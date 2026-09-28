@@ -13,6 +13,7 @@
   let searchOpened = false;
   let menuOpened = false;
   let formStarted = false;
+  let scrollSpyCleanup = null;
 
   const track = (eventName, params = {}) => {
     if (typeof window.gtag === "function") window.gtag("event", eventName, params);
@@ -38,21 +39,76 @@
   }
 
   function header(path) {
+    const parts = path.split("/").filter(Boolean);
+    const activeNav = path.startsWith("/productos")
+      ? (parts.length === 2 || window.location.hash === "#categorias" ? "categories" : "products")
+      : path.startsWith("/empresas") ? "business"
+      : path.startsWith("/nosotros") ? "about"
+      : path.startsWith("/contacto") ? "contact"
+      : "";
     const links = [
-      ["/productos", "Productos", path.startsWith("/productos")],
-      ["/productos", "Categorías", false],
-      ["/empresas", "Para empresas", path.startsWith("/empresas")],
-      ["/nosotros", "Nosotros", path.startsWith("/nosotros")],
-      ["/contacto", "Contacto", path.startsWith("/contacto")]
+      ["/productos", "Productos", "products"],
+      ["/productos#categorias", "Categorías", "categories"],
+      ["/empresas", "Para empresas", "business"],
+      ["/nosotros", "Nosotros", "about"],
+      ["/contacto", "Contacto", "contact"]
     ];
     return `<header class="site-header"><div class="wrap header-inner">
       <a href="/" data-link class="brand" aria-label="ICEMAN Ecuador, inicio"><img class="brand-symbol" src="/assets/iceman-symbol-cyan.png" alt=""><span class="brand-lockup"><img class="brand-wordmark" src="/assets/iceman-wordmark-navy.png" alt="IceMan"><small>ECUADOR</small></span></a>
-      <nav class="desktop-nav" aria-label="Navegación principal">${links.map(([href, label, current]) => `<a href="${href}" data-link ${current ? 'aria-current="page"' : ""}>${label}</a>`).join("")}</nav>
+      <nav class="desktop-nav" aria-label="Navegación principal">${links.map(([href, label, key]) => `<a href="${href}" data-link data-nav="${key}" ${activeNav === key ? 'aria-current="page"' : ""}>${label}</a>`).join("")}</nav>
       <div class="header-actions"><button class="icon-btn" type="button" data-action="search" aria-label="Buscar productos" aria-expanded="${searchOpened}"><span class="search-glyph" aria-hidden="true"></span></button><a class="btn btn-primary btn-small header-quote" href="/empresas" data-link>Solicitar cotización ${iconArrow()}</a><button class="menu-toggle" type="button" data-action="menu" aria-label="${menuOpened ? "Cerrar menú" : "Abrir menú"}" aria-expanded="${menuOpened}"><span class="menu-lines" aria-hidden="true">${menuOpened ? "×" : "☰"}</span></button></div>
       </div>
       <div class="search-bar" ${searchOpened ? "" : "hidden"}><form class="wrap search-inner" data-form="search"><span class="search-glyph" aria-hidden="true"></span><label class="sr-only" for="site-search">Buscar productos</label><input id="site-search" type="search" name="q" placeholder="Buscar papas, vegetales, Franui…" value="${escapeHTML(searchValue)}" autocomplete="off"><button class="search-close" type="button" data-action="close-search" aria-label="Cerrar búsqueda">×</button></form></div>
-      <nav class="mobile-panel ${menuOpened ? "open" : ""}" aria-label="Menú móvil" ${menuOpened ? "" : "inert"}><a href="/productos" data-link>Productos</a><a href="/productos" data-link>Categorías</a><a href="/empresas" data-link>Para empresas</a><a href="/nosotros" data-link>Nosotros</a><a href="/contacto" data-link>Contacto</a><a class="mobile-sub" href="${waLink(contactMessage)}" data-wa target="_blank" rel="noopener">Hablar por WhatsApp ${iconArrow()}</a><a class="mobile-sub" href="/empresas" data-link>Solicitar cotización ${iconArrow()}</a></nav>
+      <nav class="mobile-panel ${menuOpened ? "open" : ""}" aria-label="Menú móvil" ${menuOpened ? "" : "inert"}>${links.map(([href, label, key]) => `<a href="${href}" data-link data-nav="${key}" ${activeNav === key ? 'aria-current="page"' : ""}>${label}</a>`).join("")}<a class="mobile-sub" href="${waLink(contactMessage)}" data-wa target="_blank" rel="noopener">Hablar por WhatsApp ${iconArrow()}</a><a class="mobile-sub" href="/empresas" data-link>Solicitar cotización ${iconArrow()}</a></nav>
     </header>`;
+  }
+
+  function setActiveNav(key) {
+    root.querySelectorAll("[data-nav]").forEach((link) => {
+      const isActive = link.dataset.nav === key;
+      if (isActive) link.setAttribute("aria-current", "page");
+      else link.removeAttribute("aria-current");
+    });
+  }
+
+  function setupScrollSpy() {
+    scrollSpyCleanup?.();
+    scrollSpyCleanup = null;
+    const sections = [...root.querySelectorAll("[data-nav-section]")];
+    if (sections.length < 2) return;
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const headerHeight = root.querySelector(".site-header")?.getBoundingClientRect().height || 0;
+      const activationLine = headerHeight + 2;
+      let current = sections[0].dataset.navSection;
+      for (const section of sections) {
+        if (section.getBoundingClientRect().top <= activationLine) current = section.dataset.navSection;
+        else break;
+      }
+      setActiveNav(current);
+    };
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+    window.addEventListener("scroll", onScroll, { passive:true });
+    window.addEventListener("resize", onScroll);
+    update();
+    scrollSpyCleanup = () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (frame) cancelAnimationFrame(frame);
+    };
+  }
+
+  function scrollToHash(hash, behavior = "smooth") {
+    if (!hash) return;
+    const target = document.getElementById(decodeURIComponent(hash.slice(1)));
+    if (target) requestAnimationFrame(() => {
+      const headerHeight = root.querySelector(".site-header")?.getBoundingClientRect().height || 0;
+      const top = window.scrollY + target.getBoundingClientRect().top - headerHeight;
+      window.scrollTo({ top:Math.max(0, top), behavior });
+    });
   }
 
   function footer() {
@@ -110,11 +166,12 @@
     searchValue = query;
     activeFilter = categorySlug || "todos";
     const headerText = category ? category.name : query ? `Resultados para “${query}”` : "Todos los productos";
-    const intro = `<section class="page-intro"><div class="wrap">${breadcrumbs([{ name:"Inicio", href:"/" },{ name:"Productos", href:"/productos" },...(category ? [{ name:category.name }] : [])])}<div class="page-heading"><div class="eyebrow">Catálogo ICEMAN</div><h1>${escapeHTML(headerText)}</h1><p>${category ? escapeHTML(category.note)+". Encuentra presentación, preparación y datos para cotizar." : "Explora papas, vegetales, especialidades y más. Encuentra rápidamente el producto y la presentación que buscas."}</p></div></div></section>
-      <div class="catalog-toolbar"><div class="wrap toolbar-inner"><div class="category-chips" role="group" aria-label="Filtrar por categoría"><button class="chip ${activeFilter === "todos" ? "active" : ""}" data-filter="todos" aria-pressed="${activeFilter === "todos"}">Todos</button>${categories.map((item) => `<button class="chip ${activeFilter === item.slug ? "active" : ""}" data-filter="${item.slug}" aria-pressed="${activeFilter === item.slug}">${escapeHTML(item.name)}</button>`).join("")}</div><span class="toolbar-count" id="catalog-count"></span></div></div>
+    const intro = `<section class="page-intro" id="productos" data-nav-section="products"><div class="wrap">${breadcrumbs([{ name:"Inicio", href:"/" },{ name:"Productos", href:"/productos" },...(category ? [{ name:category.name }] : [])])}<div class="page-heading"><div class="eyebrow">Catálogo ICEMAN</div><h1>${escapeHTML(headerText)}</h1><p>${category ? escapeHTML(category.note)+". Encuentra presentación, preparación y datos para cotizar." : "Explora papas, vegetales, especialidades y más. Encuentra rápidamente el producto y la presentación que buscas."}</p></div></div></section>
+      <div class="catalog-toolbar" id="categorias" data-nav-section="categories"><div class="wrap toolbar-inner"><div class="category-chips" role="group" aria-label="Filtrar por categoría"><button class="chip ${activeFilter === "todos" ? "active" : ""}" data-filter="todos" aria-pressed="${activeFilter === "todos"}">Todos</button>${categories.map((item) => `<button class="chip ${activeFilter === item.slug ? "active" : ""}" data-filter="${item.slug}" aria-pressed="${activeFilter === item.slug}">${escapeHTML(item.name)}</button>`).join("")}</div><span class="toolbar-count" id="catalog-count" aria-live="polite"></span></div></div>
       <section class="catalog-results"><div class="wrap"><div id="catalog-content"></div></div></section>`;
     pageShell(intro, path);
     renderCatalogResults(categorySlug || "todos", query);
+    if (!category) setupScrollSpy();
     updateHead(path, category ? `Productos ${category.name}` : query ? `Resultados de búsqueda para ${query}` : "Catálogo de productos", category ? `${category.note}. Consulta presentaciones y preparación en el catálogo ICEMAN.` : "Explora el catálogo de productos ultracongelados ICEMAN: papas, vegetales, helados, smoothies, especialidades y más.");
     track("category_view", { category: categorySlug || "all" });
     if (category) addSchema(breadcrumbSchema([{ name:"Inicio", href:"/" },{ name:"Productos", href:"/productos" },{ name:category.name, href:`/productos/${category.slug}` }]));
@@ -208,6 +265,8 @@
   }
 
   function render() {
+    scrollSpyCleanup?.();
+    scrollSpyCleanup = null;
     const path = withoutBase(window.location.pathname).replace(/\/$/, "") || "/";
     const parts = path.split("/").filter(Boolean);
     if (path === "/") { activeFilter = "todos"; pageShell(home(), path); addSchema({ "@context":"https://schema.org", "@type":"Organization", name:"ICEMAN Ecuador", url:window.location.origin, telephone:"+593 96 789 4279", contactPoint:{ "@type":"ContactPoint", telephone:"+593 96 789 4279", contactType:"sales", areaServed:"EC" } }); }
@@ -228,14 +287,19 @@
     const url = new URL(href, window.location.origin);
     const target = `${withBase(withoutBase(url.pathname))}${url.search}${url.hash}`;
     if (replace) history.replaceState({}, "", target); else history.pushState({}, "", target);
-    searchOpened = false; menuOpened = false; searchValue = ""; window.scrollTo({ top:0, behavior:matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" }); render();
+    const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    searchOpened = false; menuOpened = false; searchValue = "";
+    render();
+    if (url.hash) scrollToHash(url.hash, reducedMotion ? "auto" : "smooth");
+    else window.scrollTo({ top:0, behavior:"auto" });
   }
 
   root.addEventListener("click", (event) => {
     const anchor = event.target.closest("a");
     if (anchor?.dataset.productLink && anchor.closest(".related-track")) track("related_product_click", { product_slug: anchor.dataset.productLink });
     if (anchor?.hasAttribute("data-link") && withoutBase(new URL(anchor.href, window.location.origin).pathname) === "/contacto") track("contact_click", { target:"contact_page" });
-    if (anchor?.hasAttribute("data-link")) { event.preventDefault(); navigate(anchor.getAttribute("href")); return; }
+    const isPlainInternalClick = event.button === 0 && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey;
+    if (anchor?.hasAttribute("data-link") && isPlainInternalClick && !anchor.hasAttribute("download") && (!anchor.target || anchor.target === "_self")) { event.preventDefault(); navigate(anchor.getAttribute("href")); return; }
     if (anchor?.hasAttribute("data-wa")) track("whatsapp_click", { placement: anchor.classList.contains("whatsapp-float") ? "floating" : "link" });
     if (anchor?.hasAttribute("data-contact")) track("contact_click", { target: anchor.getAttribute("href") });
     const action = event.target.closest("[data-action]")?.dataset.action;
@@ -248,6 +312,7 @@
       activeFilter = filter; searchValue = "";
       const targetPath = filter === "todos" ? "/productos" : `/productos/${filter}`;
       history.pushState({}, "", withBase(targetPath));
+      setActiveNav(filter === "todos" ? "products" : "categories");
       document.querySelectorAll(".chip").forEach((chip) => { const isActive = chip.dataset.filter === filter; chip.classList.toggle("active", isActive); chip.setAttribute("aria-pressed", String(isActive)); });
       renderCatalogResults(filter); track("category_view", { category: filter === "todos" ? "all" : filter });
     }
@@ -308,13 +373,17 @@
     successBox.classList.add("show");
   });
 
-  root.addEventListener("change", (event) => {
+  const clearFieldError = (event) => {
     const field = event.target.closest(".field input, .field select");
     if (field) { field.closest(".field")?.classList.remove("has-error"); field.removeAttribute("aria-invalid"); }
+  };
+  root.addEventListener("input", clearFieldError);
+  root.addEventListener("change", (event) => {
+    clearFieldError(event);
     if (event.target.name === "consent" && event.target.checked) { const err = root.querySelector(".consent-error"); if (err) err.style.display = "none"; }
   });
   document.addEventListener("keydown", (event) => { if (event.key === "Escape") { if (menuOpened || searchOpened) { menuOpened = false; searchOpened = false; document.body.classList.remove("menu-open"); render(); } } });
-  window.addEventListener("popstate", render);
+  window.addEventListener("popstate", () => { render(); scrollToHash(window.location.hash, "auto"); });
   if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.documentElement.classList.add("no-motion");
   const restoredRoute = new URLSearchParams(window.location.search).get("__route");
   if (restoredRoute) {
@@ -322,4 +391,5 @@
     history.replaceState({}, "", `${withBase(withoutBase(restoredUrl.pathname))}${restoredUrl.search}${restoredUrl.hash}`);
   }
   render();
+  scrollToHash(window.location.hash, "auto");
 })();
