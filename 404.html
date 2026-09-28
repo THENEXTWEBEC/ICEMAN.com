@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ICEMAN Ecuador</title>
+  </head>
+  <body>
+    <script>
+      const base = "/ICEMAN.com";
+      const requested = location.pathname + location.search + location.hash;
+      location.replace(`${base}/?__route=${encodeURIComponent(requested)}`);
+    </script>
+  </body>
+</html>
