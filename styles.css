@@ -47,3 +47,19 @@ html,body,#app{max-width:100%}body{min-width:0}img{display:block;max-width:100%}
 @media(max-height:500px) and (orientation:landscape){.mobile-panel{padding-top:8px}.mobile-panel a{padding:10px 2px;font-size:18px}.mobile-panel .mobile-sub{min-height:44px;margin-top:8px;padding:10px 14px}.hero-copy{padding-block:22px}.hero-grid{grid-template-columns:1fr .8fr;gap:22px}.hero-visual{margin-top:0}.hero-product.hero-brand-image{max-height:72vh}.business-lede{position:static}}
 
 @media(prefers-reduced-motion:reduce){.motion-enabled .reveal,.motion-enabled .hero-visual.reveal{opacity:1;transform:none;transition:none;will-change:auto}}
+
+/* Mobile business callout: keep the product prominent and the message readable. */
+@media(max-width:560px){
+  .business-panel{border-radius:22px}
+  .business-copy{padding:31px 22px 25px}
+  .business-copy h2{margin:16px 0 13px;font-size:clamp(30px,8.4vw,34px);line-height:1.02;text-wrap:balance}
+  .business-copy p{font-size:14px;line-height:1.65;text-wrap:pretty}
+  .business-actions{gap:10px;margin-top:22px}
+  .business-actions .btn{min-height:50px}
+  .business-art{min-height:252px;place-items:unset;background:linear-gradient(145deg,#f1fbff 0%,#dff4fb 100%);isolation:isolate}
+  .business-art:before{z-index:-1;top:-82px;right:-76px;width:270px;height:270px;border:52px solid rgba(0,173,239,.1);background:transparent}
+  .business-art:after{z-index:-1;right:auto;bottom:-74px;left:-76px;width:210px;height:210px;border:1px solid rgba(44,45,98,.12);background:transparent}
+  .business-art img{position:absolute;right:-1px;bottom:-10px;width:69%;height:245px;object-fit:contain;object-position:right bottom;filter:drop-shadow(0 18px 18px rgba(32,33,79,.18));mix-blend-mode:multiply}
+  .business-stamp{top:26px;right:auto;bottom:auto;left:22px;width:112px;color:var(--navy);font-size:11px;line-height:1.55;letter-spacing:.11em;text-wrap:balance}
+  .business-stamp:before{display:block;width:30px;height:2px;margin-bottom:13px;background:var(--cyan);content:""}
+}
