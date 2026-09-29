@@ -14,6 +14,7 @@
   let menuOpened = false;
   let formStarted = false;
   let scrollSpyCleanup = null;
+  let motionObserver = null;
 
   const track = (eventName, params = {}) => {
     if (typeof window.gtag === "function") window.gtag("event", eventName, params);
@@ -34,6 +35,35 @@
       ? '<path d="M5 19 19 5M9 5h10v10"/>'
       : '<path d="M4 12h16m-6-6 6 6-6 6"/>';
     return `<svg class="thin-arrow thin-arrow-${direction}" viewBox="0 0 24 24" aria-hidden="true" focusable="false">${paths}</svg>`;
+  }
+
+  function iconWhatsApp() {
+    return '<svg class="whatsapp-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 11.6a8 8 0 0 1-11.8 7L4 19.8l1.2-4A8 8 0 1 1 20 11.6Z"/><path d="M8.6 7.7c.2-.4.4-.4.7-.4h.4c.2 0 .4.1.5.4l.8 1.8c.1.3.1.5-.1.7l-.6.7c-.2.2-.1.4 0 .6.7 1.3 1.7 2.2 3 2.8.2.1.4.1.6-.1l.8-1c.2-.2.4-.3.7-.1l1.8.8c.3.1.4.3.4.6 0 .4-.2 1.3-.8 1.8-.6.5-1.4.7-2.3.5-1.4-.3-3.2-1.1-4.9-2.7-1.3-1.2-2.3-2.8-2.7-4.1-.4-1-.1-1.8.3-2.3.4-.4.9-.6 1.4-.6Z"/></svg>';
+  }
+
+  function setupMotion(scope = root) {
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    document.documentElement.classList.add("motion-enabled");
+    if (!motionObserver) {
+      motionObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("is-visible");
+          motionObserver?.unobserve(entry.target);
+        });
+      }, { threshold:0.08, rootMargin:"0px 0px -7% 0px" });
+    }
+    const selectors = [
+      ".hero-copy > *", ".hero-visual", ".trust-item", ".section-head", ".category-card",
+      ".product-card", ".benefit", ".business-copy > *", ".business-art", ".brand-word",
+      ".cta-band > *", ".page-heading > *", ".detail-image", ".detail-copy > *",
+      ".business-lede > *", ".form-section", ".contact-card", ".about-copy > *", ".about-visual"
+    ];
+    [...scope.querySelectorAll(selectors.join(","))].filter((element) => !element.classList.contains("reveal")).forEach((element, index) => {
+      element.classList.add("reveal");
+      element.style.setProperty("--reveal-delay", `${Math.min(index % 6, 5) * 45}ms`);
+      motionObserver.observe(element);
+    });
   }
 
   function productCard(product) {
@@ -63,10 +93,10 @@
     return `<header class="site-header"><div class="wrap header-inner">
       <a href="/" data-link class="brand" aria-label="ICEMAN Ecuador, inicio"><img class="brand-symbol" src="/assets/iceman-symbol-cyan.png" alt=""><span class="brand-lockup"><img class="brand-wordmark" src="/assets/iceman-wordmark-navy.png" alt="IceMan"><small>ECUADOR</small></span></a>
       <nav class="desktop-nav" aria-label="Navegación principal">${links.map(([href, label, key]) => `<a href="${href}" data-link data-nav="${key}" ${activeNav === key ? 'aria-current="page"' : ""}>${label}</a>`).join("")}</nav>
-      <div class="header-actions"><button class="icon-btn" type="button" data-action="search" aria-label="Buscar productos" aria-expanded="${searchOpened}"><span class="search-glyph" aria-hidden="true"></span></button><a class="btn btn-primary btn-small header-quote" href="/empresas" data-link>Solicitar cotización ${iconArrow()}</a><button class="menu-toggle" type="button" data-action="menu" aria-label="${menuOpened ? "Cerrar menú" : "Abrir menú"}" aria-expanded="${menuOpened}" aria-controls="mobile-menu"><span class="menu-lines ${menuOpened ? "is-open" : ""}" aria-hidden="true"><span></span><span></span></span></button></div>
+      <div class="header-actions"><button class="icon-btn" type="button" data-action="search" aria-label="Buscar productos" aria-controls="site-search-panel" aria-expanded="${searchOpened}"><span class="search-glyph" aria-hidden="true"></span></button><a class="btn btn-primary btn-small header-quote" href="/empresas" data-link>Solicitar cotización ${iconArrow()}</a><button class="menu-toggle" type="button" data-action="menu" aria-label="${menuOpened ? "Cerrar menú" : "Abrir menú"}" aria-expanded="${menuOpened}" aria-controls="mobile-menu"><span class="menu-lines ${menuOpened ? "is-open" : ""}" aria-hidden="true"><span></span><span></span></span></button></div>
       </div>
-      <div class="search-bar" ${searchOpened ? "" : "hidden"}><form class="wrap search-inner" data-form="search"><span class="search-glyph" aria-hidden="true"></span><label class="sr-only" for="site-search">Buscar productos</label><input id="site-search" type="search" name="q" placeholder="Buscar papas, vegetales, Franui…" value="${escapeHTML(searchValue)}" autocomplete="off"><button class="search-close" type="button" data-action="close-search" aria-label="Cerrar búsqueda">×</button></form></div>
-      <nav id="mobile-menu" class="mobile-panel ${menuOpened ? "open" : ""}" aria-label="Menú móvil" ${menuOpened ? "" : "inert"}>${links.map(([href, label, key]) => `<a href="${href}" data-link data-nav="${key}" ${activeNav === key ? 'aria-current="page"' : ""}>${label}</a>`).join("")}<a class="mobile-sub" href="${waLink(contactMessage)}" data-wa target="_blank" rel="noopener">Hablar por WhatsApp ${iconArrow()}</a><a class="mobile-sub" href="/empresas" data-link>Solicitar cotización ${iconArrow()}</a></nav>
+      <div class="search-bar" id="site-search-panel" ${searchOpened ? "" : "hidden"}><form class="wrap search-inner" data-form="search"><span class="search-glyph" aria-hidden="true"></span><label class="sr-only" for="site-search">Buscar productos</label><input id="site-search" type="search" name="q" placeholder="Buscar papas, vegetales, Franui…" value="${escapeHTML(searchValue)}" autocomplete="off"><button class="search-close" type="button" data-action="close-search" aria-label="Cerrar búsqueda">×</button></form></div>
+      <nav id="mobile-menu" class="mobile-panel ${menuOpened ? "open" : ""}" aria-label="Menú móvil" ${menuOpened ? "" : "inert"}>${links.map(([href, label, key]) => `<a href="${href}" data-link data-nav="${key}" ${activeNav === key ? 'aria-current="page"' : ""}>${label}</a>`).join("")}<a class="mobile-sub mobile-whatsapp" href="${waLink(contactMessage)}" data-wa target="_blank" rel="noopener">${iconWhatsApp()} Hablar por WhatsApp</a><a class="mobile-sub" href="/empresas" data-link>Solicitar cotización ${iconArrow()}</a></nav>
     </header>`;
   }
 
@@ -128,11 +158,15 @@
   }
 
   function pageShell(content, path) {
-    root.innerHTML = `${header(path)}<main id="main" class="fade-in">${content}</main>${footer()}<a class="whatsapp-float" href="${waLink(contactMessage)}" data-wa target="_blank" rel="noopener" aria-label="Escribir a ICEMAN por WhatsApp">WA</a>`;
+    motionObserver?.disconnect();
+    motionObserver = null;
+    const floatingWhatsAppClass = path === "/empresas" ? "whatsapp-float whatsapp-float-form" : "whatsapp-float";
+    root.innerHTML = `${header(path)}<main id="main" class="fade-in">${content}</main>${footer()}<a class="${floatingWhatsAppClass}" href="${waLink(contactMessage)}" data-wa target="_blank" rel="noopener" aria-label="Escribir a ICEMAN por WhatsApp">${iconWhatsApp()}</a>`;
     root.querySelectorAll("a[data-link]").forEach((link) => { link.href = withBase(withoutBase(link.getAttribute("href"))); });
     if (projectBase) root.querySelectorAll('img[src^="/assets/"]').forEach((image) => { image.src = `${projectBase}${image.getAttribute("src")}`; });
     updateHead(path);
     if (searchOpened) setTimeout(() => document.getElementById("site-search")?.focus(), 0);
+    requestAnimationFrame(() => setupMotion());
   }
 
   function updateHead(path, title, description) {
@@ -194,14 +228,17 @@
     count.textContent = `${shown.length} ${shown.length === 1 ? "producto" : "productos"}`;
     if (!shown.length) {
       content.innerHTML = `<div class="catalog-empty"><strong>No encontramos productos con esa búsqueda.</strong><p>Prueba otro nombre o selecciona una categoría.</p><button class="btn btn-outline btn-small" type="button" data-action="clear-search">Ver todo el catálogo</button></div>`;
+      setupMotion(content);
       return;
     }
     if (filter !== "todos") {
       content.innerHTML = `<div class="product-grid">${shown.map(productCard).join("")}</div>`;
+      setupMotion(content);
       return;
     }
     const grouped = categories.map((category) => ({ category, items: shown.filter((product) => product.category === category.slug) })).filter((group) => group.items.length);
     content.innerHTML = grouped.map(({ category, items }) => `<section class="category-section"><h2>${escapeHTML(category.name)}</h2><div class="product-grid">${items.map(productCard).join("")}</div></section>`).join("");
+    setupMotion(content);
   }
 
   function productPage(product, path) {
@@ -312,7 +349,10 @@
     const action = event.target.closest("[data-action]")?.dataset.action;
     if (action === "search") { searchOpened = !searchOpened; menuOpened = false; render(); }
     if (action === "close-search") { searchOpened = false; render(); }
-    if (action === "menu") { menuOpened = !menuOpened; searchOpened = false; document.body.classList.toggle("menu-open", menuOpened); render(); }
+    if (action === "menu") {
+      menuOpened = !menuOpened; searchOpened = false; document.body.classList.toggle("menu-open", menuOpened); render();
+      if (menuOpened) requestAnimationFrame(() => root.querySelector(".mobile-panel a")?.focus());
+    }
     if (action === "clear-search") { searchValue = ""; navigate("/productos"); }
     const filter = event.target.closest("[data-filter]")?.dataset.filter;
     if (filter) {
@@ -375,8 +415,10 @@
       return;
     }
     track("b2b_form_submit", { destination:"whatsapp" });
-    const opened = window.open(waLink(message), "_blank", "noopener,noreferrer");
-    successBox.textContent = opened ? "WhatsApp se abrió con los datos de tu consulta. Revísalos y envíalos para contactar al equipo ICEMAN." : "Tu consulta está lista. Usa el botón de WhatsApp para compartirla con el equipo ICEMAN.";
+    const preparedWhatsAppLink = waLink(message);
+    const opened = window.open(preparedWhatsAppLink, "_blank", "noopener,noreferrer");
+    if (opened) successBox.textContent = "WhatsApp se abrió con los datos de tu consulta. Revísalos y envíalos para contactar al equipo ICEMAN.";
+    else successBox.innerHTML = `Tu consulta está lista. <a href="${preparedWhatsAppLink}" data-wa target="_blank" rel="noopener">Abrir WhatsApp con mis datos</a>.`;
     successBox.classList.add("show");
   });
 
