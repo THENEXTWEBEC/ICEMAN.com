@@ -6,8 +6,7 @@ window.ICEMAN_CATALOG = {
     { slug: "air-fryer", name: "Air Fryer", image: "air-fryer", note: "Una opción práctica para tu freidora de aire" },
     { slug: "smoothies", name: "Smoothies", image: "smoothie-green", note: "Frutas y vegetales listos para licuar" },
     { slug: "helados", name: "Helados", image: "helado-mora", note: "Helado de paila con sabores frutales" },
-    { slug: "waffles", name: "Waffles", image: "waffle", note: "Para desayuno o postre" },
-    { slug: "pizza", name: "Pizza", image: "pizza", note: "Una pizza para compartir en casa" }
+    { slug: "waffles", name: "Waffles", image: "waffle", note: "Para desayuno o postre" }
   ],
   products: [
     { slug:"papas-air-fryer", category:"air-fryer", family:"papas", name:"Papas Air Fryer", brand:"ICEMAN", image:"air-fryer", presentation:"750 g", units:"12", sap:null, description:"Papas prefritas y congeladas, ideales para preparar en airfryer. Crujientes por fuera y suaves por dentro.", prep:["Air Fryer · 8–10 min a 200 °C"], featured:true },
@@ -36,7 +35,6 @@ window.ICEMAN_CATALOG = {
     { slug:"smoothie-green", category:"smoothies", family:"smoothies", name:"Smoothie Green", brand:"ICEMAN", image:"smoothie-green", presentation:"500 g", units:"12", sap:"PTCO00298", description:"Pulpa ultracongelada de espinaca, pepinillo y piña. No contiene azúcar añadida, preservantes ni colorantes.", prep:["Listo para licuar"] },
     { slug:"smoothie-orange", category:"smoothies", family:"smoothies", name:"Smoothie Orange", brand:"ICEMAN", image:"smoothie-orange", presentation:"500 g", units:"12", sap:"PTCO00303", description:"Pulpa ultracongelada de piña, zanahoria, naranja y jengibre. Sin azúcar añadida, preservantes ni colorantes.", prep:["Listo para licuar"] },
     { slug:"smoothie-red", category:"smoothies", family:"smoothies", name:"Smoothie Red", brand:"ICEMAN", image:"smoothie-red", presentation:"500 g", units:"12", sap:"PTCO00296", description:"Pulpa ultracongelada de frutilla, remolacha y mora. Sin azúcar añadida, preservantes ni colorantes.", prep:["Listo para licuar"] },
-    { slug:"waffle-glaseado", category:"waffles", family:"waffles", name:"Waffle glaseado", brand:"ICEMAN", image:"waffle", presentation:"220 g", units:"10", sap:"PTCO00280", description:"Waffle suave por dentro y crujiente por fuera, glaseado con copos de azúcar.", prep:["Horno · 5–6 min a 200 °C","Microondas · 45 s (750–1200 W)"] },
-    { slug:"pizza-jamon-queso", category:"pizza", family:"pizza", name:"Pizza jamón y queso", brand:"ICEMAN", image:"pizza", presentation:"926 g", units:"9", sap:"PTCO00601", description:"Pizza redonda de 32 cm con queso y jamón.", prep:["Horno · 10–15 min a 200 °C"] }
+    { slug:"waffle-glaseado", category:"waffles", family:"waffles", name:"Waffle glaseado", brand:"ICEMAN", image:"waffle", presentation:"220 g", units:"10", sap:"PTCO00280", description:"Waffle suave por dentro y crujiente por fuera, glaseado con copos de azúcar.", prep:["Horno · 5–6 min a 200 °C","Microondas · 45 s (750–1200 W)"] }
   ]
 };
