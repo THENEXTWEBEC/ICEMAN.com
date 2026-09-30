@@ -111,3 +111,11 @@ html,body,#app{max-width:100%}body{min-width:0}img{display:block;max-width:100%}
 .editorial-hero-image{width:65%;justify-self:end}.editorial-hero-image:not(.editorial-hero-poster){height:292.5px}
 @media(max-width:1100px){.editorial-hero-image:not(.editorial-hero-poster){height:260px}}
 @media(max-width:820px){.editorial-hero-image{width:100%;justify-self:stretch}.editorial-hero-image:not(.editorial-hero-poster){height:auto;aspect-ratio:1.25}}
+
+.hero-promo-terms-toggle{display:inline-flex;min-height:46px;align-items:center;justify-content:space-between;gap:14px;list-style:none;cursor:pointer}
+.hero-promo-terms-toggle::-webkit-details-marker{display:none}
+.hero-promo-terms-toggle:focus-visible{outline:3px solid #009bce;outline-offset:3px}
+.hero-promo-terms-toggle::after{content:"+";font-size:19px;font-weight:500;line-height:1}
+.hero-promo-terms[open] .hero-promo-terms-toggle::after{content:"−"}
+.hero-promo-terms-content{padding-top:18px}
+@media(max-width:560px){.hero-promo-terms-toggle{width:100%}.hero-promo-terms-content{padding-top:16px}}
