@@ -68,6 +68,7 @@ html,body,#app{max-width:100%}body{min-width:0}img{display:block;max-width:100%}
 @media(max-width:820px){.editorial-tabs{padding-bottom:13px}}
 .editorial-product-results-head{display:flex;justify-content:space-between;align-items:center;margin:27px 0 8px;color:#008fbe;font-size:10px;font-weight:700;letter-spacing:.12em}.editorial-product-results-head a{display:flex;align-items:center;gap:5px;color:var(--navy);letter-spacing:0}.editorial-search-products{padding-top:12px!important}
 .editorial-rail{cursor:grab}.editorial-rail.is-dragging{cursor:grabbing;scroll-snap-type:none;user-select:none}.editorial-rail.is-dragging a{pointer-events:none}
+.editorial-card-poster .editorial-card-image{aspect-ratio:.8;height:auto;background:#f4f5f1}.editorial-card-poster .editorial-card-image img{object-fit:contain}.editorial-hero-image.editorial-hero-poster{height:auto;aspect-ratio:.8;background:#f4f5f1}.editorial-hero-image.editorial-hero-poster:before{display:none}.editorial-hero-image.editorial-hero-poster>img{object-fit:contain}.editorial-detail-image.editorial-detail-poster{height:auto;aspect-ratio:.8;background:#f4f5f1}.editorial-detail-image.editorial-detail-poster img{object-fit:contain}
 
 /* Mobile business callout: keep the product prominent and the message readable. */
 @media(max-width:560px){
