@@ -70,6 +70,15 @@ html,body,#app{max-width:100%}body{min-width:0}img{display:block;max-width:100%}
 .editorial-rail{cursor:grab}.editorial-rail.is-dragging{cursor:grabbing;scroll-snap-type:none;user-select:none}.editorial-rail.is-dragging a{pointer-events:none}
 .editorial-card-poster .editorial-card-image{aspect-ratio:.8;height:auto;background:#f4f5f1}.editorial-card-poster .editorial-card-image img{object-fit:contain}.editorial-hero-image.editorial-hero-poster{height:auto;aspect-ratio:.8;background:#f4f5f1}.editorial-hero-image.editorial-hero-poster:before{display:none}.editorial-hero-image.editorial-hero-poster>img{object-fit:contain}.editorial-detail-image.editorial-detail-poster{height:auto;aspect-ratio:.8;background:#f4f5f1}.editorial-detail-image.editorial-detail-poster img{object-fit:contain}
 
+/* Seasonal homepage promotion: retain the full portrait artwork across screen sizes. */
+.hero-promo{background:linear-gradient(135deg,#f6f9f8 0%,#fff 55%,#fff5e8 100%)}
+.hero-promo .hero-grid{grid-template-columns:.9fr 1.1fr;min-height:0}
+.hero-promo .hero-copy{padding-block:55px}
+.hero-promo .hero-copy .eyebrow{color:#008e49}
+.hero-promo .hero-visual{min-height:0;margin:0}
+.hero-promo .hero-visual:before{inset:6% 2%;border-radius:24px;background:linear-gradient(145deg,#dff6e6,#fff0db)}
+.hero-promo .hero-product.hero-promo-image{width:min(100%,520px);height:auto;max-height:min(720px,78vh);aspect-ratio:1196/1504;object-fit:contain;border-radius:12px;filter:drop-shadow(0 20px 30px rgba(44,45,98,.16));mix-blend-mode:normal}
+
 /* Mobile business callout: keep the product prominent and the message readable. */
 @media(max-width:560px){
   .business-panel{border-radius:22px}
@@ -85,3 +94,5 @@ html,body,#app{max-width:100%}body{min-width:0}img{display:block;max-width:100%}
   .business-stamp{top:26px;right:auto;bottom:auto;left:22px;width:112px;color:var(--navy);font-size:11px;line-height:1.55;letter-spacing:.11em;text-wrap:balance}
   .business-stamp:before{display:block;width:30px;height:2px;margin-bottom:13px;background:var(--cyan);content:""}
 }
+
+@media(max-width:820px){.hero-promo .hero-grid{grid-template-columns:1fr}.hero-promo .hero-copy{padding:28px 0 4px}.hero-promo .hero-visual{min-height:0;margin-top:18px}.hero-promo .hero-product.hero-promo-image{width:min(100%,560px);max-height:none}}
