@@ -203,7 +203,7 @@
   }
 
   function promotionHero() {
-    return `<section class="hero hero-promo"><div class="wrap hero-grid"><div class="hero-copy"><div class="eyebrow">Promoción · Hasta el 25 de octubre de 2026</div><h1>¡Gana una Air Fryer <em>Oster!</em></h1><p>Crea tu plato más creativo con Papas Air Fryer ICEMAN. Súbelo a tus stories y etiquétanos. Guarda el empaque con el que participaste.</p><div class="hero-actions"><a class="btn btn-primary" href="/productos/air-fryer/papas-air-fryer" data-link>Ver Papas Air Fryer ${iconArrow()}</a></div><div class="hero-note"><span class="snow-mark" aria-hidden="true">✳</span><span>Participa hasta el 25 de octubre de 2026</span></div></div><div class="hero-visual hero-promo-visual"><img class="hero-product hero-promo-image" src="/assets/promotions/air-fryer-giveaway-2026.webp" alt="Promoción ICEMAN: gana una Air Fryer Oster al crear un plato con Papas Air Fryer ICEMAN. Participa hasta el 25 de octubre de 2026." fetchpriority="high" decoding="async"></div></div></section>`;
+    return `<section class="hero hero-promo" aria-label="Promoción ICEMAN: gana una Air Fryer Oster"><div class="wrap hero-promo-inner"><img class="hero-promo-image" src="/assets/promotions/air-fryer-giveaway-2026.webp" alt="¡Gana 1 Air Fryer Oster! Crea tu plato más creativo con Papas Air Fryer IceMan. Consulta la promoción en la imagen. Válida hasta el 25 de octubre de 2026." fetchpriority="high" decoding="async" width="1196" height="1504"><a class="btn btn-primary hero-promo-cta" href="/productos/air-fryer/papas-air-fryer" data-link>Conoce las Papas Air Fryer ${iconArrow()}</a></div></section>`;
   }
 
   function home() {
