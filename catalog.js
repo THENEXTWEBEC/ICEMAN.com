@@ -4,7 +4,7 @@ window.ICEMAN_CATALOG = {
     { slug: "vegetales", name: "Vegetales", image: "edamame-vaina", note: "Mezclas, granos y vegetales naturales" },
     { slug: "especialidades", name: "Especialidades", image: "hash-brown", note: "Bocados fáciles de compartir" },
     { slug: "air-fryer", name: "Air Fryer", image: "air-fryer", note: "Una opción práctica para tu freidora de aire" },
-    { slug: "smoothies", name: "Smoothies", image: "smoothie-green", note: "Frutas y vegetales listos para licuar" },
+    { slug: "smoothies", name: "Smoothies", image: "smoothie-green-angle", note: "Frutas y vegetales listos para licuar" },
     { slug: "helados", name: "Helados", image: "helado-mora", note: "Helado de paila con sabores frutales" },
     { slug: "waffles", name: "Waffles", image: "waffle", note: "Para desayuno o postre" }
   ],
