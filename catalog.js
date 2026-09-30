@@ -5,7 +5,7 @@ window.ICEMAN_CATALOG = {
     { slug: "especialidades", name: "Especialidades", image: "hash-brown", note: "Bocados fáciles de compartir" },
     { slug: "air-fryer", name: "Air Fryer", image: "air-fryer", note: "Una opción práctica para tu freidora de aire" },
     { slug: "smoothies", name: "Smoothies", image: "smoothie-green-angle", note: "Frutas y vegetales listos para licuar" },
-    { slug: "helados", name: "Helados", image: "helado-mora", note: "Helado de paila con sabores frutales" },
+    { slug: "helados", name: "Helados", image: "helado-mora", note: "Helados de paila y sorbetto artesanal de sabores frutales" },
     { slug: "waffles", name: "Waffles", image: "waffle", note: "Para desayuno o postre" }
   ],
   products: [
@@ -32,6 +32,7 @@ window.ICEMAN_CATALOG = {
     { slug:"helado-paila-mora", category:"helados", family:"helados", name:"Helado de paila · Mora", brand:"ICEMAN", image:"helado-mora", presentation:"900 ml", units:"6", sap:"PTCO00489", description:"Helado de paila elaborado con fruta e ingredientes 100% naturales, con receta de tradición.", prep:["Mantener congelado a −18 °C"] },
     { slug:"helado-paila-naranjilla", category:"helados", family:"helados", name:"Helado de paila · Naranjilla", brand:"ICEMAN", image:"helado-naranjilla", presentation:"900 ml", units:"6", sap:"PTCO00490", description:"Helado de paila de naranjilla elaborado con fruta e ingredientes 100% naturales.", prep:["Mantener congelado a −18 °C"] },
     { slug:"helado-paila-guanabana", category:"helados", family:"helados", name:"Helado de paila · Guanábana", brand:"ICEMAN", image:"helado-guanabana", presentation:"900 ml", units:"6", sap:"PTCO00491", description:"Helado de paila de guanábana elaborado con fruta e ingredientes 100% naturales.", prep:["Mantener congelado a −18 °C"] },
+    { slug:"sorbetto-naranjilla-hierbabuena", category:"helados", family:"helados", name:"Sorbetto artesanal · Naranjilla y hierbabuena", brand:"ICEMAN", image:"sorbetto-naranjilla-hierbabuena", presentation:"900 ml", units:null, sap:null, description:"Sorbetto artesanal ICEMAN de naranjilla y hierbabuena.", prep:["Mantener congelado a −18 °C"] },
     { slug:"smoothie-green", category:"smoothies", family:"smoothies", name:"Smoothie Green", brand:"ICEMAN", image:"smoothie-green", presentation:"500 g", units:"12", sap:"PTCO00298", description:"Pulpa ultracongelada de espinaca, pepinillo y piña. No contiene azúcar añadida, preservantes ni colorantes.", prep:["Listo para licuar"] },
     { slug:"smoothie-orange", category:"smoothies", family:"smoothies", name:"Smoothie Orange", brand:"ICEMAN", image:"smoothie-orange", presentation:"500 g", units:"12", sap:"PTCO00303", description:"Pulpa ultracongelada de piña, zanahoria, naranja y jengibre. Sin azúcar añadida, preservantes ni colorantes.", prep:["Listo para licuar"] },
     { slug:"smoothie-red", category:"smoothies", family:"smoothies", name:"Smoothie Red", brand:"ICEMAN", image:"smoothie-red", presentation:"500 g", units:"12", sap:"PTCO00296", description:"Pulpa ultracongelada de frutilla, remolacha y mora. Sin azúcar añadida, preservantes ni colorantes.", prep:["Listo para licuar"] },
