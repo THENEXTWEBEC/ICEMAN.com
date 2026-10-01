@@ -71,7 +71,7 @@
   function productCard(product) {
     return `<article class="product-card">
       <a class="product-card-link" href="${productPath(product)}" data-link data-product-link="${escapeHTML(product.slug)}" aria-label="Ver ${escapeHTML(product.name)}, presentación ${escapeHTML(product.presentation)}">
-        <div class="product-photo"><img src="${asset(product.image)}" alt="Empaque de ${escapeHTML(product.name)} ICEMAN, presentación ${escapeHTML(product.presentation)}" loading="lazy" decoding="async"><span class="product-badge">${escapeHTML(product.brand)}</span></div>
+        <div class="product-photo"><img class="${product.slug === "helado-paila-naranjilla" ? "product-image-naranjilla" : ""}" src="${asset(product.image)}" alt="Empaque de ${escapeHTML(product.name)} ICEMAN, presentación ${escapeHTML(product.presentation)}" loading="lazy" decoding="async"><span class="product-badge">${escapeHTML(product.brand)}</span></div>
         <div class="product-info"><div class="product-brand">${escapeHTML(categoryLabel(product.category))}</div><h3 class="product-title">${escapeHTML(product.name)}</h3><div class="product-meta">${escapeHTML(product.presentation)}${product.units ? ` · Caja de ${escapeHTML(product.units)} unidades` : ""}</div><div class="product-more"><span>Ver producto</span>${iconArrow()}</div></div>
       </a>
     </article>`;
