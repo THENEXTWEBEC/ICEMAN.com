@@ -245,19 +245,19 @@
   function setupEditorialDrag(scope = root) {
     scope.querySelectorAll(".editorial-rail:not([data-drag-ready])").forEach((rail) => {
       rail.dataset.dragReady = "true";
-      let startX = 0; let startScroll = 0; let moved = false;
+      let startX = 0; let startScroll = 0; let moved = false; let pointerDown = false;
       rail.addEventListener("pointerdown", (event) => {
         if (event.pointerType !== "mouse" || event.button !== 0) return;
-        startX = event.clientX; startScroll = rail.scrollLeft; moved = false;
-        rail.classList.add("is-dragging"); rail.setPointerCapture(event.pointerId);
+        startX = event.clientX; startScroll = rail.scrollLeft; moved = false; pointerDown = true;
       });
       rail.addEventListener("pointermove", (event) => {
-        if (!rail.hasPointerCapture(event.pointerId)) return;
+        if (!pointerDown) return;
         const delta = event.clientX - startX;
-        if (Math.abs(delta) > 4) moved = true;
-        if (moved) { rail.scrollLeft = startScroll - delta; event.preventDefault(); }
+        if (!moved && Math.abs(delta) <= 4) return;
+        if (!moved) { moved = true; rail.classList.add("is-dragging"); rail.setPointerCapture(event.pointerId); }
+        rail.scrollLeft = startScroll - delta; event.preventDefault();
       });
-      const stop = () => { rail.classList.remove("is-dragging"); if (moved) { rail.dataset.dragged = "true"; setTimeout(() => delete rail.dataset.dragged, 350); } };
+      const stop = () => { pointerDown = false; rail.classList.remove("is-dragging"); if (moved) { rail.dataset.dragged = "true"; setTimeout(() => delete rail.dataset.dragged, 350); } };
       rail.addEventListener("pointerup", stop); rail.addEventListener("pointercancel", stop);
       rail.addEventListener("click", (event) => { if (rail.dataset.dragged === "true") { event.preventDefault(); event.stopPropagation(); delete rail.dataset.dragged; } }, true);
     });
