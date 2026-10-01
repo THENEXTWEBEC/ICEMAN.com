@@ -240,7 +240,7 @@
     return slugs.map(productBySlug).filter(Boolean);
   }
   function productRail(items, id = "editorial-products") {
-    return `<div class="editorial-rail-wrap"><div class="editorial-rail" id="${id}" tabindex="0" aria-label="Productos ICEMAN relacionados">${items.map((product) => `<article class="editorial-product"><a href="${productPath(product)}" data-link data-product-link="${product.slug}"><span class="editorial-product-image"><img src="${asset(product.image)}" alt="Empaque de ${escapeHTML(product.name)}, ${escapeHTML(product.presentation)}" loading="lazy" decoding="async"></span><span class="editorial-product-category">${escapeHTML(categoryLabel(product.category))}</span><strong>${escapeHTML(product.name)}</strong><small>${escapeHTML(product.presentation)}</small><span class="editorial-read">Ver producto ${iconArrow()}</span></a></article>`).join("")}</div><div class="editorial-rail-controls"><button type="button" data-scroll-editorial="${id}" data-direction="-1" aria-label="Productos anteriores">${iconArrow("left")}</button><span class="rail-hint">Desliza para explorar</span><button type="button" data-scroll-editorial="${id}" data-direction="1" aria-label="Más productos">${iconArrow()}</button></div></div>`;
+    return `<div class="editorial-rail-wrap"><div class="editorial-rail" id="${id}" tabindex="0" aria-label="Productos ICEMAN relacionados">${items.map((product) => `<article class="editorial-product"><a href="${withBase(productPath(product))}" data-product-link="${product.slug}"><span class="editorial-product-image"><img src="${asset(product.image)}" alt="Empaque de ${escapeHTML(product.name)}, ${escapeHTML(product.presentation)}" loading="lazy" decoding="async"></span><span class="editorial-product-category">${escapeHTML(categoryLabel(product.category))}</span><strong>${escapeHTML(product.name)}</strong><small>${escapeHTML(product.presentation)}</small><span class="editorial-read">Ver producto ${iconArrow()}</span></a></article>`).join("")}</div><div class="editorial-rail-controls"><button type="button" data-scroll-editorial="${id}" data-direction="-1" aria-label="Productos anteriores">${iconArrow("left")}</button><span class="rail-hint">Desliza para explorar</span><button type="button" data-scroll-editorial="${id}" data-direction="1" aria-label="Más productos">${iconArrow()}</button></div></div>`;
   }
   function setupEditorialDrag(scope = root) {
     scope.querySelectorAll(".editorial-rail:not([data-drag-ready])").forEach((rail) => {
@@ -253,7 +253,7 @@
       rail.addEventListener("pointermove", (event) => {
         if (!pointerDown) return;
         const delta = event.clientX - startX;
-        if (!moved && Math.abs(delta) <= 4) return;
+        if (!moved && Math.abs(delta) <= 8) return;
         if (!moved) { moved = true; rail.classList.add("is-dragging"); rail.setPointerCapture(event.pointerId); }
         rail.scrollLeft = startScroll - delta; event.preventDefault();
       });
