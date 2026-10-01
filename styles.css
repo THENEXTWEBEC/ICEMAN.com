@@ -133,3 +133,5 @@ html,body,#app{max-width:100%}body{min-width:0}img{display:block;max-width:100%}
 
 /* Normalize the larger Naranjilla pack artwork to the same visible height as the other paila tubs. */
 .product-photo img.product-image-naranjilla{width:85%;height:85%;}
+
+.contact-map{display:block;width:100%;height:230px;margin:0 0 17px;border:0;border-radius:8px;background:#f2f5f8}
