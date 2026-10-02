@@ -156,3 +156,10 @@ html,body,#app{max-width:100%}body{min-width:0}img{display:block;max-width:100%}
 .editorial-card-landscape .editorial-card-image img{width:100%;height:100%;object-fit:cover}
 .editorial-detail-image.editorial-detail-landscape{height:auto;aspect-ratio:3/2;background:#fff}
 .editorial-detail-image.editorial-detail-landscape img{width:100%;height:100%;object-fit:cover}
+
+.contact-map-placeholder{display:grid;min-height:230px;place-content:center;justify-items:center;gap:12px;margin-bottom:17px;padding:20px;border-radius:8px;background:#f2f5f8;text-align:center}.contact-map-placeholder p{max-width:260px;margin:0;color:#55596c}
+.footer-legal{display:flex;gap:14px;flex-wrap:wrap}.footer-legal a,.footer-legal button{padding:0;border:0;background:none;color:inherit;font:inherit;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.legal-copy{max-width:780px;color:#55596c;font-size:15px;line-height:1.8}.legal-copy h2{margin:30px 0 8px;color:var(--navy);font-size:22px}.legal-copy p{margin:0 0 17px}.legal-copy a{color:#006d96;text-decoration:underline}
+.consent a{color:#006d96;text-decoration:underline;text-underline-offset:2px}.lead-form button:disabled{cursor:wait;opacity:.65}
+.cookie-banner{position:fixed;right:16px;bottom:16px;left:16px;z-index:100;display:flex;max-width:960px;margin-inline:auto;align-items:center;justify-content:space-between;gap:24px;padding:18px 20px;border:1px solid #dce1eb;border-radius:12px;background:#fff;color:var(--navy);box-shadow:0 10px 40px #17183d30}.cookie-banner p{margin:5px 0 0;color:#55596c;font-size:13px;line-height:1.5}.cookie-actions{display:flex;flex:none;gap:9px}.cookie-actions button{min-height:44px;padding:9px 13px;border:1px solid #2c2d62;border-radius:7px;background:#fff;color:#2c2d62;font:inherit;font-size:13px;font-weight:700;cursor:pointer}.cookie-actions [data-consent="accept"]{background:#2c2d62;color:white}
+@media(max-width:560px){.cookie-banner{right:10px;bottom:10px;left:10px;display:block;padding:16px}.cookie-actions{display:grid;grid-template-columns:1fr 1fr;margin-top:12px}.cookie-actions button{padding-inline:8px;font-size:12px}.footer-legal{gap:16px}}

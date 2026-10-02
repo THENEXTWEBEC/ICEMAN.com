@@ -30,6 +30,7 @@
   const categoryLabel = (slug) => categoryBySlug[slug]?.name || "Productos";
   const productPath = (product) => `/productos/${product.category}/${product.slug}`;
   const currentPath = () => `${window.location.pathname.replace(/\/$/, "") || "/"}${window.location.search}`;
+  const publicUrl = (path) => `${window.location.origin}${withBase(withoutBase(path))}`;
 
   function iconArrow(direction = "right") {
     const paths = direction === "left"
@@ -159,7 +160,7 @@
       <div class="footer-col"><h3>Productos</h3><a href="/productos/papas" data-link>Papas</a><a href="/productos/vegetales" data-link>Vegetales</a><a href="/productos/especialidades" data-link>Especialidades</a><a href="/productos/helados" data-link>Helados</a><a href="/productos" data-link>Ver catálogo completo</a></div>
       <div class="footer-col"><h3>ICEMAN</h3><a href="/nosotros" data-link>Nosotros</a><a href="/empresas" data-link>Para empresas</a><a href="/recetas" data-link>Recetas & Consejos</a><a href="/contacto" data-link>Contacto</a><a href="/contacto" data-link>Consulta las opciones de distribución con nuestro equipo.</a></div>
       <div class="footer-col"><h3>Contacto</h3><a href="${waLink(contactMessage)}" data-wa target="_blank" rel="noopener">WhatsApp · 099 915 2518</a><a href="tel:+593999152518" data-contact>Información · 099 915 2518</a></div>
-    </div><div class="footer-bottom"><span>© ICEMAN ${new Date().getFullYear()}. Todos los derechos reservados.</span><span>Productos ultracongelados · Ecuador</span></div></div></footer>`;
+    </div><div class="footer-bottom"><span>© ICEMAN ${new Date().getFullYear()}. Todos los derechos reservados.</span><span>Productos ultracongelados · Ecuador</span><div class="footer-legal"><a href="/privacidad" data-link>Privacidad</a><a href="/terminos" data-link>Términos</a><button type="button" data-action="cookie-settings">Cookies</button></div></div></div></footer>`;
   }
 
   function pageShell(content, path) {
@@ -182,9 +183,13 @@
     if (meta) meta.content = pageDescription;
     const ogTitle = document.querySelector('meta[property="og:title"]'); if (ogTitle) ogTitle.content = document.title;
     const ogDescription = document.querySelector('meta[property="og:description"]'); if (ogDescription) ogDescription.content = pageDescription;
+    const twitterTitle = document.querySelector('meta[name="twitter:title"]'); if (twitterTitle) twitterTitle.content = document.title;
+    const twitterDescription = document.querySelector('meta[name="twitter:description"]'); if (twitterDescription) twitterDescription.content = pageDescription;
+    const robots = document.querySelector('meta[name="robots"]'); if (robots) robots.content = title === "Página no encontrada" ? "noindex,follow" : "index,follow";
     let canonical = document.querySelector('link[rel="canonical"]');
     if (!canonical) { canonical = document.createElement("link"); canonical.rel = "canonical"; document.head.append(canonical); }
-    canonical.href = `${window.location.origin}${window.location.pathname}`;
+    canonical.href = `${window.location.origin}${withBase(withoutBase(window.location.pathname))}`;
+    const ogUrl = document.querySelector('meta[property="og:url"]'); if (ogUrl) ogUrl.content = canonical.href;
   }
 
   function hero() {
@@ -292,13 +297,14 @@
     const relatedProducts = editorialProducts(item.products || []);
     const related = editorialAll.filter((other) => other.slug !== item.slug && (other.kind === item.kind || (other.tags || []).some((tag) => (item.tags || []).includes(tag)))).slice(0,3);
     const productNames = relatedProducts.map((product) => product.name).join(", ");
-    const body = isRecipe ? `<div class="recipe-method"><h2>Ingredientes</h2><ul class="recipe-ingredients">${item.ingredients.map((ingredient) => `<li>${escapeHTML(ingredient)}</li>`).join("")}</ul><h2>Preparación</h2><ol class="recipe-steps">${item.steps.map((step,index) => `<li><span>${String(index+1).padStart(2,"0")}</span><p>${escapeHTML(step)}</p></li>`).join("")}</ol><p class="recipe-note">Los tiempos son orientativos. Sigue las indicaciones del empaque y las instrucciones de tu electrodoméstico.</p><div class="recipe-share"><strong>Comparte esta receta</strong><a href="${waLink(`Mira esta receta de ICEMAN: ${item.title} ${window.location.origin}${path}`)}" data-wa target="_blank" rel="noopener">WhatsApp ${iconArrow()}</a><button type="button" data-action="copy-link">Copiar enlace</button><span id="copy-status" aria-live="polite"></span></div></div>` : `<div class="article-body">${item.body.map((paragraph,index) => `<${index ? "h2" : "p"}>${escapeHTML(paragraph)}</${index ? "h2" : "p"}>`).join("")}${isBusiness ? `<div class="article-business-cta"><h2>¿Buscas productos para tu negocio?</h2><p>Cuéntanos qué necesitas y un asesor ICEMAN puede ayudarte con productos, presentaciones y opciones para tu operación.</p><a class="btn btn-primary" href="${waLink(businessMessage)}" data-wa target="_blank" rel="noopener">Hablar por WhatsApp ${iconArrow()}</a><a class="editorial-text-link" href="/empresas" data-link>Solicitar información</a></div>` : ""}</div>`;
+    const body = isRecipe ? `<div class="recipe-method"><h2>Ingredientes</h2><ul class="recipe-ingredients">${item.ingredients.map((ingredient) => `<li>${escapeHTML(ingredient)}</li>`).join("")}</ul><h2>Preparación</h2><ol class="recipe-steps">${item.steps.map((step,index) => `<li><span>${String(index+1).padStart(2,"0")}</span><p>${escapeHTML(step)}</p></li>`).join("")}</ol><p class="recipe-note">Los tiempos son orientativos. Sigue las indicaciones del empaque y las instrucciones de tu electrodoméstico.</p><div class="recipe-share"><strong>Comparte esta receta</strong><a href="${waLink(`Mira esta receta de ICEMAN: ${item.title} ${publicUrl(path)}`)}" data-wa target="_blank" rel="noopener">WhatsApp ${iconArrow()}</a><button type="button" data-action="copy-link">Copiar enlace</button><span id="copy-status" aria-live="polite"></span></div></div>` : `<div class="article-body">${item.body.map((paragraph,index) => `<${index ? "h2" : "p"}>${escapeHTML(paragraph)}</${index ? "h2" : "p"}>`).join("")}${isBusiness ? `<div class="article-business-cta"><h2>¿Buscas productos para tu negocio?</h2><p>Cuéntanos qué necesitas y un asesor ICEMAN puede ayudarte con productos, presentaciones y opciones para tu operación.</p><a class="btn btn-primary" href="${waLink(businessMessage)}" data-wa target="_blank" rel="noopener">Hablar por WhatsApp ${iconArrow()}</a><a class="editorial-text-link" href="/empresas" data-link>Solicitar información</a></div>` : ""}</div>`;
     const editorialPoster = String(item.heroImage || item.image).startsWith("editorial/");
     const editorialLandscape = item.imageLayout === "landscape";
     const content = `<section class="editorial-detail"><div class="wrap"><div class="editorial-detail-breadcrumb">${breadcrumbs([{name:"Inicio",href:"/"},{name:"Recetas & Consejos",href:"/recetas"},{name:isRecipe?"Recetas":item.category,href:"/recetas"},{name:item.title}])}</div><div class="editorial-detail-hero"><div class="editorial-detail-copy"><div class="eyebrow">${isRecipe ? "RECETA ICEMAN" : escapeHTML(item.category)}</div><h1>${escapeHTML(item.title)}</h1><p>${escapeHTML(item.description)}</p>${isRecipe ? `<div class="recipe-facts"><span><small>TIEMPO</small><b>${escapeHTML(item.time)}</b></span><span><small>DIFICULTAD</small><b>${escapeHTML(item.difficulty)}</b></span><span><small>PORCIONES</small><b>${escapeHTML(item.servings)}</b></span><span><small>MÉTODO</small><b>${escapeHTML(item.method)}</b></span></div>` : `<span class="article-reading-time">Ideas claras para llevar a tu mesa.</span>`}<div class="editorial-detail-actions"><a class="editorial-text-link" href="#contenido">${isRecipe?"Ir a la receta":"Leer artículo"} ↓</a></div></div><div class="editorial-detail-image ${editorialPoster ? "editorial-detail-poster" : ""} ${editorialLandscape ? "editorial-detail-landscape" : ""}"><img src="${editorialImage(item.heroImage || item.image)}" alt="${escapeHTML(isRecipe && item.heroImage ? "Papas doradas y crujientes recién hechas, servidas con salsas" : isRecipe ? `Producto ICEMAN relacionado con ${item.title}` : item.title)}" fetchpriority="high">${String(item.heroImage || item.image).startsWith("editorial/") ? "" : `<span>${isRecipe ? "PRODUCTOS ICEMAN" : "RECETAS & CONSEJOS"}</span>`}</div></div><div class="editorial-detail-layout" id="contenido"><article>${body}</article><aside class="editorial-detail-aside"><small>${relatedProducts.length ? (isRecipe ? "EN ESTA IDEA" : "PRODUCTOS MENCIONADOS") : "SIGUE EXPLORANDO"}</small><strong>${relatedProducts.length ? escapeHTML(productNames) : escapeHTML(item.category)}</strong><a href="/productos" data-link>Explorar productos ${iconArrow()}</a></aside></div>${relatedProducts.length ? `<section class="editorial-section detail-products"><div class="section-head"><div><div class="eyebrow">Del contenido al catálogo</div><h2>${isRecipe ? "Productos ICEMAN para esta receta" : "Productos ICEMAN relacionados"}</h2></div></div>${productRail(relatedProducts,"detail-products-rail")}</section>` : ""}${isRecipe ? `<section class="editorial-section detail-products"><div class="section-head"><div><div class="eyebrow">Una combinación a tu gusto</div><h2>También queda bien con…</h2></div></div>${productRail(editorialProducts(["papas-air-fryer","aros-de-cebolla","hash-brown","corte-ondulado-900-premium","smoothie-red"]),"detail-discovery-rail")}</section>` : ""}<section class="editorial-section detail-related"><div class="section-head"><div><div class="eyebrow">Sigue explorando</div><h2>Más ideas para disfrutar</h2></div></div><div class="editorial-card-grid">${related.map((entry) => editorialCard(entry)).join("")}</div></section></div></section>`;
     pageShell(content,path);
     updateHead(path,item.title,`${item.description} ${isRecipe ? `Tiempo: ${item.time}. Dificultad: ${item.difficulty}.` : ""}`);
     const imageMeta = document.querySelector('meta[property="og:image"]'); if (imageMeta) imageMeta.content = `${window.location.origin}${editorialImage(item.heroImage || item.image)}`;
+    const twitterImage = document.querySelector('meta[name="twitter:image"]'); if (twitterImage && imageMeta) twitterImage.content = imageMeta.content;
     if (isRecipe) {
       const recipeSchema = {"@context":"https://schema.org","@type":"Recipe",name:item.title,description:item.description,image:`${window.location.origin}${editorialImage(item.heroImage || item.image)}`,recipeCategory:"Acompañamiento",recipeCuisine:"Ecuatoriana",recipeYield:item.servings,prepTime:`PT${(item.time.match(/\d+/)||["10"])[0]}M`,recipeIngredient:item.ingredients,recipeInstructions:item.steps.map((text)=>({"@type":"HowToStep",text})),author:{"@type":"Organization",name:"ICEMAN Ecuador"}};
       addSchema({"@context":"https://schema.org","@graph":[recipeSchema,breadcrumbSchema([{name:"Inicio",href:"/"},{name:"Recetas & Consejos",href:"/recetas"},{name:item.title,href:path}])]});
@@ -356,6 +362,7 @@
     pageShell(`${content}${recipeSection}`, path);
     const image = document.querySelector('meta[property="og:image"]') || document.createElement("meta");
     image.setAttribute("property", "og:image"); image.content = `${window.location.origin}${asset(product.image)}`; if (!image.parentNode) document.head.append(image);
+    const twitterImage = document.querySelector('meta[name="twitter:image"]'); if (twitterImage) twitterImage.content = image.content;
     updateHead(path, product.name, `${product.description} Presentación ${product.presentation}. Consulta información y disponibilidad a ICEMAN Ecuador.`);
     const crumbItems = breadcrumbSchema([{ name:"Inicio", href:"/" },{ name:"Productos", href:"/productos" },{ name:category.name, href:`/productos/${category.slug}` },{ name:product.name, href:productPath(product) }]).itemListElement;
     addSchema({ "@context":"https://schema.org", "@graph":[
@@ -365,7 +372,7 @@
   }
 
   function breadcrumbSchema(parts) {
-    return { "@context":"https://schema.org", "@type":"BreadcrumbList", itemListElement:parts.map((part, index) => ({ "@type":"ListItem", position:index+1, name:part.name, item:`${window.location.origin}${part.href || window.location.pathname}` })) };
+    return { "@context":"https://schema.org", "@type":"BreadcrumbList", itemListElement:parts.map((part, index) => ({ "@type":"ListItem", position:index+1, name:part.name, item:publicUrl(part.href || window.location.pathname) })) };
   }
 
   function addSchema(schema) {
@@ -381,7 +388,7 @@
       <form class="lead-form" id="lead-form" novalidate><div class="form-section"><h2>Cuéntanos de tu negocio</h2><div class="form-grid"><div class="field"><label for="lead-name">Nombre <span aria-hidden="true">*</span></label><input id="lead-name" name="name" autocomplete="name" required><span class="field-error">Escribe tu nombre.</span></div><div class="field"><label for="lead-company">Empresa <span aria-hidden="true">*</span></label><input id="lead-company" name="company" autocomplete="organization" required><span class="field-error">Escribe el nombre de la empresa.</span></div><div class="field"><label for="lead-role">Cargo</label><input id="lead-role" name="role" autocomplete="organization-title"></div><div class="field"><label for="lead-city">Ciudad <span aria-hidden="true">*</span></label><input id="lead-city" name="city" autocomplete="address-level2" required><span class="field-error">Escribe tu ciudad.</span></div><div class="field"><label for="lead-phone">Teléfono / WhatsApp <span aria-hidden="true">*</span></label><input id="lead-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required><span class="field-error">Ingresa un número de contacto válido.</span></div><div class="field"><label for="lead-email">Correo electrónico <span aria-hidden="true">*</span></label><input id="lead-email" name="email" type="email" autocomplete="email" required><span class="field-error">Ingresa un correo válido.</span></div><div class="field full"><label for="lead-business-type">Tipo de negocio <span aria-hidden="true">*</span></label><select id="lead-business-type" name="business_type" required><option value="">Selecciona una opción</option>${businesses.map((name) => `<option>${name}</option>`).join("")}</select><span class="field-error">Selecciona el tipo de negocio.</span></div></div></div>
       <div class="form-section"><h2>¿Qué productos te interesan?</h2><div class="check-grid">${interests.map((name) => `<label class="check-option"><input type="checkbox" name="interests" value="${name}"><span>${name}</span></label>`).join("")}</div></div>
       <div class="form-section"><h2>Cuéntanos un poco más</h2><div class="form-grid"><div class="field full"><label for="lead-volume">Volumen aproximado o necesidad</label><input id="lead-volume" name="volume" placeholder="Opcional"></div><div class="field full"><label for="lead-message">Mensaje</label><textarea id="lead-message" name="message" placeholder="¿Qué te gustaría consultar?"></textarea></div></div></div>
-      <div class="sr-only" aria-hidden="true"><label for="lead-website">No llenar este campo</label><input id="lead-website" name="website" tabindex="-1" autocomplete="off"></div><label class="consent"><input type="checkbox" name="consent" required><span>Acepto ser contactado por ICEMAN respecto a esta solicitud. <span aria-hidden="true">*</span></span></label><p class="field-error consent-error">Acepta el contacto para continuar.</p><div class="form-error" id="form-error" role="alert"></div><div class="form-success" id="form-success" role="status"></div><div class="submit-row"><button class="btn btn-primary" type="submit">Solicitar información ${iconArrow()}</button><span class="submit-hint">Al enviar, se abrirá WhatsApp con tu consulta para que puedas revisarla y compartirla con ICEMAN.</span></div></form></div></section>`;
+      <div class="sr-only" aria-hidden="true"><label for="lead-website">No llenar este campo</label><input id="lead-website" name="website" tabindex="-1" autocomplete="off"></div><label class="consent"><input type="checkbox" name="consent" required><span>Acepto ser contactado por ICEMAN respecto a esta solicitud. <a href="/privacidad" data-link>Lee la política de privacidad</a>. <span aria-hidden="true">*</span></span></label><p class="field-error consent-error">Acepta el contacto para continuar.</p><div class="form-error" id="form-error" role="alert"></div><div class="form-success" id="form-success" role="status"></div><div class="submit-row"><button class="btn btn-primary" type="submit">Solicitar información ${iconArrow()}</button><span class="submit-hint">Al enviar, se abrirá WhatsApp con tu consulta para que puedas revisarla y compartirla con ICEMAN.</span></div></form></div></section>`;
     pageShell(content, path);
     updateHead(path, "Productos ICEMAN para empresas", "Solicita información comercial sobre productos y presentaciones ICEMAN para restaurantes, hoteles, cafeterías, supermercados y distribuidores en Ecuador.");
     document.querySelectorAll("#lead-form input, #lead-form select, #lead-form textarea").forEach((field) => field.addEventListener("focus", () => {
@@ -398,7 +405,7 @@
       ["Guayaquil", "Km 7½ Vía Daule, Bodegas Hilantex.", "Telf.: 099 364 3640"],
       ["Ambato", "Av. El Cóndor y Bolivariana.", "Telf.: 099 428 6645"]
     ];
-    const content = `<section class="page-intro"><div class="wrap">${breadcrumbs([{ name:"Inicio", href:"/" },{ name:"Contacto" }])}<div class="page-heading"><div class="eyebrow">Estamos para ayudarte</div><h1>Conversemos.</h1><p>Escríbenos para consultar productos, cobertura o información para tu negocio.</p></div></div></section><section class="section"><div class="wrap contact-panel"><article class="contact-card"><h2>Contacto comercial</h2><iframe class="contact-map" src="https://maps.google.com/maps?q=Antonio%20Castillo%20OE1-464%20y%20Av.%20Juan%20de%20Selis%2C%20Carcel%C3%A9n%20Industrial%2C%20Quito%2C%20Ecuador&amp;output=embed" title="Mapa de ICEMAN, matriz en Carcelén Industrial, Quito" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe><a href="${waLink(contactMessage)}" data-wa target="_blank" rel="noopener">WhatsApp · +593 99 915 2518</a><a href="tel:+593999152518" data-contact>Información · 099 915 2518</a><p>Para una cotización empresarial, cuéntanos sobre tu negocio.</p><a class="btn btn-primary btn-small" href="/empresas" data-link>Formulario para empresas ${iconArrow()}</a></article><article class="contact-card"><h2>Oficinas y distribuidores</h2>${cities.map(([name,address,phone]) => `<div class="contact-city"><h3>${escapeHTML(name)}</h3><p>${escapeHTML(address)}<br>${escapeHTML(phone)}</p></div>`).join("")}</article></div></section>`;
+    const content = `<section class="page-intro"><div class="wrap">${breadcrumbs([{ name:"Inicio", href:"/" },{ name:"Contacto" }])}<div class="page-heading"><div class="eyebrow">Estamos para ayudarte</div><h1>Conversemos.</h1><p>Escríbenos para consultar productos, cobertura o información para tu negocio.</p></div></div></section><section class="section"><div class="wrap contact-panel"><article class="contact-card"><h2>Contacto comercial</h2><div class="contact-map-placeholder"><p>Ver ubicación de ICEMAN, matriz en Carcelén Industrial, Quito.</p><button type="button" class="btn btn-outline btn-small" data-load-map>Cargar mapa de Google Maps</button></div><a href="${waLink(contactMessage)}" data-wa target="_blank" rel="noopener">WhatsApp · +593 99 915 2518</a><a href="tel:+593999152518" data-contact>Información · 099 915 2518</a><p>Para una cotización empresarial, cuéntanos sobre tu negocio.</p><a class="btn btn-primary btn-small" href="/empresas" data-link>Formulario para empresas ${iconArrow()}</a></article><article class="contact-card"><h2>Oficinas y distribuidores</h2>${cities.map(([name,address,phone]) => `<div class="contact-city"><h3>${escapeHTML(name)}</h3><p>${escapeHTML(address)}<br>${escapeHTML(phone)}</p></div>`).join("")}</article></div></section>`;
     pageShell(content, path);
     updateHead(path, "Contacto ICEMAN Ecuador", "Contacta al equipo comercial ICEMAN por WhatsApp o consulta las oficinas y distribuidores en Ecuador.");
   }
@@ -414,12 +421,38 @@
     updateHead(path, "Página no encontrada", "El enlace solicitado no se encontró. Explora el catálogo de productos ICEMAN.");
   }
 
+  function legalPage(path, kind) {
+    const privacy = kind === "privacy";
+    const title = privacy ? "Política de privacidad" : "Términos y condiciones";
+    const copy = privacy
+      ? `<p><strong>Responsable:</strong> ICEMAN. El propietario debe completar razón social, identificación tributaria y domicilio legal antes de publicar esta política.</p><h2>Datos y finalidad</h2><p>El formulario para empresas solicita nombre, empresa, ciudad, teléfono, correo y tipo de negocio, además de campos opcionales. Se usan para preparar una consulta que la persona revisa y envía desde WhatsApp. El sitio no almacena solicitudes en un servidor propio actualmente.</p><h2>Cookies y analítica</h2><p>El sitio usa almacenamiento local para recordar preferencias. Google Analytics 4 (ID G-EP2322YPPC) solo se carga si la persona acepta analítica; Google puede usar cookies y recibir datos de uso. La elección se cambia desde «Cookies» en el pie.</p><h2>Servicios externos</h2><p>Al abrir WhatsApp, Instagram o Google Maps se accede a servicios sujetos a sus propias políticas. El sitio no controla su tratamiento de datos.</p><h2>Contacto y derechos</h2><p>Para consultas de privacidad o ejercer derechos, contactar a <strong>[EL PROPIETARIO DEBE PROPORCIONAR UN CORREO DE PRIVACIDAD]</strong>.</p><p><strong>Pendiente del propietario:</strong> completar identidad legal, domicilio, correo, plazos de conservación, base legal y canales de solicitudes de derechos.</p>`
+      : `<p>Al navegar el sitio, la persona visitante acepta usarlo conforme a la ley y no interferir con su funcionamiento.</p><h2>Contenido y propiedad intelectual</h2><p>Los textos, marcas, fotografías y demás materiales se muestran con fines informativos y pertenecen a sus respectivos titulares. No se autoriza su reproducción comercial sin permiso.</p><h2>Productos y solicitudes</h2><p>El catálogo es informativo. Presentaciones, disponibilidad y características pueden cambiar; confirma la información con el equipo comercial. Una solicitud no constituye oferta ni confirma una compra.</p><h2>Servicios externos</h2><p>Los enlaces a WhatsApp, Instagram, Google Maps y otros servicios se rigen por las condiciones de sus proveedores.</p><h2>Responsabilidad y contacto</h2><p>Para consultas, visita la página de <a href="/contacto" data-link>Contacto</a>.</p><p><strong>Pendiente del propietario:</strong> proporcionar razón social, identificación y domicilio legal; revisar estas condiciones con asesoría legal local.</p>`;
+    pageShell(`<section class="page-intro"><div class="wrap">${breadcrumbs([{name:"Inicio",href:"/"},{name:title}])}<div class="page-heading"><div class="eyebrow">ICEMAN Ecuador</div><h1>${title}</h1><p>${privacy ? "Información sobre datos y preferencias de analítica." : "Condiciones generales para navegar este sitio web."}</p></div></div></section><section class="section legal-page"><div class="wrap legal-copy">${copy}</div></section>`,path);
+    updateHead(path,title,privacy ? "Información sobre datos tratados por el sitio ICEMAN Ecuador, el formulario y las preferencias de analítica." : "Condiciones generales de uso del sitio y catálogo ICEMAN Ecuador.");
+  }
+
+  function consentUI(force = false) {
+    const host=document.getElementById("consent-root"); if (!host) return;
+    if (localStorage.getItem("iceman-consent") && !force) { host.innerHTML=""; return; }
+    host.innerHTML=`<section class="cookie-banner" role="dialog" aria-label="Preferencias de analítica" aria-describedby="cookie-description"><div><strong>Tu privacidad importa</strong><p id="cookie-description">Google Analytics solo se carga si aceptas analítica.</p></div><div class="cookie-actions"><button type="button" data-consent="reject">Rechazar analítica</button><button type="button" data-consent="accept">Aceptar analítica</button></div></section>`;
+  }
+
+  function saveConsent(analytics) {
+    localStorage.setItem("iceman-consent",JSON.stringify({essential:true,analytics,updatedAt:new Date().toISOString()}));
+    if (analytics) {
+      window.dataLayer=window.dataLayer||[]; window.gtag=window.gtag||function(){window.dataLayer.push(arguments);};
+      window.gtag("js",new Date()); window.gtag("config","G-EP2322YPPC",{anonymize_ip:true});
+      if (!document.querySelector("script[data-iceman-analytics]")) { const script=document.createElement("script"); script.async=true; script.src="https://www.googletagmanager.com/gtag/js?id=G-EP2322YPPC"; script.dataset.icemanAnalytics="true"; document.head.append(script); }
+    } else if (typeof window.gtag === "function") window.gtag("consent","update",{analytics_storage:"denied"});
+    consentUI();
+  }
+
   function render() {
     scrollSpyCleanup?.();
     scrollSpyCleanup = null;
     const path = withoutBase(window.location.pathname).replace(/\/$/, "") || "/";
     const parts = path.split("/").filter(Boolean);
-    if (path === "/") { activeFilter = "todos"; pageShell(home(), path); addSchema({ "@context":"https://schema.org", "@type":"Organization", name:"ICEMAN Ecuador", url:window.location.origin, telephone:"+593 96 789 4279", contactPoint:{ "@type":"ContactPoint", telephone:"+593 96 789 4279", contactType:"sales", areaServed:"EC" } }); }
+    if (path === "/") { activeFilter = "todos"; pageShell(home(), path); addSchema({ "@context":"https://schema.org", "@type":"Organization", name:"ICEMAN Ecuador", url:publicUrl("/"), telephone:"+593 96 789 4279", contactPoint:{ "@type":"ContactPoint", telephone:"+593 96 789 4279", contactType:"sales", areaServed:"EC" } }); }
     else if (path === "/productos") catalogPage(path);
     else if (parts[0] === "productos" && parts.length === 2 && categoryBySlug[parts[1]]) catalogPage(path, parts[1]);
     else if (parts[0] === "productos" && parts.length >= 3) {
@@ -431,6 +464,8 @@
     else if (path === "/empresas") businessPage(path);
     else if (path === "/contacto") contactPage(path);
     else if (path === "/nosotros") aboutPage(path);
+    else if (path === "/privacidad") legalPage(path,"privacy");
+    else if (path === "/terminos") legalPage(path,"terms");
     else notFound(path);
     document.body.classList.toggle("menu-open", menuOpened);
   }
@@ -455,6 +490,10 @@
     if (anchor?.hasAttribute("data-wa")) track("whatsapp_click", { placement: anchor.classList.contains("whatsapp-float") ? "floating" : "link" });
     if (anchor?.hasAttribute("data-contact")) track("contact_click", { target: anchor.getAttribute("href") });
     const action = event.target.closest("[data-action]")?.dataset.action;
+    if (event.target.closest("[data-load-map]")) {
+      const frame=document.createElement("iframe"); frame.className="contact-map"; frame.title="Mapa de ICEMAN, matriz en Carcelén Industrial, Quito"; frame.loading="lazy"; frame.referrerPolicy="no-referrer-when-downgrade"; frame.allowFullscreen=true; frame.src="https://maps.google.com/maps?q=Antonio%20Castillo%20OE1-464%20y%20Av.%20Juan%20de%20Selis%2C%20Carcel%C3%A9n%20Industrial%2C%20Quito%2C%20Ecuador&output=embed"; event.target.closest(".contact-map-placeholder").replaceWith(frame); return;
+    }
+    if (action === "cookie-settings") { event.preventDefault(); consentUI(true); document.querySelector('[data-consent="reject"]')?.focus(); }
     if (action === "search") { searchOpened = !searchOpened; menuOpened = false; render(); }
     if (action === "close-search") { searchOpened = false; render(); }
     if (action === "menu") {
@@ -520,7 +559,7 @@
     const form = event.target;
     if (form.matches('[data-form="search"]')) {
       event.preventDefault(); const value = new FormData(form).get("q")?.toString().trim() || "";
-      searchValue = value; track("search", { search_term:value }); searchOpened = false; navigate(value ? `/productos?q=${encodeURIComponent(value)}` : "/productos"); return;
+      searchValue = value; track("search"); searchOpened = false; navigate(value ? `/productos?q=${encodeURIComponent(value)}` : "/productos"); return;
     }
     if (form.id !== "lead-form") return;
     event.preventDefault();
@@ -537,7 +576,11 @@
     form.querySelector(".consent-error").style.display = consent.checked ? "none" : "block";
     if (!consent.checked && !firstInvalid) firstInvalid = consent;
     if (firstInvalid) { firstInvalid.focus(); errorBox.textContent = "Revisa los campos marcados para continuar."; errorBox.classList.add("show"); return; }
+    if (form.dataset.submitting === "true") return;
     if (form.elements.website.value.trim()) return;
+    form.dataset.submitting = "true";
+    const submitButton = form.querySelector('button[type="submit"]');
+    if (submitButton) { submitButton.disabled = true; submitButton.setAttribute("aria-busy","true"); }
     const values = new FormData(form);
     const chosen = values.getAll("interests");
     const message = [
@@ -556,11 +599,13 @@
     const endpoint = document.querySelector('meta[name="iceman-lead-endpoint"]')?.content?.trim();
     if (endpoint) {
       try {
+        if (new URL(endpoint,window.location.href).protocol !== "https:") throw new Error("El formulario requiere un endpoint seguro HTTPS.");
         const payload = Object.fromEntries(values); payload.interests = values.getAll("interests");
         const response = await fetch(endpoint, { method:"POST", headers:{ "Content-Type":"application/json" }, body:JSON.stringify(payload) });
         if (!response.ok) throw new Error("No se pudo enviar la solicitud.");
         successBox.textContent = "Gracias. Recibimos tu solicitud y el equipo ICEMAN se pondrá en contacto contigo."; successBox.classList.add("show"); form.reset(); track("b2b_form_submit", { destination:"backend" });
       } catch { errorBox.textContent = "No pudimos enviar tu solicitud en este momento. Escríbenos por WhatsApp y te ayudaremos."; errorBox.classList.add("show"); }
+      finally { delete form.dataset.submitting; if (submitButton) { submitButton.disabled = false; submitButton.removeAttribute("aria-busy"); } }
       return;
     }
     track("b2b_form_submit", { destination:"whatsapp" });
@@ -569,6 +614,8 @@
     if (opened) successBox.textContent = "WhatsApp se abrió con los datos de tu consulta. Revísalos y envíalos para contactar al equipo ICEMAN.";
     else successBox.innerHTML = `Tu consulta está lista. <a href="${preparedWhatsAppLink}" data-wa target="_blank" rel="noopener">Abrir WhatsApp con mis datos</a>.`;
     successBox.classList.add("show");
+    delete form.dataset.submitting;
+    if (submitButton) { submitButton.disabled = false; submitButton.removeAttribute("aria-busy"); }
   });
 
   const clearFieldError = (event) => {
@@ -588,6 +635,12 @@
     const restoredUrl = new URL(restoredRoute, window.location.origin);
     history.replaceState({}, "", `${withBase(withoutBase(restoredUrl.pathname))}${restoredUrl.search}${restoredUrl.hash}`);
   }
+  document.getElementById("consent-root")?.addEventListener("click", (event) => {
+    const button=event.target.closest("[data-consent]");
+    if (button) saveConsent(button.dataset.consent === "accept");
+  });
   render();
+  try { const consent=JSON.parse(localStorage.getItem("iceman-consent")||"null"); if (consent?.analytics) saveConsent(true); else consentUI(); }
+  catch { consentUI(); }
   scrollToHash(window.location.hash, "auto");
 })();

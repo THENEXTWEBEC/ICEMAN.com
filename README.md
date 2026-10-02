@@ -16,6 +16,10 @@ El formulario valida campos en el navegador y prepara el mensaje para WhatsApp. 
 
 No hay un endpoint de leads ni almacenamiento configurado en esta carpeta. Mientras no se configure, la persona revisa y envía manualmente su consulta desde WhatsApp.
 
-## Medición
+## Medición y privacidad
 
-Cuando se agregue GA4, proporciona `gtag` antes de `app.js`. La web emite `whatsapp_click`, `b2b_form_start`, `b2b_form_submit`, `product_view`, `category_view`, `related_product_click`, `search` y `contact_click`; también despacha los mismos datos en el evento `iceman:analytics` para una integración propia.
+GA4 está configurado con el ID existente `G-EP2322YPPC` y solo se carga después de aceptar analítica en el aviso de consentimiento. La elección se puede cambiar desde el pie de página. La web emite eventos como `whatsapp_click`, `b2b_form_start`, `b2b_form_submit`, `product_view`, `category_view` y `contact_click`, sin enviar el texto que se escribió en la búsqueda.
+
+Las páginas `/privacidad` y `/terminos` contienen los datos confirmados por el código y señalan la información legal que el propietario aún debe completar. Revisa esos campos antes de publicar.
+
+El sitemap y `robots.txt` se generan para la URL de GitHub Pages documentada arriba. Si se configura un dominio personalizado, actualiza la URL base en `index.html`, `robots.txt` y `sitemap.xml`. Las cabeceras de seguridad, la redirección HTTP a HTTPS y el dominio canónico se deben configurar en hosting/DNS; GitHub Pages no permite definir esas cabeceras desde estos archivos estáticos.
