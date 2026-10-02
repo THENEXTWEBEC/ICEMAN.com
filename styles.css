@@ -149,3 +149,10 @@ html,body,#app{max-width:100%}body{min-width:0}img{display:block;max-width:100%}
 .editorial-hero-image.editorial-hero-poster>img{display:block;width:100%;height:100%;object-fit:contain}
 .editorial-detail-image.editorial-detail-poster{height:auto;aspect-ratio:.893;background:#fff}
 .editorial-detail-image.editorial-detail-poster img{display:block;width:100%;height:100%;object-fit:contain}
+
+
+/* The supplied business and storage photography shares a 3:2 landscape frame. */
+.editorial-card-landscape .editorial-card-image{height:auto;aspect-ratio:3/2;background:#fff}
+.editorial-card-landscape .editorial-card-image img{width:100%;height:100%;object-fit:cover}
+.editorial-detail-image.editorial-detail-landscape{height:auto;aspect-ratio:3/2;background:#fff}
+.editorial-detail-image.editorial-detail-landscape img{width:100%;height:100%;object-fit:cover}
