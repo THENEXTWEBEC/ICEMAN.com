@@ -129,11 +129,11 @@ window.ICEMAN_EDITORIAL = {
     }
   ],
   occasions: [
-    { slug: "peliculas", title: "Noche de películas", text: "Prepara algo para picar y disfruta la función en casa.", image: "hash-brown", products: ["papas-air-fryer", "aros-de-cebolla", "hash-brown"], tags: ["snacks", "reunión"] },
-    { slug: "partido", title: "Partido con amigos", text: "Una picada variada para acompañar cada jugada.", image: "papas-ondulado-premium", products: ["papas-air-fryer", "aros-de-cebolla", "hash-brown"], tags: ["picada", "reunión"] },
+    { slug: "peliculas", title: "Noche de películas", text: "Prepara algo para picar y disfruta la función en casa.", image: "editorial/occasion-movie-night.webp", products: ["papas-air-fryer", "aros-de-cebolla", "hash-brown"], tags: ["snacks", "reunión"] },
+    { slug: "partido", title: "Partido con amigos", text: "Una picada variada para acompañar cada jugada.", image: "editorial/occasion-football-gathering.webp", products: ["papas-air-fryer", "aros-de-cebolla", "hash-brown"], tags: ["picada", "reunión"] },
     { slug: "reunion", title: "Reunión en casa", text: "Opciones para poner al centro y compartir sin complicaciones.", image: "croqueta-yuca", products: ["croqueta-de-yuca", "aros-de-cebolla", "papas-spices"], tags: ["picada", "snacks"] },
-    { slug: "cena", title: "Cena rápida", text: "Resuelve el acompañamiento y adapta el plato a tu gusto.", image: "papas-finas-hierbas", products: ["papas-air-fryer", "mix-jardinera-450", "waffle-glaseado"], tags: ["rápido", "cena"] },
-    { slug: "fin-de-semana", title: "Fin de semana", text: "Ideas fáciles para un desayuno tranquilo o una comida en familia.", image: "waffle", products: ["papas-air-fryer", "waffle-glaseado", "papas-finas-hierbas"], tags: ["familia", "desayuno"] }
+    { slug: "cena", title: "Cena rápida", text: "Resuelve el acompañamiento y adapta el plato a tu gusto.", image: "editorial/occasion-quick-dinner.webp", products: ["papas-air-fryer", "mix-jardinera-450", "waffle-glaseado"], tags: ["rápido", "cena"] },
+    { slug: "fin-de-semana", title: "Fin de semana", text: "Ideas fáciles para un desayuno tranquilo o una comida en familia.", image: "editorial/occasion-weekend-breakfast.webp", products: ["papas-air-fryer", "waffle-glaseado", "papas-finas-hierbas"], tags: ["familia", "desayuno"] }
   ],
   business: [
     { slug: "elegir-congelados-restaurante", title: "Cómo elegir productos congelados para tu restaurante", description: "Criterios prácticos para revisar formatos, preparación y variedad según tu operación.", category: "Para tu negocio", image: "editorial/business-choose-restaurant.webp", imageLayout: "landscape", tags: ["restaurante", "operación"], body: ["Empieza por el menú y el ritmo de servicio: identifica qué preparaciones podrían beneficiarse de opciones listas para cocinar.", "Revisa presentación, unidades por caja, métodos de preparación y condiciones de almacenamiento en la ficha de cada producto. La disponibilidad se confirma con el equipo comercial."] },
