@@ -231,7 +231,7 @@
   function editorialCard(item, featured = false) {
     const product = productBySlug(item.products?.[0]);
     const eyebrow = item.kind === "recipe" ? `Receta · ${item.time}` : item.category;
-    return `<article class="editorial-card ${item.image.startsWith("editorial/") ? "editorial-card-poster" : ""} ${item.imageLayout === "landscape" ? "editorial-card-landscape" : ""} ${featured ? "editorial-card-featured" : ""}" data-editorial-card data-category="${item.kind === "business" ? "negocios" : item.kind === "recipe" ? "recetas" : "nutricion"}" data-search="${escapeHTML([item.title,item.description,item.category,...(item.tags || []),...(item.ingredients || []),product?.name || ""].join(" ").toLocaleLowerCase("es"))}">
+    return `<article class="editorial-card ${item.image.startsWith("editorial/") ? "editorial-card-poster" : ""} ${item.imageLayout === "landscape" ? "editorial-card-landscape" : ""} ${featured ? "editorial-card-featured" : ""}" data-editorial-card data-category="${item.kind === "business" ? "negocios" : item.kind === "recipe" ? "recetas" : "nutricion"}" data-search="${escapeHTML([item.title,item.description,item.category,...(item.tags || []),...(item.ingredients || []),...(item.occasions || []),product?.name || ""].join(" ").toLocaleLowerCase("es"))}">
       <a class="editorial-card-image" href="${articleHref(item)}" data-link aria-label="Leer ${escapeHTML(item.title)}"><img src="${editorialImage(item.image)}" alt="${escapeHTML(item.image.startsWith("editorial/") ? item.title : item.kind === "recipe" ? `Producto ICEMAN para ${item.title}` : item.title)}" loading="lazy" decoding="async">${item.image.startsWith("editorial/") ? "" : `<span class="editorial-image-label">${escapeHTML(item.kind === "recipe" ? "ICEMAN EN LA MESA" : item.category.toUpperCase())}</span>`}</a>
       <div class="editorial-card-copy"><div class="editorial-kicker">${escapeHTML(eyebrow)}</div><h3><a href="${articleHref(item)}" data-link>${escapeHTML(item.title)}</a></h3><p>${escapeHTML(item.description)}</p><div class="editorial-card-foot">${product ? `<a class="editorial-product-chip" href="${productPath(product)}" data-link>${escapeHTML(product.name)} · ${escapeHTML(product.presentation)}</a>` : `<span>${item.kind === "business" ? "Ideas para tu operación" : "Lectura breve"}</span>`}<a class="editorial-read" href="${articleHref(item)}" data-link> ${item.kind === "recipe" ? "Ver receta" : "Leer artículo"} ${iconArrow()}</a></div></div>
     </article>`;
@@ -526,7 +526,18 @@
       navigator.clipboard?.writeText(window.location.href).then(() => { if (status) status.textContent = "Enlace copiado"; }).catch(() => { if (status) status.textContent = "Copia la dirección desde tu navegador"; });
     }
     const occasionLink = event.target.closest("[data-occasion-link]");
-    if (occasionLink) { root.querySelector('[data-editorial-filter="ocasiones"]')?.click(); }
+    if (occasionLink) {
+      event.preventDefault();
+      root.querySelectorAll("[data-editorial-filter]").forEach((button) => {
+        const active = button.dataset.editorialFilter === "recetas";
+        button.classList.toggle("is-active", active);
+        button.setAttribute("aria-pressed", String(active));
+      });
+      const search = root.querySelector("#editorial-search");
+      if (search) search.value = occasionLink.dataset.occasionLink;
+      applyEditorialSearch(occasionLink.dataset.occasionLink, "recetas");
+      root.querySelector("#editorial-card-grid")?.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "start" });
+    }
   });
 
   function applyEditorialSearch(query, filter = root.querySelector("[data-editorial-filter].is-active")?.dataset.editorialFilter || "todos") {
