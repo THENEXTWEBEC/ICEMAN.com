@@ -8,7 +8,7 @@ Desde la carpeta del proyecto, sirve los archivos con cualquier servidor estáti
 
 ## Publicación en GitHub Pages
 
-El repositorio incluye un flujo de GitHub Actions que publica el sitio al actualizar `main`. En la primera publicación, activa GitHub Pages desde **Settings → Pages → Build and deployment → GitHub Actions**. La dirección del proyecto será `https://thenextwebec.github.io/ICEMAN.com/`. Las rutas de producto se conservan al recargar la página.
+El repositorio incluye un flujo de GitHub Actions que publica el sitio al actualizar `main`. En la primera publicación, activa GitHub Pages desde **Settings → Pages → Build and deployment → GitHub Actions**. La dirección del proyecto será `https://icemanec.com/`. Las rutas de producto se conservan al recargar la página.
 
 ## Solicitudes comerciales
 
@@ -22,4 +22,4 @@ GA4 está configurado con el ID existente `G-EP2322YPPC` y solo se carga despué
 
 Las páginas `/privacidad` y `/terminos` contienen los datos confirmados por el código y señalan la información legal que el propietario aún debe completar. Revisa esos campos antes de publicar.
 
-El sitemap y `robots.txt` se generan para la URL de GitHub Pages documentada arriba. Si se configura un dominio personalizado, actualiza la URL base en `index.html`, `robots.txt` y `sitemap.xml`. Las cabeceras de seguridad, la redirección HTTP a HTTPS y el dominio canónico se deben configurar en hosting/DNS; GitHub Pages no permite definir esas cabeceras desde estos archivos estáticos.
+El dominio personalizado es `icemanec.com`, declarado en `CNAME`. Las URLs de `index.html`, `robots.txt` y `sitemap.xml` usan `https://icemanec.com`. Las cabeceras de seguridad, la redirección HTTP a HTTPS y el dominio canónico se deben configurar en hosting/DNS; GitHub Pages no permite definir esas cabeceras desde estos archivos estáticos.

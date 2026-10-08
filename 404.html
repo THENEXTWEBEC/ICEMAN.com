@@ -7,7 +7,7 @@
   </head>
   <body>
     <script>
-      const base = "/ICEMAN.com";
+      const base = location.hostname.endsWith(".github.io") && /^\/ICEMAN\.com(?:\/|$)/.test(location.pathname) ? "/ICEMAN.com" : "";
       const requested = location.pathname + location.search + location.hash;
       location.replace(`${base}/?__route=${encodeURIComponent(requested)}`);
     </script>
