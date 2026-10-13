@@ -8,7 +8,7 @@ const source = fs.readFileSync(require('node:path').join(__dirname, '../app.js')
 const tracking = source.slice(source.indexOf('  const track ='), source.indexOf('  const escapeHTML'));
 const submit = source.slice(source.indexOf('  root.addEventListener("submit",'), source.indexOf('  const clearFieldError'));
 function harness({ endpoint = 'https://leads.example.test', consent = true, search = '', response = { ok: true }, fail = false } = {}) {
-  const events = [], calls = [], observers = [];
+  const events = [], calls = [], observers = [], whatsapp = [];
   const box = () => ({ classList: { add() {}, remove() {} }, style: {} });
   const error = box(), success = box(), button = { setAttribute() {}, removeAttribute() {} };
   const field = (name, value, type = 'text') => ({ name, value, type, checked: true, closest: () => null, focus() {} });
@@ -22,7 +22,7 @@ function harness({ endpoint = 'https://leads.example.test', consent = true, sear
   const context = { URL, URLSearchParams, JSON, console,
     root: { addEventListener: (_, callback) => { listener = callback; } },
     localStorage: { getItem: () => JSON.stringify({ analytics: consent }) },
-    window: { location: { href: 'https://icemanec.com/empresas', search }, gtag: (...args) => events.push(args), dispatchEvent: event => observers.push(event.detail), open: () => null },
+    window: { location: { href: 'https://icemanec.com/empresas', search }, gtag: (...args) => events.push(args), dispatchEvent: event => observers.push(event.detail), open: (...args) => { whatsapp.push(args); return null; } },
     CustomEvent: class { constructor(_, options) { this.detail = options.detail; } },
     document: { getElementById: id => id === 'form-error' ? error : success, querySelector: () => endpoint ? { content: endpoint } : null },
     FormData: class {
@@ -35,7 +35,7 @@ function harness({ endpoint = 'https://leads.example.test', consent = true, sear
     fetch: (...args) => { calls.push(args); return new Promise((resolve, reject) => { resolveFetch = () => fail ? reject(new Error('network')) : resolve(response); }); }
   };
   vm.runInNewContext(tracking + submit, context);
-  return { fields, form, calls, events, observers, success, button,
+  return { fields, form, calls, events, observers, success, button, whatsapp,
     submit: () => listener({ target: form, preventDefault() {} }),
     confirm: () => resolveFetch(), leads: () => events.filter(event => event[1] === 'generate_lead') };
 }
@@ -94,4 +94,16 @@ test('a second independent successful submission is counted', async () => {
   h.fields.forEach((f, i) => { f.value = original[i]; f.checked = true; });
   pending = h.submit(); h.confirm(); await pending;
   assert.equal(h.leads().length, 2);
+});
+
+test('WhatsApp opens synchronously alongside backend; fallback preserves captured data after reset', async () => {
+  const h = harness(); const pending = h.submit();
+  assert.equal(h.whatsapp.length, 1); assert.equal(h.calls.length, 1);
+  assert.match(decodeURIComponent(h.whatsapp[0][0]), /Test company/);
+  assert.equal(h.leads().length, 0);
+  await h.submit(); assert.equal(h.whatsapp.length, 1);
+  h.confirm(); await pending;
+  assert.equal(h.leads().length, 1);
+  assert.match(h.success.innerHTML, /Abrir WhatsApp con mis datos/);
+  assert.match(decodeURIComponent(h.success.innerHTML), /Test company/);
 });

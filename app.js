@@ -392,7 +392,7 @@
   function businessPage(path) {
     formStarted = false;
     const leadHint = document.querySelector('meta[name="iceman-lead-endpoint"]')?.content?.trim()
-      ? "Tu solicitud se enviará directamente al equipo ICEMAN."
+      ? "Tu solicitud se enviará al equipo ICEMAN y se abrirá WhatsApp con tu consulta para que puedas revisarla y compartirla."
       : "Al enviar, se abrirá WhatsApp con tu consulta para que puedas revisarla y compartirla con ICEMAN.";
     const businesses = ["Restaurante","Hotel","Cafetería","Supermercado","Minimarket","Distribuidor","Catering","Otro"];
     const interests = ["Papas","Vegetales","Especialidades","Air Fryer","Helados","Smoothies","Waffles","Otros"];
@@ -620,6 +620,11 @@
       values.get("message") ? `Mensaje: ${values.get("message")}` : ""
     ].filter(Boolean).join("\n");
     const endpoint = document.querySelector('meta[name="iceman-lead-endpoint"]')?.content?.trim();
+    // Open during the submit gesture, before awaiting the backend response,
+    // so browsers can open WhatsApp without treating it as a delayed popup.
+    const preparedWhatsAppLink = waLink(message);
+    const opened = window.open(preparedWhatsAppLink, "_blank", "noopener,noreferrer");
+    const whatsAppAction = `<a href="${preparedWhatsAppLink}" data-wa target="_blank" rel="noopener">Abrir WhatsApp con mis datos</a>`;
     if (endpoint) {
       try {
         if (new URL(endpoint,window.location.href).protocol !== "https:") throw new Error("El formulario requiere un endpoint seguro HTTPS.");
@@ -629,14 +634,12 @@
         // A successful HTTP response is the endpoint's receipt contract. Never
         // count validation, errors, or opening a prepared WhatsApp message.
         trackConfirmedLead();
-        successBox.textContent = "Gracias. Recibimos tu solicitud y el equipo ICEMAN se pondrá en contacto contigo."; successBox.classList.add("show"); form.reset(); track("b2b_form_submit", { destination:"backend" });
-      } catch { errorBox.textContent = "No pudimos enviar tu solicitud en este momento. Escríbenos por WhatsApp y te ayudaremos."; errorBox.classList.add("show"); }
+        successBox.innerHTML = `Gracias. Recibimos tu solicitud y el equipo ICEMAN se pondrá en contacto contigo. También puedes revisar y enviar tu consulta por WhatsApp. ${whatsAppAction}.`; successBox.classList.add("show"); form.reset(); track("b2b_form_submit", { destination:"backend" });
+      } catch { errorBox.innerHTML = `No pudimos registrar tu solicitud en este momento. Puedes enviarla por WhatsApp. ${whatsAppAction}.`; errorBox.classList.add("show"); }
       finally { delete form.dataset.submitting; if (submitButton) { submitButton.disabled = false; submitButton.removeAttribute("aria-busy"); } }
       return;
     }
     track("b2b_form_submit", { destination:"whatsapp" });
-    const preparedWhatsAppLink = waLink(message);
-    const opened = window.open(preparedWhatsAppLink, "_blank", "noopener,noreferrer");
     if (opened) successBox.textContent = "WhatsApp se abrió con los datos de tu consulta. Revísalos y envíalos para contactar al equipo ICEMAN.";
     else successBox.innerHTML = `Tu consulta está lista. <a href="${preparedWhatsAppLink}" data-wa target="_blank" rel="noopener">Abrir WhatsApp con mis datos</a>.`;
     successBox.classList.add("show");
