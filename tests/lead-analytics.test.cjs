@@ -51,6 +51,18 @@ test('confirmed receipt emits once; double submit while pending does not duplica
   assert.equal(JSON.stringify(h.leads()).includes('test@example.test'), false);
   await h.submit(); assert.equal(h.leads().length, 1);
 });
+test('configured Formspree endpoint receives JSON and requests JSON confirmation', async () => {
+  const html = fs.readFileSync(require('node:path').join(__dirname, '../index.html'), 'utf8');
+  const endpoint = html.match(/name="iceman-lead-endpoint" content="([^"]+)"/)[1];
+  assert.equal(endpoint, 'https://formspree.io/f/mzedjaza');
+  const h = harness({ endpoint }); const pending = h.submit();
+  const [url, options] = h.calls[0];
+  assert.equal(url, endpoint);
+  assert.equal(options.headers.Accept, 'application/json');
+  assert.equal(options.headers['Content-Type'], 'application/json');
+  assert.equal(JSON.parse(options.body).company, 'Test company');
+  h.confirm(); await pending; assert.equal(h.leads().length, 1);
+});
 for (const [label, options] of [['HTTP failure', { response: { ok: false } }], ['network failure', { fail: true }], ['analytics rejected', { consent: false }]]) {
   test(label + ' does not emit a lead', async () => {
     const h = harness(options); const pending = h.submit(); h.confirm(); await pending;

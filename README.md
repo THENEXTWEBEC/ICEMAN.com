@@ -12,9 +12,9 @@ El repositorio incluye un flujo de GitHub Actions que publica el sitio al actual
 
 ## Solicitudes comerciales
 
-El formulario valida campos en el navegador y prepara el mensaje para WhatsApp. Para enviar solicitudes a un servicio propio, define una etiqueta `meta[name="iceman-lead-endpoint"]` en `index.html` con la URL HTTPS de un endpoint. Ese servicio debe volver a validar los campos, aplicar límites de frecuencia, filtrar el campo honeypot `website` y guardar los datos con controles de acceso adecuados. El formulario acepta una respuesta HTTP exitosa como confirmación.
+El formulario valida campos en el navegador y envía la solicitud a Formspree mediante el endpoint `https://formspree.io/f/mzedjaza`, configurado en `index.html`. Si se elimina esa configuración, conserva la preparación del mensaje para WhatsApp. Para enviar solicitudes a un servicio propio, define una etiqueta `meta[name="iceman-lead-endpoint"]` en `index.html` con la URL HTTPS de un endpoint. Ese servicio debe volver a validar los campos, aplicar límites de frecuencia, filtrar el campo honeypot `website` y guardar los datos con controles de acceso adecuados. El formulario acepta una respuesta HTTP exitosa como confirmación.
 
-No hay un endpoint de leads ni almacenamiento configurado en esta carpeta. Mientras no se configure, la persona revisa y envía manualmente su consulta desde WhatsApp.
+Las solicitudes se reciben en el panel de Formspree y se notifican según la configuración de esa cuenta. Verificar el correo destinatario en Formspree antes de publicar. El sitio no incluye almacenamiento propio de leads.
 
 ## Medición y privacidad
 
@@ -32,7 +32,7 @@ Parámetros: `form_id=lead-form`, `form_name=b2b_request`, `form_path=/empresas`
 
 No se emite al abrir, enfocar, abandonar o validar el formulario, ante errores HTTP/red, honeypot, ni al abrir WhatsApp (incluido el enlace alternativo si se bloquea la ventana). Se mantienen `b2b_form_start`, `b2b_form_submit`, `whatsapp_click`, `contact_click`, `product_view` y `category_view`. `b2b_form_submit` con `destination=whatsapp` mide la preparación de la consulta, no su recepción comercial: no marcarlo como conversión confirmada.
 
-**Estado:** no hay endpoint configurado en `index.html`; por tanto, el flujo actual de WhatsApp no puede producir `generate_lead`. Para activar conversiones confirmadas se necesita la URL HTTPS real del servicio de recepción, con CORS compatible con el sitio, y configurarla mediante `meta[name="iceman-lead-endpoint"]`. La integración no añade un backend ni modifica el diseño.
+**Estado:** `index.html` configura Formspree con `https://formspree.io/f/mzedjaza`. Se envía JSON con `Accept: application/json` para recibir confirmación sin redirección. Verificar en Formspree el correo destinatario y cualquier activación pendiente. El formulario usa envío directo y mantiene WhatsApp como canal alternativo. La recepción real y DebugView aún requieren la prueba de aceptación tras publicar.
 
 **Pruebas automáticas:** con Node.js, ejecutar `node --test tests/lead-analytics.test.cjs`. Las pruebas ejecutan el manejador real con DOM, GA4 y red simulados; no envían solicitudes comerciales ni prueban la recepción en Google Analytics.
 
