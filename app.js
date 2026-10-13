@@ -21,6 +21,15 @@
     if (typeof window.gtag === "function") window.gtag("event", eventName, params);
     window.dispatchEvent(new CustomEvent("iceman:analytics", { detail: { event: eventName, ...params } }));
   };
+  function trackConfirmedLead() {
+    // Reuse the existing Google tag, and respect the current analytics choice.
+    try {
+      if (!JSON.parse(localStorage.getItem("iceman-consent") || "null")?.analytics) return;
+      const params = { form_id: "lead-form", form_name: "b2b_request", form_path: "/empresas", destination: "backend" };
+      if (new URLSearchParams(window.location.search).get("ga4_debug") === "1") params.debug_mode = true;
+      track("generate_lead", params);
+    } catch { return; }
+  }
   const escapeHTML = (value = "") => String(value).replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char]);
   const asset = (name) => `${projectBase}/assets/catalog/${encodeURIComponent(name)}.webp`;
   const editorialImage = (name) => name?.startsWith("editorial/") ? `${projectBase}/assets/${name}` : asset(name);
@@ -614,6 +623,9 @@
         const payload = Object.fromEntries(values); payload.interests = values.getAll("interests");
         const response = await fetch(endpoint, { method:"POST", headers:{ "Content-Type":"application/json" }, body:JSON.stringify(payload) });
         if (!response.ok) throw new Error("No se pudo enviar la solicitud.");
+        // A successful HTTP response is the endpoint's receipt contract. Never
+        // count validation, errors, or opening a prepared WhatsApp message.
+        trackConfirmedLead();
         successBox.textContent = "Gracias. Recibimos tu solicitud y el equipo ICEMAN se pondrá en contacto contigo."; successBox.classList.add("show"); form.reset(); track("b2b_form_submit", { destination:"backend" });
       } catch { errorBox.textContent = "No pudimos enviar tu solicitud en este momento. Escríbenos por WhatsApp y te ayudaremos."; errorBox.classList.add("show"); }
       finally { delete form.dataset.submitting; if (submitButton) { submitButton.disabled = false; submitButton.removeAttribute("aria-busy"); } }
