@@ -2,6 +2,12 @@
 
 Sitio estático responsive con catálogo y rutas amigables. El inventario de `catalog.js` se preparó desde el catálogo ICEMAN adjunto; las imágenes WebP de `assets/catalog/` son recortes de los empaques que aparecen en ese documento.
 
+## Rediseño de la página principal
+
+La home combina navegación directa y secciones narrativas. Los paneles de productos se expanden al tocarlos o seleccionarlos con teclado, desplazando los demás y mostrando su ficha. En móvil la fila se puede desplazar horizontalmente. La franja de puntos de venta se mueve automáticamente hacia la derecha, se pausa al interactuar y respeta la preferencia de movimiento reducido.
+
+**Contenido oficial pendiente:** ICEMAN debe entregar la lista y los logotipos de establecimientos para sustituir los espacios de prueba de “Dónde encontrarnos”. También faltan las fotografías definitivas y la aprobación editorial de las recetas. Las imágenes actuales se identifican como referenciales en la interfaz. Antes de publicar, revisar además los datos legales que ya figuran como pendientes en `/privacidad` y `/terminos`.
+
 ## Vista local
 
 Desde la carpeta del proyecto, sirve los archivos con cualquier servidor estático local. Las rutas `/productos`, `/empresas`, `/nosotros` y `/contacto` se resuelven con el fallback de `_redirects`.
