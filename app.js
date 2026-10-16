@@ -212,10 +212,10 @@
   }
 
   const homeShowcase = [
-    { slug:"papas-air-fryer", tone:"#fff0dc" },
-    { slug:"mix-jardinera-450", tone:"#e8f1df" },
-    { slug:"aros-de-cebolla", tone:"#f5e4d9" },
-    { slug:"helado-paila-mora", tone:"#e2edf5" }
+    { slug:"papas-air-fryer", tone:"#EFB54A" },
+    { slug:"mix-jardinera-450", tone:"#86BD69" },
+    { slug:"aros-de-cebolla", tone:"#65BED0" },
+    { slug:"helado-paila-mora", tone:"#83AED8" }
   ].map((item) => ({ ...item, product:products.find((product) => product.slug === item.slug) })).filter((item) => item.product);
 
   function home() {
