@@ -35,7 +35,6 @@ body{overflow-x:clip}
 .home-intro:before{position:absolute;right:-9%;top:8%;width:35vw;aspect-ratio:1;content:"";border-radius:50%;background:radial-gradient(circle,rgba(40,162,193,.09),transparent 65%);pointer-events:none}
 .home-intro-visual{clip-path:inset(8% 8% 8% 8% round 6px 92px 6px 6px);transform:translate3d(0,var(--scene-shift-small,0px),0) scale(1.025);transition:clip-path 1s var(--motion-out),transform 1s var(--motion-out);will-change:transform,clip-path}
 .home-intro.scene-visible .home-intro-visual{clip-path:inset(0 round 6px 92px 6px 6px);transform:translate3d(0,var(--scene-shift-small,0px),0) scale(1)}
-.home-intro h2{position:relative;z-index:1}
 .home-categories{position:relative;z-index:3;background:#f3f7f6}
 .home-category-rail{gap:0;border-top:1px solid #d7e0e4;border-bottom:1px solid #d7e0e4}
 .home-category{min-height:330px;border:0;border-right:1px solid #d7e0e4;border-radius:0;background:transparent;transition:background-color .4s ease,transform .45s var(--motion-out)}
@@ -112,7 +111,7 @@ body{overflow-x:clip}
 .scene-ready .home-section-heading,.scene-ready .home-showcase-heading,.scene-ready .home-stockists-head,.scene-ready .home-business-copy,.scene-ready .home-contact-inner{opacity:0;transform:translateY(28px);transition:opacity .75s var(--motion-out),transform .9s var(--motion-out)}
 .scene-ready.scene-visible .home-section-heading,.scene-ready.scene-visible .home-showcase-heading,.scene-ready.scene-visible .home-stockists-head,.scene-ready.scene-visible .home-business-copy,.scene-ready.scene-visible .home-contact-inner{opacity:1;transform:translateY(0)}
 .scene-ready .home-intro-copy>*{opacity:0;transform:translateY(22px);transition:opacity .68s var(--motion-out),transform .82s var(--motion-out)}
-.scene-ready .home-intro-copy>*:nth-child(2){transition-delay:.08s}.scene-ready .home-intro-copy>*:nth-child(3){transition-delay:.16s}.scene-ready .home-intro-copy>*:nth-child(4){transition-delay:.24s}.scene-ready .home-intro-copy>*:nth-child(5){transition-delay:.32s}
+.scene-ready .home-intro-copy>*:nth-child(2){transition-delay:.1s}
 .scene-ready.scene-visible .home-intro-copy>*{opacity:1;transform:translateY(0)}
 ::view-transition-old(iceman-editorial-image),::view-transition-new(iceman-editorial-image){animation-duration:.58s;animation-timing-function:var(--motion-out);object-fit:cover}
 #editorial-card-grid{view-transition-name:editorial-results}
