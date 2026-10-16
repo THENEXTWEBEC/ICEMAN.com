@@ -212,20 +212,22 @@
   }
 
   const homeShowcase = [
-    { slug:"papas-air-fryer", tone:"#fff0dc" },
-    { slug:"mix-jardinera-450", tone:"#e8f1df" },
-    { slug:"aros-de-cebolla", tone:"#f5e4d9" },
-    { slug:"helado-paila-mora", tone:"#e2edf5" }
+    { slug:"papas-air-fryer", tone:"#fff0dc", scene:"editorial/01-papas-air-fryer-cena.webp" },
+    { slug:"mix-jardinera-450", tone:"#e8f1df", scene:"editorial/occasion-quick-dinner.webp" },
+    { slug:"aros-de-cebolla", tone:"#dceff5", scene:"editorial/10-aros-para-compartir.webp" },
+    { slug:"helado-paila-mora", tone:"#e2edf5", scene:"editorial/occasion-movie-night.webp" },
+    { slug:"smoothie-red", tone:"#f5e4e9", scene:"editorial/occasion-home-sharing.webp" },
+    { slug:"waffle-glaseado", tone:"#e5f1e4", scene:"editorial/occasion-weekend-breakfast.webp" }
   ].map((item) => ({ ...item, product:products.find((product) => product.slug === item.slug) })).filter((item) => item.product);
 
   function home() {
     const categoryLinks = categories.map((category, index) => `<a class="home-category" href="/productos/${category.slug}" data-link data-category-link="${category.slug}"><span class="home-category-number">0${index + 1}</span><span class="home-category-image"><img src="${asset(category.image)}" alt="" loading="lazy" decoding="async"></span><strong>${escapeHTML(category.name)}</strong>${iconArrow("up-right")}</a>`).join("");
-    const showcasePanels = homeShowcase.map(({ product, tone }, index) => `<article class="showcase-panel ${index === 0 ? "is-selected" : ""}" style="--panel-tone:${tone}"><div class="showcase-scene" aria-hidden="true"></div><button class="showcase-select" type="button" data-home-product="${index}" aria-label="Explorar ${escapeHTML(product.name)}" aria-pressed="${index === 0}"><span class="showcase-index">0${index + 1} / 0${homeShowcase.length}</span><img class="showcase-pack" src="${asset(product.image)}" alt="" loading="lazy" decoding="async"><span class="showcase-product-name">${escapeHTML(product.name)}</span></button><div class="showcase-detail" aria-hidden="${index !== 0}"><span>${escapeHTML(categoryLabel(product.category))}</span><p>${escapeHTML(product.description)}</p><a href="${productPath(product)}" data-link tabindex="${index === 0 ? 0 : -1}">Ver producto ${iconArrow()}</a></div></article>`).join("");
+    const showcasePanels = homeShowcase.map(({ product, tone, scene }, index) => `<a class="showcase-panel" href="${productPath(product)}" data-link data-home-product="${index}" style="--panel-tone:${tone}"><div class="showcase-scene" aria-hidden="true"><img src="${projectBase}/assets/${scene}" alt="" loading="lazy" decoding="async"></div><span class="showcase-index">0${index + 1}</span><img class="showcase-pack" src="${asset(product.image)}" alt="Empaque ICEMAN de ${escapeHTML(product.name)}" loading="lazy" decoding="async"><div class="showcase-info"><span class="showcase-category">${escapeHTML(categoryLabel(product.category))} · ${escapeHTML(product.presentation)}</span><strong class="showcase-product-name">${escapeHTML(product.name)}</strong><span class="showcase-product-link">Ver producto ${iconArrow()}</span></div></a>`).join("");
     const recipeCards = editorial.recipes.slice(0, 3).map((recipe, index) => `<article class="home-recipe home-recipe-${index + 1}"><a href="/recetas/${recipe.slug}" data-link><div class="home-recipe-image"><img src="${editorialImage(recipe.image)}" alt="Imagen referencial para ${escapeHTML(recipe.title)}" loading="lazy" decoding="async"><span>Imagen referencial</span></div><div class="home-recipe-copy"><span>Idea con productos ICEMAN</span><h3>${escapeHTML(recipe.title)}</h3><span class="home-recipe-arrow">Ver idea ${iconArrow()}</span></div></a></article>`).join("");
     const stockistItems = [["Consulta disponibilidad",waLink(contactMessage),"data-wa target=\"_blank\" rel=\"noopener\""],["Explora el catálogo","/productos","data-link"],["Habla con nuestro equipo",waLink(contactMessage),"data-wa target=\"_blank\" rel=\"noopener\""],["Encuentra tu favorito","/productos","data-link"]].map(([label,href,attributes]) => `<a class="stockist-placeholder" href="${href}" ${attributes}><span class="stockist-mark" aria-hidden="true">✳</span>${label}<small>ICEMAN Ecuador ↗</small></a>`).join("");
     return `<section class="home-hero" id="inicio" data-nav-section="home"><div class="home-hero-image" data-parallax="0.16"><img src="${projectBase}/assets/editorial/hero-crispy-potatoes.webp" alt="Papas preparadas en un plato, fotografía referencial" fetchpriority="high" decoding="async" width="1536" height="1024"></div><div class="home-hero-shade"></div><div class="hero-orbit hero-orbit-one" data-pointer-depth="12" aria-hidden="true"></div><div class="hero-orbit hero-orbit-two" data-pointer-depth="-8" aria-hidden="true"></div><div class="wrap home-hero-inner"><div class="home-hero-copy"><span class="home-kicker hero-sequence">Alimentos ultracongelados ICEMAN</span><h1><span class="hero-line"><span>Sabor a</span></span><span class="hero-line"><em>tu ritmo.</em></span></h1><p class="hero-sequence">Productos prácticos para disfrutar a tu manera, todos los días.</p><div class="home-hero-actions hero-sequence"><a class="btn btn-primary magnetic" href="/productos" data-link>Explorar productos ${iconArrow()}</a><a class="home-hero-link" href="/#donde-encontrarnos" data-link>Encuéntranos ${iconArrow()}</a></div></div><div class="hero-pack-wrap" data-pointer-depth="-16"><span class="hero-pack-halo" aria-hidden="true"></span><img class="hero-pack" src="${asset(homeShowcase[0].product.image)}" alt="Empaque oficial de ${escapeHTML(homeShowcase[0].product.name)} ICEMAN" fetchpriority="high" decoding="async"></div><span class="hero-side-note" aria-hidden="true">Del congelador a tu mesa · ICEMAN Ecuador</span><span class="home-image-note">Fotografía referencial</span><a class="hero-scroll" href="#productos-destacados" aria-label="Explorar productos destacados"><span aria-hidden="true">↓</span> Descubre más</a></div></section>
     <section class="home-intro" aria-labelledby="home-intro-title"><div class="wrap home-intro-grid"><span class="home-intro-label">Una mesa con más posibilidades</span><div><h2 id="home-intro-title">A tu ritmo.<br><em>A tu gusto.</em></h2><p>Desde una comida rápida hasta una ocasión para compartir, explora el catálogo de ultracongelados ICEMAN y elige lo que va contigo.</p><a class="home-inline-link" href="/nosotros" data-link>Conoce ICEMAN ${iconArrow()}</a></div><figure class="home-intro-visual"><img src="${projectBase}/assets/editorial/occasion-quick-dinner.webp" alt="Plato preparado con vegetales en una cena cotidiana, fotografía referencial" loading="lazy" decoding="async" width="1672" height="939"><figcaption>Fotografía referencial</figcaption></figure></div></section>
-    <section class="home-showcase" id="productos-destacados" aria-labelledby="showcase-title" data-nav-section="products"><div class="wrap"><div class="home-showcase-heading"><span class="home-kicker">Productos que se mueven contigo</span><h2 id="showcase-title">Elige. Descubre. Disfruta.</h2><p>Toca un empaque para acercarlo. Los demás se mueven y puedes explorar cada producto.</p></div><div class="showcase-accordion" id="showcase-accordion" aria-label="Productos destacados de ICEMAN">${showcasePanels}</div><div class="showcase-footer"><span class="showcase-count" aria-live="polite">01 <i>/</i> 0${homeShowcase.length}</span><div class="showcase-progress" aria-hidden="true"><span></span></div><div class="showcase-controls"><button type="button" data-showcase-step="-1" aria-label="Producto anterior">${iconArrow("left")}</button><button type="button" data-showcase-step="1" aria-label="Producto siguiente">${iconArrow()}</button></div></div></div></section>
+    <section class="home-showcase" id="productos-destacados" aria-labelledby="showcase-title" data-nav-section="products"><div class="wrap"><div class="home-showcase-heading"><span class="home-kicker">Productos que se mueven contigo</span><h2 id="showcase-title">Elige. Descubre. Disfruta.</h2><p>Una selección de favoritos ICEMAN, lista para llegar a tu mesa.</p></div></div><div class="showcase-accordion" id="showcase-accordion" aria-label="Productos destacados de ICEMAN">${showcasePanels}</div><div class="showcase-ribbon"><span class="showcase-ribbon-label">ICEMAN ECUADOR</span><div class="showcase-ribbon-categories" aria-label="Categorías del catálogo"><span>Papas</span><span>Vegetales</span><span>Especialidades</span><span>Helados</span><span>Smoothies</span></div><a href="${waLink(contactMessage)}" data-wa target="_blank" rel="noopener">Consulta disponibilidad ${iconArrow()}</a></div></section>
     <section class="home-categories" id="categorias" aria-labelledby="categories-title"><div class="wrap"><div class="home-section-heading"><span class="home-kicker">Del congelador a tu mesa</span><h2 id="categories-title">Hay mucho por descubrir.</h2><p>Encuentra tu próximo favorito entre las categorías del catálogo.</p></div><div class="home-category-rail">${categoryLinks}</div><a class="home-inline-link" href="/productos" data-link>Ver catálogo completo ${iconArrow()}</a></div></section>
     <section class="home-recipes" id="ideas" aria-labelledby="recipes-title" data-nav-section="editorial"><div class="wrap"><div class="home-section-heading"><span class="home-kicker">Inspiración para la mesa</span><h2 id="recipes-title">Más ideas para disfrutar.</h2><p>Preparaciones y ocasiones con productos del catálogo ICEMAN.</p></div><div class="home-recipe-grid">${recipeCards}</div><div class="home-recipes-foot"><p>Las fotografías son referenciales. La selección final de imágenes y contenido está pendiente de aprobación.</p><a class="home-inline-link" href="/recetas" data-link>Explorar recetas y consejos ${iconArrow()}</a></div></div></section>
     <section class="home-stockists" id="donde-encontrarnos" aria-labelledby="stockists-title" data-nav-section="stockists"><div class="wrap home-stockists-head"><span class="home-kicker">Dónde encontrarnos</span><h2 id="stockists-title">IceMan, cerca de ti.</h2><p>Estamos preparando la lista oficial de establecimientos. Mientras tanto, consulta la disponibilidad directamente con nuestro equipo.</p><a class="btn btn-primary" href="${waLink(contactMessage)}" data-wa target="_blank" rel="noopener">Consultar por WhatsApp ${iconArrow()}</a></div><div class="stockists-track" id="stockists-track" aria-label="Opciones para consultar productos ICEMAN"><div class="stockists-set">${stockistItems}</div>${Array.from({ length:3 }, () => `<div class="stockists-set" aria-hidden="true" inert>${stockistItems}</div>`).join("")}</div><div class="wrap stockists-note">Los nombres de los puntos de venta se incorporarán cuando ICEMAN confirme la lista oficial.</div></section>
@@ -234,47 +236,10 @@
   }
 
   function setupHomeProducts() {
-    const accordion = root.querySelector("#showcase-accordion");
-    if (!accordion || !homeShowcase.length) return;
-    const panels = [...accordion.querySelectorAll(".showcase-panel")];
-    let selected = 0;
-    const select = (index) => {
-      const previous = selected;
-      selected = (index + homeShowcase.length) % homeShowcase.length;
-      if (previous === selected) return;
-      panels.forEach((panel, index) => {
-        const active = index === selected;
-        panel.classList.toggle("is-selected", active);
-        panel.querySelector(".showcase-select").setAttribute("aria-pressed", String(active));
-        panel.querySelector(".showcase-detail").setAttribute("aria-hidden", String(!active));
-        panel.querySelector(".showcase-detail a").tabIndex = active ? 0 : -1;
-      });
-      if (matchMedia("(max-width: 640px)").matches) {
-        const panel = panels[selected];
-        accordion.scrollTo({ left:panel.offsetLeft - accordion.offsetLeft - 16, behavior:"smooth" });
-      }
-      const pack = panels[selected].querySelector(".showcase-pack");
-      if (!matchMedia("(prefers-reduced-motion: reduce)").matches && pack?.animate) {
-        pack.getAnimations().forEach((animation) => animation.cancel());
-        pack.animate([{ opacity:0, translate:`${selected > previous ? 48 : -48}px 24px`, rotate:`${selected > previous ? 8 : -8}deg`, scale:.88 },{ opacity:1, translate:"0 0", rotate:"0deg", scale:1 }], { duration:720, easing:"cubic-bezier(.16,1,.3,1)" });
-      }
-      const count = root.querySelector(".showcase-count");
-      if (count) count.innerHTML = `${String(selected + 1).padStart(2,"0")} <i>/</i> 0${homeShowcase.length}`;
-      root.querySelector(".showcase-progress span")?.style.setProperty("transform", `scaleX(${(selected + 1) / homeShowcase.length})`);
-      track("product_view", { product_slug:homeShowcase[selected].product.slug, placement:"home_showcase" });
-    };
-    root.querySelectorAll("[data-showcase-step]").forEach((button) => button.addEventListener("click", () => select(selected + Number(button.dataset.showcaseStep))));
-    let touchStart = null;
-    accordion.addEventListener("touchstart", (event) => { touchStart = event.touches[0]?.clientX ?? null; }, { passive:true });
-    accordion.addEventListener("touchend", (event) => { if (touchStart === null) return; const delta = event.changedTouches[0].clientX - touchStart; touchStart = null; if (Math.abs(delta) > 42) select(selected + (delta < 0 ? 1 : -1)); }, { passive:true });
-    accordion.querySelectorAll("[data-home-product]").forEach((button) => {
-      button.addEventListener("click", () => select(Number(button.dataset.homeProduct)));
-      button.addEventListener("keydown", (event) => {
-        if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
-        event.preventDefault();
-        const next = (selected + (event.key === "ArrowRight" ? 1 : -1) + panels.length) % panels.length;
-        select(next);
-        panels[next].querySelector(".showcase-select").focus();
+    root.querySelectorAll("[data-home-product]").forEach((panel, index) => {
+      panel.addEventListener("click", () => {
+        const item = homeShowcase[index];
+        if (item) track("product_view", { product_slug:item.product.slug, placement:"home_showcase" });
       });
     });
   }
