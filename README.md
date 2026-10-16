@@ -2,11 +2,17 @@
 
 Sitio estático responsive con catálogo y rutas amigables. El inventario de `catalog.js` se preparó desde el catálogo ICEMAN adjunto; las imágenes WebP de `assets/catalog/` son recortes de los empaques que aparecen en ese documento.
 
-## Rediseño de la página principal
+## Experiencia interactiva
 
-La home combina navegación directa y secciones narrativas. Los paneles de productos se expanden al tocarlos o seleccionarlos con teclado, desplazando los demás y mostrando su ficha. En móvil la fila se puede desplazar horizontalmente. La franja de puntos de venta se mueve automáticamente hacia la derecha, se pausa al interactuar y respeta la preferencia de movimiento reducido.
+La home combina navegación directa y secciones narrativas. `motion-experience.js` controla las escenas visibles, la profundidad del hero, el desplazamiento ligero de imágenes y los botones magnéticos. Se monta de nuevo tras cada cambio de ruta y limpia sus observadores, eventos y fotogramas al salir. `motion-experience.css` contiene los tiempos y curvas; las animaciones se desactivan con `prefers-reduced-motion`.
 
-**Contenido oficial pendiente:** ICEMAN debe entregar la lista y los logotipos de establecimientos para sustituir los espacios de prueba de “Dónde encontrarnos”. También faltan las fotografías definitivas y la aprobación editorial de las recetas. Las imágenes actuales se identifican como referenciales en la interfaz. Antes de publicar, revisar además los datos legales que ya figuran como pendientes en `/privacidad` y `/terminos`.
+El hero utiliza el empaque real de Papas Air Fryer sobre una fotografía referencial. El showroom conserva los paneles del catálogo y añade transición de empaque, controles anterior/siguiente, contador, teclado y selección táctil. La navegación editorial usa View Transitions API cuando está disponible y mantiene navegación normal en el resto de navegadores. Los filtros de recetas también tienen una transición de estado. La página comercial permite elegir Restaurante, Hotel o Comercio para completar el campo de tipo de negocio del formulario; los empaques mostrados son los oficiales del catálogo.
+
+La franja horizontal de “Dónde encontrarnos” se mueve hacia la derecha, se pausa al interactuar y detiene su animación cuando sale de pantalla. Sus enlaces llevan a WhatsApp o al catálogo. **No contiene establecimientos ficticios**; la lista oficial sigue pendiente.
+
+**Contenido oficial pendiente:** ICEMAN debe entregar la lista y los logotipos de establecimientos para habilitar nombres de puntos de venta. También faltan las fotografías definitivas y la aprobación editorial de las recetas. Las imágenes actuales se identifican como referenciales en la interfaz. No hay cifras nutricionales oficiales en el repositorio; el componente de `drafts/nutrition-chart.js` no se carga en producción y exige una ficha aprobada, la porción y el valor de referencia antes de mostrar datos. Antes de publicar, revisar además los datos legales que ya figuran como pendientes en `/privacidad` y `/terminos`.
+
+El proyecto no tiene compilador ni dependencias npm: `index.html` es la entrada de producción. Para verificarlo, ejecutar `node --check app.js`, `node --check motion-experience.js` y `node --test tests/*.test.cjs`, y revisar las rutas en un servidor con fallback a `index.html`/`404.html`. El objetivo Lighthouse 90+ requiere medición sobre el dominio final y un dispositivo representativo; no se presupone por estas pruebas locales.
 
 ## Vista local
 
