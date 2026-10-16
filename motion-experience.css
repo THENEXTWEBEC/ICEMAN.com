@@ -49,10 +49,7 @@ body{overflow-x:clip}
 .showcase-accordion{height:610px;border-radius:0;box-shadow:0 34px 65px rgba(29,59,76,.12)}
 .showcase-panel{border-right:1px solid rgba(255,255,255,.55);transition:flex-grow .72s var(--motion-state)}
 .showcase-panel.is-selected{flex-grow:2.5}
-.showcase-scene{height:47%;background:radial-gradient(circle at 50% 45%,rgba(255,255,255,.72) 0%,rgba(255,255,255,.05) 49%,transparent 64%),var(--panel-accent)}
-.showcase-scene:after{background:linear-gradient(180deg,transparent 42%,var(--panel-tone) 99%)}
-.showcase-scene:before{position:absolute;top:10%;left:18%;width:64%;aspect-ratio:1;content:"";border:1px solid rgba(255,255,255,.65);border-radius:50%;box-shadow:0 0 0 28px rgba(255,255,255,.1);transition:transform .75s var(--motion-out)}
-.showcase-panel.is-selected .showcase-scene:before{transform:scale(1.28)}
+.showcase-scene{display:none}
 .showcase-pack{top:17%;height:59%;filter:drop-shadow(13px 25px 18px rgba(28,41,55,.22));transition:top .72s var(--motion-state),height .72s var(--motion-state),transform .72s var(--motion-out)}
 .showcase-panel.is-selected .showcase-pack{top:13%;height:58%}
 .showcase-panel:hover .showcase-pack{transform:translateX(-50%) translateY(-9px) rotate(-2deg)}
