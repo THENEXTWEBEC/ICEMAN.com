@@ -8,7 +8,7 @@ La home combina navegación directa y secciones narrativas. `motion-experience.j
 
 El hero utiliza el empaque real de Papas Air Fryer sobre una fotografía referencial. El showroom conserva los paneles del catálogo y añade transición de empaque, controles anterior/siguiente, contador, teclado y selección táctil. La navegación editorial usa View Transitions API cuando está disponible y mantiene navegación normal en el resto de navegadores. Los filtros de recetas también tienen una transición de estado. La página comercial permite elegir Restaurante, Hotel o Comercio para completar el campo de tipo de negocio del formulario; los empaques mostrados son los oficiales del catálogo.
 
-La franja horizontal de “Dónde encontrarnos” muestra los logotipos originales de Supermaxi, Megamaxi y Coral Hipermercados. Se mueve de forma continua, se pausa al interactuar y detiene su animación cuando sale de pantalla.
+La franja horizontal de “Dónde encontrarnos” muestra los 15 establecimientos confirmados, en el orden aprobado y con sus identificadores visuales originales. Se mueve de forma continua, se pausa al interactuar y detiene su animación cuando sale de pantalla.
 
 **Contenido oficial pendiente:** faltan las fotografías definitivas y la aprobación editorial de las recetas. Las imágenes actuales se identifican como referenciales en la interfaz. No hay cifras nutricionales oficiales en el repositorio; el componente de `drafts/nutrition-chart.js` no se carga en producción y exige una ficha aprobada, la porción y el valor de referencia antes de mostrar datos. Antes de publicar, revisar además los datos legales que ya figuran como pendientes en `/privacidad` y `/terminos`.
 
