@@ -17,6 +17,7 @@
   let scrollSpyCleanup = null;
   let motionObserver = null;
   let stockistsCleanup = null;
+  let recipeImageObserver = null;
 
   const track = (eventName, params = {}) => {
     if (typeof window.gtag === "function") window.gtag("event", eventName, params);
@@ -179,9 +180,12 @@
     stockistsCleanup = null;
     motionObserver?.disconnect();
     motionObserver = null;
+    recipeImageObserver?.disconnect();
+    recipeImageObserver = null;
     const floatingWhatsAppClass = path === "/empresas" ? "whatsapp-float whatsapp-float-form" : "whatsapp-float";
     root.innerHTML = `${header(path)}<main id="main" class="fade-in">${content}</main>${footer()}<a class="${floatingWhatsAppClass}" href="${waLink(contactMessage)}" data-wa target="_blank" rel="noopener" aria-label="Escribir a ICEMAN por WhatsApp">${iconWhatsApp()}</a>`;
     setupEditorialDrag();
+    setupRecipeTransforms();
     root.querySelectorAll("a[data-link]").forEach((link) => { link.href = withBase(withoutBase(link.getAttribute("href"))); });
     if (projectBase) root.querySelectorAll('img[src^="/assets/"]').forEach((image) => { image.src = `${projectBase}${image.getAttribute("src")}`; });
     updateHead(path);
@@ -341,6 +345,19 @@
   function editorialCard(item, featured = false) {
     const product = productBySlug(item.products?.[0]);
     const eyebrow = item.kind === "recipe" ? `Receta · ${item.time}` : item.category;
+    if (item.kind === "recipe" && product) {
+      const productAlt = `Empaque de ${product.name} ICEMAN, presentación ${product.presentation}`;
+      const dishAlt = `Plato preparado: ${item.title}`;
+      return `<article class="editorial-card editorial-recipe-card ${featured ? "editorial-card-featured" : ""}" data-editorial-card data-category="recetas" data-search="${escapeHTML([item.title,item.description,item.category,...(item.tags || []),...(item.ingredients || []),...(item.occasions || []),product.name].join(" ").toLocaleLowerCase("es"))}">
+        <button class="editorial-card-image editorial-recipe-media" type="button" data-recipe-transform aria-pressed="false" aria-label="Mostrar el plato preparado de ${escapeHTML(item.title)}. Producto actual: ${escapeHTML(product.name)} ICEMAN.">
+          <img class="editorial-recipe-product" src="${asset(product.image)}" alt="${escapeHTML(productAlt)}" loading="lazy" decoding="async">
+          <img class="editorial-recipe-dish" data-src="${editorialImage(item.image)}" alt="${escapeHTML(dishAlt)}" decoding="async">
+          <span class="editorial-recipe-status" aria-hidden="true"><span>Producto ICEMAN</span><span>Listo para disfrutar</span></span>
+          <span class="editorial-recipe-cue" aria-hidden="true">Toca para transformar</span>
+        </button>
+        <div class="editorial-card-copy"><div class="editorial-kicker">De nuestro producto a tu mesa</div><h3><a href="${articleHref(item)}" data-link>${escapeHTML(item.title)}</a></h3><p>${escapeHTML(item.description)}</p><div class="editorial-recipe-facts" aria-label="Detalles de la receta"><span><small>Tiempo</small><b>${escapeHTML(item.time)}</b></span><span><small>Dificultad</small><b>${escapeHTML(item.difficulty)}</b></span></div><div class="editorial-card-foot"><a class="editorial-product-chip" href="${productPath(product)}" data-link aria-label="Ver producto ${escapeHTML(product.name)}">${escapeHTML(product.name)} · ${escapeHTML(product.presentation)}</a><a class="editorial-read editorial-recipe-link" href="${articleHref(item)}" data-link>Ver receta ${iconArrow()}</a></div></div>
+      </article>`;
+    }
     return `<article class="editorial-card ${item.image.startsWith("editorial/") ? "editorial-card-poster" : ""} ${item.imageLayout === "landscape" ? "editorial-card-landscape" : ""} ${featured ? "editorial-card-featured" : ""}" data-editorial-card data-category="${item.kind === "business" ? "negocios" : item.kind === "recipe" ? "recetas" : "nutricion"}" data-search="${escapeHTML([item.title,item.description,item.category,...(item.tags || []),...(item.ingredients || []),...(item.occasions || []),product?.name || ""].join(" ").toLocaleLowerCase("es"))}">
       <a class="editorial-card-image" href="${articleHref(item)}" data-link aria-label="Leer ${escapeHTML(item.title)}"><img src="${editorialImage(item.image)}" alt="${escapeHTML(item.image.startsWith("editorial/") ? item.title : item.kind === "recipe" ? `Producto ICEMAN para ${item.title}` : item.title)}" loading="lazy" decoding="async">${item.image.startsWith("editorial/") ? `<span class="editorial-temp-label">Imagen referencial</span>` : `<span class="editorial-image-label">${escapeHTML(item.kind === "recipe" ? "ICEMAN EN LA MESA" : item.category.toUpperCase())}</span>`}</a>
       <div class="editorial-card-copy"><div class="editorial-kicker">${escapeHTML(eyebrow)}</div><h3><a href="${articleHref(item)}" data-link>${escapeHTML(item.title)}</a></h3><p>${escapeHTML(item.description)}</p><div class="editorial-card-foot">${product ? `<a class="editorial-product-chip" href="${productPath(product)}" data-link>${escapeHTML(product.name)} · ${escapeHTML(product.presentation)}</a>` : `<span>${item.kind === "business" ? "Ideas para tu operación" : "Lectura breve"}</span>`}<a class="editorial-read" href="${articleHref(item)}" data-link> ${item.kind === "recipe" ? "Ver receta" : "Leer artículo"} ${iconArrow()}</a></div></div>
@@ -370,6 +387,46 @@
       const stop = () => { pointerDown = false; rail.classList.remove("is-dragging"); if (moved) { rail.dataset.dragged = "true"; setTimeout(() => delete rail.dataset.dragged, 350); } };
       rail.addEventListener("pointerup", stop); rail.addEventListener("pointercancel", stop);
       rail.addEventListener("click", (event) => { if (rail.dataset.dragged === "true") { event.preventDefault(); event.stopPropagation(); delete rail.dataset.dragged; } }, true);
+    });
+  }
+
+  function loadRecipeDish(control) {
+    const dish = control?.querySelector(".editorial-recipe-dish[data-src]");
+    if (!dish) return;
+    const markReady = () => control.classList.add("is-dish-ready");
+    dish.addEventListener("load", markReady, { once:true });
+    dish.src = dish.dataset.src;
+    delete dish.dataset.src;
+    if (dish.complete) markReady();
+  }
+
+  function setRecipeTransform(control, active) {
+    if (!control) return;
+    loadRecipeDish(control);
+    control.classList.toggle("is-transformed", active);
+    control.setAttribute("aria-pressed", String(active));
+    const cardTitle = control.closest(".editorial-recipe-card")?.querySelector("h3")?.textContent?.trim() || "la receta";
+    const productName = control.closest(".editorial-recipe-card")?.querySelector(".editorial-product-chip")?.textContent?.split(" · ")[0]?.trim() || "ICEMAN";
+    control.setAttribute("aria-label", active ? `Mostrar el producto ${productName} usado en ${cardTitle}.` : `Mostrar el plato preparado de ${cardTitle}. Producto actual: ${productName} ICEMAN.`);
+  }
+
+  function setupRecipeTransforms(scope = root) {
+    const controls = [...scope.querySelectorAll("[data-recipe-transform]")];
+    if (!controls.length) return;
+    if ("IntersectionObserver" in window) {
+      recipeImageObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          loadRecipeDish(entry.target);
+          recipeImageObserver?.unobserve(entry.target);
+        });
+      }, { rootMargin:"500px 0px", threshold:0.01 });
+    }
+    controls.forEach((control, index) => {
+      if (index < 3 || !recipeImageObserver) loadRecipeDish(control);
+      else recipeImageObserver.observe(control);
+      control.addEventListener("pointerenter", () => loadRecipeDish(control), { once:true });
+      control.addEventListener("focus", () => loadRecipeDish(control), { once:true });
     });
   }
   function editorialPage(path) {
@@ -410,7 +467,7 @@
     const body = isRecipe ? `<div class="recipe-method"><h2>Ingredientes</h2><ul class="recipe-ingredients">${item.ingredients.map((ingredient) => `<li>${escapeHTML(ingredient)}</li>`).join("")}</ul><h2>Preparación</h2><ol class="recipe-steps">${item.steps.map((step,index) => `<li><span>${String(index+1).padStart(2,"0")}</span><p>${escapeHTML(step)}</p></li>`).join("")}</ol><p class="recipe-note">Los tiempos son orientativos. Sigue las indicaciones del empaque y las instrucciones de tu electrodoméstico.</p><div class="recipe-share"><strong>Comparte esta receta</strong><a href="${waLink(`Mira esta receta de ICEMAN: ${item.title} ${publicUrl(path)}`)}" data-wa target="_blank" rel="noopener">WhatsApp ${iconArrow()}</a><button type="button" data-action="copy-link">Copiar enlace</button><span id="copy-status" aria-live="polite"></span></div></div>` : `<div class="article-body">${item.body.map((paragraph,index) => `<${index ? "h2" : "p"}>${escapeHTML(paragraph)}</${index ? "h2" : "p"}>`).join("")}${isBusiness ? `<div class="article-business-cta"><h2>¿Buscas productos para tu negocio?</h2><p>Cuéntanos qué necesitas y un asesor ICEMAN puede ayudarte con productos, presentaciones y opciones para tu operación.</p><a class="btn btn-primary" href="${waLink(businessMessage)}" data-wa target="_blank" rel="noopener">Hablar por WhatsApp ${iconArrow()}</a><a class="editorial-text-link" href="/empresas" data-link>Solicitar información</a></div>` : ""}</div>`;
     const editorialPoster = String(item.heroImage || item.image).startsWith("editorial/");
     const editorialLandscape = item.imageLayout === "landscape";
-    const content = `<section class="editorial-detail"><div class="wrap"><div class="editorial-detail-breadcrumb">${breadcrumbs([{name:"Inicio",href:"/"},{name:"Recetas & Consejos",href:"/recetas"},{name:isRecipe?"Recetas":item.category,href:"/recetas"},{name:item.title}])}</div><div class="editorial-detail-hero"><div class="editorial-detail-copy"><div class="eyebrow">${isRecipe ? "RECETA ICEMAN" : escapeHTML(item.category)}</div><h1>${escapeHTML(item.title)}</h1><p>${escapeHTML(item.description)}</p>${isRecipe ? `<p class="editorial-review-note">Receta e imagen referenciales. Revisa el empaque del producto para las indicaciones definitivas.</p>` : ""}${isRecipe ? `<div class="recipe-facts"><span><small>TIEMPO</small><b>${escapeHTML(item.time)}</b></span><span><small>DIFICULTAD</small><b>${escapeHTML(item.difficulty)}</b></span><span><small>PORCIONES</small><b>${escapeHTML(item.servings)}</b></span><span><small>MÉTODO</small><b>${escapeHTML(item.method)}</b></span></div>` : `<span class="article-reading-time">Ideas claras para llevar a tu mesa.</span>`}<div class="editorial-detail-actions"><a class="editorial-text-link" href="#contenido">${isRecipe?"Ir a la receta":"Leer artículo"} ↓</a></div></div><div class="editorial-detail-image ${editorialPoster ? "editorial-detail-poster" : ""} ${editorialLandscape ? "editorial-detail-landscape" : ""}"><img src="${editorialImage(item.heroImage || item.image)}" alt="${escapeHTML(isRecipe && item.heroImage ? "Papas doradas y crujientes recién hechas, servidas con salsas" : isRecipe ? `Producto ICEMAN relacionado con ${item.title}` : item.title)}" fetchpriority="high">${String(item.heroImage || item.image).startsWith("editorial/") ? `<span class="editorial-temp-label">Imagen referencial</span>` : `<span>${isRecipe ? "PRODUCTOS ICEMAN" : "RECETAS & CONSEJOS"}</span>`}</div></div><div class="editorial-detail-layout" id="contenido"><article>${body}</article><aside class="editorial-detail-aside"><small>${relatedProducts.length ? (isRecipe ? "EN ESTA IDEA" : "PRODUCTOS MENCIONADOS") : "SIGUE EXPLORANDO"}</small><strong>${relatedProducts.length ? escapeHTML(productNames) : escapeHTML(item.category)}</strong><a href="/productos" data-link>Explorar productos ${iconArrow()}</a></aside></div>${relatedProducts.length ? `<section class="editorial-section detail-products"><div class="section-head"><div><div class="eyebrow">Del contenido al catálogo</div><h2>${isRecipe ? "Productos ICEMAN para esta receta" : "Productos ICEMAN relacionados"}</h2></div></div>${productRail(relatedProducts,"detail-products-rail")}</section>` : ""}${isRecipe ? `<section class="editorial-section detail-products"><div class="section-head"><div><div class="eyebrow">Una combinación a tu gusto</div><h2>También queda bien con…</h2></div></div>${productRail(editorialProducts(["papas-air-fryer","aros-de-cebolla","hash-brown","corte-ondulado-900-premium","smoothie-red"]),"detail-discovery-rail")}</section>` : ""}<section class="editorial-section detail-related"><div class="section-head"><div><div class="eyebrow">Sigue explorando</div><h2>Más ideas para disfrutar</h2></div></div><div class="editorial-card-grid">${related.map((entry) => editorialCard(entry)).join("")}</div></section></div></section>`;
+    const content = `<section class="editorial-detail"><div class="wrap"><div class="editorial-detail-breadcrumb">${breadcrumbs([{name:"Inicio",href:"/"},{name:"Recetas & Consejos",href:"/recetas"},{name:isRecipe?"Recetas":item.category,href:"/recetas"},{name:item.title}])}</div><div class="editorial-detail-hero"><div class="editorial-detail-copy"><div class="eyebrow">${isRecipe ? "RECETA ICEMAN" : escapeHTML(item.category)}</div><h1>${escapeHTML(item.title)}</h1><p>${escapeHTML(item.description)}</p>${isRecipe ? `<p class="editorial-review-note">Receta e imagen referenciales. Revisa el empaque del producto para las indicaciones definitivas.</p>` : ""}${isRecipe ? `<div class="recipe-facts"><span><small>TIEMPO</small><b>${escapeHTML(item.time)}</b></span><span><small>DIFICULTAD</small><b>${escapeHTML(item.difficulty)}</b></span><span><small>PORCIONES</small><b>${escapeHTML(item.servings)}</b></span><span><small>MÉTODO</small><b>${escapeHTML(item.method)}</b></span></div>` : `<span class="article-reading-time">Ideas claras para llevar a tu mesa.</span>`}<div class="editorial-detail-actions"><a class="editorial-text-link" href="#contenido">${isRecipe?"Ir a la receta":"Leer artículo"} ↓</a></div></div><div class="editorial-detail-image ${editorialPoster ? "editorial-detail-poster" : ""} ${editorialLandscape ? "editorial-detail-landscape" : ""}"><img src="${editorialImage(item.heroImage || item.image)}" alt="${escapeHTML(item.heroAlt || (isRecipe ? `Plato preparado: ${item.title}` : item.title))}" fetchpriority="high">${String(item.heroImage || item.image).startsWith("editorial/") ? `<span class="editorial-temp-label">Imagen referencial</span>` : `<span>${isRecipe ? "PRODUCTOS ICEMAN" : "RECETAS & CONSEJOS"}</span>`}</div></div><div class="editorial-detail-layout" id="contenido"><article>${body}</article><aside class="editorial-detail-aside"><small>${relatedProducts.length ? (isRecipe ? "EN ESTA IDEA" : "PRODUCTOS MENCIONADOS") : "SIGUE EXPLORANDO"}</small><strong>${relatedProducts.length ? escapeHTML(productNames) : escapeHTML(item.category)}</strong><a href="/productos" data-link>Explorar productos ${iconArrow()}</a></aside></div>${relatedProducts.length ? `<section class="editorial-section detail-products"><div class="section-head"><div><div class="eyebrow">Del contenido al catálogo</div><h2>${isRecipe ? "Productos ICEMAN para esta receta" : "Productos ICEMAN relacionados"}</h2></div></div>${productRail(relatedProducts,"detail-products-rail")}</section>` : ""}${isRecipe ? `<section class="editorial-section detail-products"><div class="section-head"><div><div class="eyebrow">Una combinación a tu gusto</div><h2>También queda bien con…</h2></div></div>${productRail(editorialProducts(["papas-air-fryer","aros-de-cebolla","hash-brown","corte-ondulado-900-premium","smoothie-red"]),"detail-discovery-rail")}</section>` : ""}<section class="editorial-section detail-related"><div class="section-head"><div><div class="eyebrow">Sigue explorando</div><h2>Más ideas para disfrutar</h2></div></div><div class="editorial-card-grid">${related.map((entry) => editorialCard(entry)).join("")}</div></section></div></section>`;
     pageShell(content,path);
     updateHead(path,item.title,`${item.description} ${isRecipe ? `Tiempo: ${item.time}. Dificultad: ${item.difficulty}.` : ""}`);
     const imageMeta = document.querySelector('meta[property="og:image"]'); if (imageMeta) imageMeta.content = `${window.location.origin}${editorialImage(item.heroImage || item.image)}`;
@@ -606,11 +663,17 @@
   }
 
   root.addEventListener("click", (event) => {
+    const recipeTransform = event.target.closest("[data-recipe-transform]");
+    if (recipeTransform) {
+      if (event.detail > 0 && matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+      setRecipeTransform(recipeTransform, recipeTransform.getAttribute("aria-pressed") !== "true");
+      return;
+    }
     const anchor = event.target.closest("a");
     if (anchor?.dataset.productLink && anchor.closest(".related-track,.editorial-rail")) track("related_product_click", { product_slug: anchor.dataset.productLink });
     if (anchor?.hasAttribute("data-link") && withoutBase(new URL(anchor.href, window.location.origin).pathname) === "/contacto") track("contact_click", { target:"contact_page" });
     const isPlainInternalClick = event.button === 0 && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey;
-    if (anchor?.hasAttribute("data-link") && isPlainInternalClick && !anchor.hasAttribute("download") && (!anchor.target || anchor.target === "_self")) { event.preventDefault(); navigate(anchor.getAttribute("href"), { sharedImage:anchor.closest(".home-recipe,.editorial-card")?.querySelector("img") || null }); return; }
+    if (anchor?.hasAttribute("data-link") && isPlainInternalClick && !anchor.hasAttribute("download") && (!anchor.target || anchor.target === "_self")) { event.preventDefault(); navigate(anchor.getAttribute("href"), { sharedImage:anchor.closest(".editorial-recipe-card")?.querySelector(".editorial-recipe-dish") || anchor.closest(".home-recipe,.editorial-card")?.querySelector("img") || null }); return; }
     if (anchor?.hasAttribute("data-wa")) track("whatsapp_click", { placement: anchor.classList.contains("whatsapp-float") ? "floating" : "link" });
     if (anchor?.hasAttribute("data-contact")) track("contact_click", { target: anchor.getAttribute("href") });
     const action = event.target.closest("[data-action]")?.dataset.action;
