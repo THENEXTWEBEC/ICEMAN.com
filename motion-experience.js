@@ -21,6 +21,7 @@
     staged.forEach((element) => { element.classList.add("scene-ready"); observer.observe(element); });
 
     const hero = root.querySelector(".home-hero");
+    const heroJourney = root.querySelector("[data-hero-journey]");
     const depthLayers = hero ? [...hero.querySelectorAll("[data-pointer-depth]")] : [];
     let pointerFrame = 0;
     let pointerX = 0;
@@ -60,6 +61,27 @@
         scene.style.setProperty("--scene-shift-small", `${((.5 - progress) * 20).toFixed(1)}px`);
         scene.style.setProperty("--scene-scale", (0.93 + progress * .11).toFixed(3));
       });
+      if (hero && heroJourney) {
+        const journeyBounds = heroJourney.getBoundingClientRect();
+        const stickyTop = Number.parseFloat(getComputedStyle(hero).top) || 0;
+        const scrollable = Math.max(1, heroJourney.offsetHeight - hero.offsetHeight);
+        const progress = clamp((stickyTop - journeyBounds.top) / scrollable);
+        const storyIn = clamp((progress - .25) / .2);
+        const storyOut = clamp((1 - progress) / .12);
+        const compact = innerWidth <= 640;
+        hero.style.setProperty("--journey-progress", progress.toFixed(4));
+        hero.style.setProperty("--journey-copy-opacity", clamp(1 - progress * 3.7).toFixed(3));
+        hero.style.setProperty("--journey-copy-y", `${(-progress * 76).toFixed(1)}px`);
+        hero.style.setProperty("--journey-story-opacity", Math.min(storyIn, storyOut).toFixed(3));
+        hero.style.setProperty("--journey-story-y", `${((1 - storyIn) * 42 - progress * 18).toFixed(1)}px`);
+        hero.style.setProperty("--journey-pack-x", `${(-hero.clientWidth * progress * (compact ? .14 : .24)).toFixed(1)}px`);
+        hero.style.setProperty("--journey-pack-y", `${(-hero.clientHeight * progress * (compact ? .025 : .065)).toFixed(1)}px`);
+        hero.style.setProperty("--journey-pack-scale", (1 + progress * (compact ? .12 : .28)).toFixed(3));
+        hero.style.setProperty("--journey-pack-rotate", `${(-progress * 8).toFixed(2)}deg`);
+        hero.style.setProperty("--journey-bg-y", `${(progress * 58).toFixed(1)}px`);
+        hero.style.setProperty("--journey-bg-scale", (1 + progress * .075).toFixed(3));
+        hero.style.setProperty("--journey-shade-opacity", (1 - progress * .42).toFixed(3));
+      }
     };
     const scheduleScroll = () => { if (!scrollFrame) scrollFrame = requestAnimationFrame(updateScroll); };
     addEventListener("scroll", scheduleScroll, { passive:true, signal });
