@@ -8,10 +8,10 @@
 .home-inline-link{display:inline-flex;align-items:center;gap:12px;width:max-content;max-width:100%;padding:6px 0;border-bottom:1px solid currentColor;color:var(--home-navy);font-size:14px;font-weight:700;line-height:1.4;transition:gap .25s var(--ease),color .25s var(--ease)}
 .home-inline-link:hover{gap:18px;color:#08799e}
 .home-inline-link .thin-arrow{color:currentColor}
-.home-hero{position:relative;display:flex;min-height:min(740px,calc(100dvh - 76px));overflow:hidden;align-items:center;background:#dcecf3;isolation:isolate}
+.home-hero{position:relative;display:flex;min-height:calc(100dvh - 76px);overflow:hidden;align-items:center;background:#dcecf3;isolation:isolate}
 .home-hero-image,.home-hero-shade{position:absolute;inset:0}
 .home-hero-image img{width:100%;height:100%;object-fit:cover;object-position:center 48%;animation:home-image-enter 1.3s var(--ease) both}
-.home-hero-shade{background:linear-gradient(90deg,rgba(238,248,251,.97) 0%,rgba(238,248,251,.86) 27%,rgba(238,248,251,.3) 50%,transparent 70%)}
+.home-hero-shade{background:linear-gradient(90deg,rgba(238,248,251,.9) 0%,rgba(238,248,251,.68) 28%,rgba(238,248,251,.18) 52%,transparent 72%)}
 .home-hero-inner{position:relative;display:flex;min-height:inherit;align-items:center;padding-top:26px;padding-bottom:60px}
 .home-hero-copy{max-width:540px;animation:home-copy-enter .8s var(--ease) both}
 .home-hero h1{max-width:550px;margin:17px 0 20px;color:var(--home-navy);font-size:clamp(56px,6.7vw,102px);font-weight:700;letter-spacing:-.08em;line-height:.94;text-wrap:balance}
