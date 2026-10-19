@@ -10,7 +10,7 @@
     if (reduced.matches) return;
     const controller = new AbortController();
     const { signal } = controller;
-    const staged = [...root.querySelectorAll(".home-intro,.home-categories,.home-showcase,.home-recipes,.home-stockists,.home-business,.home-contact,.editorial-card,.business-page")];
+    const staged = [...root.querySelectorAll(".home-categories,.home-showcase,.home-recipes,.home-stockists,.home-business,.home-contact,.editorial-card,.business-page")];
     const observer = new IntersectionObserver((entries) => {
       for (const entry of entries) {
         if (!entry.isIntersecting) continue;
@@ -45,7 +45,7 @@
       }, { signal });
     }
 
-    const scenes = [...root.querySelectorAll(".home-hero,.home-intro,.home-recipes,.home-business")];
+    const scenes = [...root.querySelectorAll(".home-hero,.home-recipes,.home-business")];
     let scrollFrame = 0;
     const updateScroll = () => {
       scrollFrame = 0;
