@@ -87,7 +87,6 @@ body{overflow-x:clip}
 .home-business.scene-visible .home-business-image{clip-path:inset(0 round 46% 46% 3px 3px)}
 .home-business-image img{transform:scale(1.08) translateY(var(--scene-shift-medium,0px));will-change:transform}
 .home-business-copy{position:relative}
-.home-business-copy:before{position:absolute;left:-27px;top:-35px;width:80px;height:80px;content:"✳︎";color:#a5d7e1;font-family:Arial,sans-serif;font-size:78px;line-height:1;opacity:.5;z-index:-1}
 .home-contact{position:relative;overflow:hidden;background:#dceef1}
 .home-contact:after{position:absolute;right:-100px;bottom:-250px;width:500px;aspect-ratio:1;content:"";border:1px solid #a5ced6;border-radius:50%;box-shadow:0 0 0 60px rgba(255,255,255,.14),0 0 0 125px rgba(255,255,255,.1);pointer-events:none}
 .home-contact-inner{position:relative;z-index:1}
@@ -400,3 +399,4 @@ a:focus-visible,button:focus-visible{outline:3px solid #087fa6;outline-offset:4p
 }
 .home-hero-copy>p.hero-sequence{animation-delay:.3s}
 .home-hero-actions.hero-sequence{animation-delay:.4s}
+
