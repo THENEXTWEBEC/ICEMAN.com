@@ -74,10 +74,7 @@ body{overflow-x:clip}
 .home-recipe-grid{grid-template-columns:1.18fr .87fr .87fr;align-items:start;gap:22px}
 .home-recipe-2{margin-top:86px}
 .home-recipe-3{margin-top:28px}
-.home-recipe-image{clip-path:inset(9% 9% 9% 9% round 160px 160px 5px 5px);transition:clip-path .9s var(--motion-out)}
-.home-recipes.scene-visible .home-recipe-image{clip-path:inset(0 round 160px 160px 5px 5px)}
-.home-recipe:nth-child(2) .home-recipe-image{transition-delay:.14s}
-.home-recipe:nth-child(3) .home-recipe-image{transition-delay:.28s}
+.home-recipe-image{clip-path:none}
 .home-recipe-image img{transform:scale(1.04) translateY(var(--scene-shift-small,0px));transition:transform .8s var(--motion-out)}
 .home-recipe:hover .home-recipe-image img{transform:scale(1.1)}
 .home-stockists{background:#e8f3f4}
