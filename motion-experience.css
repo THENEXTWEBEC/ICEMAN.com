@@ -351,3 +351,52 @@ body{overflow-x:clip}
   .home-recipe{width:100%;max-width:520px;margin-inline:auto;scroll-snap-align:none}
   .home-recipe>a{width:100%}
 }
+
+/* Native touch scrolling must remain available in both axes on every rail. */
+.category-grid,.featured-track,.related-track,.category-chips,.stockists-track,
+.editorial-rail,.home-category-rail,.showcase-accordion{touch-action:pan-x pan-y pinch-zoom}
+[data-nav-section],#productos-destacados{scroll-margin-top:calc(var(--header-height) + var(--safe-top) + 12px)}
+a:focus-visible,button:focus-visible{outline:3px solid #087fa6;outline-offset:4px}
+@media(max-width:820px){
+  /* Tablets use the same native carousel; five compressed accordion columns
+     cannot accommodate readable names and usable product links. */
+  .showcase-accordion{display:flex;width:100%;height:auto;gap:12px;margin:0;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x proximity;scrollbar-width:none;border-radius:9px}
+  .showcase-panel,.showcase-panel.is-selected,.showcase-panel:not(.is-selected){display:flex;flex:0 0 100%;min-width:0;min-height:520px;flex-direction:column;scroll-snap-align:start;scroll-snap-stop:normal;border:0;border-radius:9px;transition:none}
+  .showcase-select{position:relative;inset:auto;display:flex;min-height:350px;flex-direction:column;align-items:center;padding:55px 20px 16px}
+  .showcase-index{top:16px;left:20px;font-size:12px}
+  .showcase-pack,.showcase-panel.is-selected .showcase-pack{position:static;width:100%;height:220px;object-fit:contain;transform:none;transition:transform .35s var(--motion-out)}
+  .showcase-panel:hover .showcase-pack{transform:none}
+  .showcase-product-name,.showcase-panel.is-selected .showcase-product-name,.showcase-panel:not(.is-selected) .showcase-product-name{position:static;max-width:100%;width:100%;margin-top:18px;overflow-wrap:normal;font-size:clamp(24px,5vw,32px);line-height:1.1;text-align:left;white-space:normal;writing-mode:horizontal-tb;transform:none;transition:none}
+  .showcase-detail,.showcase-panel.is-selected .showcase-detail{position:relative;inset:auto;width:100%;max-width:none;margin-top:auto;padding:0 20px 18px;opacity:1;visibility:visible;transform:none;pointer-events:auto;transition:none}
+  .showcase-detail p{max-width:none;display:block;font-size:14px;line-height:1.5}
+  .showcase-detail a{min-height:44px;font-size:14px}
+  .showcase-footer{display:grid;grid-template-columns:auto minmax(28px,1fr) auto;gap:14px;align-items:center}
+  .showcase-progress{width:100%}
+  .showcase-controls button{width:48px;height:48px}
+  .mobile-panel a{flex-shrink:0}
+  .home-hero{top:calc(var(--header-height) + var(--safe-top))}
+  .editorial-search input{font-size:16px}
+}
+@media(max-width:640px){
+  /* Stable viewport units prevent toolbar expansion from resizing the story
+     during a touch scroll; keep the original sticky scene and its depth. */
+  .home-hero-journey{height:max(1100px,160svh)}
+  .home-hero{height:max(670px,calc(100svh - var(--header-height) - var(--safe-top)));min-height:max(670px,calc(100svh - var(--header-height) - var(--safe-top)))}
+  .home-hero-actions{flex-wrap:wrap;gap:12px}
+  .hero-scroll{font-size:10px;letter-spacing:.06em}
+  .home-hero-actions .btn{min-height:48px}
+}
+@media(max-height:500px) and (orientation:landscape){
+  .home-hero-journey{height:auto}
+  .home-hero{position:relative;top:auto;height:auto;min-height:640px}
+}
+@media(prefers-reduced-motion:reduce){
+  .home-hero-journey{height:auto}
+  .home-hero{position:relative;top:auto;height:auto}
+}
+@media(min-width:821px){
+  /* Reserve the title band below the active pack, including its hover lift. */
+  .showcase-panel.is-selected .showcase-pack{top:10%;height:52%}
+}
+.home-hero-copy>p.hero-sequence{animation-delay:.3s}
+.home-hero-actions.hero-sequence{animation-delay:.4s}
