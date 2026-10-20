@@ -48,11 +48,26 @@
 
     const scenes = [...root.querySelectorAll(".home-hero,.home-recipes,.home-business")];
     let scrollFrame = 0;
+    let heroMetrics = null;
+    const measureHero = () => {
+      heroMetrics = hero && heroJourney ? {
+        top:Number.parseFloat(getComputedStyle(hero).top) || 0,
+        distance:Math.max(1, heroJourney.offsetHeight - hero.offsetHeight),
+        width:hero.clientWidth, height:hero.clientHeight
+      } : null;
+    };
+    const layoutObserver = new ResizeObserver(() => { measureHero(); scheduleScroll(); });
+    if (hero) layoutObserver.observe(hero);
+    if (heroJourney) layoutObserver.observe(heroJourney);
+    measureHero();
     const updateScroll = () => {
       scrollFrame = 0;
       const height = innerHeight || 1;
-      scenes.forEach((scene) => {
-        const bounds = scene.getBoundingClientRect();
+      // Complete geometry reads before custom-property writes to avoid repeated
+      // forced layout when scenes enter and leave the viewport.
+      const sceneBounds = scenes.map(scene => [scene, scene.getBoundingClientRect()]);
+      const journeyBounds = heroJourney?.getBoundingClientRect();
+      sceneBounds.forEach(([scene, bounds]) => {
         if (bounds.bottom < 0 || bounds.top > height) return;
         const progress = clamp((height - bounds.top) / (height + bounds.height));
         scene.style.setProperty("--hero-shift", `${(progress * 36).toFixed(1)}px`);
@@ -61,11 +76,8 @@
         scene.style.setProperty("--scene-shift-small", `${((.5 - progress) * 20).toFixed(1)}px`);
         scene.style.setProperty("--scene-scale", (0.93 + progress * .11).toFixed(3));
       });
-      if (hero && heroJourney) {
-        const journeyBounds = heroJourney.getBoundingClientRect();
-        const stickyTop = Number.parseFloat(getComputedStyle(hero).top) || 0;
-        const scrollable = Math.max(1, heroJourney.offsetHeight - hero.offsetHeight);
-        const progress = clamp((stickyTop - journeyBounds.top) / scrollable);
+      if (heroMetrics && journeyBounds && journeyBounds.bottom >= 0 && journeyBounds.top <= height) {
+        const progress = clamp((heroMetrics.top - journeyBounds.top) / heroMetrics.distance);
         const storyIn = clamp((progress - .25) / .2);
         const storyOut = clamp((1 - progress) / .12);
         const compact = innerWidth <= 640;
@@ -74,8 +86,8 @@
         hero.style.setProperty("--journey-copy-y", `${(-progress * 76).toFixed(1)}px`);
         hero.style.setProperty("--journey-story-opacity", Math.min(storyIn, storyOut).toFixed(3));
         hero.style.setProperty("--journey-story-y", `${((1 - storyIn) * 42 - progress * 18).toFixed(1)}px`);
-        hero.style.setProperty("--journey-pack-x", `${(-hero.clientWidth * progress * (compact ? .14 : .24)).toFixed(1)}px`);
-        hero.style.setProperty("--journey-pack-y", `${(-hero.clientHeight * progress * (compact ? .025 : .065)).toFixed(1)}px`);
+        hero.style.setProperty("--journey-pack-x", `${(-heroMetrics.width * progress * (compact ? .14 : .24)).toFixed(1)}px`);
+        hero.style.setProperty("--journey-pack-y", `${(-heroMetrics.height * progress * (compact ? .025 : .065)).toFixed(1)}px`);
         hero.style.setProperty("--journey-pack-scale", (1 + progress * (compact ? .12 : .28)).toFixed(3));
         hero.style.setProperty("--journey-pack-rotate", `${(-progress * 8).toFixed(2)}deg`);
         hero.style.setProperty("--journey-bg-y", `${(progress * 58).toFixed(1)}px`);
@@ -101,9 +113,16 @@
     cleanup = () => {
       controller.abort();
       observer.disconnect();
+      layoutObserver.disconnect();
+      staged.forEach(element => element.classList.remove("scene-ready"));
       if (pointerFrame) cancelAnimationFrame(pointerFrame);
       if (scrollFrame) cancelAnimationFrame(scrollFrame);
     };
   }
+  reduced.addEventListener("change", () => {
+    cleanup();
+    document.documentElement.classList.toggle("no-motion", reduced.matches);
+    if (!reduced.matches) mount(document.getElementById("app"));
+  });
   window.ICEMAN_MOTION = { mount, unmount:() => cleanup() };
 })();

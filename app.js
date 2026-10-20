@@ -17,6 +17,7 @@
   let scrollSpyCleanup = null;
   let motionObserver = null;
   let stockistsCleanup = null;
+  let showcaseCleanup = null;
   let recipeImageObserver = null;
 
   const track = (eventName, params = {}) => {
@@ -132,6 +133,7 @@
     const sections = [...root.querySelectorAll("[data-nav-section]")];
     if (sections.length < 2) return;
     let frame = 0;
+    let activeKey = null;
     const update = () => {
       frame = 0;
       const headerHeight = root.querySelector(".site-header")?.getBoundingClientRect().height || 0;
@@ -141,7 +143,7 @@
         if (section.getBoundingClientRect().top <= activationLine) current = section.dataset.navSection;
         else break;
       }
-      setActiveNav(current);
+      if (current !== activeKey) { setActiveNav(current); activeKey = current; }
     };
     const onScroll = () => {
       if (!frame) frame = requestAnimationFrame(update);
@@ -177,6 +179,8 @@
 
   function pageShell(content, path) {
     window.ICEMAN_MOTION?.unmount();
+    showcaseCleanup?.();
+    showcaseCleanup = null;
     stockistsCleanup?.();
     stockistsCleanup = null;
     motionObserver?.disconnect();
@@ -244,7 +248,7 @@
       { name:"Casa Deli", logo:"casa-deli-clean.webp" }
     ];
     const stockistItems = stockists.map(({ name, logo }) => `<div class="stockist-logo${logo === "casa-deli-clean.webp" ? " stockist-logo-casa-deli" : ""}" role="listitem"><img src="${projectBase}/assets/stockists/${logo}" alt="${escapeHTML(name)}" loading="lazy" decoding="async"></div>`).join("");
-    return `<div class="home-hero-journey" data-hero-journey><section class="home-hero" id="inicio" data-nav-section="home"><div class="home-hero-image" data-parallax="0.16"><img src="${projectBase}/assets/editorial/golden-fries-alpine.png" alt="Papas doradas flotando sobre un paisaje alpino congelado" fetchpriority="high" decoding="async" width="1672" height="941"></div><div class="home-hero-shade"></div><div class="hero-orbit hero-orbit-one" data-pointer-depth="12" aria-hidden="true"></div><div class="hero-orbit hero-orbit-two" data-pointer-depth="-8" aria-hidden="true"></div><div class="wrap home-hero-inner"><div class="home-hero-copy"><span class="home-kicker hero-sequence">Alimentos congelados ICEMAN</span><h1><span class="hero-line"><span>Sabor a</span></span><span class="hero-line"><em>tu ritmo.</em></span></h1><p class="hero-sequence">Productos prácticos para disfrutar a tu manera, todos los días.</p><div class="home-hero-actions hero-sequence"><a class="btn btn-primary magnetic" href="/productos" data-link>Explorar productos ${iconArrow()}</a><a class="home-hero-link" href="/#donde-encontrarnos" data-link>Encuéntranos ${iconArrow()}</a></div></div><div class="hero-scroll-story" aria-hidden="true"><span>ICEMAN · Congelados</span><strong>Listos cuando<br>tú lo estás.</strong><small>Productos prácticos para cada día</small></div><div class="hero-pack-wrap" data-pointer-depth="-16"><span class="hero-pack-halo" aria-hidden="true"></span><img class="hero-pack" src="${asset(homeShowcase[0].product.image)}" alt="Empaque oficial de ${escapeHTML(homeShowcase[0].product.name)} ICEMAN" fetchpriority="high" decoding="async"></div><div class="hero-journey-progress" aria-hidden="true"><span>01</span><i><b></b></i><span>02</span></div><span class="hero-side-note" aria-hidden="true">Del congelador a tu mesa · ICEMAN Ecuador</span><a class="hero-scroll" href="#productos-destacados" aria-label="Explorar productos destacados"><span aria-hidden="true">↓</span> Desliza para descubrir</a></div></section></div>
+    return `<div class="home-hero-journey" data-hero-journey><section class="home-hero" id="inicio" data-nav-section="home"><div class="home-hero-image" data-parallax="0.16"><img src="${projectBase}/assets/editorial/golden-fries-alpine-1672.webp" srcset="${projectBase}/assets/editorial/golden-fries-alpine-768.webp 768w, ${projectBase}/assets/editorial/golden-fries-alpine-1672.webp 1672w" sizes="100vw" alt="Papas doradas flotando sobre un paisaje alpino congelado" fetchpriority="high" decoding="async" width="1672" height="941"></div><div class="home-hero-shade"></div><div class="hero-orbit hero-orbit-one" data-pointer-depth="12" aria-hidden="true"></div><div class="hero-orbit hero-orbit-two" data-pointer-depth="-8" aria-hidden="true"></div><div class="wrap home-hero-inner"><div class="home-hero-copy"><span class="home-kicker hero-sequence">Alimentos congelados ICEMAN</span><h1><span class="hero-line"><span>Sabor a</span></span><span class="hero-line"><em>tu ritmo.</em></span></h1><p class="hero-sequence">Productos prácticos para disfrutar a tu manera, todos los días.</p><div class="home-hero-actions hero-sequence"><a class="btn btn-primary magnetic" href="/productos" data-link>Explorar productos ${iconArrow()}</a><a class="home-hero-link" href="/#donde-encontrarnos" data-link>Encuéntranos ${iconArrow()}</a></div></div><div class="hero-scroll-story" aria-hidden="true"><span>ICEMAN · Congelados</span><strong>Listos cuando<br>tú lo estás.</strong><small>Productos prácticos para cada día</small></div><div class="hero-pack-wrap" data-pointer-depth="-16"><span class="hero-pack-halo" aria-hidden="true"></span><img class="hero-pack" src="${asset(homeShowcase[0].product.image)}" alt="Empaque oficial de ${escapeHTML(homeShowcase[0].product.name)} ICEMAN" fetchpriority="high" decoding="async"></div><div class="hero-journey-progress" aria-hidden="true"><span>01</span><i><b></b></i><span>02</span></div><span class="hero-side-note" aria-hidden="true">Del congelador a tu mesa · ICEMAN Ecuador</span><a class="hero-scroll" href="#productos-destacados" aria-label="Explorar productos destacados"><span aria-hidden="true">↓</span> Desliza para descubrir</a></div></section></div>
     <section class="home-showcase" id="productos-destacados" aria-labelledby="showcase-title" data-nav-section="products"><div class="wrap"><div class="home-showcase-heading"><span class="home-kicker">Productos que se mueven contigo</span><h2 id="showcase-title">Elige. Descubre. Disfruta.</h2><p>Toca un empaque para acercarlo. Los demás se mueven y puedes explorar cada producto.</p></div><div class="showcase-accordion" id="showcase-accordion" aria-label="Productos destacados de ICEMAN">${showcasePanels}</div><div class="showcase-footer"><span class="showcase-count" aria-live="polite">01 <i>/</i> 0${homeShowcase.length}</span><div class="showcase-progress" aria-hidden="true"><span></span></div><div class="showcase-controls"><button type="button" data-showcase-step="-1" aria-label="Producto anterior">${iconArrow("left")}</button><button type="button" data-showcase-step="1" aria-label="Producto siguiente">${iconArrow()}</button></div></div></div></section>
     <section class="home-stockists" id="donde-encontrarnos" aria-labelledby="stockists-title" data-nav-section="stockists"><div class="wrap home-stockists-head"><span class="home-kicker">Dónde encontrarnos</span><h2 id="stockists-title">IceMan, cerca de ti.</h2><p>Encuentra productos ICEMAN en las principales cadenas del país.</p></div><div class="stockists-track" id="stockists-track" role="list" aria-label="Establecimientos donde encuentras productos ICEMAN"><div class="stockists-set">${stockistItems}</div><div class="stockists-set" aria-hidden="true" inert>${stockistItems}</div></div><div class="wrap stockists-note">La disponibilidad y el surtido pueden variar según el establecimiento y el local.</div></section>
     <section class="home-categories" id="categorias" aria-labelledby="categories-title"><div class="wrap"><div class="home-section-heading"><span class="home-kicker">Del congelador a tu mesa</span><h2 id="categories-title">Hay mucho por descubrir.</h2><p>Encuentra tu próximo favorito entre las categorías del catálogo.</p></div><div class="home-category-rail">${categoryLinks}</div><a class="home-inline-link" href="/productos" data-link>Ver catálogo completo ${iconArrow()}</a></div></section>
@@ -258,7 +262,11 @@
     if (!accordion || !homeShowcase.length) return;
     const panels = [...accordion.querySelectorAll(".showcase-panel")];
     let selected = 0;
-    const select = (index) => {
+    const controller = new AbortController();
+    const { signal } = controller;
+    const mobile = matchMedia("(max-width: 820px)");
+    let scrollFrame = 0;
+    const select = (index, { align = true, animate = true } = {}) => {
       const previous = selected;
       selected = (index + homeShowcase.length) % homeShowcase.length;
       if (previous === selected) return;
@@ -266,16 +274,16 @@
         const active = index === selected;
         panel.classList.toggle("is-selected", active);
         panel.querySelector(".showcase-select").setAttribute("aria-pressed", String(active));
-        panel.querySelector(".showcase-detail").setAttribute("aria-hidden", String(!active));
-        panel.querySelector(".showcase-detail a").tabIndex = active ? 0 : -1;
+        panel.querySelector(".showcase-detail").setAttribute("aria-hidden", String(!active && !mobile.matches));
+        panel.querySelector(".showcase-detail a").tabIndex = active || mobile.matches ? 0 : -1;
       });
-      if (matchMedia("(max-width: 640px)").matches) {
+      if (align && mobile.matches) {
         const panel = panels[selected];
         const panelLeft = panel.getBoundingClientRect().left - accordion.getBoundingClientRect().left + accordion.scrollLeft;
         accordion.scrollTo({ left:panelLeft, behavior:matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
       }
       const pack = panels[selected].querySelector(".showcase-pack");
-      if (!matchMedia("(prefers-reduced-motion: reduce)").matches && pack?.animate) {
+      if (animate && !matchMedia("(prefers-reduced-motion: reduce)").matches && pack?.animate) {
         pack.getAnimations().forEach((animation) => animation.cancel());
         pack.animate([{ opacity:0, translate:`${selected > previous ? 48 : -48}px 24px`, rotate:`${selected > previous ? 8 : -8}deg`, scale:.88 },{ opacity:1, translate:"0 0", rotate:"0deg", scale:1 }], { duration:720, easing:"cubic-bezier(.16,1,.3,1)" });
       }
@@ -285,9 +293,33 @@
       track("product_view", { product_slug:homeShowcase[selected].product.slug, placement:"home_showcase" });
     };
     root.querySelectorAll("[data-showcase-step]").forEach((button) => button.addEventListener("click", () => select(selected + Number(button.dataset.showcaseStep))));
-    let touchStart = null;
-    accordion.addEventListener("touchstart", (event) => { touchStart = event.touches[0]?.clientX ?? null; }, { passive:true });
-    accordion.addEventListener("touchend", (event) => { if (touchStart === null) return; const delta = event.changedTouches[0].clientX - touchStart; touchStart = null; if (Math.abs(delta) > 42) select(selected + (delta < 0 ? 1 : -1)); }, { passive:true });
+    // Selection follows the native scroll position, including momentum and reversals.
+    // Never turn a vertical or diagonal touch gesture into a scripted swipe.
+    const syncSelection = () => {
+      scrollFrame = 0;
+      if (!mobile.matches) return;
+      const left = accordion.getBoundingClientRect().left;
+      const nearest = panels.reduce((best, panel, index) =>
+        Math.abs(panel.getBoundingClientRect().left - left) < Math.abs(panels[best].getBoundingClientRect().left - left) ? index : best, 0);
+      select(nearest, { align:false, animate:false });
+    };
+    accordion.addEventListener("scroll", () => {
+      if (!scrollFrame) scrollFrame = requestAnimationFrame(syncSelection);
+    }, { passive:true, signal });
+    const onLayout = () => {
+      panels.forEach((panel, index) => {
+        panel.querySelector(".showcase-detail").setAttribute("aria-hidden", String(index !== selected && !mobile.matches));
+        panel.querySelector(".showcase-detail a").tabIndex = index === selected || mobile.matches ? 0 : -1;
+      });
+      if (mobile.matches) accordion.scrollTo({ left:panels[selected].offsetLeft - panels[0].offsetLeft, behavior:"instant" });
+    };
+    const resizeObserver = new ResizeObserver(onLayout);
+    resizeObserver.observe(accordion);
+    showcaseCleanup = () => {
+      controller.abort();
+      resizeObserver.disconnect();
+      if (scrollFrame) cancelAnimationFrame(scrollFrame);
+    };
     accordion.querySelectorAll("[data-home-product]").forEach((button) => {
       button.addEventListener("click", () => select(Number(button.dataset.homeProduct)));
       button.addEventListener("keydown", (event) => {
@@ -298,7 +330,7 @@
         panels[next].querySelector(".showcase-select").focus();
       });
     });
-    if (matchMedia("(min-width: 641px) and (pointer: fine)").matches) {
+    if (matchMedia("(min-width: 821px) and (hover: hover) and (pointer: fine)").matches) {
       panels.forEach((panel, index) => panel.addEventListener("mouseenter", () => select(index)));
     }
   }
@@ -317,7 +349,7 @@
     track.scrollLeft = setWidth;
     const tick = (now) => {
       frame = 0;
-      if (!visible || reduced.matches) return;
+      if (!visible || paused || reduced.matches) return;
       if (!paused) {
         const elapsed = previous ? Math.min(now - previous, 50) : 16;
         track.scrollLeft -= elapsed * pixelsPerMillisecond;
@@ -326,8 +358,8 @@
       previous = now;
       frame = requestAnimationFrame(tick);
     };
-    const pause = () => { paused = true; };
-    const resume = () => { paused = false; previous = 0; };
+    const pause = () => { paused = true; if (frame) cancelAnimationFrame(frame); frame = 0; };
+    const resume = () => { paused = false; previous = 0; if (visible && !frame && !reduced.matches) frame = requestAnimationFrame(tick); };
     const observer = new IntersectionObserver(([entry]) => {
       visible = entry.isIntersecting && !document.hidden;
       previous = 0;
@@ -347,7 +379,8 @@
     track.addEventListener("focusout", resume);
     track.addEventListener("touchstart", pause, { passive:true });
     track.addEventListener("touchend", resume, { passive:true });
-    stockistsCleanup = () => { cancelAnimationFrame(frame); observer.disconnect(); document.removeEventListener("visibilitychange", onVisibility); window.removeEventListener("resize", onResize); reduced.removeEventListener("change", onMotion); track.removeEventListener("mouseenter", pause); track.removeEventListener("mouseleave", resume); track.removeEventListener("focusin", pause); track.removeEventListener("focusout", resume); track.removeEventListener("touchstart", pause); track.removeEventListener("touchend", resume); };
+    track.addEventListener("touchcancel", resume, { passive:true });
+    stockistsCleanup = () => { cancelAnimationFrame(frame); observer.disconnect(); document.removeEventListener("visibilitychange", onVisibility); window.removeEventListener("resize", onResize); reduced.removeEventListener("change", onMotion); track.removeEventListener("mouseenter", pause); track.removeEventListener("mouseleave", resume); track.removeEventListener("focusin", pause); track.removeEventListener("focusout", resume); track.removeEventListener("touchstart", pause); track.removeEventListener("touchend", resume); track.removeEventListener("touchcancel", resume); };
   }
 
   function breadcrumbs(parts) {
@@ -698,11 +731,22 @@
       const frame=document.createElement("iframe"); frame.className="contact-map"; frame.title="Mapa de ICEMAN, matriz en Carcelén Industrial, Quito"; frame.loading="lazy"; frame.referrerPolicy="no-referrer-when-downgrade"; frame.allowFullscreen=true; frame.src="https://maps.google.com/maps?q=Antonio%20Castillo%20OE1-464%20y%20Av.%20Juan%20de%20Selis%2C%20Carcel%C3%A9n%20Industrial%2C%20Quito%2C%20Ecuador&output=embed"; event.target.closest(".contact-map-placeholder").replaceWith(frame); return;
     }
     if (action === "cookie-settings") { event.preventDefault(); consentUI(true); document.querySelector('[data-consent="reject"]')?.focus(); }
-    if (action === "search") { searchOpened = !searchOpened; menuOpened = false; render(); }
-    if (action === "close-search") { searchOpened = false; render(); }
-    if (action === "menu") {
-      menuOpened = !menuOpened; searchOpened = false; document.body.classList.toggle("menu-open", menuOpened); render();
-      if (menuOpened) requestAnimationFrame(() => root.querySelector(".mobile-panel a")?.focus());
+    if (action === "search" || action === "close-search" || action === "menu") {
+      menuOpened = action === "menu" ? !menuOpened : false;
+      searchOpened = action === "search" ? !searchOpened : false;
+      document.body.classList.toggle("menu-open", menuOpened);
+      const menu = root.querySelector(".mobile-panel");
+      menu.classList.toggle("open", menuOpened);
+      menu.inert = !menuOpened;
+      const toggle = root.querySelector('[data-action="menu"]');
+      toggle.setAttribute("aria-expanded", String(menuOpened));
+      toggle.setAttribute("aria-label", menuOpened ? "Cerrar menú" : "Abrir menú");
+      toggle.querySelector(".menu-lines").classList.toggle("is-open", menuOpened);
+      root.querySelector(".search-bar").hidden = !searchOpened;
+      root.querySelector('[data-action="search"]').setAttribute("aria-expanded", String(searchOpened));
+      if (menuOpened) menu.querySelector("a")?.focus({ preventScroll:true });
+      else if (searchOpened) root.querySelector("#site-search")?.focus({ preventScroll:true });
+      else root.querySelector(`[data-action="${action === "menu" ? "menu" : "search"}"]`)?.focus({ preventScroll:true });
     }
     if (action === "clear-search") { searchValue = ""; navigate("/productos"); }
     const filter = event.target.closest("[data-filter]")?.dataset.filter;
@@ -858,7 +902,21 @@
     clearFieldError(event);
     if (event.target.name === "consent" && event.target.checked) { const err = root.querySelector(".consent-error"); if (err) err.style.display = "none"; }
   });
-  document.addEventListener("keydown", (event) => { if (event.key === "Escape") { if (menuOpened || searchOpened) { menuOpened = false; searchOpened = false; document.body.classList.remove("menu-open"); render(); } } });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Tab" && menuOpened) {
+      const controls = [root.querySelector('[data-action="menu"]'), ...root.querySelectorAll('.mobile-panel a')];
+      const current = controls.indexOf(document.activeElement);
+      if (event.shiftKey && current <= 0) { event.preventDefault(); controls.at(-1)?.focus(); }
+      else if (!event.shiftKey && (current < 0 || current === controls.length - 1)) { event.preventDefault(); controls[0]?.focus(); }
+    }
+    if (event.key === "Escape") { if (menuOpened || searchOpened) { menuOpened = false; searchOpened = false; document.body.classList.remove("menu-open");
+      root.querySelector(".mobile-panel")?.classList.remove("open");
+      root.querySelector(".mobile-panel").inert = true;
+      root.querySelector(".search-bar").hidden = true;
+      root.querySelectorAll('[data-action="menu"],[data-action="search"]').forEach(button => button.setAttribute("aria-expanded", "false"));
+      root.querySelector(".menu-lines")?.classList.remove("is-open");
+      root.querySelector('[data-action="menu"]').setAttribute("aria-label", "Abrir menú");
+      root.querySelector('[data-action="menu"]')?.focus({ preventScroll:true }); } } });
   window.addEventListener("popstate", () => { render(); scrollToHash(window.location.hash, "auto"); });
   if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.documentElement.classList.add("no-motion");
   const restoredRoute = new URLSearchParams(window.location.search).get("__route");
