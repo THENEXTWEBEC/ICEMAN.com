@@ -122,7 +122,7 @@ window.ICEMAN_EDITORIAL = {
       category: "Consejos",
       description: "La Zanahoria ondulada aporta una forma diferente a tus platos de todos los días.",
       image: "editorial/04-corte-zanahoria.webp", products: ["zanahoria-ondulada"], tags: ["zanahoria", "corte", "vegetales"],
-      body: ["Las formas y cortes ayudan a darle variedad visual a una preparación. La Zanahoria ondulada ICEMAN está disponible en presentación de 500 g.", "El producto es precocido y ultracongelado. Para conocer cómo prepararlo, sigue las instrucciones indicadas en el catálogo y en su empaque."]
+      body: ["Las formas y cortes ayudan a darle variedad visual a una preparación. La Zanahoria ondulada ICEMAN está disponible en presentación de 500 g.", "El producto es precocido y congelado. Para conocer cómo prepararlo, sigue las instrucciones indicadas en el catálogo y en su empaque."]
     },
     {
       slug: "test-rapido-que-prefieres",
