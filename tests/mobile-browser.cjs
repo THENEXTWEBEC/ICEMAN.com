@@ -14,21 +14,10 @@ const assert=require('node:assert/strict');
    await page.locator('[data-action="menu"]').click();
    await page.locator('#productos-destacados').scrollIntoViewIfNeeded();
    await page.waitForTimeout(300);
-   const geometry=await page.evaluate(()=>[...document.querySelectorAll('.showcase-panel')].map(p=>{const name=p.querySelector('.showcase-product-name').getBoundingClientRect(),pack=p.querySelector('.showcase-pack').getBoundingClientRect(),detail=p.querySelector('.showcase-detail').getBoundingClientRect();return {width:p.clientWidth,packBottom:pack.bottom,nameTop:name.top,nameBottom:name.bottom,detailTop:detail.top}}));
-   geometry.forEach(g=>{assert.ok(g.width>=width-80,`panel width ${width}`);assert.ok(g.packBottom<=g.nameTop,`pack overlap ${width}`);assert.ok(g.nameBottom<=g.detailTop,`copy overlap ${width}`)});
-   await page.locator('[data-showcase-step="1"]').click();await page.waitForTimeout(800);
-   assert.match(await page.locator('.showcase-count').innerText(),/02/);
-   await page.evaluate(()=>{const a=document.querySelector('.showcase-accordion');a.scrollTo({left:(a.clientWidth+12)*3,behavior:'instant'})});await page.waitForTimeout(200);
-   assert.match(await page.locator('.showcase-count').innerText(),/04/);
-   await page.locator('[data-showcase-step="1"]').click();await page.waitForTimeout(800);
-   assert.match(await page.locator('.showcase-count').innerText(),/01/);
-
-  }
-  if(width>820){
-   await page.locator('#productos-destacados').scrollIntoViewIfNeeded();
-   await page.waitForTimeout(800);
-   const g=await page.locator('.showcase-panel.is-selected').evaluate(p=>({pack:p.querySelector('.showcase-pack').getBoundingClientRect().bottom,name:p.querySelector('.showcase-product-name').getBoundingClientRect().top}));
-   assert.ok(g.pack<=g.name,'desktop product image must clear title');
+   const geometry=await page.locator('.discovery-card').evaluateAll(cards=>cards.map(p=>p.getBoundingClientRect().toJSON()));
+   geometry.forEach(g=>assert.equal(g.width,width/2,`two-column grid ${width}`));
+   assert.equal(geometry[0].left,0);
+   assert.equal(geometry[1].right,width);
   }
   for(const route of ['/productos' ,'/recetas','/empresas','/nosotros','/contacto','/privacidad','/terminos']){
    await page.evaluate(path=>{history.pushState({},'',path);dispatchEvent(new PopStateEvent('popstate'));scrollTo({top:0,behavior:'instant'})},route);
@@ -48,26 +37,21 @@ const assert=require('node:assert/strict');
  const main=await page.locator('main').elementHandle();
  await page.locator('[data-action="menu"]').click();
  assert.equal(await main.evaluate(el=>el.isConnected),true,'menu must preserve route DOM');
+ await page.locator('.mobile-panel a').last().waitFor({state:'visible'});
  await page.locator('.mobile-panel a').last().focus();await page.keyboard.press('Tab');
  assert.equal(await page.locator('[data-action="menu"]').evaluate(el=>el===document.activeElement),true);
  await page.keyboard.press('Escape');
  assert.equal(await page.locator('[data-action="menu"]').getAttribute('aria-expanded'),'false');
  const cdp=await page.context().newCDPSession(page);
  const touch=async(type,x,y)=>cdp.send('Input.dispatchTouchEvent',{type,touchPoints:type==='touchEnd'?[]:[{x,y}]});
- // Start a vertical gesture over the carousel: the document must move immediately.
- await page.evaluate(()=>{const y=document.querySelector('.showcase-accordion').getBoundingClientRect().top+scrollY;scrollTo({top:y-120,behavior:'instant'})});
+ // Start a vertical gesture over the product grid: the document must move immediately.
+ await page.evaluate(()=>{const y=document.querySelector('.discovery-grid').getBoundingClientRect().top+scrollY;scrollTo({top:y-120,behavior:'instant'})});
  const before=await page.evaluate(()=>scrollY);
  await touch('touchStart',190,390);
  for(let i=1;i<=6;i++){await touch('touchMove',190,390-i*24);await page.waitForTimeout(20)}
  await touch('touchEnd');await page.waitForTimeout(400);
- assert.ok(await page.evaluate(()=>scrollY)>before+40,'vertical scrolling over carousel stays free');
- assert.match(await page.locator('.showcase-count').innerText(),/01/);
- await page.evaluate(()=>{const y=document.querySelector('.showcase-accordion').getBoundingClientRect().top+scrollY;scrollTo({top:y-120,behavior:'instant'})});
- await touch('touchStart',330,350);
- for(let i=1;i<=8;i++){await touch('touchMove',330-i*33,350);await page.waitForTimeout(20)}
- await touch('touchEnd');await page.waitForTimeout(900);
- assert.ok(await page.locator('.showcase-accordion').evaluate(el=>el.scrollLeft)>100,'horizontal gesture uses native rail');
- assert.doesNotMatch(await page.locator('.showcase-count').innerText(),/^01/);
+ assert.ok(await page.evaluate(()=>scrollY)>before+40,'vertical scrolling over products stays free');
+ assert.equal(await page.locator('.discovery-card.is-revealed').count(),0,'scroll does not reveal or navigate');
  await page.emulateMedia({reducedMotion:'reduce'});await page.waitForTimeout(100);
  assert.equal(await page.locator('.home-hero').evaluate(el=>getComputedStyle(el).position),'relative');
  await page.emulateMedia({reducedMotion:'no-preference'});await page.waitForTimeout(100);

@@ -230,7 +230,7 @@
 
   function home() {
     const categoryLinks = categories.map((category, index) => `<a class="home-category" href="/productos/${category.slug}" data-link data-category-link="${category.slug}"><span class="home-category-number">0${index + 1}</span><span class="home-category-image"><img src="${asset(category.image)}" alt="" loading="lazy" decoding="async"></span><strong>${escapeHTML(category.name)}</strong>${iconArrow("up-right")}</a>`).join("");
-    const showcasePanels = homeShowcase.map(({ product, tone }, index) => `<article class="showcase-panel ${index === 0 ? "is-selected" : ""}" style="--panel-tone:${tone}"><div class="showcase-scene" aria-hidden="true"></div><button class="showcase-select" type="button" data-home-product="${index}" aria-label="Explorar ${escapeHTML(product.name)}" aria-pressed="${index === 0}"><span class="showcase-index">0${index + 1} / 0${homeShowcase.length}</span><img class="showcase-pack" src="${asset(product.image)}" alt="" loading="lazy" decoding="async"><span class="showcase-product-name">${escapeHTML(product.name)}</span></button><div class="showcase-detail" aria-hidden="${index !== 0}"><span>${escapeHTML(categoryLabel(product.category))}</span><p>${escapeHTML(product.description)}</p><a href="${productPath(product)}" data-link tabindex="${index === 0 ? 0 : -1}">Ver producto ${iconArrow()}</a></div></article>`).join("");
+    const showcasePanels = homeShowcase.map(({ product, tone }, index) => `<article class="discovery-card" style="--panel-tone:${tone}"><a class="discovery-link" href="${productPath(product)}" data-link data-product-link="${escapeHTML(product.slug)}" aria-label="Ver ${escapeHTML(product.name)}" aria-describedby="discovery-copy-${index}"><img class="discovery-pack" src="${asset(product.image)}" alt="" loading="lazy" decoding="async" width="480" height="480"><div class="discovery-copy" id="discovery-copy-${index}"><h3>${escapeHTML(product.name)}</h3><p>${escapeHTML(product.description)}</p><span class="discovery-cta">Ver producto ${iconArrow()}</span></div></a></article>`).join("");
     const recipeCards = editorial.recipes.slice(0, 3).map((recipe, index) => `<article class="home-recipe home-recipe-${index + 1}"><a href="/recetas/${recipe.slug}" data-link><div class="home-recipe-image"><img src="${editorialImage(recipe.image)}" alt="Plato preparado: ${escapeHTML(recipe.title)}" loading="lazy" decoding="async"></div><div class="home-recipe-copy"><span class="home-recipe-label">Idea con productos ICEMAN</span><h3>${escapeHTML(recipe.title)}</h3><span class="home-recipe-arrow">Ver receta ${iconArrow()}</span></div></a></article>`).join("");
     const stockists = [
       { name:"Supermaxi", logo:"supermaxi.png" },
@@ -249,7 +249,7 @@
     ];
     const stockistItems = stockists.map(({ name, logo }) => `<div class="stockist-logo${logo === "casa-deli-clean.webp" ? " stockist-logo-casa-deli" : ""}" role="listitem"><img src="${projectBase}/assets/stockists/${logo}" alt="${escapeHTML(name)}" loading="lazy" decoding="async"></div>`).join("");
     return `<div class="home-hero-journey" data-hero-journey><section class="home-hero" id="inicio" data-nav-section="home"><div class="home-hero-image" data-parallax="0.16"><img src="${projectBase}/assets/editorial/golden-fries-alpine-1672.webp" srcset="${projectBase}/assets/editorial/golden-fries-alpine-768.webp 768w, ${projectBase}/assets/editorial/golden-fries-alpine-1672.webp 1672w" sizes="100vw" alt="Papas doradas flotando sobre un paisaje alpino congelado" fetchpriority="high" decoding="async" width="1672" height="941"></div><div class="home-hero-shade"></div><div class="hero-orbit hero-orbit-one" data-pointer-depth="12" aria-hidden="true"></div><div class="hero-orbit hero-orbit-two" data-pointer-depth="-8" aria-hidden="true"></div><div class="wrap home-hero-inner"><div class="home-hero-copy"><span class="home-kicker hero-sequence">Alimentos congelados ICEMAN</span><h1><span class="hero-line"><span>Sabor a</span></span><span class="hero-line"><em>tu ritmo.</em></span></h1><p class="hero-sequence">Productos prácticos para disfrutar a tu manera, todos los días.</p><div class="home-hero-actions hero-sequence"><a class="btn btn-primary magnetic" href="/productos" data-link>Explorar productos ${iconArrow()}</a><a class="home-hero-link" href="/#donde-encontrarnos" data-link>Encuéntranos ${iconArrow()}</a></div></div><div class="hero-scroll-story" aria-hidden="true"><span>ICEMAN · Congelados</span><strong>Listos cuando<br>tú lo estás.</strong><small>Productos prácticos para cada día</small></div><div class="hero-pack-wrap" data-pointer-depth="-16"><span class="hero-pack-halo" aria-hidden="true"></span><img class="hero-pack" src="${asset(homeShowcase[0].product.image)}" alt="Empaque oficial de ${escapeHTML(homeShowcase[0].product.name)} ICEMAN" fetchpriority="high" decoding="async"></div><div class="hero-journey-progress" aria-hidden="true"><span>01</span><i><b></b></i><span>02</span></div><span class="hero-side-note" aria-hidden="true">Del congelador a tu mesa · ICEMAN Ecuador</span><a class="hero-scroll" href="#productos-destacados" aria-label="Explorar productos destacados"><span aria-hidden="true">↓</span> Desliza para descubrir</a></div></section></div>
-    <section class="home-showcase" id="productos-destacados" aria-labelledby="showcase-title" data-nav-section="products"><div class="wrap"><div class="home-showcase-heading"><span class="home-kicker">Productos que se mueven contigo</span><h2 id="showcase-title">Elige. Descubre. Disfruta.</h2><p>Toca un empaque para acercarlo. Los demás se mueven y puedes explorar cada producto.</p></div><div class="showcase-accordion" id="showcase-accordion" aria-label="Productos destacados de ICEMAN">${showcasePanels}</div><div class="showcase-footer"><span class="showcase-count" aria-live="polite">01 <i>/</i> 0${homeShowcase.length}</span><div class="showcase-progress" aria-hidden="true"><span></span></div><div class="showcase-controls"><button type="button" data-showcase-step="-1" aria-label="Producto anterior">${iconArrow("left")}</button><button type="button" data-showcase-step="1" aria-label="Producto siguiente">${iconArrow()}</button></div></div></div></section>
+    <section class="home-showcase" id="productos-destacados" aria-labelledby="showcase-title" data-nav-section="products"><div class="wrap"><div class="home-showcase-heading"><span class="home-kicker">Productos que se mueven contigo</span><h2 id="showcase-title">Elige. Descubre. Disfruta.</h2><p>Toca para descubrir. Toca de nuevo para ver el producto.</p></div></div><div class="discovery-grid" aria-label="Productos destacados de ICEMAN">${showcasePanels}</div></section>
     <section class="home-stockists" id="donde-encontrarnos" aria-labelledby="stockists-title" data-nav-section="stockists"><div class="wrap home-stockists-head"><span class="home-kicker">Dónde encontrarnos</span><h2 id="stockists-title">IceMan, cerca de ti.</h2><p>Encuentra productos ICEMAN en las principales cadenas del país.</p></div><div class="stockists-track" id="stockists-track" role="list" aria-label="Establecimientos donde encuentras productos ICEMAN"><div class="stockists-set">${stockistItems}</div><div class="stockists-set" aria-hidden="true" inert>${stockistItems}</div></div><div class="wrap stockists-note">La disponibilidad y el surtido pueden variar según el establecimiento y el local.</div></section>
     <section class="home-categories" id="categorias" aria-labelledby="categories-title"><div class="wrap"><div class="home-section-heading"><span class="home-kicker">Del congelador a tu mesa</span><h2 id="categories-title">Hay mucho por descubrir.</h2><p>Encuentra tu próximo favorito entre las categorías del catálogo.</p></div><div class="home-category-rail">${categoryLinks}</div><a class="home-inline-link" href="/productos" data-link>Ver catálogo completo ${iconArrow()}</a></div></section>
     <section class="home-recipes" id="ideas" aria-labelledby="recipes-title" data-nav-section="editorial"><div class="wrap"><div class="home-section-heading"><span class="home-kicker">Inspiración para la mesa</span><h2 id="recipes-title">Más ideas para disfrutar.</h2><p>Preparaciones y ocasiones con productos del catálogo ICEMAN.</p></div><div class="home-recipe-grid">${recipeCards}</div><div class="home-recipes-foot"><p>Encuentra nuevas formas de preparar y compartir tus productos favoritos.</p><a class="home-inline-link" href="/recetas" data-link>Explorar recetas y consejos ${iconArrow()}</a></div></div></section>
@@ -258,81 +258,46 @@
   }
 
   function setupHomeProducts() {
-    const accordion = root.querySelector("#showcase-accordion");
-    if (!accordion || !homeShowcase.length) return;
-    const panels = [...accordion.querySelectorAll(".showcase-panel")];
-    let selected = 0;
+    const grid = root.querySelector(".discovery-grid");
+    if (!grid) return;
+    const cards = [...grid.querySelectorAll(".discovery-card")];
     const controller = new AbortController();
     const { signal } = controller;
-    const mobile = matchMedia("(max-width: 820px)");
-    let scrollFrame = 0;
-    const select = (index, { align = true, animate = true } = {}) => {
-      const previous = selected;
-      selected = (index + homeShowcase.length) % homeShowcase.length;
-      if (previous === selected) return;
-      panels.forEach((panel, index) => {
-        const active = index === selected;
-        panel.classList.toggle("is-selected", active);
-        panel.querySelector(".showcase-select").setAttribute("aria-pressed", String(active));
-        panel.querySelector(".showcase-detail").setAttribute("aria-hidden", String(!active && !mobile.matches));
-        panel.querySelector(".showcase-detail a").tabIndex = active || mobile.matches ? 0 : -1;
-      });
-      if (align && mobile.matches) {
-        const panel = panels[selected];
-        const panelLeft = panel.getBoundingClientRect().left - accordion.getBoundingClientRect().left + accordion.scrollLeft;
-        accordion.scrollTo({ left:panelLeft, behavior:matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
-      }
-      const pack = panels[selected].querySelector(".showcase-pack");
-      if (animate && !matchMedia("(prefers-reduced-motion: reduce)").matches && pack?.animate) {
-        pack.getAnimations().forEach((animation) => animation.cancel());
-        pack.animate([{ opacity:0, translate:`${selected > previous ? 48 : -48}px 24px`, rotate:`${selected > previous ? 8 : -8}deg`, scale:.88 },{ opacity:1, translate:"0 0", rotate:"0deg", scale:1 }], { duration:720, easing:"cubic-bezier(.16,1,.3,1)" });
-      }
-      const count = root.querySelector(".showcase-count");
-      if (count) count.innerHTML = `${String(selected + 1).padStart(2,"0")} <i>/</i> 0${homeShowcase.length}`;
-      root.querySelector(".showcase-progress span")?.style.setProperty("transform", `scaleX(${(selected + 1) / homeShowcase.length})`);
-      track("product_view", { product_slug:homeShowcase[selected].product.slug, placement:"home_showcase" });
+    let active = null;
+    let gesture = null;
+    const reveal = (card) => {
+      active = card;
+      cards.forEach((item) => item.classList.toggle("is-revealed", item === card));
     };
-    root.querySelectorAll("[data-showcase-step]").forEach((button) => button.addEventListener("click", () => select(selected + Number(button.dataset.showcaseStep))));
-    // Selection follows the native scroll position, including momentum and reversals.
-    // Never turn a vertical or diagonal touch gesture into a scripted swipe.
-    const syncSelection = () => {
-      scrollFrame = 0;
-      if (!mobile.matches) return;
-      const left = accordion.getBoundingClientRect().left;
-      const nearest = panels.reduce((best, panel, index) =>
-        Math.abs(panel.getBoundingClientRect().left - left) < Math.abs(panels[best].getBoundingClientRect().left - left) ? index : best, 0);
-      select(nearest, { align:false, animate:false });
-    };
-    accordion.addEventListener("scroll", () => {
-      if (!scrollFrame) scrollFrame = requestAnimationFrame(syncSelection);
+    grid.addEventListener("pointerdown", (event) => {
+      gesture = { id:event.pointerId, x:event.clientX, y:event.clientY, moved:!event.isPrimary, type:event.pointerType };
     }, { passive:true, signal });
-    const onLayout = () => {
-      panels.forEach((panel, index) => {
-        panel.querySelector(".showcase-detail").setAttribute("aria-hidden", String(index !== selected && !mobile.matches));
-        panel.querySelector(".showcase-detail a").tabIndex = index === selected || mobile.matches ? 0 : -1;
-      });
-      if (mobile.matches) accordion.scrollTo({ left:panels[selected].offsetLeft - panels[0].offsetLeft, behavior:"instant" });
-    };
-    const resizeObserver = new ResizeObserver(onLayout);
-    resizeObserver.observe(accordion);
-    showcaseCleanup = () => {
-      controller.abort();
-      resizeObserver.disconnect();
-      if (scrollFrame) cancelAnimationFrame(scrollFrame);
-    };
-    accordion.querySelectorAll("[data-home-product]").forEach((button) => {
-      button.addEventListener("click", () => select(Number(button.dataset.homeProduct)));
-      button.addEventListener("keydown", (event) => {
-        if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+    document.addEventListener("pointermove", (event) => {
+      if (gesture?.id === event.pointerId && Math.hypot(event.clientX - gesture.x, event.clientY - gesture.y) > 10) gesture.moved = true;
+    }, { passive:true, signal });
+    grid.addEventListener("pointercancel", () => { if (gesture) gesture.moved = true; }, { passive:true, signal });
+    grid.addEventListener("click", (event) => {
+      const card = event.target.closest(".discovery-card");
+      if (!card || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      const touch = event.pointerType === "touch" || event.pointerType === "pen" || gesture?.type === "touch" || gesture?.type === "pen";
+      const moved = gesture?.moved;
+      gesture = null;
+      if (event.detail > 0 && (moved || (touch && active !== card))) {
         event.preventDefault();
-        const next = (selected + (event.key === "ArrowRight" ? 1 : -1) + panels.length) % panels.length;
-        select(next);
-        panels[next].querySelector(".showcase-select").focus();
-      });
+        event.stopPropagation();
+        if (!moved) reveal(card);
+      }
+      // Keyboard activation and mouse clicks keep the existing product route.
+    }, { signal });
+    cards.forEach((card) => {
+      card.addEventListener("pointerenter", (event) => { if (event.pointerType === "mouse") reveal(card); }, { signal });
+      card.addEventListener("pointerleave", (event) => { if (event.pointerType === "mouse" && active === card) reveal(null); }, { signal });
+      card.addEventListener("focusin", () => { if (card.querySelector(":focus-visible")) reveal(card); }, { signal });
     });
-    if (matchMedia("(min-width: 821px) and (hover: hover) and (pointer: fine)").matches) {
-      panels.forEach((panel, index) => panel.addEventListener("mouseenter", () => select(index)));
-    }
+    document.addEventListener("pointerdown", (event) => { if (!grid.contains(event.target)) reveal(null); }, { passive:true, signal });
+    document.addEventListener("focusin", (event) => { if (!grid.contains(event.target)) reveal(null); }, { signal });
+    document.addEventListener("keydown", (event) => { if (event.key === "Escape") reveal(null); }, { signal });
+    showcaseCleanup = () => controller.abort();
   }
 
   function setupStockistsMarquee() {
