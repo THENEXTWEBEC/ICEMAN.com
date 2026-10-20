@@ -90,7 +90,7 @@ body{overflow-x:clip}
 .home-business.scene-visible .home-business-image{clip-path:inset(0 round 46% 46% 3px 3px)}
 .home-business-image img{transform:scale(1.08) translateY(var(--scene-shift-medium,0px));will-change:transform}
 .home-business-copy{position:relative}
-.home-business-copy:before{position:absolute;left:-27px;top:-35px;width:80px;height:80px;content:"✳";color:#a5d7e1;font-size:78px;line-height:1;opacity:.5;z-index:-1}
+.home-business-copy:before{position:absolute;left:-27px;top:-35px;width:80px;height:80px;content:"✳︎";color:#a5d7e1;font-family:Arial,sans-serif;font-size:78px;line-height:1;opacity:.5;z-index:-1}
 .home-contact{position:relative;overflow:hidden;background:#dceef1}
 .home-contact:after{position:absolute;right:-100px;bottom:-250px;width:500px;aspect-ratio:1;content:"";border:1px solid #a5ced6;border-radius:50%;box-shadow:0 0 0 60px rgba(255,255,255,.14),0 0 0 125px rgba(255,255,255,.1);pointer-events:none}
 .home-contact-inner{position:relative;z-index:1}
@@ -156,3 +156,111 @@ body{overflow-x:clip}
 @media(max-width:980px){.home-recipe-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:640px){.home-recipes{padding:76px 0 88px}.home-recipes .home-section-heading{margin-bottom:28px}.home-recipe-grid{grid-template-columns:1fr;gap:24px}.home-recipe-copy{min-height:172px;padding:21px 20px 22px}.home-recipe h3{font-size:22px}.home-recipe-image>span{right:13px;bottom:13px}}
 @media(prefers-reduced-motion:reduce){.home-recipe>a,.home-recipe-image img,.home-recipe-arrow,.home-recipe-arrow .thin-arrow,.motion-enabled .home-recipes.scene-ready .home-recipe{transition:none!important;transform:none!important}.motion-enabled .home-recipes.scene-ready .home-recipe{opacity:1}}
+
+/* Mobile coherence: compact type, clear section rhythm and dependable touch targets. */
+@media(max-width:640px){
+  .home-hero h1{font-size:clamp(50px,14vw,58px);line-height:.92}
+  .home-section-heading h2,.home-showcase h2,.home-stockists h2,.home-business h2{font-size:clamp(38px,10.5vw,44px);line-height:1}
+  .home-business{padding-top:66px;padding-bottom:82px}
+  .home-business-grid{gap:28px}
+  .home-business-copy:before{display:none}
+  .home-business-copy p{font-size:16px;line-height:1.65}
+  .home-business-copy .btn{width:100%;min-height:52px}
+  .home-inline-link,.home-hero-link,.hero-scroll,.showcase-detail a{min-height:44px;align-items:center}
+  .home-contact-inner .btn{width:100%}
+  .page-heading h1{font-size:clamp(34px,9.5vw,42px);line-height:1.04}
+  .business-lede h1,.about-copy h1{font-size:clamp(34px,9.5vw,40px);line-height:1.04}
+  .detail-copy h1{font-size:clamp(34px,9.5vw,40px);line-height:1.04}
+  .editorial-hero-copy h1{font-size:clamp(36px,10vw,44px);line-height:1.02}
+  .editorial-detail-copy h1{font-size:clamp(34px,9.5vw,42px);line-height:1.04}
+  .editorial-read,.editorial-text-link,.home-recipe-arrow{min-height:44px;align-items:center}
+  .editorial-product-chip,.editorial-card h3 a,.editorial-detail-aside>a{display:flex;min-height:44px;align-items:center}
+  .footer-bottom a,.footer-bottom button{display:inline-flex;min-height:44px;align-items:center}
+  .footer-legal{align-items:center;gap:14px}
+}
+
+/* Site-wide system: one rhythm, one heading scale and one card geometry. */
+:root{
+  --site-section-space:clamp(76px,7.5vw,112px);
+  --site-card-radius:10px;
+  --site-media-ratio:4 / 5;
+}
+
+.section,.editorial-section{padding-block:var(--site-section-space)}
+.home-categories,.home-showcase,.home-stockists,.home-recipes,.home-business{padding-block:var(--site-section-space)}
+.section-head,.home-section-heading,.home-showcase-heading{margin-bottom:40px}
+.section-head h2,
+.home-section-heading h2,
+.home-showcase h2,
+.home-stockists h2,
+.home-business h2,
+.home-contact h2,
+.editorial-planner h2,
+.editorial-business h2{
+  font-size:clamp(40px,4.7vw,64px);
+  letter-spacing:-.065em;
+  line-height:1;
+  text-wrap:balance;
+}
+.section-head p,.home-section-heading p,.home-showcase-heading p,.home-stockists-head p{font-size:16px;line-height:1.65}
+
+.page-heading h1,
+.business-lede h1,
+.about-copy h1,
+.detail-copy h1,
+.editorial-hero-copy h1,
+.editorial-detail-copy h1{
+  font-size:clamp(44px,5.4vw,68px);
+  letter-spacing:-.07em;
+  line-height:1.02;
+  text-wrap:balance;
+}
+
+.product-card,
+.home-recipe>a,
+.editorial-card,
+.contact-card,
+.lead-form,
+.planner-result,
+.editorial-detail-aside{border-radius:var(--site-card-radius)}
+
+.editorial-card-grid{align-items:stretch}
+.editorial-card{
+  overflow:hidden;
+  padding-bottom:0;
+  border:1px solid #e3eaf0;
+  background:#fff;
+  box-shadow:0 10px 30px rgba(41,43,97,.045);
+}
+.editorial-card:hover{border-color:#b9d8e4;box-shadow:0 18px 42px rgba(41,43,97,.1)}
+.editorial-card-image,
+.editorial-card-poster .editorial-card-image,
+.editorial-card-landscape .editorial-card-image,
+.editorial-recipe-media{
+  width:100%;
+  height:auto;
+  aspect-ratio:var(--site-media-ratio);
+  border-radius:0;
+  background:#edf4f7;
+}
+.editorial-card-image img,
+.editorial-card-landscape .editorial-card-image img{width:100%;height:100%;object-fit:cover}
+.editorial-card-poster .editorial-card-image img{width:100%;height:100%;object-fit:contain;background:#fff}
+.editorial-card-copy{padding:22px 22px 20px}
+.editorial-card h3{display:-webkit-box;overflow:hidden;min-height:2.3em;-webkit-box-orient:vertical;-webkit-line-clamp:2}
+.editorial-card-copy>p{display:-webkit-box;overflow:hidden;min-height:4.95em;-webkit-box-orient:vertical;-webkit-line-clamp:3}
+
+@media(max-width:820px){
+  :root{--site-section-space:72px}
+  .section-head,.home-section-heading,.home-showcase-heading{margin-bottom:30px}
+}
+
+@media(max-width:640px){
+  :root{--site-section-space:64px;--site-card-radius:9px}
+  .home-categories,.home-showcase,.home-stockists,.home-recipes,.home-business,.section,.editorial-section{padding-block:var(--site-section-space)}
+  .section-head h2,.home-section-heading h2,.home-showcase h2,.home-stockists h2,.home-business h2,.home-contact h2,.editorial-planner h2,.editorial-business h2{font-size:clamp(34px,9.5vw,42px);line-height:1.04}
+  .page-heading h1,.business-lede h1,.about-copy h1,.detail-copy h1,.editorial-hero-copy h1,.editorial-detail-copy h1{font-size:clamp(34px,9.5vw,42px);line-height:1.04}
+  .section-head p,.home-section-heading p,.home-showcase-heading p,.home-stockists-head p{font-size:15px}
+  .editorial-card-copy{padding:21px 20px 20px}
+  .editorial-card h3,.editorial-card-copy>p{min-height:0}
+}
