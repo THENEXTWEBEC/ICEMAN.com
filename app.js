@@ -183,7 +183,8 @@
     recipeImageObserver?.disconnect();
     recipeImageObserver = null;
     const floatingWhatsAppClass = path === "/empresas" ? "whatsapp-float whatsapp-float-form" : "whatsapp-float";
-    root.innerHTML = `${header(path)}<main id="main" class="fade-in">${content}</main>${footer()}<a class="${floatingWhatsAppClass}" href="${waLink(contactMessage)}" data-wa target="_blank" rel="noopener" aria-label="Escribir a ICEMAN por WhatsApp">${iconWhatsApp()}</a>`;
+    const pageContent = path === "/" ? content.replace("Alimentos ultracongelados ICEMAN", "Alimentos congelados ICEMAN") : content;
+    root.innerHTML = `${header(path)}<main id="main" class="fade-in">${pageContent}</main>${footer()}<a class="${floatingWhatsAppClass}" href="${waLink(contactMessage)}" data-wa target="_blank" rel="noopener" aria-label="Escribir a ICEMAN por WhatsApp">${iconWhatsApp()}</a>`;
     setupEditorialDrag();
     setupRecipeTransforms();
     root.querySelectorAll("a[data-link]").forEach((link) => { link.href = withBase(withoutBase(link.getAttribute("href"))); });
