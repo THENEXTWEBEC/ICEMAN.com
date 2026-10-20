@@ -101,6 +101,7 @@
       : "home";
     const links = [
       ["/#inicio", "Inicio", "home"],
+      ["/nosotros", "Nosotros", "about"],
       ["/productos", "Productos", "products"],
       ["/#donde-encontrarnos", "Dónde encontrarnos", "stockists"],
       ["/recetas", "Recetas", "editorial"],
