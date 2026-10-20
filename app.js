@@ -308,6 +308,7 @@
     let paused = false;
     let visible = false;
     let setWidth = set.getBoundingClientRect().width;
+    const pixelsPerMillisecond = .028 * 1.15;
     const reduced = matchMedia("(prefers-reduced-motion: reduce)");
     track.scrollLeft = setWidth;
     const tick = (now) => {
@@ -315,7 +316,7 @@
       if (!visible || reduced.matches) return;
       if (!paused) {
         const elapsed = previous ? Math.min(now - previous, 50) : 16;
-        track.scrollLeft -= elapsed * .028;
+        track.scrollLeft -= elapsed * pixelsPerMillisecond;
         if (track.scrollLeft <= 0) track.scrollLeft += setWidth;
       }
       previous = now;
