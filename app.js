@@ -299,6 +299,9 @@
         panels[next].querySelector(".showcase-select").focus();
       });
     });
+    if (matchMedia("(min-width: 641px) and (pointer: fine)").matches) {
+      panels.forEach((panel, index) => panel.addEventListener("mouseenter", () => select(index)));
+    }
   }
 
   function setupStockistsMarquee() {
