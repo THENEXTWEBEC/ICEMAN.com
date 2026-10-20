@@ -108,7 +108,7 @@
       ["/contacto", "Contacto", "contact"]
     ];
     return `<header class="site-header"><div class="wrap header-inner">
-      <a href="/" data-link class="brand" aria-label="ICEMAN Ecuador, inicio"><img class="brand-official-logo" src="/assets/iceman-logo-cliente.jpg" alt="ICEMAN, alimentos congelados" fetchpriority="high"></a>
+      <a href="/" data-link class="brand" aria-label="ICEMAN Ecuador, inicio"><img class="brand-official-logo" src="${projectBase}/assets/iceman-logo-cliente.jpg" alt="ICEMAN, alimentos congelados" fetchpriority="high"></a>
       <nav class="desktop-nav" aria-label="Navegación principal">${links.map(([href, label, key]) => `<a href="${href}" data-link data-nav="${key}" ${activeNav === key ? 'aria-current="page"' : ""}>${label}</a>`).join("")}</nav>
       <div class="header-actions"><button class="icon-btn" type="button" data-action="search" aria-label="Buscar productos" aria-controls="site-search-panel" aria-expanded="${searchOpened}"><span class="search-glyph" aria-hidden="true"></span></button><a class="btn btn-primary btn-small header-quote" href="/empresas" data-link>Solicitar cotización ${iconArrow()}</a><button class="menu-toggle" type="button" data-action="menu" aria-label="${menuOpened ? "Cerrar menú" : "Abrir menú"}" aria-expanded="${menuOpened}" aria-controls="mobile-menu"><span class="menu-lines ${menuOpened ? "is-open" : ""}" aria-hidden="true"><span></span><span></span></span></button></div>
       </div>
@@ -167,7 +167,7 @@
 
   function footer() {
     return `<footer class="site-footer"><div class="wrap"><div class="footer-grid">
-      <div class="footer-brand-block"><a href="/" data-link class="brand footer-brand"><img class="brand-symbol" src="/assets/iceman-symbol-white.png" alt=""><span class="brand-lockup"><img class="brand-wordmark" src="/assets/iceman-wordmark-white.png" alt="IceMan"><small>ECUADOR</small></span></a><p>Alimentos ultracongelados, prácticos y listos para disfrutar. Una selección para cada día y para cada negocio.</p></div>
+      <div class="footer-brand-block"><a href="/" data-link class="brand footer-brand"><img class="brand-symbol" src="${projectBase}/assets/iceman-symbol-white.png" alt=""><span class="brand-lockup"><img class="brand-wordmark" src="${projectBase}/assets/iceman-wordmark-white.png" alt="IceMan"><small>ECUADOR</small></span></a><p>Alimentos ultracongelados, prácticos y listos para disfrutar. Una selección para cada día y para cada negocio.</p></div>
       <div class="footer-col"><h3>Productos</h3><a href="/productos/papas" data-link>Papas</a><a href="/productos/vegetales" data-link>Vegetales</a><a href="/productos/especialidades" data-link>Especialidades</a><a href="/productos/helados" data-link>Helados</a><a href="/productos" data-link>Ver catálogo completo</a></div>
       <div class="footer-col"><h3>ICEMAN</h3><a href="/nosotros" data-link>Nosotros</a><a href="/#donde-encontrarnos" data-link>Dónde encontrarnos</a><a href="/recetas" data-link>Recetas & Consejos</a><a href="/empresas" data-link>Para empresas</a><a href="/contacto" data-link>Contacto</a></div>
       <div class="footer-col"><h3>Contacto</h3><a href="${waLink(contactMessage)}" data-wa target="_blank" rel="noopener">WhatsApp · 099 915 2518</a><a href="tel:+593999152518" data-contact>Información · 099 915 2518</a></div>
