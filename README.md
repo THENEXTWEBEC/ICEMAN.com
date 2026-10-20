@@ -6,11 +6,11 @@ Sitio estático responsive con catálogo y rutas amigables. El inventario de `ca
 
 La home combina navegación directa y secciones narrativas. `motion-experience.js` controla las escenas visibles, la profundidad del hero, el desplazamiento ligero de imágenes y los botones magnéticos. Se monta de nuevo tras cada cambio de ruta y limpia sus observadores, eventos y fotogramas al salir. `motion-experience.css` contiene los tiempos y curvas; las animaciones se desactivan con `prefers-reduced-motion`.
 
-El hero utiliza el empaque real de Papas Air Fryer sobre una fotografía referencial. El showroom conserva los paneles del catálogo y añade transición de empaque, controles anterior/siguiente, contador, teclado y selección táctil. La navegación editorial usa View Transitions API cuando está disponible y mantiene navegación normal en el resto de navegadores. Los filtros de recetas también tienen una transición de estado. La página comercial permite elegir Restaurante, Hotel o Comercio para completar el campo de tipo de negocio del formulario; los empaques mostrados son los oficiales del catálogo.
+El hero utiliza el empaque real de Papas Air Fryer sobre una composición editorial. El showroom conserva los paneles del catálogo y añade transición de empaque, controles anterior/siguiente, contador, teclado y selección táctil. La navegación editorial usa View Transitions API cuando está disponible y mantiene navegación normal en el resto de navegadores. Los filtros de recetas también tienen una transición de estado. La página comercial permite elegir Restaurante, Hotel o Comercio para completar el campo de tipo de negocio del formulario; los empaques mostrados son los oficiales del catálogo.
 
 La franja horizontal de “Dónde encontrarnos” muestra los 15 establecimientos confirmados, en el orden aprobado y con sus identificadores visuales originales. Se mueve de forma continua, se pausa al interactuar y detiene su animación cuando sale de pantalla.
 
-**Contenido oficial pendiente:** faltan las fotografías definitivas y la aprobación editorial de las recetas. Las imágenes actuales se identifican como referenciales en la interfaz. No hay cifras nutricionales oficiales en el repositorio; el componente de `drafts/nutrition-chart.js` no se carga en producción y exige una ficha aprobada, la porción y el valor de referencia antes de mostrar datos. Antes de publicar, revisar además los datos legales que ya figuran como pendientes en `/privacidad` y `/terminos`.
+**Criterio de entrega:** todo contenido visible se considera listo para presentar al cliente. La interfaz no debe mostrar notas de producción, placeholders, estados de aprobación ni avisos internos. Si un contenido no está confirmado, se omite de producción y el seguimiento se conserva únicamente en documentación interna. No hay cifras nutricionales oficiales en el repositorio; el componente de `drafts/nutrition-chart.js` no se carga en producción y exige una ficha aprobada, la porción y el valor de referencia antes de mostrar datos.
 
 El proyecto no tiene compilador ni dependencias npm: `index.html` es la entrada de producción. Para verificarlo, ejecutar `node --check app.js`, `node --check motion-experience.js` y `node --test tests/*.test.cjs`, y revisar las rutas en un servidor con fallback a `index.html`/`404.html`. El objetivo Lighthouse 90+ requiere medición sobre el dominio final y un dispositivo representativo; no se presupone por estas pruebas locales.
 
@@ -32,7 +32,7 @@ Las solicitudes se reciben en el panel de Formspree y se notifican según la con
 
 GA4 está configurado con el ID existente `G-EP2322YPPC` y solo se carga después de aceptar analítica en el aviso de consentimiento. La elección se puede cambiar desde el pie de página. La web emite eventos como `whatsapp_click`, `b2b_form_start`, `b2b_form_submit`, `product_view`, `category_view` y `contact_click`, sin enviar el texto que se escribió en la búsqueda.
 
-Las páginas `/privacidad` y `/terminos` contienen los datos confirmados por el código y señalan la información legal que el propietario aún debe completar. Revisa esos campos antes de publicar.
+Las páginas `/privacidad` y `/terminos` presentan únicamente la información pública disponible, sin notas internas ni campos de trabajo visibles.
 
 ### Conversiones comerciales: `generate_lead`
 
