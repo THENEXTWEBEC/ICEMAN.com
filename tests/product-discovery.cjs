@@ -11,6 +11,7 @@ const assert = require('node:assert/strict');
   const cards=page.locator('.discovery-card'),links=page.locator('.discovery-link');
   await cards.first().scrollIntoViewIfNeeded();
   assert.equal(await cards.count(),4);
+  assert.equal(await page.locator('.discovery-pack').evaluateAll(images=>images.every(img=>{const s=getComputedStyle(img);return s.mixBlendMode==='normal'&&s.opacity==='1'&&s.filter==='none'})),true,'product colors must not blend with backgrounds');
   const geometry=await cards.evaluateAll(es=>es.map(e=>e.getBoundingClientRect().toJSON()));
   assert.equal(geometry[0].left,0);assert.equal(geometry[1].left,geometry[0].right);
   geometry.forEach(r=>assert.equal(r.height,geometry[0].height));
@@ -23,8 +24,15 @@ const assert = require('node:assert/strict');
    await links.nth(1).tap();assert.equal(await cards.first().getAttribute('class'),'discovery-card');
    await page.locator('.home-showcase-heading').tap();assert.equal(await page.locator('.is-revealed').count(),0);
    await links.first().tap();await page.waitForTimeout(350);
-   const copy=await page.locator('.discovery-copy').first().evaluate(e=>({height:e.scrollHeight,box:e.clientHeight,right:e.getBoundingClientRect().right,img:e.parentElement.querySelector('img').getBoundingClientRect().left}));
-   assert.ok(copy.height<=copy.box);assert.ok(copy.right<=copy.img);
+   const copy=await page.locator('.discovery-copy').first().evaluate(e=>({height:e.scrollHeight,box:e.clientHeight,top:e.getBoundingClientRect().top,img:e.parentElement.querySelector('img').getBoundingClientRect().bottom}));
+   assert.ok(copy.height<=copy.box);assert.ok(copy.top>=copy.img);
+   await page.locator('.home-showcase-heading').tap();
+   for(let i=0;i<4;i++){
+    await links.nth(i).tap();await page.waitForTimeout(350);
+    const visible=await cards.nth(i).evaluate(e=>{const p=e.querySelector('img').getBoundingClientRect(),r=e.getBoundingClientRect(),c=e.querySelector('.discovery-copy');return p.left>=r.left&&p.right<=r.right&&p.top>=r.top&&p.bottom<=c.getBoundingClientRect().top&&c.scrollHeight<=c.clientHeight});
+    assert.ok(visible,`entire product and text visible ${width}, card ${i}`);
+   }
+   await links.first().tap();await page.waitForTimeout(350);
    await page.screenshot({path:`/tmp/iceman-grid-${width}.png`,fullPage:false});
    const cdp=await page.context().newCDPSession(page);
    await page.evaluate(()=>scrollTo({top:document.querySelector('.discovery-grid').getBoundingClientRect().top+scrollY-150,behavior:'instant'}));
