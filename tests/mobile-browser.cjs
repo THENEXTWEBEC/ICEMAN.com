@@ -10,6 +10,12 @@ const assert=require('node:assert/strict');
   await page.evaluate(()=>document.querySelector('[data-consent="reject"]')?.click());
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,`home overflow ${width}`);
   if(width<=820){
+   for (const progress of [.35,.5,.7,.9]) {
+    await page.evaluate(progress=>{const j=document.querySelector('.home-hero-journey'),h=document.querySelector('.home-hero');scrollTo({top:j.offsetTop+(j.offsetHeight-h.offsetHeight)*progress,behavior:'instant'})},progress);
+    await page.waitForTimeout(60);
+    const bounds=await page.evaluate(()=>({story:document.querySelector('.hero-scroll-story').getBoundingClientRect().toJSON(),pack:document.querySelector('.hero-pack').getBoundingClientRect().toJSON()}));
+    assert.ok(bounds.story.bottom+12<=bounds.pack.top,`hero story clears pack ${width} at ${progress}`);
+   }
    await page.locator('[data-action="menu"]').click();
    await page.locator('[data-action="menu"]').click();
    await page.locator('#productos-destacados').scrollIntoViewIfNeeded();

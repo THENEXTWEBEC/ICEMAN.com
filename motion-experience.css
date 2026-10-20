@@ -400,3 +400,20 @@ a:focus-visible,button:focus-visible{outline:3px solid #087fa6;outline-offset:4p
 .home-hero-copy>p.hero-sequence{animation-delay:.3s}
 .home-hero-actions.hero-sequence{animation-delay:.4s}
 
+/* Keep touch-scrolled packs in normal flow without filtered off-screen layers. */
+@media(max-width:820px){
+  .showcase-pack,.showcase-panel.is-selected .showcase-pack{
+    flex:0 0 220px;
+    opacity:1;
+    filter:none;
+    transform:none;
+    transition:none;
+  }
+  /* The story occupies the upper band; the pack stays below it throughout scroll. */
+  .hero-scroll-story{top:34%;max-width:100%}
+  .hero-scroll-story strong{font-size:clamp(44px,8vw,64px);line-height:.95}
+  .hero-scroll-story span{margin-bottom:12px;font-size:9px}
+  .hero-scroll-story small{max-width:100%;margin-top:14px;font-size:10px;line-height:1.4}
+  .hero-pack-wrap{right:3%;bottom:5%;width:clamp(130px,25vw,180px)}
+}
+
