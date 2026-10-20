@@ -234,7 +234,6 @@
       { name:"Akí", logo:"aki.png" },
       { name:"Gran Akí", logo:"gran-aki.png" },
       { name:"Tía", logo:"tia.png" },
-      { name:"Mega Santa María", logo:"mega-santa-maria.png" },
       { name:"Coral Hipermercados", logo:"coral.png" },
       { name:"Del Portal Supermercados", logo:"del-portal.png" },
       { name:"Fybeca", logo:"fybeca.png" },
