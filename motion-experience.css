@@ -176,6 +176,11 @@ body{overflow-x:clip}
   .footer-legal{align-items:center;gap:14px}
 }
 
+/* The vertical journey rail is decorative and too narrow to read on phones. */
+@media(max-width:640px){
+  .hero-side-note,.hero-journey-progress{display:none!important}
+}
+
 /* Site-wide system: one rhythm, one heading scale and one card geometry. */
 :root{
   --site-section-space:clamp(76px,7.5vw,112px);
