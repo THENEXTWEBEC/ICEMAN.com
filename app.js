@@ -271,7 +271,8 @@
       });
       if (matchMedia("(max-width: 640px)").matches) {
         const panel = panels[selected];
-        accordion.scrollTo({ left:panel.offsetLeft - accordion.offsetLeft - 16, behavior:"smooth" });
+        const panelLeft = panel.getBoundingClientRect().left - accordion.getBoundingClientRect().left + accordion.scrollLeft;
+        accordion.scrollTo({ left:panelLeft, behavior:matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
       }
       const pack = panels[selected].querySelector(".showcase-pack");
       if (!matchMedia("(prefers-reduced-motion: reduce)").matches && pack?.animate) {
