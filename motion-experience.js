@@ -46,7 +46,106 @@
       }, { signal });
     }
 
-    const scenes = [...root.querySelectorAll(".home-hero,.home-recipes,.home-business")];
+    const categoryScene = root.querySelector(".home-categories");
+    const categoryField = categoryScene?.querySelector("[data-category-universe]");
+    const categoryItems = categoryField ? [...categoryField.querySelectorAll(".home-category")] : [];
+    const floatProfiles = [
+      { phase:.2, speed:.43, x:22, y:28, rx:3.2, ry:5.8, rz:2.4, depth:.82 },
+      { phase:1.7, speed:.31, x:30, y:22, rx:4.4, ry:7.2, rz:2.8, depth:1.18 },
+      { phase:3.1, speed:.49, x:18, y:34, rx:3.8, ry:5.1, rz:3.1, depth:.68 },
+      { phase:4.4, speed:.36, x:27, y:25, rx:4.7, ry:6.5, rz:2.2, depth:1.04 },
+      { phase:5.6, speed:.45, x:20, y:30, rx:3.4, ry:5.6, rz:2.7, depth:.76 },
+      { phase:2.5, speed:.28, x:32, y:20, rx:4.1, ry:7.6, rz:2.1, depth:1.12 }
+    ];
+    let categoryFrame = 0;
+    let categoryPointerFrame = 0;
+    let categoryVisible = false;
+    let categoryLastFrame = 0;
+    let activeCategory = null;
+    const lowPower = innerWidth < 700 || (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4);
+    const motionScale = lowPower ? .58 : 1;
+    categoryItems.forEach((item, index) => {
+      const profile = floatProfiles[index];
+      item.style.setProperty("--depth-z", `${Math.round((profile.depth - 1) * 110)}px`);
+      item.style.setProperty("--entry-delay", `${index * 70}ms`);
+    });
+    const setActiveCategory = (item) => {
+      activeCategory = item;
+      categoryScene?.classList.toggle("has-active-category", Boolean(item));
+      categoryItems.forEach(entry => entry.classList.toggle("is-active-category", entry === item));
+    };
+    const renderCategoryFloat = (now) => {
+      categoryFrame = 0;
+      if (!categoryVisible || reduced.matches) return;
+      if (lowPower && now - categoryLastFrame < 30) {
+        categoryFrame = requestAnimationFrame(renderCategoryFloat);
+        return;
+      }
+      categoryLastFrame = now;
+      const time = now / 1000;
+      categoryItems.forEach((item, index) => {
+        const p = floatProfiles[index];
+        const primary = time * p.speed + p.phase;
+        const secondary = time * p.speed * .61 + p.phase * 1.7;
+        item.style.setProperty("--float-x", `${((Math.sin(primary) * p.x + Math.sin(secondary) * p.x * .28) * motionScale).toFixed(2)}px`);
+        item.style.setProperty("--float-y", `${((Math.cos(primary * .83) * p.y + Math.sin(secondary * 1.3) * p.y * .22) * motionScale).toFixed(2)}px`);
+        item.style.setProperty("--float-rx", `${(Math.sin(primary * .72) * p.rx * motionScale).toFixed(2)}deg`);
+        item.style.setProperty("--float-ry", `${(Math.cos(secondary * .9) * p.ry * motionScale).toFixed(2)}deg`);
+        item.style.setProperty("--float-rz", `${(Math.sin(primary * .53) * p.rz * motionScale).toFixed(2)}deg`);
+      });
+      categoryFrame = requestAnimationFrame(renderCategoryFloat);
+    };
+    const categoryObserver = categoryScene ? new IntersectionObserver(([entry]) => {
+      categoryVisible = entry.isIntersecting && !document.hidden;
+      if (categoryVisible && !categoryFrame && !reduced.matches) categoryFrame = requestAnimationFrame(renderCategoryFloat);
+      if (!categoryVisible && categoryFrame) { cancelAnimationFrame(categoryFrame); categoryFrame = 0; }
+    }, { rootMargin:"18% 0px" }) : null;
+    if (categoryScene) categoryObserver.observe(categoryScene);
+    if (categoryScene && categoryField && finePointer.matches) {
+      categoryScene.addEventListener("pointermove", (event) => {
+        if (categoryPointerFrame) return;
+        categoryPointerFrame = requestAnimationFrame(() => {
+          const sceneBox = categoryScene.getBoundingClientRect();
+          const nx = (event.clientX - sceneBox.left) / sceneBox.width - .5;
+          const ny = (event.clientY - sceneBox.top) / sceneBox.height - .5;
+          categoryItems.forEach((item, index) => {
+            const box = item.getBoundingClientRect();
+            const distance = Math.hypot(event.clientX - (box.left + box.width / 2), event.clientY - (box.top + box.height / 2));
+            const attraction = Math.max(0, 1 - distance / 360);
+            const depth = floatProfiles[index].depth;
+            item.style.setProperty("--cursor-x", `${(nx * 22 * depth + (event.clientX - box.left - box.width / 2) * attraction * .035).toFixed(2)}px`);
+            item.style.setProperty("--cursor-y", `${(ny * 16 * depth + (event.clientY - box.top - box.height / 2) * attraction * .035).toFixed(2)}px`);
+            item.style.setProperty("--cursor-rx", `${(-ny * 5 * depth).toFixed(2)}deg`);
+            item.style.setProperty("--cursor-ry", `${(nx * 7 * depth).toFixed(2)}deg`);
+          });
+          categoryPointerFrame = 0;
+        });
+      }, { passive:true, signal });
+      categoryScene.addEventListener("pointerleave", () => {
+        categoryItems.forEach(item => ["--cursor-x","--cursor-y"].forEach(name => item.style.setProperty(name,"0px")));
+        categoryItems.forEach(item => ["--cursor-rx","--cursor-ry"].forEach(name => item.style.setProperty(name,"0deg")));
+        setActiveCategory(null);
+      }, { signal });
+    }
+    categoryItems.forEach(item => {
+      item.addEventListener("pointerenter", event => { if (event.pointerType === "mouse") setActiveCategory(item); }, { signal });
+      item.addEventListener("focusin", () => setActiveCategory(item), { signal });
+      item.addEventListener("focusout", () => { if (!categoryField?.contains(document.activeElement)) setActiveCategory(null); }, { signal });
+    });
+    if (categoryField) {
+      categoryField.addEventListener("click", event => {
+        const item = event.target.closest(".home-category");
+        if (!item || finePointer.matches || event.detail === 0) return;
+        if (activeCategory !== item) {
+          event.preventDefault();
+          event.stopImmediatePropagation();
+          setActiveCategory(item);
+        }
+      }, { capture:true, signal });
+      document.addEventListener("pointerdown", event => { if (!categoryField.contains(event.target)) setActiveCategory(null); }, { passive:true, signal });
+    }
+
+    const scenes = [...root.querySelectorAll(".home-hero,.home-categories,.home-recipes,.home-business")];
     let scrollFrame = 0;
     let heroMetrics = null;
     const measureHero = () => {
@@ -75,6 +174,15 @@
         scene.style.setProperty("--scene-shift-medium", `${((.5 - progress) * 36).toFixed(1)}px`);
         scene.style.setProperty("--scene-shift-small", `${((.5 - progress) * 20).toFixed(1)}px`);
         scene.style.setProperty("--scene-scale", (0.93 + progress * .11).toFixed(3));
+        if (scene === categoryScene) {
+          const centered = progress - .5;
+          categoryItems.forEach((item, index) => {
+            const depth = floatProfiles[index].depth;
+            item.style.setProperty("--scroll-x", `${(centered * (index % 2 ? 24 : -20) * depth).toFixed(2)}px`);
+            item.style.setProperty("--scroll-y", `${(centered * -90 * depth).toFixed(2)}px`);
+            item.style.setProperty("--scroll-rz", `${(centered * (index % 2 ? 3.2 : -2.6)).toFixed(2)}deg`);
+          });
+        }
       });
       if (heroMetrics && journeyBounds && journeyBounds.bottom >= 0 && journeyBounds.top <= height) {
         const progress = clamp((heroMetrics.top - journeyBounds.top) / heroMetrics.distance);
@@ -114,9 +222,12 @@
       controller.abort();
       observer.disconnect();
       layoutObserver.disconnect();
+      categoryObserver?.disconnect();
       staged.forEach(element => element.classList.remove("scene-ready"));
       if (pointerFrame) cancelAnimationFrame(pointerFrame);
       if (scrollFrame) cancelAnimationFrame(scrollFrame);
+      if (categoryFrame) cancelAnimationFrame(categoryFrame);
+      if (categoryPointerFrame) cancelAnimationFrame(categoryPointerFrame);
     };
   }
   reduced.addEventListener("change", () => {

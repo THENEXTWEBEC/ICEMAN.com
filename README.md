@@ -60,3 +60,7 @@ No se emite al abrir, enfocar, abandonar o validar el formulario, ante errores H
 La recepción en DebugView y la configuración como evento clave requieren acceso a la propiedad GA4 y un envío confirmado real; las pruebas automáticas no acreditan esa recepción.
 
 El dominio personalizado es `icemanec.com`, declarado en `CNAME`. Las URLs de `index.html`, `robots.txt` y `sitemap.xml` usan `https://icemanec.com`. Las cabeceras de seguridad, la redirección HTTP a HTTPS y el dominio canónico se deben configurar en hosting/DNS; GitHub Pages no permite definir esas cabeceras desde estos archivos estáticos.
+
+## Rediseño del 22–23 de octubre de 2026
+
+Ver `docs/redesign-2026-10-22.md` para alcance, pruebas, versión privada y materiales pendientes. La navegación incluye `/donde-encontrarnos`; Papas Air Fryer pertenece a `/productos/papas`. `brand-experience.css` unifica las páginas interiores y `tests/brand-experience.test.cjs` comprueba selector y correspondencias.
