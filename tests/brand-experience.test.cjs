@@ -5,6 +5,7 @@ const vm = require('node:vm');
 const path = require('node:path');
 const base = path.join(__dirname,'..');
 const app = fs.readFileSync(path.join(base,'app.js'),'utf8');
+const brandStyles = fs.readFileSync(path.join(base,'brand-experience.css'),'utf8');
 const context = {window:{}};
 vm.createContext(context);
 for(const file of ['catalog.js','editorial-data.js']) vm.runInContext(fs.readFileSync(path.join(base,file),'utf8'),context);
@@ -21,6 +22,11 @@ function planner(people,plan,method){
 test('Air Fryer is in Papas and no longer a separate category',()=>{
  assert.equal(catalog.products.find(p=>p.slug==='papas-air-fryer').category,'papas');
  assert.ok(!catalog.categories.some(c=>c.slug==='air-fryer'));
+});
+test('compact navbar menu can render open at every viewport width',()=>{
+ assert.match(brandStyles,/\.site-header \.mobile-panel\{[^}]*display:flex/);
+ assert.match(brandStyles,/\.site-header \.mobile-panel\.open\{[^}]*visibility:visible[^}]*pointer-events:auto/);
+ assert.match(app,/menu\.classList\.toggle\("open", menuOpened\)/);
 });
 test('planner uses actual recipe servings and method for a matching breakfast',()=>{
  const n=planner('1–2','Desayuno','Horno');
