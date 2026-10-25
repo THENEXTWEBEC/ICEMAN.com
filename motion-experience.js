@@ -50,20 +50,25 @@
     const categoryField = categoryScene?.querySelector("[data-category-universe]");
     const categoryItems = categoryField ? [...categoryField.querySelectorAll(".home-category")] : [];
     const floatProfiles = [
-      { phase:.2, speed:.43, x:22, y:28, rx:3.2, ry:5.8, rz:2.4, depth:.82 },
-      { phase:1.7, speed:.31, x:30, y:22, rx:4.4, ry:7.2, rz:2.8, depth:1.18 },
-      { phase:3.1, speed:.49, x:18, y:34, rx:3.8, ry:5.1, rz:3.1, depth:.68 },
-      { phase:4.4, speed:.36, x:27, y:25, rx:4.7, ry:6.5, rz:2.2, depth:1.04 },
-      { phase:5.6, speed:.45, x:20, y:30, rx:3.4, ry:5.6, rz:2.7, depth:.76 },
-      { phase:2.5, speed:.28, x:32, y:20, rx:4.1, ry:7.6, rz:2.1, depth:1.12 }
+      { phase:.2, speed:.62, x:22, y:28, rx:3.2, ry:5.8, rz:2.4, depth:.82 },
+      { phase:1.7, speed:.51, x:30, y:22, rx:4.4, ry:7.2, rz:2.8, depth:1.18 },
+      { phase:3.1, speed:.71, x:18, y:34, rx:3.8, ry:5.1, rz:3.1, depth:.68 },
+      { phase:4.4, speed:.56, x:27, y:25, rx:4.7, ry:6.5, rz:2.2, depth:1.04 },
+      { phase:5.6, speed:.66, x:20, y:30, rx:3.4, ry:5.6, rz:2.7, depth:.76 },
+      { phase:2.5, speed:.48, x:32, y:20, rx:4.1, ry:7.6, rz:2.1, depth:1.12 }
     ];
+    const categoryMotion = floatProfiles.map(() => ({
+      cursorX:0, cursorY:0, cursorRX:0, cursorRY:0,
+      targetX:0, targetY:0, targetRX:0, targetRY:0,
+      scrollX:0, scrollY:0, scrollRZ:0, lastTransform:""
+    }));
     let categoryFrame = 0;
     let categoryPointerFrame = 0;
     let categoryVisible = false;
     let categoryLastFrame = 0;
     let activeCategory = null;
     const lowPower = innerWidth < 700 || (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4);
-    const motionScale = lowPower ? .58 : 1;
+    const motionScale = lowPower ? .68 : 1;
     categoryItems.forEach((item, index) => {
       const profile = floatProfiles[index];
       item.style.setProperty("--depth-z", `${Math.round((profile.depth - 1) * 110)}px`);
@@ -77,21 +82,29 @@
     const renderCategoryFloat = (now) => {
       categoryFrame = 0;
       if (!categoryVisible || reduced.matches) return;
-      if (lowPower && now - categoryLastFrame < 30) {
-        categoryFrame = requestAnimationFrame(renderCategoryFloat);
-        return;
-      }
+      const delta = categoryLastFrame ? Math.min(40, now - categoryLastFrame) : 16.7;
       categoryLastFrame = now;
+      const response = 1 - Math.exp(-delta * .018);
       const time = now / 1000;
       categoryItems.forEach((item, index) => {
         const p = floatProfiles[index];
+        const state = categoryMotion[index];
         const primary = time * p.speed + p.phase;
         const secondary = time * p.speed * .61 + p.phase * 1.7;
-        item.style.setProperty("--float-x", `${((Math.sin(primary) * p.x + Math.sin(secondary) * p.x * .28) * motionScale).toFixed(2)}px`);
-        item.style.setProperty("--float-y", `${((Math.cos(primary * .83) * p.y + Math.sin(secondary * 1.3) * p.y * .22) * motionScale).toFixed(2)}px`);
-        item.style.setProperty("--float-rx", `${(Math.sin(primary * .72) * p.rx * motionScale).toFixed(2)}deg`);
-        item.style.setProperty("--float-ry", `${(Math.cos(secondary * .9) * p.ry * motionScale).toFixed(2)}deg`);
-        item.style.setProperty("--float-rz", `${(Math.sin(primary * .53) * p.rz * motionScale).toFixed(2)}deg`);
+        state.cursorX += (state.targetX - state.cursorX) * response;
+        state.cursorY += (state.targetY - state.cursorY) * response;
+        state.cursorRX += (state.targetRX - state.cursorRX) * response;
+        state.cursorRY += (state.targetRY - state.cursorRY) * response;
+        const x = (Math.sin(primary) * p.x + Math.sin(secondary) * p.x * .28) * motionScale + state.cursorX + state.scrollX;
+        const y = (Math.cos(primary * .83) * p.y + Math.sin(secondary * 1.3) * p.y * .22) * motionScale + state.cursorY + state.scrollY;
+        const rx = Math.sin(primary * .72) * p.rx * motionScale + state.cursorRX;
+        const ry = Math.cos(secondary * .9) * p.ry * motionScale + state.cursorRY;
+        const rz = Math.sin(primary * .53) * p.rz * motionScale + state.scrollRZ;
+        const transform = `translate3d(${x.toFixed(2)}px,${y.toFixed(2)}px,var(--depth-z)) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg) rotateZ(${rz.toFixed(2)}deg)`;
+        if (transform !== state.lastTransform) {
+          item.style.transform = transform;
+          state.lastTransform = transform;
+        }
       });
       categoryFrame = requestAnimationFrame(renderCategoryFloat);
     };
@@ -105,25 +118,28 @@
       categoryScene.addEventListener("pointermove", (event) => {
         if (categoryPointerFrame) return;
         categoryPointerFrame = requestAnimationFrame(() => {
-          const sceneBox = categoryScene.getBoundingClientRect();
-          const nx = (event.clientX - sceneBox.left) / sceneBox.width - .5;
-          const ny = (event.clientY - sceneBox.top) / sceneBox.height - .5;
+          const fieldBox = categoryField.getBoundingClientRect();
+          const localX = event.clientX - fieldBox.left;
+          const localY = event.clientY - fieldBox.top;
+          const nx = localX / fieldBox.width - .5;
+          const ny = (event.clientY - categoryScene.getBoundingClientRect().top) / categoryScene.clientHeight - .5;
           categoryItems.forEach((item, index) => {
-            const box = item.getBoundingClientRect();
-            const distance = Math.hypot(event.clientX - (box.left + box.width / 2), event.clientY - (box.top + box.height / 2));
+            const centerX = item.offsetLeft + item.offsetWidth / 2;
+            const centerY = item.offsetTop + item.offsetHeight / 2;
+            const distance = Math.hypot(localX - centerX, localY - centerY);
             const attraction = Math.max(0, 1 - distance / 360);
             const depth = floatProfiles[index].depth;
-            item.style.setProperty("--cursor-x", `${(nx * 22 * depth + (event.clientX - box.left - box.width / 2) * attraction * .035).toFixed(2)}px`);
-            item.style.setProperty("--cursor-y", `${(ny * 16 * depth + (event.clientY - box.top - box.height / 2) * attraction * .035).toFixed(2)}px`);
-            item.style.setProperty("--cursor-rx", `${(-ny * 5 * depth).toFixed(2)}deg`);
-            item.style.setProperty("--cursor-ry", `${(nx * 7 * depth).toFixed(2)}deg`);
+            const state = categoryMotion[index];
+            state.targetX = nx * 28 * depth + (localX - centerX) * attraction * .045;
+            state.targetY = ny * 20 * depth + (localY - centerY) * attraction * .045;
+            state.targetRX = -ny * 6 * depth;
+            state.targetRY = nx * 8 * depth;
           });
           categoryPointerFrame = 0;
         });
       }, { passive:true, signal });
       categoryScene.addEventListener("pointerleave", () => {
-        categoryItems.forEach(item => ["--cursor-x","--cursor-y"].forEach(name => item.style.setProperty(name,"0px")));
-        categoryItems.forEach(item => ["--cursor-rx","--cursor-ry"].forEach(name => item.style.setProperty(name,"0deg")));
+        categoryMotion.forEach(state => { state.targetX = 0; state.targetY = 0; state.targetRX = 0; state.targetRY = 0; });
         setActiveCategory(null);
       }, { signal });
     }
@@ -178,9 +194,10 @@
           const centered = progress - .5;
           categoryItems.forEach((item, index) => {
             const depth = floatProfiles[index].depth;
-            item.style.setProperty("--scroll-x", `${(centered * (index % 2 ? 24 : -20) * depth).toFixed(2)}px`);
-            item.style.setProperty("--scroll-y", `${(centered * -90 * depth).toFixed(2)}px`);
-            item.style.setProperty("--scroll-rz", `${(centered * (index % 2 ? 3.2 : -2.6)).toFixed(2)}deg`);
+            const state = categoryMotion[index];
+            state.scrollX = centered * (index % 2 ? 24 : -20) * depth;
+            state.scrollY = centered * -90 * depth;
+            state.scrollRZ = centered * (index % 2 ? 3.2 : -2.6);
           });
         }
       });
