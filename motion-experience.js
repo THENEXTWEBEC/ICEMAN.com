@@ -201,6 +201,7 @@
           });
         }
       });
+      if (activeCategory && finePointer.matches && !activeCategory.matches(":hover") && document.activeElement !== activeCategory) setActiveCategory(null);
       if (heroMetrics && journeyBounds && journeyBounds.bottom >= 0 && journeyBounds.top <= height) {
         const progress = clamp((heroMetrics.top - journeyBounds.top) / heroMetrics.distance);
         const storyIn = clamp((progress - .25) / .2);
