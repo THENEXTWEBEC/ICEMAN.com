@@ -246,6 +246,22 @@ body:has(.catalog-results) #main{background:#161d46}.page-intro:has(+ .catalog-t
   .comparison-pack img{padding:24px!important}
 }
 
+/* Final comparison frame: remove image canvases and use one shared scale. */
+.comparison-scene{background:#eaf1f4}
+.comparison-dish,.comparison-pack{background:transparent!important}
+.comparison-dish img,.comparison-pack img,
+.detail-image .comparison-dish img,.detail-image .comparison-pack img{
+  width:100%!important;
+  height:100%!important;
+  max-width:none!important;
+  padding:24px!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  background:transparent!important;
+  mix-blend-mode:multiply!important;
+  transform:none!important;
+}
+
 /* Responsive category grid: the pack and its label share one stable, clickable card. */
 .home-categories{
   min-height:0;
