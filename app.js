@@ -669,7 +669,7 @@
   }
   const storyConcepts = [
     {title:"PRACTICIDAD",text:"Soluciones que hacen más fácil tu día.",image:"occasion-quick-dinner.webp",alt:"Preparación de una comida en casa"},
-    {title:"VERSATILIDAD",text:"Un producto, muchas formas de disfrutarlo.",image:"recipe-onion-chicken.webp",alt:"Pollo y ensalada acompañados de aros de cebolla"},
+    {title:"VERSATILIDAD",text:"Un producto, muchas formas de disfrutarlo.",image:"recipe-onion-chicken-plate.png",alt:"Pollo con ensalada y aros de cebolla"},
     {title:"PARA COMPARTIR",text:"Sabores que reúnen alrededor de la mesa.",image:"occasion-home-sharing.webp",alt:"Una mesa compartida con amigos"}
   ];
   const storyValues = [
