@@ -235,3 +235,13 @@ body:has(.catalog-results) #main{background:#161d46}.page-intro:has(+ .catalog-t
   .home-category-rail .home-category{--float-x:0px!important;--float-y:0px!important;--float-rx:0deg!important;--float-ry:0deg!important;--float-rz:0deg!important;--cursor-x:0px!important;--cursor-y:0px!important;--scroll-x:0px!important;--scroll-y:0px!important;--scroll-rz:0deg!important;transition:none!important}
   .home-categories.scene-ready .home-category{opacity:1}
 }
+
+/* Product-to-plate comparison: equal perceived scale and seamless celeste frame. */
+.comparison-dish img{padding:56px!important;mix-blend-mode:multiply!important}
+.comparison-pack img{padding:16px!important;mix-blend-mode:multiply!important}
+.detail-image .comparison-dish img{padding:46px!important;mix-blend-mode:multiply!important}
+.detail-image .comparison-pack img{padding:18px!important;mix-blend-mode:multiply!important}
+@media(min-width:900px){
+  .comparison-dish img{padding:64px!important}
+  .comparison-pack img{padding:24px!important}
+}
