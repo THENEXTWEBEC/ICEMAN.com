@@ -153,7 +153,17 @@
       item.addEventListener("focusout", () => { if (!categoryField?.contains(document.activeElement)) setActiveCategory(null); }, { signal });
     });
     if (categoryField) {
-      // Category cards are real links: one tap should always navigate on touch devices.
+      categoryField.addEventListener("click", event => {
+        const item = event.target.closest(".home-category");
+        if (!item || finePointer.matches || event.detail === 0) return;
+        if (activeCategory !== item) {
+          event.preventDefault();
+          event.stopImmediatePropagation();
+          setActiveCategory(item);
+        } else {
+          setActiveCategory(null);
+        }
+      }, { capture:true, signal });
       document.addEventListener("pointerdown", event => { if (!categoryField.contains(event.target)) setActiveCategory(null); }, { passive:true, signal });
     }
 
