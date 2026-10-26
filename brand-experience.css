@@ -262,6 +262,7 @@ body:has(.catalog-results) #main{background:#161d46}.page-intro:has(+ .catalog-t
   transform:none!important;
 }
 .comparison-scene,.comparison-dish,.comparison-pack{isolation:auto!important}
+.product-comparison[data-comparison-side="pack"] .comparison-dish{visibility:hidden}
 
 /* Responsive category grid: the pack and its label share one stable, clickable card. */
 .home-categories{

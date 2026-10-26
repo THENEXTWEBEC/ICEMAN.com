@@ -662,7 +662,7 @@
     const pack = `<img src="${cutoutAsset(product.image)}" alt="Empaque de ${escapeHTML(product.name)}, ${escapeHTML(product.presentation)}" loading="lazy" decoding="async">`;
     if (!dish) return `<div class="product-photo">${pack}</div>`;
     const dishSrc = dish.image.startsWith("catalog/prepared/") ? `${projectBase}/assets/catalog/prepared-cutout/${dish.image.split("/").pop()}` : editorialImage(dish.image);
-    return `<div class="product-comparison" data-comparison style="--split:50%"><div class="comparison-scene"><div class="comparison-dish ${dish.className || ""}"><img src="${dishSrc}" alt="${dish.alt}" loading="lazy" decoding="async"></div><div class="comparison-pack">${pack}</div><span class="comparison-line" aria-hidden="true"><b>↔</b></span><input type="range" min="0" max="100" value="50" data-compare-range aria-label="Revelar preparación de ${escapeHTML(product.name)}" aria-valuetext="50% empaque, 50% preparación"></div><div class="comparison-captions"><span>En el empaque</span><span>En tu mesa</span></div><p class="comparison-cue">Desliza y descubre <span aria-hidden="true">↔</span></p></div>`;
+    return `<div class="product-comparison" data-comparison data-comparison-side="mix" style="--split:50%"><div class="comparison-scene"><div class="comparison-dish ${dish.className || ""}"><img src="${dishSrc}" alt="${dish.alt}" loading="lazy" decoding="async"></div><div class="comparison-pack">${pack}</div><span class="comparison-line" aria-hidden="true"><b>↔</b></span><input type="range" min="0" max="100" value="50" data-compare-range aria-label="Revelar preparación de ${escapeHTML(product.name)}" aria-valuetext="50% empaque, 50% preparación"></div><div class="comparison-captions"><span>En el empaque</span><span>En tu mesa</span></div><p class="comparison-cue">Desliza y descubre <span aria-hidden="true">↔</span></p></div>`;
   }
   function floatPacks(className = "") {
     return `<div class="floating-packs ${className}" aria-hidden="true"><img src="${asset("air-fryer")}" alt="" class="float-pack pack-one" loading="lazy"><img src="${asset("edamame-grano")}" alt="" class="float-pack pack-two" loading="lazy"><img src="${asset("papas-rejilla")}" alt="" class="float-pack pack-three" loading="lazy"></div>`;
@@ -701,7 +701,9 @@
     root.addEventListener("input", e=>{
       if (!e.target.matches("[data-compare-range]")) return;
       const value=Number(e.target.value);
-      e.target.closest("[data-comparison]").style.setProperty("--split",`${value}%`);
+      const comparison=e.target.closest("[data-comparison]");
+      comparison.style.setProperty("--split",`${value}%`);
+      comparison.dataset.comparisonSide=value >= 98 ? "pack" : value <= 2 ? "dish" : "mix";
       e.target.setAttribute("aria-valuetext",`${value}% empaque, ${100-value}% preparación`);
     },{signal});
     root.querySelectorAll("[data-story-selector]").forEach(section=>{
