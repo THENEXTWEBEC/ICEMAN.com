@@ -50,7 +50,7 @@ test('story selections retain the approved descriptions',()=>{
 test('every enabled comparison resolves to an existing package and served image',()=>{
  const source=app.slice(app.indexOf('  const dishScenes ='),app.indexOf('  function productScene('));
  const scenes=vm.runInNewContext(source+';dishScenes;');
- assert.equal(Object.keys(scenes).length,14);
+ assert.equal(Object.keys(scenes).length,27);
  Object.entries(scenes).forEach(([slug,dish])=>{
   const product=catalog.products.find(p=>p.slug===slug); assert.ok(product,slug);
   assert.ok(fs.existsSync(path.join(base,'assets/catalog',product.image+'.webp')));

@@ -628,20 +628,33 @@
   // Client-supplied prepared dishes. The comparison keeps the existing pack
   // geometry and only swaps the visual shown on the “En tu mesa” side.
   const dishScenes = {
+    "papas-air-fryer": {image:"catalog/prepared/papas-air-fryer.png",alt:"Papas Air Fryer preparadas y servidas en un plato verde"},
+    "corte-ondulado-900-premium": {image:"catalog/prepared/corte-ondulado-900-premium.png",alt:"Papas onduladas preparadas y servidas en un plato verde"},
+    "corte-recto-900-premium": {image:"catalog/prepared/corte-recto-900-premium.png",alt:"Papas de corte recto preparadas y servidas en un plato verde"},
+    "papa-steak": {image:"catalog/prepared/papa-steak.png",alt:"Papa Steak preparada y servida en un plato verde"},
+    "papas-spices": {image:"catalog/prepared/papas-spices.png",alt:"Papas con especias preparadas y servidas en un plato verde"},
+    "papas-finas-hierbas": {image:"catalog/prepared/papas-finas-hierbas.png",alt:"Papas con finas hierbas preparadas y servidas en un plato verde"},
+    "papas-rejilla": {image:"catalog/prepared/papas-rejilla.png",alt:"Papas rejilla preparadas y servidas en un plato verde"},
+    "hash-brown": {image:"catalog/prepared/hash-brown.png",alt:"Hash Brown preparado y servido en un plato verde"},
+    "aros-de-cebolla": {image:"catalog/prepared/aros-de-cebolla.png",alt:"Aros de cebolla preparados y servidos en un plato verde"},
+    "croqueta-de-yuca": {image:"catalog/prepared/croqueta-de-yuca.png",alt:"Croquetas de yuca preparadas y servidas en un plato verde"},
     "zanahoria-ondulada": {image:"catalog/prepared/zanahoria-ondulada.png",alt:"Zanahoria ondulada servida en un plato verde"},
     "ensalada-rusa": {image:"catalog/prepared/ensalada-rusa.png",alt:"Ensalada rusa servida en un plato verde"},
-    "corte-ondulado-900-premium": {image:"catalog/prepared/corte-ondulado-900-premium.png",alt:"Papas onduladas preparadas y servidas en un plato verde"},
     "maiz-dulce-450": {image:"catalog/prepared/maiz-dulce-450.png",alt:"Maíz dulce preparado y servido en un plato verde"},
     "mix-jardinera-450": {image:"catalog/prepared/mix-jardinera-450.png",alt:"Mix jardinera preparado y servido en un plato verde"},
     "arvejas-450": {image:"catalog/prepared/arvejas-450.png",alt:"Arvejas preparadas y servidas en un plato verde"},
     "edamame-vaina": {image:"catalog/prepared/edamame-vaina.png",alt:"Edamame en vaina preparado y servido en un plato verde"},
     "edamame-grano": {image:"catalog/prepared/edamame-grano.png",alt:"Edamame en grano preparado y servido en un plato verde"},
-    "corte-recto-900-premium": {image:"editorial/recipe-papas-onduladas.webp",alt:"Papas de corte recto servidas"},
-    "papas-rejilla": {image:"editorial/papas-rejilla-servidas-cliente.jpeg",alt:"Papas rejilla servidas en un plato verde",className:"dish-rejilla"},
-    "aros-de-cebolla": {image:"editorial/recipe-onion-rings.webp",alt:"Aros de cebolla dorados con salsa"},
     "salteado-de-verduras": {image:"catalog/prepared/salteado-de-verduras.png",alt:"Salteado de verduras preparado y servido en un plato verde"},
     "yuca-500": {image:"catalog/prepared/yuca-500.png",alt:"Trozos de yuca preparados y servidos en un plato verde"},
-    "waffle-glaseado": {image:"editorial/recipe-waffles-franui.webp",alt:"Waffles con Franuí y frutos rojos",className:"dish-poster"}
+    "helado-paila-mora": {image:"catalog/prepared/helado-paila-mora.png",alt:"Helado de mora servido en un plato verde"},
+    "helado-paila-naranjilla": {image:"catalog/prepared/helado-paila-naranjilla.png",alt:"Helado de naranjilla servido en un plato verde"},
+    "helado-paila-guanabana": {image:"catalog/prepared/helado-paila-guanabana.png",alt:"Helado de guanábana servido en un plato verde"},
+    "helado-paila-naranjilla-hierbabuena": {image:"catalog/prepared/helado-paila-naranjilla-hierbabuena.png",alt:"Helado de naranjilla y hierbabuena servido en un plato verde"},
+    "smoothie-green": {image:"catalog/prepared/smoothie-green.png",alt:"Smoothie Green servido en un plato verde"},
+    "smoothie-orange": {image:"catalog/prepared/smoothie-orange.png",alt:"Smoothie Orange servido en un plato verde"},
+    "smoothie-red": {image:"catalog/prepared/smoothie-red.png",alt:"Smoothie Red servido en un plato verde"},
+    "waffle-glaseado": {image:"catalog/prepared/waffle-glaseado.png",alt:"Waffle glaseado preparado y servido en un plato verde"}
   };
   function productScene(product) {
     const dish = dishScenes[product.slug];
