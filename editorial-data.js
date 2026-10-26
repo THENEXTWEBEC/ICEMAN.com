@@ -26,7 +26,7 @@ window.ICEMAN_EDITORIAL = {
       title: "Pollo a las hierbas con aros de cebolla y ensalada de repollo morado",
       description: "Pollo dorado, ensalada fresca y aros de cebolla crujientes con una salsa ligera de yogur.",
       category: "Recetas", time: "30 min", difficulty: "Fácil", servings: "4", method: "Sartén y método del empaque",
-      image: "editorial/recipe-onion-rings.webp", heroImage: "editorial/recipe-onion-chicken.webp",
+      image: "editorial/recipe-onion-rings.webp", heroImage: "editorial/recipe-onion-chicken-plate.png",
       heroAlt: "Pollo a las hierbas con aros de cebolla, ensalada de repollo morado y salsa de yogur",
       products: ["aros-de-cebolla"],
       tags: ["pollo", "ensalada", "repollo morado", "aros de cebolla", "salsa de yogur"], occasions: ["cena", "fin-de-semana"],
