@@ -87,6 +87,10 @@
       const response = 1 - Math.exp(-delta * .018);
       const time = now / 1000;
       categoryItems.forEach((item, index) => {
+        if (innerWidth < 821) {
+          item.style.transform = "none";
+          return;
+        }
         const p = floatProfiles[index];
         const state = categoryMotion[index];
         const primary = time * p.speed + p.phase;

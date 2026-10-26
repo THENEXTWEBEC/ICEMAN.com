@@ -338,11 +338,12 @@ body:has(.catalog-results) #main{background:#161d46}.page-intro:has(+ .catalog-t
   line-height:.95;
   letter-spacing:-.045em;
   white-space:normal;
+  writing-mode:horizontal-tb!important;
   text-wrap:balance;
   overflow-wrap:anywhere;
   text-shadow:0 8px 22px rgba(2,6,26,.46);
   opacity:1;
-  transform:none;
+  transform:none!important;
 }
 .home-category-rail .home-category>.thin-arrow{
   position:absolute;
@@ -381,8 +382,8 @@ body:has(.catalog-results) #main{background:#161d46}.page-intro:has(+ .catalog-t
 .home-categories>.wrap>.home-inline-link{margin-top:0}
 
 @media(max-width:820px){
-  .home-category-rail{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:32px}
-  .home-category-rail .home-category{grid-template-rows:minmax(164px,clamp(164px,36vw,245px)) auto;padding:13px;border-radius:18px}
+  .home-category-rail{grid-template-columns:repeat(2,minmax(0,1fr))!important;grid-auto-flow:row!important;grid-auto-columns:auto!important;grid-auto-rows:auto!important;gap:16px;margin-top:32px}
+  .home-category-rail .home-category{grid-column:auto!important;grid-row:auto!important;min-width:0!important;width:100%!important;grid-template-rows:minmax(164px,clamp(164px,36vw,245px)) auto;padding:13px;border-radius:18px}
   .home-category-rail .home-category:before{inset:7px;border-radius:13px}
   .home-category-rail .home-category strong{min-height:31px;margin-top:13px;font-size:clamp(20px,5.4vw,29px)}
   .home-category-rail .home-category>.thin-arrow{right:15px;bottom:16px;width:25px;height:25px}
@@ -396,7 +397,9 @@ body:has(.catalog-results) #main{background:#161d46}.page-intro:has(+ .catalog-t
   .home-category-rail .home-category strong{min-height:28px;margin-top:10px;padding:0 2px;font-size:clamp(18px,5.2vw,23px)}
   .home-category-rail .home-category>.thin-arrow{right:11px;bottom:12px;width:22px;height:22px}
 }
+@keyframes category-grid-pack-float{0%,100%{transform:translate3d(-2px,2px,0) rotate(-.6deg)}50%{transform:translate3d(2px,-5px,0) rotate(.6deg)}}
+.home-category-rail .home-category-image img{animation:category-grid-pack-float 7s ease-in-out infinite alternate!important}
 @media(prefers-reduced-motion:reduce){
-  .home-category-rail .home-category,.home-category-rail .home-category img{transition:none!important}
+  .home-category-rail .home-category,.home-category-rail .home-category img{transition:none!important;animation:none!important}
   .home-categories.scene-ready .home-category{opacity:1}
 }
