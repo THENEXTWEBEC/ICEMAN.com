@@ -428,6 +428,15 @@ body:has(.catalog-results) #main{background:#161d46}.page-intro:has(+ .catalog-t
 @keyframes category-grid-pack-float{0%,100%{transform:translate3d(-2px,2px,0) rotate(-.6deg)}50%{transform:translate3d(2px,-5px,0) rotate(.6deg)}}
 .home-category-rail .home-category-image img{animation:category-grid-pack-float 7s ease-in-out infinite alternate!important}
 .home-categories .category-ambient{display:none!important}
+@media(min-width:821px){
+  .home-category-rail .home-category strong{
+    max-width:none;
+    font-size:clamp(18px,1.65vw,30px);
+    white-space:nowrap!important;
+    text-wrap:nowrap;
+    overflow:visible;
+  }
+}
 @media(prefers-reduced-motion:reduce){
   .home-category-rail .home-category,.home-category-rail .home-category img{transition:none!important;animation:none!important}
   .home-categories.scene-ready .home-category{opacity:1}
