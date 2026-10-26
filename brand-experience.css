@@ -261,6 +261,7 @@ body:has(.catalog-results) #main{background:#161d46}.page-intro:has(+ .catalog-t
   mix-blend-mode:normal!important;
   transform:none!important;
 }
+.comparison-dish img,.detail-image .comparison-dish img{transform:scale(.82)!important}
 .comparison-scene,.comparison-dish,.comparison-pack{isolation:auto!important}
 .product-comparison[data-comparison-side="pack"] .comparison-dish{visibility:hidden}
 
