@@ -261,6 +261,7 @@ body:has(.catalog-results) #main{background:#161d46}.page-intro:has(+ .catalog-t
   mix-blend-mode:multiply!important;
   transform:none!important;
 }
+.comparison-scene,.comparison-dish,.comparison-pack{isolation:auto!important}
 
 /* Responsive category grid: the pack and its label share one stable, clickable card. */
 .home-categories{
