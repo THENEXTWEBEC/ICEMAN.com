@@ -184,8 +184,8 @@ body:has(.catalog-results) #main{background:#161d46}.page-intro:has(+ .catalog-t
 .home-category-number{display:none}
 .home-category-image{display:block;width:100%;height:330px;min-height:0;margin:0;border:0;border-radius:0;background:transparent!important;transform-style:preserve-3d}
 .home-category-image img{display:block;width:100%;height:100%;padding:0;object-fit:contain;background:transparent;filter:drop-shadow(0 30px 24px rgba(1,5,28,.48)) drop-shadow(0 7px 7px rgba(71,145,193,.15));animation:none!important;transform:translateZ(32px) scale(1);transition:filter .28s ease,transform .28s cubic-bezier(.16,1,.3,1);will-change:transform}
-.home-category strong{position:absolute;z-index:4;left:4%;bottom:15px;margin:0;padding:0;color:#fff;font-size:clamp(24px,2.1vw,35px);font-weight:800;line-height:.92;letter-spacing:-.05em;white-space:nowrap;text-shadow:0 10px 28px rgba(1,5,28,.7);opacity:.86;animation:none!important;transform:translateZ(54px);transition:opacity .24s ease,transform .28s cubic-bezier(.16,1,.3,1)}
-.home-category>.thin-arrow{position:absolute;z-index:4;right:3%;bottom:10px;width:31px;height:31px;color:#9fe5f8;opacity:.8;animation:none!important;transform:translateZ(55px);transition:opacity .24s ease,transform .28s cubic-bezier(.16,1,.3,1)}
+.home-category strong{position:absolute;z-index:4;top:344px;left:4%;margin:0;padding:0;color:#fff;font-size:clamp(24px,2.1vw,35px);font-weight:800;line-height:.92;letter-spacing:-.05em;white-space:nowrap;text-shadow:0 10px 28px rgba(1,5,28,.7);opacity:.86;animation:none!important;transform:translateZ(54px);transition:opacity .24s ease,transform .28s cubic-bezier(.16,1,.3,1)}
+.home-category>.thin-arrow{position:absolute;z-index:4;top:338px;right:3%;width:31px;height:31px;color:#9fe5f8;opacity:.8;animation:none!important;transform:translateZ(55px);transition:opacity .24s ease,transform .28s cubic-bezier(.16,1,.3,1)}
 .home-category:hover,.home-category.is-active-category{--focus-scale:1.1}
 .home-category:hover img,.home-category.is-active-category img{filter:drop-shadow(0 42px 30px rgba(1,5,28,.58)) drop-shadow(0 8px 16px rgba(95,200,235,.22));transform:translateZ(68px) scale(1.035)}
 .home-category:hover strong,.home-category.is-active-category strong{opacity:1;transform:translateZ(82px) translateY(-7px)}
@@ -208,7 +208,8 @@ body:has(.catalog-results) #main{background:#161d46}.page-intro:has(+ .catalog-t
   .home-category:nth-child(4){left:50%!important;top:70px!important;width:23%}
   .home-category:nth-child(5){left:70%!important;top:285px!important;width:16%}
   .home-category:nth-child(6){right:-2%!important;top:25px!important;width:22%}
-  .home-category strong{font-size:clamp(21px,2.5vw,29px)}
+  .home-category strong{top:299px;font-size:clamp(21px,2.5vw,29px)}
+  .home-category>.thin-arrow{top:294px}
 }
 @media(max-width:640px){
   .home-categories{min-height:1260px;padding-block:78px 68px;overflow:hidden}
@@ -222,8 +223,8 @@ body:has(.catalog-results) #main{background:#161d46}.page-intro:has(+ .catalog-t
   .home-category:nth-child(4){left:52%!important;right:auto!important;top:350px!important;bottom:auto!important;width:41%}
   .home-category:nth-child(5){left:2%!important;right:auto!important;top:735px!important;bottom:auto!important;width:37%}
   .home-category:nth-child(6){left:47%!important;right:auto!important;top:665px!important;bottom:auto!important;width:46%}
-  .home-category strong{position:absolute;left:4%;bottom:6px;margin:0;padding:0;font-size:clamp(20px,6.3vw,28px);animation:none!important}
-  .home-category>.thin-arrow{right:2%;bottom:1px;width:27px;height:27px;animation:none!important}
+  .home-category strong{position:absolute;top:235px;left:4%;bottom:auto;margin:0;padding:0;font-size:clamp(20px,6.3vw,28px);animation:none!important}
+  .home-category>.thin-arrow{top:229px;right:2%;bottom:auto;width:27px;height:27px;animation:none!important}
   .home-categories.has-active-category .home-category:not(.is-active-category){opacity:.32;filter:saturate(.65) brightness(.72)}
   .category-ambient i{width:72vw;height:72vw}
   .category-ambient i:nth-child(2){width:94vw;height:94vw}
