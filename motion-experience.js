@@ -68,7 +68,7 @@
     let categoryLastFrame = 0;
     let activeCategory = null;
     const lowPower = innerWidth < 700 || (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4);
-    const motionScale = lowPower ? .68 : 1;
+    const motionScale = (lowPower ? .68 : 1) * .8;
     categoryItems.forEach((item, index) => {
       const profile = floatProfiles[index];
       item.style.setProperty("--depth-z", `${Math.round((profile.depth - 1) * 110)}px`);
