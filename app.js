@@ -62,6 +62,7 @@
   }
   const escapeHTML = (value = "") => String(value).replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char]);
   const asset = (name) => `${projectBase}/assets/catalog/${encodeURIComponent(name)}.webp`;
+  const cutoutAsset = (name) => `${projectBase}/assets/catalog/cutout/${encodeURIComponent(name)}.png`;
   const editorialImage = (name) => name?.startsWith("editorial/") ? `${projectBase}/assets/${name}` : asset(name);
   const waLink = (message) => `https://wa.me/${waNumber}?text=${encodeURIComponent(message)}`;
   const contactMessage = "Hola, equipo de ICEMAN. Me gustaría recibir información sobre sus productos.";
@@ -658,9 +659,9 @@
   };
   function productScene(product) {
     const dish = dishScenes[product.slug];
-    const pack = `<img src="${asset(product.image)}" alt="Empaque de ${escapeHTML(product.name)}, ${escapeHTML(product.presentation)}" loading="lazy" decoding="async">`;
+    const pack = `<img src="${cutoutAsset(product.image)}" alt="Empaque de ${escapeHTML(product.name)}, ${escapeHTML(product.presentation)}" loading="lazy" decoding="async">`;
     if (!dish) return `<div class="product-photo">${pack}</div>`;
-    const dishSrc = dish.image.startsWith("catalog/") ? `${projectBase}/assets/${dish.image}` : editorialImage(dish.image);
+    const dishSrc = dish.image.startsWith("catalog/prepared/") ? `${projectBase}/assets/catalog/prepared-cutout/${dish.image.split("/").pop()}` : editorialImage(dish.image);
     return `<div class="product-comparison" data-comparison style="--split:50%"><div class="comparison-scene"><div class="comparison-dish ${dish.className || ""}"><img src="${dishSrc}" alt="${dish.alt}" loading="lazy" decoding="async"></div><div class="comparison-pack">${pack}</div><span class="comparison-line" aria-hidden="true"><b>↔</b></span><input type="range" min="0" max="100" value="50" data-compare-range aria-label="Revelar preparación de ${escapeHTML(product.name)}" aria-valuetext="50% empaque, 50% preparación"></div><div class="comparison-captions"><span>En el empaque</span><span>En tu mesa</span></div><p class="comparison-cue">Desliza y descubre <span aria-hidden="true">↔</span></p></div>`;
   }
   function floatPacks(className = "") {
