@@ -625,20 +625,30 @@
     updateHead(path, "Contacto ICEMAN Ecuador", "Contacta al equipo comercial ICEMAN por WhatsApp o consulta las oficinas y distribuidores en Ecuador.");
   }
 
-  // Only verified visual correspondences. Missing dish assets keep the official pack.
+  // Client-supplied prepared dishes. The comparison keeps the existing pack
+  // geometry and only swaps the visual shown on the “En tu mesa” side.
   const dishScenes = {
+    "zanahoria-ondulada": {image:"catalog/prepared/zanahoria-ondulada.png",alt:"Zanahoria ondulada servida en un plato verde"},
+    "ensalada-rusa": {image:"catalog/prepared/ensalada-rusa.png",alt:"Ensalada rusa servida en un plato verde"},
+    "corte-ondulado-900-premium": {image:"catalog/prepared/corte-ondulado-900-premium.png",alt:"Papas onduladas preparadas y servidas en un plato verde"},
+    "maiz-dulce-450": {image:"catalog/prepared/maiz-dulce-450.png",alt:"Maíz dulce preparado y servido en un plato verde"},
+    "mix-jardinera-450": {image:"catalog/prepared/mix-jardinera-450.png",alt:"Mix jardinera preparado y servido en un plato verde"},
+    "arvejas-450": {image:"catalog/prepared/arvejas-450.png",alt:"Arvejas preparadas y servidas en un plato verde"},
+    "edamame-vaina": {image:"catalog/prepared/edamame-vaina.png",alt:"Edamame en vaina preparado y servido en un plato verde"},
+    "edamame-grano": {image:"catalog/prepared/edamame-grano.png",alt:"Edamame en grano preparado y servido en un plato verde"},
     "corte-recto-900-premium": {image:"editorial/recipe-papas-onduladas.webp",alt:"Papas de corte recto servidas"},
     "papas-rejilla": {image:"editorial/papas-rejilla-servidas-cliente.jpeg",alt:"Papas rejilla servidas en un plato verde",className:"dish-rejilla"},
     "aros-de-cebolla": {image:"editorial/recipe-onion-rings.webp",alt:"Aros de cebolla dorados con salsa"},
-    "salteado-de-verduras": {image:"editorial/article-vegetables.webp",alt:"Preparación de vegetales salteados"},
-    "edamame-grano": {image:"editorial/article-edamame.webp",alt:"Bowl con edamame grano",className:"dish-poster"},
+    "salteado-de-verduras": {image:"catalog/prepared/salteado-de-verduras.png",alt:"Salteado de verduras preparado y servido en un plato verde"},
+    "yuca-500": {image:"catalog/prepared/yuca-500.png",alt:"Trozos de yuca preparados y servidos en un plato verde"},
     "waffle-glaseado": {image:"editorial/recipe-waffles-franui.webp",alt:"Waffles con Franuí y frutos rojos",className:"dish-poster"}
   };
   function productScene(product) {
     const dish = dishScenes[product.slug];
     const pack = `<img src="${asset(product.image)}" alt="Empaque de ${escapeHTML(product.name)}, ${escapeHTML(product.presentation)}" loading="lazy" decoding="async">`;
     if (!dish) return `<div class="product-photo">${pack}</div>`;
-    return `<div class="product-comparison" data-comparison style="--split:50%"><div class="comparison-scene"><div class="comparison-dish ${dish.className || ""}"><img src="${editorialImage(dish.image)}" alt="${dish.alt}" loading="lazy" decoding="async"></div><div class="comparison-pack">${pack}</div><span class="comparison-line" aria-hidden="true"><b>↔</b></span><input type="range" min="0" max="100" value="50" data-compare-range aria-label="Revelar preparación de ${escapeHTML(product.name)}" aria-valuetext="50% empaque, 50% preparación"></div><div class="comparison-captions"><span>En el empaque</span><span>En tu mesa</span></div><p class="comparison-cue">Desliza y descubre <span aria-hidden="true">↔</span></p></div>`;
+    const dishSrc = dish.image.startsWith("catalog/") ? `${projectBase}/assets/${dish.image}` : editorialImage(dish.image);
+    return `<div class="product-comparison" data-comparison style="--split:50%"><div class="comparison-scene"><div class="comparison-dish ${dish.className || ""}"><img src="${dishSrc}" alt="${dish.alt}" loading="lazy" decoding="async"></div><div class="comparison-pack">${pack}</div><span class="comparison-line" aria-hidden="true"><b>↔</b></span><input type="range" min="0" max="100" value="50" data-compare-range aria-label="Revelar preparación de ${escapeHTML(product.name)}" aria-valuetext="50% empaque, 50% preparación"></div><div class="comparison-captions"><span>En el empaque</span><span>En tu mesa</span></div><p class="comparison-cue">Desliza y descubre <span aria-hidden="true">↔</span></p></div>`;
   }
   function floatPacks(className = "") {
     return `<div class="floating-packs ${className}" aria-hidden="true"><img src="${asset("air-fryer")}" alt="" class="float-pack pack-one" loading="lazy"><img src="${asset("edamame-grano")}" alt="" class="float-pack pack-two" loading="lazy"><img src="${asset("papas-rejilla")}" alt="" class="float-pack pack-three" loading="lazy"></div>`;
