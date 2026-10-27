@@ -454,3 +454,18 @@ body:has(.catalog-results) #main{background:#161d46}.page-intro:has(+ .catalog-t
   .home-category-rail .home-category,.home-category-rail .home-category img{transition:none!important;animation:none!important}
   .home-categories.scene-ready .home-category{opacity:1}
 }
+
+/* Desktop category band: a celeste field keeps the floating products legible. */
+@media(min-width:821px){
+  .home-categories{
+    background:#a9e7f5!important;
+    border-top:0;
+  }
+  .home-categories .home-section-heading h2{color:#172457!important}
+  .home-categories .home-section-heading p{color:#385878!important}
+  .home-categories .home-kicker{color:#147da2!important}
+  .home-category-rail{border-color:transparent!important}
+  .home-category-rail .home-category strong{color:#172457;text-shadow:none}
+  .home-categories>.wrap>.home-inline-link{color:#172457}
+  .home-categories>.wrap>.home-inline-link:hover{color:#0d6282}
+}
