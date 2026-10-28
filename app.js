@@ -722,7 +722,7 @@
   ];
   const storyValues = [
     {title:"CERCANÍA",text:"Te acompañamos a ti y a tu familia con soluciones pensadas para las necesidades de cada día.",image:"editorial/10-aros-para-compartir.webp",alt:"Un momento cercano acompañado por Aros de cebolla ICEMAN"},
-    {title:"INNOVACIÓN",text:"Buscamos productos y soluciones que abren nuevas posibilidades.",image:"editorial/03-zanahoria-receta.webp",alt:"Zanahoria ondulada ICEMAN presentada de una forma creativa"},
+    {title:"INNOVACIÓN",text:"Buscamos productos y soluciones que abren nuevas posibilidades.",image:"editorial/innovation-kitchen.png",alt:"Plato creativo de vegetales y papas con cortes variados en una cocina contemporánea"},
     {title:"CONFIANZA",text:"Cuidamos la calidad de todo lo que llevamos hasta ti.",image:"editorial/occasion-weekend-breakfast.webp",alt:"Desayuno preparado para compartir en familia"}
   ];
   function storySelector(items, id, title, hint, number) {
