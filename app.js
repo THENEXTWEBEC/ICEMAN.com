@@ -710,7 +710,7 @@
     hero:{image:"editorial/advice-store-frozen-products.webp",alt:"Selección de productos ICEMAN conservados en el congelador"},
     history:{image:"editorial/article-vegetables.webp",alt:"Vegetales preparados para una comida cotidiana"},
     purpose:[
-      {image:"editorial/recipe-papas-onduladas.webp",alt:"Papas doradas listas para disfrutar"},
+      {image:"editorial/recipe-papas-onduladas-vertical.png",alt:"Papas onduladas doradas servidas en un plato verde"},
       {image:"editorial/article-edamame-clean.png",alt:"Preparación completa con edamame"},
       {image:"editorial/recipe-waffles-franui-clean.png",alt:"Waffles con frutos rojos para compartir"}
     ]
