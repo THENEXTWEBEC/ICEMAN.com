@@ -718,7 +718,7 @@
   const storyConcepts = [
     {title:"PRACTICIDAD",text:"Soluciones que hacen más fácil tu día.",image:"editorial/hero-crispy-potatoes.webp",alt:"Papas crocantes listas para servir"},
     {title:"VERSATILIDAD",text:"Un producto, muchas formas de disfrutarlo.",image:"editorial/08-test-preferencias.webp",alt:"Selección de snacks, smoothie y helado ICEMAN"},
-    {title:"PARA COMPARTIR",text:"Sabores que reúnen alrededor de la mesa.",image:"editorial/recipe-onion-chicken.webp",alt:"Plato de pollo, ensalada y aros de cebolla para compartir"}
+    {title:"PARA COMPARTIR",text:"Sabores que reúnen alrededor de la mesa.",image:"editorial/sharing-table.png",alt:"Personas compartiendo una bandeja de aros, papas y vegetales alrededor de la mesa"}
   ];
   const storyValues = [
     {title:"CERCANÍA",text:"Te acompañamos a ti y a tu familia con soluciones pensadas para las necesidades de cada día.",image:"editorial/10-aros-para-compartir.webp",alt:"Un momento cercano acompañado por Aros de cebolla ICEMAN"},
