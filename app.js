@@ -678,7 +678,7 @@
     "arvejas-450":[.99,.99,.99],
     "ensalada-rusa":[1,1,1],
     "mix-jardinera-450":[1.01,1.01,1.01],
-    "yuca-500":[.83,.83,.83],
+    "yuca-500":[.71,.71,.71],
     "zanahoria-ondulada":[.83,.83,.83],
     "helado-paila-mora":[1.15,1.15,1.09],
     "helado-paila-naranjilla":[1.34,1.34,1.34],
