@@ -10,14 +10,9 @@ const context = {window:{}};
 vm.createContext(context);
 for(const file of ['catalog.js','editorial-data.js']) vm.runInContext(fs.readFileSync(path.join(base,file),'utf8'),context);
 const catalog=context.window.ICEMAN_CATALOG, editorial=context.window.ICEMAN_EDITORIAL;
-function planner(people,plan,method){
- const nodes={};
- const root={querySelectorAll:()=>Object.entries({people,plan,method}).map(([choice,value])=>({dataset:{choice,value}})),querySelector:selector=>nodes[selector]??=( {parentElement:{}} )};
- const helpers=app.slice(app.indexOf('  const featuredRecipeSlugs'),app.indexOf('  const categories ='));
- const source=helpers+app.slice(app.indexOf('  function updatePlanner()'),app.indexOf('  function editorialDetail('));
- const sandbox={root,editorial,productBySlug:slug=>catalog.products.find(p=>p.slug===slug),editorialImage:x=>x,withBase:x=>x,editorialPath:r=>'/recetas/'+r.slug,escapeHTML:x=>String(x)};
- vm.runInNewContext(source+';updatePlanner();',sandbox);
- return nodes;
+function recipeModel(){
+ const helpers=app.slice(app.indexOf('  function orderedRecipes()'),app.indexOf('  const categories ='));
+ return vm.runInNewContext(helpers+';orderedRecipes().map(r=>r.slug)',{editorial});
 }
 test('Air Fryer is in Papas and no longer a separate category',()=>{
  assert.equal(catalog.products.find(p=>p.slug==='papas-air-fryer').category,'papas');
@@ -28,20 +23,34 @@ test('compact navbar menu can render open at every viewport width',()=>{
  assert.match(brandStyles,/\.site-header \.mobile-panel\.open\{[^}]*visibility:visible[^}]*pointer-events:auto/);
  assert.match(app,/menu\.classList\.toggle\("open", menuOpened\)/);
 });
-test('planner uses actual recipe servings and method for a matching breakfast',()=>{
- const n=planner('1–2','Desayuno','Horno');
- assert.equal(n['#planner-title'].textContent,'Waffles ICEMAN con Franuí y frutos rojos');
- assert.equal(n['#planner-recipe-link'].href,'/recetas/waffles-con-franui-y-frutos-rojos');
- assert.match(n['#planner-products'].innerHTML,/1 porción/);
- assert.equal(n['#planner-match'].textContent,'Una receta que coincide con tus opciones.');
+test('only the five client-approved recipes are in the recipe collection',()=>{
+ assert.deepEqual(Array.from(recipeModel()),[
+  'brochetas-carne-papas-rejilla-chimichurri',
+  'carne-plancha-papas-onduladas-salsa-ajo',
+  'pollo-hierbas-aros-cebolla-ensalada-repollo',
+  'waffles-iceman-franui-frutos-rojos',
+  'bowl-salmon-teriyaki-edamame-mayonesa-picante'
+ ]);
 });
-test('planner does not invent servings or method for an unavailable match',()=>{
- const n=planner('8+','Desayuno','Sartén');
- assert.match(n['#planner-match'].textContent,/No tenemos una coincidencia exacta/);
- assert.match(n['#planner-match'].textContent,/método/);
- assert.match(n['#planner-match'].textContent,/cantidad de personas/);
- assert.match(n['#planner-products'].innerHTML,/1 porción/);
- assert.doesNotMatch(n['#planner-products'].innerHTML,/8\+/);
+test('recipe selector starts empty and allows selection through button controls',()=>{
+ assert.match(app,/data-recipe-explorer/);
+ assert.match(app,/aria-pressed="false" aria-controls="recipe-feature-panel"/);
+ assert.match(app,/Selecciona un empaque para ver la receta/);
+ assert.match(app,/function recipeFeaturePanel\(recipe\)/);
+ assert.match(app,/IntersectionObserver/);
+});
+test('home categories render as a six-card catalog grid with working routes',()=>{
+ assert.deepEqual(Array.from(catalog.categories,category=>category.name),['Papas','Vegetales','Especialidades','Smoothies','Helados','Waffles']);
+ assert.match(app,/home-category-grid/);
+ assert.match(app,/href="\/productos\/\$\{category\.slug\}/);
+ assert.match(app,/class="home-category-cta">Explorar/);
+});
+test('sitemap lists the five recipe pages',()=>{
+ const sitemap=fs.readFileSync(path.join(base,'sitemap.xml'),'utf8');
+ const paths=[...sitemap.matchAll(/https:\/\/icemanec\.com\/recetas\/([^<]+)/g)].map(match=>match[1]);
+ const recipes=editorial.recipes.map(recipe=>recipe.slug);
+ recipes.forEach(slug=>assert.ok(paths.includes(slug),slug));
+ assert.equal(paths.filter(slug=>recipes.includes(slug)).length,5);
 });
 test('story selections retain the approved descriptions',()=>{
  const descriptions=['Soluciones que hacen más fácil tu día.','Un producto, muchas formas de disfrutarlo.','Sabores que reúnen alrededor de la mesa.','Te acompañamos a ti y a tu familia con soluciones pensadas para las necesidades de cada día.','Buscamos productos y soluciones que abren nuevas posibilidades.','Cuidamos la calidad de todo lo que llevamos hasta ti.'];
@@ -90,15 +99,15 @@ test('every enabled comparison resolves to existing imagery and responsive optic
  });
 });
 
-test('confirmed recipes lead the library without duplicating or dropping others',()=>{
- const helpers=app.slice(app.indexOf('  const featuredRecipeSlugs'),app.indexOf('  const categories ='));
- const ordered=vm.runInNewContext(helpers+';orderedRecipes().map(r=>r.slug)',{editorial});
- assert.deepEqual(Array.from(ordered.slice(0,3)),['picada-para-compartir','hamburguesa-con-papas','papas-rejilla-para-compartir']);
- assert.equal(new Set(ordered).size,editorial.recipes.length);
-});
-test('recipe imagery never substitutes straight fries for the wavy cut',()=>{
- const helpers=app.slice(app.indexOf('  const featuredRecipeSlugs'),app.indexOf('  const categories ='));
- const visual=vm.runInNewContext(helpers+';recipeVisual(editorial.recipes.find(r=>r.slug==="hamburguesa-con-papas"))',{editorial});
- assert.equal(visual.treatment,'pack');
- assert.equal(visual.image,'papas-ondulado-premium');
+test('recipe photos and product links match the approved recipes',()=>{
+ const helpers=app.slice(app.indexOf('  function orderedRecipes()'),app.indexOf('  const categories ='));
+ const visuals=vm.runInNewContext(helpers+';editorial.recipes.map(r=>({slug:r.slug,visual:recipeVisual(r)}))',{editorial});
+ assert.equal(visuals.length,5);
+ visuals.forEach(({slug,visual})=>{
+  const recipe=editorial.recipes.find(item=>item.slug===slug);
+  assert.equal(visual.image,recipe.image);
+  assert.equal(visual.treatment,'dish');
+  assert.ok(fs.existsSync(path.join(base,'assets',recipe.image)));
+  assert.ok(catalog.products.some(product=>product.slug===recipe.products[0]));
+ });
 });

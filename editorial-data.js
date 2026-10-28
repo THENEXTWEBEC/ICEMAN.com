@@ -1,110 +1,55 @@
-/* Contenido editorial ICEMAN. Los productos se enlazan por slug al catálogo. */
+/* Contenido editorial IceMan. Los productos se enlazan por slug al catálogo. */
 window.ICEMAN_EDITORIAL = {
   recipes: [
     {
-      slug: "papas-air-fryer-cena",
-      title: "Papas Air Fryer para una cena especial",
-      description: "Papas doradas y carne a la plancha: una combinación sencilla para disfrutar en casa.",
-      category: "Recetas", time: "8–10 min", difficulty: "Fácil", servings: "4", method: "Air Fryer",
-      image: "editorial/01-papas-air-fryer-cena.webp", products: ["papas-air-fryer"],
-      tags: ["papas", "air fryer", "carne", "cena", "rápido"], occasions: ["cena", "fin-de-semana"],
-      ingredients: ["Papas Air Fryer ICEMAN", "Carne preparada a tu gusto", "Salsa para acompañar, opcional"],
-      steps: ["Precalienta la Air Fryer a 200 °C.", "Coloca las papas congeladas en la canasta, sin amontonarlas.", "Cocina durante 8–10 minutos y agita la canasta a mitad del tiempo, según las indicaciones del producto.", "Sirve con la carne preparada aparte. El tiempo puede variar según el electrodoméstico."]
-    },
-    {
-      slug: "yuca-lista-en-minutos",
-      title: "Yuca lista para cocinar cuando tienes hambre",
-      description: "Una guarnición práctica para completar el almuerzo o la cena con trozos de yuca ICEMAN.",
-      category: "Recetas", time: "4–6 min", difficulty: "Fácil", servings: "4", method: "Olla",
-      image: "editorial/02-yuca-rapida.webp", products: ["yuca-500"],
-      tags: ["yuca", "rápido", "guarnición", "cena"], occasions: ["cena", "fin-de-semana"],
-      ingredients: ["1 funda de Yuca congelada ICEMAN", "Agua para cocinar", "Sal al gusto, opcional"],
-      steps: ["Lleva agua a ebullición en una olla.", "Agrega la yuca congelada y cocina durante 4–6 minutos, siguiendo las indicaciones del catálogo.", "Escurre con cuidado y añade sal si lo deseas.", "Sirve como acompañamiento de tu plato favorito."]
-    },
-    {
-      slug: "picada-para-compartir",
-      title: "Pollo a las hierbas con aros de cebolla y ensalada de repollo morado",
-      description: "Pollo dorado, ensalada fresca y aros de cebolla crujientes con una salsa ligera de yogur.",
-      category: "Recetas", time: "30 min", difficulty: "Fácil", servings: "4", method: "Sartén y método del empaque",
-      image: "editorial/recipe-onion-rings.webp", heroImage: "editorial/recipe-onion-chicken-plate.png",
-      heroAlt: "Pollo a las hierbas con aros de cebolla, ensalada de repollo morado y salsa de yogur",
-      products: ["aros-de-cebolla"],
-      tags: ["pollo", "ensalada", "repollo morado", "aros de cebolla", "salsa de yogur"], occasions: ["cena", "fin-de-semana"],
-      ingredients: ["400 g de Aros de cebolla ICEMAN", "600 g de pechuga de pollo en tiras", "1 cucharada de aceite de oliva", "1 diente de ajo picado", "1 cucharadita de orégano", "Sal y pimienta al gusto", "2 tazas de repollo morado cortado fino", "1 zanahoria rallada", "½ pepino cortado en medias lunas", "Jugo de 1 limón", "1 cucharada de aceite de oliva para la ensalada", "Sal al gusto", "½ taza de yogur natural sin azúcar", "½ diente de ajo rallado", "1 cucharadita de jugo de limón para la salsa", "Perejil picado y sal al gusto"],
-      steps: ["Prepara la ensalada: mezcla el repollo, la zanahoria y el pepino. Aliña con limón, aceite y sal justo antes de servir.", "Mezcla la salsa: combina el yogur con el ajo, el limón, el perejil y la sal. Conserva en refrigeración.", "Cocina el pollo: sazona con aceite, ajo, orégano, sal y pimienta. Dóralo en una sartén hasta que esté completamente cocido por dentro.", "Prepara los aros: cocínalos directamente congelados siguiendo el método, el tiempo y la temperatura indicados en el empaque.", "Sirve el pollo, los aros y la ensalada en el plato. Presenta la salsa aparte y cocina los aros al final para llevarlos a la mesa calientes y crujientes."]
-    },
-    {
-      slug: "hamburguesa-con-papas",
-      title: "Carne a la plancha con papas onduladas y salsa de ajo",
-      description: "Filetes de res con papas onduladas, ensalada fresca y una salsa cremosa de ajo servida aparte.",
-      category: "Recetas", time: "30 min", difficulty: "Fácil", servings: "4", method: "Plancha y método del empaque",
-      image: "editorial/06-hamburguesa-papas.webp", heroImage: "editorial/recipe-steak-fries.webp", imageLayout: "landscape",
-      heroAlt: "Carne a la plancha con papas doradas y hierbas",
-      products: ["corte-ondulado-900-premium"],
-      tags: ["papas onduladas", "carne", "salsa de ajo", "cena"], occasions: ["cena", "fin-de-semana"],
-      ingredients: ["1 funda de Papas corte ondulado ICEMAN de 900 g", "4 filetes de res", "1 cucharada de aceite de oliva", "2 dientes de ajo picados", "Sal, pimienta y perejil al gusto", "Lechuga y tomates cherry", "½ taza de yogur natural sin azúcar", "1 cucharada de mayonesa", "½ diente de ajo rallado", "1 cucharadita de jugo de limón", "Perejil picado y sal al gusto para la salsa"],
-      steps: ["Prepara las papas: cocínalas directamente congeladas siguiendo el tiempo y la temperatura indicados en el empaque para el método elegido. Distribúyelas sin amontonarlas.", "Sazona la carne: unta los filetes con aceite, ajo, sal y pimienta.", "Cocina los filetes en una plancha o sartén caliente por ambos lados hasta alcanzar el punto deseado. Déjalos reposar unos minutos antes de servir.", "Mezcla el yogur, la mayonesa, el ajo, el limón, el perejil y la sal para preparar la salsa.", "Sirve la carne con las papas onduladas, la lechuga y los tomates cherry cortados por la mitad. Coloca la salsa aparte para que las papas conserven su textura crujiente."]
-    },
-    {
-      slug: "sopa-casera-con-yuca",
-      title: "Sopa casera con trozos de yuca",
-      description: "Añade trozos de yuca a tu sopa favorita para una comida reconfortante en casa.",
-      category: "Recetas", time: "4–6 min para la yuca", difficulty: "Fácil", servings: "4", method: "Olla",
-      image: "editorial/05-sopa-yuca.webp", products: ["yuca-500"],
-      tags: ["yuca", "sopa", "almuerzo", "comida casera"], occasions: ["cena", "fin-de-semana"],
-      ingredients: ["Yuca congelada ICEMAN", "Sopa o caldo preparado a tu gusto", "Hierbas para servir, opcional"],
-      steps: ["Prepara la sopa o el caldo como acostumbras.", "Cocina la yuca congelada en olla durante 4–6 minutos, siguiendo la indicación del producto.", "Incorpora la yuca a la sopa caliente.", "Sirve con las hierbas que prefieras."]
-    },
-    {
-      slug: "papas-para-maraton-de-peliculas",
-      title: "Papas para un maratón de películas",
-      description: "Arma un plan de sofá y comparte papas corte ondulado recién preparadas.",
-      category: "Recetas", time: "12–15 min", difficulty: "Fácil", servings: "4", method: "Air Fryer u horno",
-      image: "editorial/07-maraton-papas.webp", products: ["corte-ondulado-900-premium"],
-      tags: ["papas", "películas", "maratón", "snacks"], occasions: ["peliculas"],
-      ingredients: ["Papas corte ondulado ICEMAN", "Tus salsas favoritas, opcional"],
-      steps: ["Precalienta el horno o la Air Fryer a 200 °C.", "Distribuye las papas congeladas en una sola capa.", "Cocina 12–15 minutos y revisa las indicaciones del empaque.", "Sirve al centro para compartir durante la película."]
-    },
-    {
-      slug: "papas-rejilla-para-compartir",
+      slug: "brochetas-carne-papas-rejilla-chimichurri",
       title: "Brochetas de carne con papas rejilla y chimichurri",
-      description: "Brochetas de carne y vegetales con papas rejilla doradas y chimichurri casero.",
-      category: "Recetas", time: "35 min", difficulty: "Fácil", servings: "4", method: "Parrilla y método del empaque",
-      image: "editorial/09-papas-rejilla.webp", products: ["papas-rejilla"],
-      tags: ["papas rejilla", "brochetas", "carne", "chimichurri"], occasions: ["reunion", "cena", "fin-de-semana"],
-      ingredients: ["750 g de Papas corte rejilla ICEMAN", "600 g de carne de res cortada en cubos", "1 pimiento amarillo", "1 zucchini", "1 cebolla", "8 tomates cherry", "1 cucharada de aceite de oliva", "Sal, pimienta y ajo al gusto", "Palitos para brochetas", "½ taza de perejil picado", "2 dientes de ajo picados", "4 cucharadas de aceite de oliva para el chimichurri", "2 cucharadas de vinagre", "1 cucharadita de orégano", "Sal y ají al gusto"],
-      steps: ["Prepara el chimichurri: mezcla el perejil, el ajo, el aceite, el vinagre, el orégano, la sal y el ají. Déjalo reposar mientras preparas las brochetas.", "Arma las brochetas: corta los vegetales en trozos y altérnalos con la carne en los palitos. Sazona con aceite, sal, pimienta y ajo.", "Cocina las brochetas en una parrilla o sartén caliente y gíralas hasta alcanzar el punto de cocción deseado.", "Prepara las papas directamente congeladas siguiendo las indicaciones del empaque. Distribúyelas sin amontonarlas para lograr un dorado uniforme.", "Sirve las brochetas con las papas rejilla y agrega el chimichurri sobre la carne o en un recipiente aparte."]
+      description: "Brochetas de res y vegetales acompañadas de papas rejilla IceMan y chimichurri casero.",
+      category: "Recetas", time: "", servings: "4",
+      image: "editorial/customer-potatoes-rejilla.webp", heroAlt: "Brochetas con vegetales y papas rejilla IceMan",
+      products: ["papas-rejilla"], tags: ["papas rejilla", "brochetas", "carne", "chimichurri"], occasions: ["reunion", "cena", "fin-de-semana"],
+      ingredients: ["750 g de papas corte rejilla IceMan", "600 g de carne de res cortada en cubos", "1 pimiento amarillo", "1 zucchini", "1 cebolla", "8 tomates cherry", "1 cucharada de aceite de oliva", "Sal, pimienta y ajo al gusto", "Palitos para brochetas", "Para el chimichurri", "½ taza de perejil picado", "2 dientes de ajo picados", "4 cucharadas de aceite de oliva", "2 cucharadas de vinagre", "1 cucharadita de orégano", "Sal y ají al gusto"],
+      steps: ["Mezcla los ingredientes del chimichurri y déjalo reposar mientras preparas las brochetas.", "Corta los vegetales en trozos y altérnalos con la carne en los palitos. Sazona con aceite, sal, pimienta y ajo.", "Cocina las brochetas en una parrilla o sartén caliente, girándolas hasta alcanzar el punto de cocción deseado.", "Cocina las papas directamente congeladas siguiendo las indicaciones del empaque. Distribúyelas sin amontonarlas para que se doren uniformemente.", "Sirve las brochetas con las papas rejilla. Agrega el chimichurri sobre la carne o sírvelo aparte."]
     },
     {
-      slug: "croquetas-de-yuca-con-queso",
-      title: "Croquetas de yuca con salsa de queso",
-      description: "Croquetas de yuca doradas para acompañar con una salsa de queso de tu elección.",
-      category: "Recetas", time: "15–20 min", difficulty: "Fácil", servings: "4", method: "Air Fryer u horno",
-      image: "editorial/11-croquetas-yuca.webp", products: ["croqueta-de-yuca"],
-      tags: ["yuca", "croquetas", "queso", "snacks"], occasions: ["reunion", "partido"],
-      ingredients: ["Croquetas de yuca ICEMAN", "Salsa de queso para acompañar"],
-      steps: ["Precalienta la Air Fryer o el horno a 200 °C.", "Coloca las croquetas congeladas sin amontonarlas.", "Cocina durante 15–20 minutos, de acuerdo con las indicaciones del catálogo.", "Sirve con la salsa de queso aparte."]
+      slug: "carne-plancha-papas-onduladas-salsa-ajo",
+      title: "Carne a la plancha con papas onduladas y salsa de ajo",
+      description: "Filetes de res con papas onduladas, ensalada fresca y salsa cremosa de ajo servida aparte.",
+      category: "Recetas", time: "", servings: "4",
+      image: "editorial/customer-potatoes-onduladas.webp", heroAlt: "Carne a la plancha servida con papas onduladas IceMan",
+      products: ["corte-ondulado-900-premium"], tags: ["papas onduladas", "carne", "salsa de ajo", "cena"], occasions: ["cena", "fin-de-semana"],
+      ingredients: ["1 funda de papas corte ondulado IceMan de 900 g", "4 filetes de res", "1 cucharada de aceite de oliva", "2 dientes de ajo picados", "Sal, pimienta y perejil al gusto", "Lechuga y tomates cherry", "Para la salsa", "½ taza de yogur natural sin azúcar", "1 cucharada de mayonesa", "½ diente de ajo rallado", "1 cucharadita de jugo de limón", "Perejil picado y sal al gusto"],
+      steps: ["Cocina las papas directamente congeladas siguiendo el tiempo y la temperatura indicados en el empaque para el método elegido. Distribúyelas sin amontonarlas.", "Unta los filetes con aceite, ajo, sal y pimienta.", "Cocina los filetes en una plancha o sartén caliente hasta alcanzar el punto deseado. Déjalos reposar unos minutos antes de servir.", "Mezcla el yogur, la mayonesa, el ajo, el limón, el perejil y la sal.", "Sirve la carne con las papas onduladas, la lechuga y los tomates cherry cortados por la mitad. Presenta la salsa aparte para que las papas conserven su textura crujiente."]
     },
     {
-      slug: "cena-gourmet-papa-steak",
-      title: "Cena gourmet en casa con Papa Steak",
-      description: "Papa Steak ICEMAN como acompañamiento de una cena especial en casa.",
-      category: "Recetas", time: "12–15 min para las papas", difficulty: "Fácil", servings: "4", method: "Air Fryer u horno",
-      image: "editorial/12-papa-steak-gourmet.webp", products: ["papa-steak"],
-      tags: ["papa steak", "cena", "papas", "carne"], occasions: ["cena", "fin-de-semana"],
-      ingredients: ["Papa Steak ICEMAN", "Carne preparada a tu gusto", "Hierbas o salsa para servir, opcional"],
-      steps: ["Prepara la carne a tu gusto.", "Precalienta el horno o la Air Fryer a 200 °C.", "Cocina la Papa Steak congelada durante 12–15 minutos, siguiendo las instrucciones del empaque.", "Sirve las papas junto a la carne recién preparada."]
+      slug: "pollo-hierbas-aros-cebolla-ensalada-repollo",
+      title: "Pollo a las hierbas con aros de cebolla y ensalada de repollo morado",
+      description: "Pollo dorado con aros de cebolla crujientes, ensalada fresca y salsa ligera de yogur.",
+      category: "Recetas", time: "", servings: "4",
+      image: "editorial/customer-onion-rings.webp", heroAlt: "Aros de cebolla IceMan servidos con pollo y ensalada",
+      products: ["aros-de-cebolla"], tags: ["pollo", "ensalada", "repollo morado", "aros de cebolla"], occasions: ["cena", "fin-de-semana"],
+      ingredients: ["400 g de aros de cebolla IceMan", "600 g de pechuga de pollo en tiras", "1 cucharada de aceite de oliva", "1 diente de ajo picado", "1 cucharadita de orégano", "Sal y pimienta al gusto", "Para la ensalada", "2 tazas de repollo morado cortado fino", "1 zanahoria rallada", "½ pepino cortado en medias lunas", "Jugo de 1 limón", "1 cucharada de aceite de oliva", "Sal al gusto", "Para la salsa", "½ taza de yogur natural sin azúcar", "½ diente de ajo rallado", "1 cucharadita de jugo de limón", "Perejil picado y sal al gusto"],
+      steps: ["Mezcla el repollo, la zanahoria y el pepino. Aliña con limón, aceite y sal justo antes de servir.", "Combina el yogur con el ajo, el limón, el perejil y la sal. Conserva la salsa en refrigeración.", "Sazona el pollo con aceite, ajo, orégano, sal y pimienta. Dóralo en una sartén hasta que esté completamente cocido por dentro.", "Cocina los aros directamente congelados siguiendo el método, el tiempo y la temperatura indicados en el empaque.", "Sirve el pollo, los aros y la ensalada. Presenta la salsa aparte. Cocina los aros al final para servirlos calientes y crujientes."]
     },
     {
-      slug: "waffles-con-franui-y-frutos-rojos",
-      title: "Waffles ICEMAN con Franuí y frutos rojos",
-      description: "Waffles calientes con salsa de frambuesa, crema de vainilla, frutos rojos y bocados de Franuí.",
-      category: "Recetas", time: "15 min", difficulty: "Fácil", servings: "1 porción", method: "Horno o Air Fryer",
-      image: "editorial/recipe-waffles-franui.webp", heroAlt: "Waffles ICEMAN con salsa de frambuesa, frutos rojos y Franuí",
-      products: ["waffle-glaseado"],
-      tags: ["waffles", "franuí", "frutos rojos", "frambuesa", "postre", "desayuno"], occasions: ["fin-de-semana"],
-      ingredients: ["2 Waffles ICEMAN congelados", "4 unidades de Franuí", "4 fresas", "½ taza de frambuesas frescas", "¼ taza de arándanos", "1 taza de frambuesas frescas o congeladas para la salsa", "2 cucharadas de azúcar", "1 cucharadita de jugo de limón", "1 cucharada de agua", "¾ taza de yogur griego natural", "1 cucharada de miel", "½ cucharadita de vainilla"],
-      steps: ["Prepara la salsa: coloca las frambuesas, el azúcar, el limón y el agua en una olla pequeña. Cocina a fuego medio durante 5–7 minutos, removiendo y aplastando ligeramente las frambuesas, hasta obtener una salsa espesa y brillante. Déjala enfriar un poco.", "Prepara la crema: mezcla el yogur griego con la miel y la vainilla hasta obtener una textura suave.", "Calienta los waffles directamente congelados siguiendo las instrucciones del empaque. Para que queden más crujientes, puedes usar horno o Air Fryer a 180 °C durante aproximadamente 5–7 minutos, vigilándolos para que no se quemen.", "Corta los Franuí por la mitad.", "Coloca la crema de vainilla en un recipiente pequeño. Distribuye los waffles calientes en el plato y añade la salsa de frambuesa.", "Decora con las fresas cortadas, las frambuesas, los arándanos y los Franuí. Sirve inmediatamente con la salsa tibia o fría para no derretir la cobertura de los Franuí."]
+      slug: "waffles-iceman-franui-frutos-rojos",
+      title: "Waffles IceMan con Franuí y frutos rojos",
+      description: "Waffles calientes con salsa de frambuesa, crema de vainilla, frutos rojos y Franuí.",
+      category: "Recetas", time: "15 min", servings: "1 porción",
+      image: "editorial/customer-waffles-franui.webp", heroAlt: "Waffles IceMan con Franuí y frutos rojos",
+      products: ["waffle-glaseado"], tags: ["waffles", "franuí", "frutos rojos", "frambuesa", "postre", "desayuno"], occasions: ["fin-de-semana"],
+      ingredients: ["2 waffles IceMan congelados", "4 unidades de Franuí", "4 fresas", "½ taza de frambuesas frescas", "¼ taza de arándanos", "Para la salsa de frambuesa", "1 taza de frambuesas frescas o congeladas", "2 cucharadas de azúcar", "1 cucharadita de jugo de limón", "1 cucharada de agua", "Para la crema de vainilla", "¾ taza de yogur griego natural", "1 cucharada de miel", "½ cucharadita de vainilla"],
+      steps: ["Coloca las frambuesas, el azúcar, el limón y el agua en una olla pequeña. Cocina a fuego medio durante 5–7 minutos, removiendo y aplastando ligeramente las frambuesas. Cuando la salsa esté espesa y brillante, déjala enfriar un poco.", "Mezcla el yogur griego con la miel y la vainilla hasta obtener una crema suave.", "Calienta los waffles directamente congelados siguiendo las instrucciones del empaque. Para que queden más crujientes, puedes calentarlos en horno o Air Fryer a 180 °C durante aproximadamente 5–7 minutos, vigilándolos para que no se quemen.", "Trocea los Franuí por la mitad.", "Coloca la crema de vainilla en un recipiente pequeño. Distribuye los waffles calientes en el plato y añade la salsa de frambuesa.", "Decora con las fresas cortadas, las frambuesas, los arándanos y los Franuí. Sirve inmediatamente. La salsa debe estar tibia o fría para que no derrita la cobertura de los Franuí."]
+    },
+    {
+      slug: "bowl-salmon-teriyaki-edamame-mayonesa-picante",
+      title: "Bowl de salmón teriyaki, edamame y mayonesa picante",
+      description: "Salmón glaseado y edamame IceMan sobre arroz, con vegetales frescos y mayonesa picante.",
+      category: "Recetas", time: "30 min", servings: "1 porción abundante",
+      image: "editorial/customer-salmon-edamame.webp", heroAlt: "Bowl de salmón teriyaki, arroz y edamame IceMan",
+      products: ["edamame-grano"], tags: ["salmón", "teriyaki", "edamame", "bowl", "mayonesa picante"], occasions: ["cena", "fin-de-semana"],
+      ingredients: ["Para el bowl", "150 g de salmón sin piel, cortado en cubos", "100 g de edamame IceMan en grano", "¾ de taza de arroz blanco cocido", "¼ de aguacate en láminas", "¼ de pepino en tiras", "¼ de zanahoria en juliana", "¼ de taza de repollo morado finamente cortado", "1 cucharada de cebollín picado", "1 cucharadita de semillas de sésamo", "1 gajo de limón o lima", "1 cucharadita de aceite", "Para el salmón teriyaki", "1½ cucharadas de salsa de soya", "1 cucharada de miel", "1 cucharadita de jugo de limón o lima", "1 cucharadita de aceite de sésamo", "½ cucharadita de jengibre rallado", "½ diente de ajo rallado", "½ cucharadita de sriracha o salsa picante, opcional", "Para sazonar el arroz", "1 cucharadita de vinagre de arroz", "½ cucharadita de azúcar", "Una pizca de sal", "Para la mayonesa picante", "2 cucharadas de mayonesa", "1 cucharadita de sriracha", "1 cucharadita de jugo de limón o lima", "½ cucharadita de miel"],
+      steps: ["Mezcla el vinagre de arroz con el azúcar y la sal. Agrégalo al arroz todavía tibio y remueve suavemente.", "Cocina el edamame directamente congelado siguiendo las instrucciones del empaque. Como referencia, puedes hervirlo durante 4–5 minutos. Escúrrelo bien.", "Mezcla la salsa de soya, la miel, el limón, el aceite de sésamo, el jengibre, el ajo y la sriracha para preparar la salsa teriyaki.", "Seca bien los cubos de salmón. Calienta una sartén con el aceite y cocínalos a fuego medio-alto durante aproximadamente 2 minutos por cada lado.", "Baja ligeramente el fuego, incorpora la salsa teriyaki y cocina durante 1–2 minutos más. Mueve los cubos cuidadosamente hasta que queden brillantes, caramelizados y completamente cocidos en el centro.", "Mezcla la mayonesa, la sriracha, el limón y la miel.", "Coloca el arroz en la base del bowl. Distribuye encima el salmón teriyaki, el edamame, el aguacate, el pepino, la zanahoria y el repollo morado.", "Añade la mayonesa picante en líneas finas. Termina con cebollín, semillas de sésamo y unas gotas de limón o lima. Sirve inmediatamente."]
     }
   ],
   articles: [
@@ -112,9 +57,9 @@ window.ICEMAN_EDITORIAL = {
       slug: "zanahoria-para-una-buena-receta",
       title: "El secreto de una buena receta empieza aquí",
       category: "Consejos",
-      description: "Una idea fácil para sumar Zanahoria ondulada ICEMAN a tus preparaciones de todos los días.",
+      description: "Una idea fácil para sumar Zanahoria ondulada IceMan a tus preparaciones de todos los días.",
       image: "editorial/03-zanahoria-receta.webp", products: ["zanahoria-ondulada"], tags: ["zanahoria", "vegetales", "consejos"],
-      body: ["La Zanahoria ondulada ICEMAN ya viene con un corte distinto y precocida. Puedes incorporarla como acompañamiento o añadirla a tus preparaciones.", "Para prepararla, el catálogo indica olla durante 4–6 minutos o microondas durante 3–4 minutos. Consulta el empaque para las indicaciones completas del producto."]
+      body: ["La Zanahoria ondulada IceMan ya viene con un corte distinto y precocida. Puedes incorporarla como acompañamiento o añadirla a tus preparaciones.", "Para prepararla, el catálogo indica olla durante 4–6 minutos o microondas durante 3–4 minutos. Consulta el empaque para las indicaciones completas del producto."]
     },
     {
       slug: "un-corte-distinto-para-tus-platos",
@@ -122,7 +67,7 @@ window.ICEMAN_EDITORIAL = {
       category: "Consejos",
       description: "La Zanahoria ondulada aporta una forma diferente a tus platos de todos los días.",
       image: "editorial/04-corte-zanahoria.webp", products: ["zanahoria-ondulada"], tags: ["zanahoria", "corte", "vegetales"],
-      body: ["Las formas y cortes ayudan a darle variedad visual a una preparación. La Zanahoria ondulada ICEMAN está disponible en presentación de 500 g.", "El producto es precocido y congelado. Para conocer cómo prepararlo, sigue las instrucciones indicadas en el catálogo y en su empaque."]
+      body: ["Las formas y cortes ayudan a darle variedad visual a una preparación. La Zanahoria ondulada IceMan está disponible en presentación de 500 g.", "El producto es precocido y congelado. Para conocer cómo prepararlo, sigue las instrucciones indicadas en el catálogo y en su empaque."]
     },
     {
       slug: "test-rapido-que-prefieres",
@@ -140,7 +85,7 @@ window.ICEMAN_EDITORIAL = {
       category: "Consejos",
       description: "La cadena de frío ayuda a conservar los productos durante el almacenamiento y traslado.",
       image: "editorial/advice-store-frozen-products.webp", imageLayout: "landscape", products: ["edamame-grano"], tags: ["conservación", "cadena de frío", "congelado", "edamame"],
-      body: ["El catálogo ICEMAN indica mantener los productos congelados a −18 °C. Guárdalos en el congelador al llegar a casa y revisa siempre la información del empaque.", "Evita dejar productos congelados a temperatura ambiente. Sigue las instrucciones de conservación y preparación de cada producto."]
+      body: ["El catálogo IceMan indica mantener los productos congelados a −18 °C. Guárdalos en el congelador al llegar a casa y revisa siempre la información del empaque.", "Evita dejar productos congelados a temperatura ambiente. Sigue las instrucciones de conservación y preparación de cada producto."]
     }
   ],
   occasions: [
@@ -152,8 +97,8 @@ window.ICEMAN_EDITORIAL = {
   ],
   business: [
     { slug: "elegir-congelados-restaurante", title: "Cómo elegir productos congelados para tu restaurante", description: "Criterios prácticos para revisar formatos, preparación y variedad según tu operación.", category: "Para tu negocio", image: "editorial/business-choose-restaurant.webp", imageLayout: "landscape", tags: ["restaurante", "operación"], body: ["Empieza por el menú y el ritmo de servicio: identifica qué preparaciones podrían beneficiarse de opciones listas para cocinar.", "Revisa presentación, unidades por caja, métodos de preparación y condiciones de almacenamiento en la ficha de cada producto. La disponibilidad se confirma con el equipo comercial."] },
-    { slug: "costo-por-porcion", title: "Cómo calcular el costo por porción", description: "Un cálculo sencillo puede ayudarte a comparar presentaciones para tu menú.", category: "Para tu negocio", image: "editorial/business-cost-per-serving.webp", imageLayout: "landscape", tags: ["costos", "restaurante"], body: ["Divide el costo de compra por la cantidad de porciones que obtienes según el gramaje que sirves. Registra también mermas y otros ingredientes de la preparación.", "El resultado depende de la presentación y del tamaño de porción de tu negocio. Consulta con el equipo ICEMAN sobre los formatos disponibles."] },
-    { slug: "organizar-cadena-de-frio", title: "Cadena de frío: buenas prácticas para tu operación", description: "Organiza almacenamiento y manipulación siguiendo las indicaciones del producto.", category: "Para tu negocio", image: "editorial/business-cold-chain.webp", imageLayout: "landscape", tags: ["cadena de frío", "operación"], body: ["Planifica la recepción y el almacenamiento para mantener los productos congelados. El catálogo ICEMAN indica conservación a −18 °C.", "Verifica la temperatura del congelador y sigue las instrucciones de conservación de cada empaque. Ajusta tus procedimientos a las normas aplicables a tu establecimiento."] },
+    { slug: "costo-por-porcion", title: "Cómo calcular el costo por porción", description: "Un cálculo sencillo puede ayudarte a comparar presentaciones para tu menú.", category: "Para tu negocio", image: "editorial/business-cost-per-serving.webp", imageLayout: "landscape", tags: ["costos", "restaurante"], body: ["Divide el costo de compra por la cantidad de porciones que obtienes según el gramaje que sirves. Registra también mermas y otros ingredientes de la preparación.", "El resultado depende de la presentación y del tamaño de porción de tu negocio. Consulta con el equipo IceMan sobre los formatos disponibles."] },
+    { slug: "organizar-cadena-de-frio", title: "Cadena de frío: buenas prácticas para tu operación", description: "Organiza almacenamiento y manipulación siguiendo las indicaciones del producto.", category: "Para tu negocio", image: "editorial/business-cold-chain.webp", imageLayout: "landscape", tags: ["cadena de frío", "operación"], body: ["Planifica la recepción y el almacenamiento para mantener los productos congelados. El catálogo IceMan indica conservación a −18 °C.", "Verifica la temperatura del congelador y sigue las instrucciones de conservación de cada empaque. Ajusta tus procedimientos a las normas aplicables a tu establecimiento."] },
     { slug: "simplificar-preparacion-menu", title: "Ideas para simplificar la preparación de tu menú", description: "Explora formatos y métodos de preparación del catálogo según las necesidades de tu cocina.", category: "Para tu negocio", image: "editorial/business-simplify-menu.webp", imageLayout: "landscape", tags: ["cafetería", "operación"], body: ["Compara los métodos indicados en las fichas del catálogo: algunos productos ofrecen preparación en Air Fryer, horno, freidora o sartén.", "Cuéntanos qué tipo de negocio tienes y qué categorías buscas. El equipo comercial puede compartir información sobre presentaciones y opciones para tu operación."] }
   ]
 };
