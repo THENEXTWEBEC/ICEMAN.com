@@ -113,7 +113,7 @@ window.ICEMAN_EDITORIAL = {
       title: "El secreto de una buena receta empieza aquí",
       category: "Consejos",
       description: "Una idea fácil para sumar Zanahoria ondulada ICEMAN a tus preparaciones de todos los días.",
-      image: "editorial/article-vegetables.webp", imageLayout: "landscape", products: ["zanahoria-ondulada"], tags: ["zanahoria", "vegetales", "consejos"],
+      image: "editorial/03-zanahoria-receta.webp", products: ["zanahoria-ondulada"], tags: ["zanahoria", "vegetales", "consejos"],
       body: ["La Zanahoria ondulada ICEMAN ya viene con un corte distinto y precocida. Puedes incorporarla como acompañamiento o añadirla a tus preparaciones.", "Para prepararla, el catálogo indica olla durante 4–6 minutos o microondas durante 3–4 minutos. Consulta el empaque para las indicaciones completas del producto."]
     },
     {
@@ -129,7 +129,7 @@ window.ICEMAN_EDITORIAL = {
       title: "Test rápido: ¿qué se te antoja hoy?",
       category: "Consejos",
       description: "Un antojo salado, algo para tomar o un postre frío: explora algunas ideas del catálogo.",
-      image: "editorial/article-ice-cream.webp", imageLayout: "landscape",
+      image: "editorial/08-test-preferencias.webp",
       products: ["aros-de-cebolla", "smoothie-red", "hash-brown", "helado-paila-naranjilla"],
       tags: ["test", "antojo", "snacks", "smoothie", "helado"],
       body: ["¿Algo crujiente? Explora los Aros de cebolla o el Hash Brown. ¿Prefieres una bebida? El Smoothie Red está hecho con frutilla, remolacha y mora, según el catálogo. ¿Buscas un postre frío? Conoce el Helado de paila de naranjilla.", "Elige una idea y revisa su ficha para conocer ingredientes, presentación y método de preparación. También puedes usar el planificador de Recetas & Consejos para encontrar una combinación según tu ocasión."]
@@ -139,7 +139,7 @@ window.ICEMAN_EDITORIAL = {
       title: "Cómo conservar correctamente los congelados",
       category: "Consejos",
       description: "La cadena de frío ayuda a conservar los productos durante el almacenamiento y traslado.",
-      image: "editorial/article-edamame.webp", products: ["edamame-grano"], tags: ["conservación", "cadena de frío", "congelado", "edamame"],
+      image: "editorial/advice-store-frozen-products.webp", imageLayout: "landscape", products: ["edamame-grano"], tags: ["conservación", "cadena de frío", "congelado", "edamame"],
       body: ["El catálogo ICEMAN indica mantener los productos congelados a −18 °C. Guárdalos en el congelador al llegar a casa y revisa siempre la información del empaque.", "Evita dejar productos congelados a temperatura ambiente. Sigue las instrucciones de conservación y preparación de cada producto."]
     }
   ],
@@ -151,9 +151,9 @@ window.ICEMAN_EDITORIAL = {
     { slug: "fin-de-semana", title: "Fin de semana", text: "Ideas fáciles para un desayuno tranquilo o una comida en familia.", image: "editorial/occasion-weekend-breakfast.webp", products: ["papas-air-fryer", "waffle-glaseado", "papas-finas-hierbas"], tags: ["familia", "desayuno"] }
   ],
   business: [
-    { slug: "elegir-congelados-restaurante", title: "Cómo elegir productos congelados para tu restaurante", description: "Criterios prácticos para revisar formatos, preparación y variedad según tu operación.", category: "Para tu negocio", image: "air-fryer", imageLayout: "landscape", tags: ["restaurante", "operación"], body: ["Empieza por el menú y el ritmo de servicio: identifica qué preparaciones podrían beneficiarse de opciones listas para cocinar.", "Revisa presentación, unidades por caja, métodos de preparación y condiciones de almacenamiento en la ficha de cada producto. La disponibilidad se confirma con el equipo comercial."] },
+    { slug: "elegir-congelados-restaurante", title: "Cómo elegir productos congelados para tu restaurante", description: "Criterios prácticos para revisar formatos, preparación y variedad según tu operación.", category: "Para tu negocio", image: "editorial/business-choose-restaurant.webp", imageLayout: "landscape", tags: ["restaurante", "operación"], body: ["Empieza por el menú y el ritmo de servicio: identifica qué preparaciones podrían beneficiarse de opciones listas para cocinar.", "Revisa presentación, unidades por caja, métodos de preparación y condiciones de almacenamiento en la ficha de cada producto. La disponibilidad se confirma con el equipo comercial."] },
     { slug: "costo-por-porcion", title: "Cómo calcular el costo por porción", description: "Un cálculo sencillo puede ayudarte a comparar presentaciones para tu menú.", category: "Para tu negocio", image: "editorial/business-cost-per-serving.webp", imageLayout: "landscape", tags: ["costos", "restaurante"], body: ["Divide el costo de compra por la cantidad de porciones que obtienes según el gramaje que sirves. Registra también mermas y otros ingredientes de la preparación.", "El resultado depende de la presentación y del tamaño de porción de tu negocio. Consulta con el equipo ICEMAN sobre los formatos disponibles."] },
-    { slug: "organizar-cadena-de-frio", title: "Cadena de frío: buenas prácticas para tu operación", description: "Organiza almacenamiento y manipulación siguiendo las indicaciones del producto.", category: "Para tu negocio", image: "papas-spices", imageLayout: "landscape", tags: ["cadena de frío", "operación"], body: ["Planifica la recepción y el almacenamiento para mantener los productos congelados. El catálogo ICEMAN indica conservación a −18 °C.", "Verifica la temperatura del congelador y sigue las instrucciones de conservación de cada empaque. Ajusta tus procedimientos a las normas aplicables a tu establecimiento."] },
-    { slug: "simplificar-preparacion-menu", title: "Ideas para simplificar la preparación de tu menú", description: "Explora formatos y métodos de preparación del catálogo según las necesidades de tu cocina.", category: "Para tu negocio", image: "aros-cebolla", imageLayout: "landscape", tags: ["cafetería", "operación"], body: ["Compara los métodos indicados en las fichas del catálogo: algunos productos ofrecen preparación en Air Fryer, horno, freidora o sartén.", "Cuéntanos qué tipo de negocio tienes y qué categorías buscas. El equipo comercial puede compartir información sobre presentaciones y opciones para tu operación."] }
+    { slug: "organizar-cadena-de-frio", title: "Cadena de frío: buenas prácticas para tu operación", description: "Organiza almacenamiento y manipulación siguiendo las indicaciones del producto.", category: "Para tu negocio", image: "editorial/business-cold-chain.webp", imageLayout: "landscape", tags: ["cadena de frío", "operación"], body: ["Planifica la recepción y el almacenamiento para mantener los productos congelados. El catálogo ICEMAN indica conservación a −18 °C.", "Verifica la temperatura del congelador y sigue las instrucciones de conservación de cada empaque. Ajusta tus procedimientos a las normas aplicables a tu establecimiento."] },
+    { slug: "simplificar-preparacion-menu", title: "Ideas para simplificar la preparación de tu menú", description: "Explora formatos y métodos de preparación del catálogo según las necesidades de tu cocina.", category: "Para tu negocio", image: "editorial/business-simplify-menu.webp", imageLayout: "landscape", tags: ["cafetería", "operación"], body: ["Compara los métodos indicados en las fichas del catálogo: algunos productos ofrecen preparación en Air Fryer, horno, freidora o sartén.", "Cuéntanos qué tipo de negocio tienes y qué categorías buscas. El equipo comercial puede compartir información sobre presentaciones y opciones para tu operación."] }
   ]
 };

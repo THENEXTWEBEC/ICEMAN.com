@@ -47,6 +47,28 @@ test('story selections retain the approved descriptions',()=>{
  const descriptions=['Soluciones que hacen más fácil tu día.','Un producto, muchas formas de disfrutarlo.','Sabores que reúnen alrededor de la mesa.','Te acompañamos a ti y a tu familia con soluciones pensadas para las necesidades de cada día.','Buscamos productos y soluciones que abren nuevas posibilidades.','Cuidamos la calidad de todo lo que llevamos hasta ti.'];
  descriptions.forEach(text=>assert.ok(app.includes(text),text));
 });
+test('about sections use distinct, context-specific images',()=>{
+ const source=app.slice(app.indexOf('  const floatingPackSets ='),app.indexOf('  function storySelector('));
+ const {floatingPackSets,storyVisuals,storyConcepts,storyValues}=vm.runInNewContext(source+';({floatingPackSets,storyVisuals,storyConcepts,storyValues});');
+ const images=[storyVisuals.hero.image,storyVisuals.history.image,...storyVisuals.purpose.map(item=>item.image),...storyConcepts.map(item=>item.image),...storyValues.map(item=>item.image)];
+ assert.equal(new Set(images).size,images.length);
+ images.forEach(image=>assert.ok(fs.existsSync(path.join(base,'assets',image)),image));
+ const packs=[...floatingPackSets.default,...floatingPackSets.closing];
+ assert.equal(new Set(packs).size,packs.length);
+ packs.forEach(image=>assert.ok(fs.existsSync(path.join(base,'assets/catalog',`${image}.webp`)),image));
+});
+test('editorial imagery is unique and matches the subject of corrected sections',()=>{
+ const entries=[...editorial.recipes,...editorial.articles,...editorial.occasions,...editorial.business];
+ assert.equal(new Set(entries.map(item=>item.image)).size,entries.length);
+ const image=(group,slug)=>editorial[group].find(item=>item.slug===slug).image;
+ assert.equal(image('articles','zanahoria-para-una-buena-receta'),'editorial/03-zanahoria-receta.webp');
+ assert.equal(image('articles','test-rapido-que-prefieres'),'editorial/08-test-preferencias.webp');
+ assert.equal(image('articles','cadena-de-frio'),'editorial/advice-store-frozen-products.webp');
+ assert.equal(image('business','elegir-congelados-restaurante'),'editorial/business-choose-restaurant.webp');
+ assert.equal(image('business','organizar-cadena-de-frio'),'editorial/business-cold-chain.webp');
+ assert.equal(image('business','simplificar-preparacion-menu'),'editorial/business-simplify-menu.webp');
+ assert.match(app,/home-business-image[^<]*><img src="\$\{projectBase\}\/assets\/editorial\/business-choose-restaurant\.webp"/);
+});
 test('every enabled comparison resolves to existing imagery and responsive optical scales',()=>{
  const source=app.slice(app.indexOf('  const dishScenes ='),app.indexOf('  function productScene('));
  const {scenes,scales}=vm.runInNewContext(source+';({scenes:dishScenes,scales:comparisonScales});');
