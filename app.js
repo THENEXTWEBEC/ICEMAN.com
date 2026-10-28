@@ -17,16 +17,16 @@
       { name:"Supermaxi", logo:"supermaxi.png" },
       { name:"Megamaxi", logo:"megamaxi.png" },
       { name:"Mi Comisariato", logo:"mi-comisariato.png" },
-      { name:"Akí", logo:"aki.png" },
-      { name:"Gran Akí", logo:"gran-aki.png" },
+      { name:"Akí", logo:"aki-white.png" },
+      { name:"Gran Akí", logo:"gran-aki-white.png" },
       { name:"Tía", logo:"tia.png" },
       { name:"Coral Hipermercados", logo:"coral.png" },
       { name:"Del Portal Supermercados", logo:"del-portal.png" },
       { name:"Fybeca", logo:"fybeca.png" },
-      { name:"Pedidos Ya", logo:"pedidos-ya-clean.png" },
+      { name:"Pedidos Ya", logo:"pedidos-ya-white.png" },
       { name:"Tipti", logo:"tipti.png" },
-      { name:"Datu Deli", logo:"datu-deli.png" },
-      { name:"Casa Deli", logo:"casa-deli-clean.webp" }
+      { name:"Datu Deli", logo:"datu-deli-white.png" },
+      { name:"Casa Deli", logo:"casa-deli-white.png" }
     ];
 
   let experienceCleanup = null;
