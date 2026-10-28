@@ -261,8 +261,12 @@ body:has(.catalog-results) #main{background:#161d46}.page-intro:has(+ .catalog-t
   mix-blend-mode:normal!important;
   transform:none!important;
 }
-.comparison-dish img,.detail-image .comparison-dish img{transform:scale(.82)!important}
-.comparison-dish.dish-edamame img,.detail-image .comparison-dish.dish-edamame img{transform:scale(.7)!important}
+.comparison-dish img,.detail-image .comparison-dish img{
+  object-fit:contain!important;
+  object-position:center!important;
+  transform:scale(1)!important;
+  transform-origin:center!important;
+}
 .comparison-scene,.comparison-dish,.comparison-pack{isolation:auto!important}
 .product-comparison[data-comparison-side="pack"] .comparison-dish{visibility:hidden}
 
