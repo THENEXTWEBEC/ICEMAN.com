@@ -644,7 +644,7 @@
     "maiz-dulce-450": {image:"catalog/prepared/maiz-dulce-450.png",alt:"Maíz dulce preparado y servido en un plato verde"},
     "mix-jardinera-450": {image:"catalog/prepared/mix-jardinera-450.png",alt:"Mix jardinera preparado y servido en un plato verde"},
     "arvejas-450": {image:"catalog/prepared/arvejas-450.png",alt:"Arvejas preparadas y servidas en un plato verde"},
-    "edamame-vaina": {image:"catalog/prepared/edamame-vaina.png",alt:"Edamame en vaina preparado y servido en un plato verde",className:"dish-edamame-vaina",source:"prepared"},
+    "edamame-vaina": {image:"catalog/prepared/edamame-vaina.png",alt:"Edamame en vaina preparado y servido en un plato verde",className:"dish-edamame-vaina",version:"full-plate-20261028"},
     "edamame-grano": {image:"catalog/prepared/edamame-grano.png",alt:"Edamame en grano preparado y servido en un plato verde",className:"dish-edamame-grano"},
     "salteado-de-verduras": {image:"catalog/prepared/salteado-de-verduras.png",alt:"Salteado de verduras preparado y servido en un plato verde"},
     "yuca-500": {image:"catalog/prepared/yuca-500.png",alt:"Trozos de yuca preparados y servidos en un plato verde"},
@@ -693,7 +693,8 @@
     const dish = dishScenes[product.slug];
     const pack = `<img src="${cutoutAsset(product.image)}" alt="Empaque de ${escapeHTML(product.name)}, ${escapeHTML(product.presentation)}" loading="lazy" decoding="async">`;
     if (!dish) return `<div class="product-photo">${pack}</div>`;
-    const dishSrc = dish.source === "prepared" ? `${projectBase}/assets/${dish.image}` : dish.image.startsWith("catalog/prepared/") ? `${projectBase}/assets/catalog/prepared-cutout/${dish.image.split("/").pop()}` : editorialImage(dish.image);
+    const dishBaseSrc = dish.source === "prepared" ? `${projectBase}/assets/${dish.image}` : dish.image.startsWith("catalog/prepared/") ? `${projectBase}/assets/catalog/prepared-cutout/${dish.image.split("/").pop()}` : editorialImage(dish.image);
+    const dishSrc = dish.version ? `${dishBaseSrc}?v=${dish.version}` : dishBaseSrc;
     const [desktopScale=1,tabletScale=desktopScale,mobileScale=desktopScale] = comparisonScales[product.slug] || [];
     const scaleStyle = `--dish-scale:${desktopScale};--dish-scale-tablet:${tabletScale};--dish-scale-mobile:${mobileScale}`;
     return `<div class="product-comparison" data-comparison data-comparison-product="${product.slug}" data-comparison-side="mix" style="--split:50%;${scaleStyle}"><div class="comparison-scene"><div class="comparison-dish ${dish.className || ""}"><img src="${dishSrc}" alt="${dish.alt}" loading="lazy" decoding="async"></div><div class="comparison-pack">${pack}</div><span class="comparison-line" aria-hidden="true"><b>↔</b></span><input type="range" min="0" max="100" value="50" data-compare-range aria-label="Revelar preparación de ${escapeHTML(product.name)}" aria-valuetext="50% empaque, 50% preparación"></div><div class="comparison-captions"><span>En el empaque</span><span>En tu mesa</span></div><p class="comparison-cue">Desliza y descubre <span aria-hidden="true">↔</span></p></div>`;

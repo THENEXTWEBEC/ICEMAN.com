@@ -52,6 +52,8 @@ test('every enabled comparison resolves to existing imagery and responsive optic
  const {scenes,scales}=vm.runInNewContext(source+';({scenes:dishScenes,scales:comparisonScales});');
  assert.equal(Object.keys(scenes).length,27);
  assert.deepEqual(Object.keys(scales).sort(),Object.keys(scenes).sort());
+ assert.equal(scenes['edamame-vaina'].version,'full-plate-20261028');
+ assert.equal(scenes['edamame-vaina'].source,undefined);
  Object.entries(scenes).forEach(([slug,dish])=>{
   const product=catalog.products.find(p=>p.slug===slug); assert.ok(product,slug);
   assert.ok(fs.existsSync(path.join(base,'assets/catalog',product.image+'.webp')));

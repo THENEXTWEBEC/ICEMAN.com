@@ -253,7 +253,6 @@ body:has(.catalog-results) #main{background:#161d46}.page-intro:has(+ .catalog-t
 .comparison-dish img,.detail-image .comparison-dish img{
   transform:scale(var(--active-dish-scale))!important;
 }
-.comparison-dish.dish-edamame-vaina img{mix-blend-mode:multiply!important}
 .comparison-scene,.comparison-dish,.comparison-pack{isolation:auto!important}
 .product-comparison[data-comparison-side="pack"] .comparison-dish{visibility:hidden}
 @media(min-width:601px) and (max-width:899px){
