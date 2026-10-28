@@ -644,7 +644,7 @@
     "maiz-dulce-450": {image:"catalog/prepared/maiz-dulce-450.png",alt:"Maíz dulce preparado y servido en un plato verde"},
     "mix-jardinera-450": {image:"catalog/prepared/mix-jardinera-450.png",alt:"Mix jardinera preparado y servido en un plato verde"},
     "arvejas-450": {image:"catalog/prepared/arvejas-450.png",alt:"Arvejas preparadas y servidas en un plato verde"},
-    "edamame-vaina": {image:"catalog/prepared/edamame-vaina.png",alt:"Edamame en vaina preparado y servido en un plato verde",className:"dish-edamame-vaina"},
+    "edamame-vaina": {image:"catalog/prepared/edamame-vaina.png",alt:"Edamame en vaina preparado y servido en un plato verde",className:"dish-edamame-vaina",source:"prepared"},
     "edamame-grano": {image:"catalog/prepared/edamame-grano.png",alt:"Edamame en grano preparado y servido en un plato verde",className:"dish-edamame-grano"},
     "salteado-de-verduras": {image:"catalog/prepared/salteado-de-verduras.png",alt:"Salteado de verduras preparado y servido en un plato verde"},
     "yuca-500": {image:"catalog/prepared/yuca-500.png",alt:"Trozos de yuca preparados y servidos en un plato verde"},
@@ -657,12 +657,46 @@
     "smoothie-red": {image:"catalog/prepared/smoothie-red.png",alt:"Smoothie Red servido en un plato verde"},
     "waffle-glaseado": {image:"catalog/prepared/waffle-glaseado.png",alt:"Waffle glaseado preparado y servido en un plato verde"}
   };
+  // The transparent and photographic canvases have different intrinsic ratios.
+  // These optical corrections keep the visible dish as tall as its pack without
+  // changing the pack scale or distorting either image.
+  const comparisonScales = {
+    "papas-air-fryer":[1,1,1],
+    "corte-ondulado-900-premium":[.87,.87,.62],
+    "corte-recto-900-premium":[.88,.88,.63],
+    "papa-steak":[.95,.95,1.11],
+    "papas-spices":[.97,.97,.97],
+    "papas-finas-hierbas":[.81,.81,.81],
+    "papas-rejilla":[.85,.85,.85],
+    "hash-brown":[.74,.74,.74],
+    "aros-de-cebolla":[.74,.74,.74],
+    "croqueta-de-yuca":[.77,.77,.77],
+    "salteado-de-verduras":[1.06,1.06,1.06],
+    "edamame-vaina":[1.07,1.07,1.07],
+    "edamame-grano":[1.07,1.07,1.07],
+    "maiz-dulce-450":[1.01,1.01,1.01],
+    "arvejas-450":[.99,.99,.99],
+    "ensalada-rusa":[1,1,1],
+    "mix-jardinera-450":[1.01,1.01,1.01],
+    "yuca-500":[.83,.83,.83],
+    "zanahoria-ondulada":[.83,.83,.83],
+    "helado-paila-mora":[1.15,1.15,1.09],
+    "helado-paila-naranjilla":[1.34,1.34,1.34],
+    "helado-paila-guanabana":[1.16,1.16,1.09],
+    "helado-paila-naranjilla-hierbabuena":[1.19,1.19,1.19],
+    "smoothie-green":[.92,.92,.92],
+    "smoothie-orange":[.91,.91,.91],
+    "smoothie-red":[.87,.87,.87],
+    "waffle-glaseado":[1.68,1.68,1.20]
+  };
   function productScene(product) {
     const dish = dishScenes[product.slug];
     const pack = `<img src="${cutoutAsset(product.image)}" alt="Empaque de ${escapeHTML(product.name)}, ${escapeHTML(product.presentation)}" loading="lazy" decoding="async">`;
     if (!dish) return `<div class="product-photo">${pack}</div>`;
-    const dishSrc = dish.image.startsWith("catalog/prepared/") ? `${projectBase}/assets/catalog/prepared-cutout/${dish.image.split("/").pop()}` : editorialImage(dish.image);
-    return `<div class="product-comparison" data-comparison data-comparison-side="mix" style="--split:50%"><div class="comparison-scene"><div class="comparison-dish ${dish.className || ""}"><img src="${dishSrc}" alt="${dish.alt}" loading="lazy" decoding="async"></div><div class="comparison-pack">${pack}</div><span class="comparison-line" aria-hidden="true"><b>↔</b></span><input type="range" min="0" max="100" value="50" data-compare-range aria-label="Revelar preparación de ${escapeHTML(product.name)}" aria-valuetext="50% empaque, 50% preparación"></div><div class="comparison-captions"><span>En el empaque</span><span>En tu mesa</span></div><p class="comparison-cue">Desliza y descubre <span aria-hidden="true">↔</span></p></div>`;
+    const dishSrc = dish.source === "prepared" ? `${projectBase}/assets/${dish.image}` : dish.image.startsWith("catalog/prepared/") ? `${projectBase}/assets/catalog/prepared-cutout/${dish.image.split("/").pop()}` : editorialImage(dish.image);
+    const [desktopScale=1,tabletScale=desktopScale,mobileScale=desktopScale] = comparisonScales[product.slug] || [];
+    const scaleStyle = `--dish-scale:${desktopScale};--dish-scale-tablet:${tabletScale};--dish-scale-mobile:${mobileScale}`;
+    return `<div class="product-comparison" data-comparison data-comparison-product="${product.slug}" data-comparison-side="mix" style="--split:50%;${scaleStyle}"><div class="comparison-scene"><div class="comparison-dish ${dish.className || ""}"><img src="${dishSrc}" alt="${dish.alt}" loading="lazy" decoding="async"></div><div class="comparison-pack">${pack}</div><span class="comparison-line" aria-hidden="true"><b>↔</b></span><input type="range" min="0" max="100" value="50" data-compare-range aria-label="Revelar preparación de ${escapeHTML(product.name)}" aria-valuetext="50% empaque, 50% preparación"></div><div class="comparison-captions"><span>En el empaque</span><span>En tu mesa</span></div><p class="comparison-cue">Desliza y descubre <span aria-hidden="true">↔</span></p></div>`;
   }
   function floatPacks(className = "") {
     return `<div class="floating-packs ${className}" aria-hidden="true"><img src="${asset("air-fryer")}" alt="" class="float-pack pack-one" loading="lazy"><img src="${asset("edamame-grano")}" alt="" class="float-pack pack-two" loading="lazy"><img src="${asset("papas-rejilla")}" alt="" class="float-pack pack-three" loading="lazy"></div>`;
