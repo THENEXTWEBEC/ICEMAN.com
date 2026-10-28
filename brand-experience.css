@@ -451,6 +451,95 @@ body:has(.catalog-results) #main{background:#161d46}.page-intro:has(+ .catalog-t
   .home-categories.scene-ready .home-category{opacity:1}
 }
 
+/* Category field: two calm rows keep each photo inside its frame and its label clear. */
+@media(min-width:821px){
+  .home-categories{
+    min-height:0;
+    padding-block:clamp(84px,8vw,116px) clamp(78px,7vw,104px);
+  }
+  .home-category-rail{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    grid-template-rows:repeat(2,minmax(0,1fr));
+    gap:clamp(26px,3vw,44px) clamp(18px,2.2vw,34px);
+    margin-top:clamp(36px,4vw,58px);
+  }
+  .home-category-rail .home-category{
+    display:grid;
+    grid-template-rows:minmax(190px,clamp(210px,20vw,285px)) auto;
+    align-items:center;
+    min-height:0;
+    padding:10px 12px 12px;
+    overflow:hidden;
+    border:1px solid rgba(23,36,87,.12)!important;
+    border-radius:16px;
+    background:rgba(255,255,255,.22)!important;
+    transform:none!important;
+    scale:1!important;
+  }
+  .home-category-rail .home-category:after{display:none}
+  .home-category-rail .home-category-image{
+    height:100%;
+    min-height:0;
+    overflow:hidden;
+    border-radius:11px;
+    background:rgba(255,255,255,.32)!important;
+  }
+  .home-category-rail .home-category-image img{
+    width:100%;
+    height:100%;
+    padding:10px;
+    object-fit:contain;
+    animation:none!important;
+    transform:none!important;
+  }
+  .home-category-rail .home-category strong{
+    position:relative;
+    top:auto;
+    left:auto;
+    min-height:clamp(34px,3vw,48px);
+    max-width:calc(100% - 34px);
+    margin:12px 0 0;
+    padding:0;
+    color:#172457;
+    font-size:clamp(18px,1.7vw,28px);
+    line-height:1;
+    text-shadow:none;
+    white-space:normal!important;
+    text-wrap:balance;
+    transform:none!important;
+  }
+  .home-category-rail .home-category>.thin-arrow{
+    top:auto;
+    right:16px;
+    bottom:18px;
+    color:#147da2;
+    transform:none!important;
+  }
+  .home-category-rail .home-category:hover,
+  .home-category-rail .home-category:focus-visible,
+  .home-category-rail .home-category.is-active-category{
+    background:rgba(255,255,255,.42)!important;
+    transform:translateY(-5px)!important;
+  }
+  .home-category-rail .home-category:hover .home-category-image img,
+  .home-category-rail .home-category:focus-visible .home-category-image img,
+  .home-category-rail .home-category.is-active-category .home-category-image img{
+    transform:scale(1.035)!important;
+  }
+}
+
+@media(max-width:820px){
+  .home-category-rail .home-category-image img{
+    animation:none!important;
+    transform:none!important;
+  }
+  .home-category-rail .home-category:hover .home-category-image img,
+  .home-category-rail .home-category:focus-visible .home-category-image img,
+  .home-category-rail .home-category.is-active-category .home-category-image img{
+    transform:scale(1.025)!important;
+  }
+}
+
 /* Desktop category band: a celeste field keeps the floating products legible. */
 @media(min-width:821px){
   .home-categories{
