@@ -263,7 +263,7 @@
       papas:{image:"editorial/recipe-papas-onduladas.webp", position:"center 52%", treatment:"cover"},
       vegetales:{image:"editorial/article-vegetables.webp", position:"center 50%", treatment:"cover"},
       especialidades:{image:"editorial/recipe-onion-rings.webp", position:"center 48%", treatment:"cover"},
-      smoothies:{image:"category/smoothies-red.webp", position:"center 48%", treatment:"drink"},
+      smoothies:{image:"category/smoothies-red-v2.png", position:"center 50%", treatment:"cover"},
       helados:{image:"editorial/article-ice-cream.webp", position:"center 50%", treatment:"cover"},
       waffles:{image:"category/waffles.webp", position:"center 48%", treatment:"cover"}
     };
