@@ -473,7 +473,7 @@
   function recipeCover(recipe, index) {
     const product=productBySlug(recipe.products[0]);
     const visual=recipeVisual(recipe);
-    const image=visual.image;
+    const image=recipe.slug === "carne-plancha-papas-onduladas-salsa-ajo" ? "editorial/customer-potatoes-onduladas-framed.webp" : visual.image;
     const search=[recipe.title,recipe.description,...recipe.tags,...recipe.occasions].join(" ").toLocaleLowerCase("es").normalize("NFD").replace(/[\u0300-\u036f]/g,"");
     return `<article class="recipe-cover" data-editorial-card data-category="recetas" data-search="${escapeHTML(search)}"><a class="recipe-cover-art recipe-visual-${visual.treatment}" href="${editorialPath(recipe)}" data-link aria-label="Abrir ${escapeHTML(recipe.title)}"><img class="recipe-cover-dish" src="${editorialImage(image)}" alt="${escapeHTML(visual.alt)}" loading="lazy"><span class="recipe-cover-index">${String(index+1).padStart(2,"0")} / LA MESA IceMan</span>${product && visual.treatment !== "pack"?`<img class="recipe-cover-pack" src="${asset(product.image)}" alt="Empaque de ${escapeHTML(product.name)}" loading="lazy">`:""}<span class="recipe-cover-open" aria-hidden="true">↗</span></a><div class="recipe-cover-copy"><span class="story-kicker">${escapeHTML([recipe.time,recipe.servings].filter(Boolean).join(" · "))}</span><h3><a href="${editorialPath(recipe)}" data-link>${escapeHTML(recipe.title)}</a></h3><p>${escapeHTML(recipe.description)}</p><a href="${editorialPath(recipe)}" data-link class="recipe-link">Ver receta ${iconArrow()}</a></div></article>`;
   }
