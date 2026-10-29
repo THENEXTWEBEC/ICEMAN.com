@@ -234,7 +234,11 @@
     const ogDescription = document.querySelector('meta[property="og:description"]'); if (ogDescription) ogDescription.content = pageDescription;
     const twitterTitle = document.querySelector('meta[name="twitter:title"]'); if (twitterTitle) twitterTitle.content = document.title;
     const twitterDescription = document.querySelector('meta[name="twitter:description"]'); if (twitterDescription) twitterDescription.content = pageDescription;
-    const robots = document.querySelector('meta[name="robots"]'); if (robots) robots.content = title === "Página no encontrada" ? "noindex,follow" : "index,follow";
+    const robots = document.querySelector('meta[name="robots"]');
+    if (robots) {
+      const isSearchResults = new URLSearchParams(window.location.search).has("q");
+      robots.content = title === "Página no encontrada" || isSearchResults ? "noindex,follow" : "index,follow";
+    }
     let canonical = document.querySelector('link[rel="canonical"]');
     if (!canonical) { canonical = document.createElement("link"); canonical.rel = "canonical"; document.head.append(canonical); }
     canonical.href = `${window.location.origin}${withBase(withoutBase(window.location.pathname))}`;
@@ -594,7 +598,7 @@
     const image = document.querySelector('meta[property="og:image"]') || document.createElement("meta");
     image.setAttribute("property", "og:image"); image.content = `${window.location.origin}${asset(product.image)}`; if (!image.parentNode) document.head.append(image);
     const twitterImage = document.querySelector('meta[name="twitter:image"]'); if (twitterImage) twitterImage.content = image.content;
-    updateHead(path, product.name, `${product.description} Presentación ${product.presentation}. Consulta información y disponibilidad a IceMan Ecuador.`);
+    updateHead(path, `${product.name} ${product.presentation}`, `${product.description} Presentación ${product.presentation}, marca ${product.brand}. Consulta información a IceMan Ecuador.`);
     const crumbItems = breadcrumbSchema([{ name:"Inicio", href:"/" },{ name:"Productos", href:"/productos" },{ name:category.name, href:`/productos/${category.slug}` },{ name:product.name, href:productPath(product) }]).itemListElement;
     addSchema({ "@context":"https://schema.org", "@graph":[
       { "@type":"Product", name:product.name, image:`${window.location.origin}${asset(product.image)}`, description:product.description, sku:product.sap || product.slug, brand:{ "@type":"Brand", name:product.brand } },
