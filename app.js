@@ -20,13 +20,15 @@
       { name:"Akí", logo:"aki-white.png" },
       { name:"Gran Akí", logo:"gran-aki-white.png" },
       { name:"Tía", logo:"tia.png" },
+      { name:"Mega Santa María", logo:"mega-santa-maria.png" },
       { name:"Coral Hipermercados", logo:"coral.png" },
       { name:"Del Portal Supermercados", logo:"del-portal.png" },
       { name:"Fybeca", logo:"fybeca.png" },
       { name:"Pedidos Ya", logo:"pedidos-ya-white.png" },
       { name:"Tipti", logo:"tipti.png" },
       { name:"Datu Deli", logo:"datu-deli-white.png" },
-      { name:"Casa Deli", logo:"casa-deli-white.png" }
+      { name:"Casa Deli", logo:"casa-deli-white.png" },
+      { name:"Conorque", logo:"conorque.png" }
     ];
 
   let experienceCleanup = null;
