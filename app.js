@@ -57,7 +57,7 @@
   const escapeHTML = (value = "") => String(value).replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char]);
   const asset = (name) => `${projectBase}/assets/catalog/${encodeURIComponent(name)}.webp`;
   const cutoutAsset = (name) => `${projectBase}/assets/catalog/cutout/${encodeURIComponent(name)}.png`;
-  const editorialImage = (name) => /^(editorial|catalog)\//.test(name || "") ? `${projectBase}/assets/${name}` : asset(name);
+  const editorialImage = (name) => /^(editorial|catalog|category)\//.test(name || "") ? `${projectBase}/assets/${name}` : asset(name);
   const waLink = (message) => `https://wa.me/${waNumber}?text=${encodeURIComponent(message)}`;
   const contactMessage = "Hola, equipo de IceMan. Me gustaría recibir información sobre sus productos.";
   const businessMessage = "Hola, equipo de IceMan. Me interesa conocer sus opciones de distribución y abastecimiento para empresas.";
@@ -251,8 +251,18 @@
   ].map((item) => ({ ...item, product:products.find((product) => product.slug === item.slug) })).filter((item) => item.product);
 
   function home() {
-    const categoryPhotos = {papas:"editorial/customer-potatoes-rejilla.webp",vegetales:"editorial/customer-salmon-edamame.webp",especialidades:"editorial/customer-onion-rings.webp",smoothies:"catalog/prepared/smoothie-green.png",helados:"catalog/prepared/helado-paila-mora.png",waffles:"editorial/customer-waffles-franui.webp"};
-    const categoryLinks = categories.map(category => `<a class="home-category home-category-${category.slug}" href="/productos/${category.slug}" data-link data-category-link="${category.slug}" aria-label="Explorar ${escapeHTML(category.name)}"><span class="home-category-image"><img src="${editorialImage(categoryPhotos[category.slug] || category.image)}" alt="" loading="lazy" decoding="async"></span><strong>${escapeHTML(category.name)}</strong><span class="home-category-cta">Explorar ${iconArrow()}</span></a>`).join("");
+    const categoryPhotos = {
+      papas:{image:"editorial/recipe-papas-onduladas.webp", position:"center 52%", treatment:"cover"},
+      vegetales:{image:"editorial/article-vegetables.webp", position:"center 50%", treatment:"cover"},
+      especialidades:{image:"editorial/recipe-onion-rings.webp", position:"center 48%", treatment:"cover"},
+      smoothies:{image:"category/smoothies-red.webp", position:"center 48%", treatment:"drink"},
+      helados:{image:"editorial/article-ice-cream.webp", position:"center 50%", treatment:"cover"},
+      waffles:{image:"category/waffles.webp", position:"center 48%", treatment:"cover"}
+    };
+    const categoryLinks = categories.map((category, index) => {
+      const photo = categoryPhotos[category.slug] || {image:`catalog/${category.image}.webp`,position:"center",treatment:"cover"};
+      return `<a class="home-category home-category-${category.slug}" href="/productos/${category.slug}" data-link data-category-link="${category.slug}" aria-label="Explorar ${escapeHTML(category.name)}" style="--category-photo-position:${photo.position}" data-category-index="${index}"><span class="home-category-image home-category-image-${photo.treatment}"><img src="${editorialImage(photo.image)}" alt="" loading="lazy" decoding="async" width="1200" height="800"></span><span class="home-category-copy"><strong>${escapeHTML(category.name)}</strong><span class="home-category-cta">Explorar ${iconArrow()}</span></span></a>`;
+    }).join("");
     const showcasePanels = homeShowcase.map(({ product, tone }, index) => `<article class="discovery-card" style="--panel-tone:${tone}"><a class="discovery-link" href="${productPath(product)}" data-link data-product-link="${escapeHTML(product.slug)}" aria-label="Ver ${escapeHTML(product.name)}" aria-describedby="discovery-copy-${index}"><img class="discovery-pack discovery-pack-${escapeHTML(product.slug)}" data-discovery-product="${escapeHTML(product.slug)}" src="${asset(product.image)}" alt="" loading="lazy" decoding="async" width="480" height="480"><div class="discovery-copy" id="discovery-copy-${index}"><h3>${escapeHTML(product.name)}</h3><p>${escapeHTML(product.description)}</p><span class="discovery-cta">Ver producto ${iconArrow()}</span></div></a></article>`).join("");
     const recipeCards = orderedRecipes().slice(0, 3).map((recipe, index) => `<article class="home-recipe home-recipe-${index + 1}"><a href="/recetas/${recipe.slug}" data-link><div class="home-recipe-image recipe-visual-${recipeVisual(recipe).treatment}"><img src="${editorialImage(recipeVisual(recipe).image)}" alt="${escapeHTML(recipeVisual(recipe).alt)}" loading="lazy" decoding="async"></div><div class="home-recipe-copy"><span class="home-recipe-label">Idea con productos IceMan</span><h3>${escapeHTML(recipe.title)}</h3><span class="home-recipe-arrow">Ver receta ${iconArrow()}</span></div></a></article>`).join("");
     const stockistItems = stockists.map(({ name, logo }) => `<div class="stockist-logo stockist-logo-${logo.replace(/\.[^.]+$/, "").replace(/[^a-z0-9-]/gi, "-")}" role="listitem"><img src="${projectBase}/assets/stockists/${logo}" alt="${escapeHTML(name)}" loading="lazy" decoding="async"></div>`).join("");
