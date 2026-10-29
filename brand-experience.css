@@ -832,7 +832,7 @@ body:has(.catalog-results) #main{background:#161d46}.page-intro:has(+ .catalog-t
 .home-category-image-drink{background:linear-gradient(135deg,#e6f1e8,#f8f9ee)!important}
 .home-category-grid .home-category .home-category-image-drink img{object-fit:contain!important;padding:24px 34px 62px!important;mix-blend-mode:multiply}
 .home-category-grid .home-category-smoothies .home-category-image-drink{display:grid!important;place-items:center!important;background:linear-gradient(145deg,#dff3f5 0%,#eef8f4 58%,#dcebf1 100%)!important}
-.home-category-grid .home-category-smoothies .home-category-image-drink img{width:auto!important;height:88%!important;max-width:72%!important;max-height:88%!important;padding:0!important;object-fit:contain!important;mix-blend-mode:normal!important;filter:drop-shadow(0 18px 20px rgba(30,48,72,.2))!important;transform:translateY(-2%)!important}
+.home-category-grid .home-category-smoothies .home-category-image-drink img{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;padding:18px 70px 82px!important;object-fit:contain!important;mix-blend-mode:normal!important;filter:drop-shadow(0 18px 20px rgba(30,48,72,.2))!important;transform:none!important}
 .home-category-copy{
   position:absolute;
   z-index:2;
