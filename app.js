@@ -56,6 +56,8 @@
   }
   const escapeHTML = (value = "") => String(value).replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char]);
   const asset = (name) => `${projectBase}/assets/catalog/${encodeURIComponent(name)}.webp`;
+  const responsivePackImages = new Set(["papas-rejilla", "papas-ondulado-premium", "aros-cebolla", "waffle", "edamame-grano"]);
+  const responsivePackSrcset = (name) => `${projectBase}/assets/catalog/responsive/${encodeURIComponent(name)}-180.webp 180w, ${projectBase}/assets/catalog/responsive/${encodeURIComponent(name)}-360.webp 360w, ${projectBase}/assets/catalog/responsive/${encodeURIComponent(name)}-540.webp 540w`;
   const cutoutAsset = (name) => `${projectBase}/assets/catalog/cutout/${encodeURIComponent(name)}.png`;
   const editorialImage = (name) => /^(editorial|catalog|category)\//.test(name || "") ? `${projectBase}/assets/${name}` : asset(name);
   const waLink = (message) => `https://wa.me/${waNumber}?text=${encodeURIComponent(message)}`;
@@ -126,7 +128,7 @@
     const navLink = ([href, label, key]) => `<a href="${href}" data-link data-nav="${key}" ${activeNav === key ? 'aria-current="page"' : ""}>${label}</a>`;
     return `<header class="site-header"><div class="wrap header-inner header-inner-centered">
       <nav class="desktop-nav desktop-nav-left" aria-label="Navegación principal, primera parte">${links.slice(0,2).map(navLink).join("")}</nav>
-      <a href="/" data-link class="brand brand-centered" aria-label="IceMan Ecuador, inicio"><img class="brand-official-logo" src="${projectBase}/assets/iceman-logo-cliente.jpg" alt="IceMan, alimentos congelados" fetchpriority="high"></a>
+      <a href="/" data-link class="brand brand-centered" aria-label="IceMan Ecuador, inicio"><img class="brand-official-logo" src="${projectBase}/assets/iceman-logo-cliente-420.webp" alt="IceMan, alimentos congelados" width="420" height="287" fetchpriority="high" decoding="async"></a>
       <div class="header-right"><nav class="desktop-nav desktop-nav-right" aria-label="Navegación principal, segunda parte">${links.slice(2).map(navLink).join("")}</nav>
       <div class="header-actions"><button class="icon-btn" type="button" data-action="search" aria-label="Buscar productos" aria-controls="site-search-panel" aria-expanded="${searchOpened}"><span class="search-glyph" aria-hidden="true"></span></button><button class="menu-toggle" type="button" data-action="menu" aria-label="${menuOpened ? "Cerrar menú" : "Abrir menú"}" aria-expanded="${menuOpened}" aria-controls="mobile-menu"><span class="menu-lines ${menuOpened ? "is-open" : ""}" aria-hidden="true"><span></span><span></span></span></button></div></div>
       </div>
@@ -490,10 +492,15 @@
     planner.querySelector("[data-planner-recipe-link]").href = withBase(editorialPath(recipe));
   }
   function recipeProductChoices() {
-    return orderedRecipes().map(recipe => {
+    const desktop = window.matchMedia("(min-width: 981px)").matches;
+    const eagerCount = desktop ? 5 : window.matchMedia("(min-width: 641px)").matches ? 3 : 2;
+    return orderedRecipes().map((recipe, index) => {
       const product = productBySlug(recipe.products[0]);
       if (!product) return "";
-      return `<button class="recipe-pack-choice" type="button" data-recipe-select="${escapeHTML(recipe.slug)}" aria-pressed="false" aria-controls="recipe-feature-panel"><span class="recipe-pack-image"><img src="${asset(product.image)}" alt="" loading="lazy" decoding="async"></span><span class="recipe-pack-name">${escapeHTML(product.name)}</span><span class="recipe-pack-hint">Ver receta ${iconArrow()}</span></button>`;
+      const loading = index < eagerCount ? "eager" : "lazy";
+      const priority = desktop && product.slug === "edamame-grano" ? "high" : "auto";
+      const responsiveSources = responsivePackImages.has(product.image) ? `srcset="${responsivePackSrcset(product.image)}" sizes="(max-width: 640px) 148px, 172px"` : "";
+      return `<button class="recipe-pack-choice" type="button" data-recipe-select="${escapeHTML(recipe.slug)}" aria-pressed="false" aria-controls="recipe-feature-panel"><span class="recipe-pack-image"><img src="${asset(product.image)}" ${responsiveSources} alt="" loading="${loading}" fetchpriority="${priority}" decoding="async" width="172" height="158"></span><span class="recipe-pack-name">${escapeHTML(product.name)}</span><span class="recipe-pack-hint">Ver receta ${iconArrow()}</span></button>`;
     }).join("");
   }
   function recipeFeaturePanel(recipe) {

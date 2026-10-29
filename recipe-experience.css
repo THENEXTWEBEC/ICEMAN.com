@@ -11,7 +11,7 @@
 .recipe-pack-choice:hover,.recipe-pack-choice:focus-visible{z-index:1;border-color:#20a9d5;box-shadow:0 14px 32px rgba(41,43,97,.12);transform:translateY(-5px)}
 .recipe-pack-choice:focus-visible{outline:3px solid rgba(32,169,213,.4);outline-offset:3px}
 .recipe-pack-image{display:grid;width:min(100%,172px);height:126px;flex:none;margin-inline:auto;place-items:center}
-.recipe-pack-image img{display:block;width:100%!important;height:100%!important;max-width:100%;max-height:100%;object-fit:contain;object-position:center;animation:recipe-pack-float 4.7s ease-in-out infinite;animation-play-state:paused;will-change:transform}
+.recipe-pack-image img{display:block;width:100%!important;height:100%!important;min-width:0;min-height:0;max-width:100%;max-height:100%;object-fit:contain;object-position:center;animation:recipe-pack-float 4.7s ease-in-out infinite;animation-play-state:paused;will-change:transform}
 /* The edamame artwork has a much tighter canvas than the other package images.
    Scale it to the same perceived size while retaining the shared image slot. */
 .recipe-pack-choice[data-recipe-select="bowl-salmon-teriyaki-edamame-mayonesa-picante"] .recipe-pack-image img{width:82%!important;height:82%!important}

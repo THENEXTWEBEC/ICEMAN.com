@@ -24,18 +24,31 @@
     <link rel="canonical" href="https://icemanec.com/" />
     <link rel="icon" href="assets/iceman-symbol-cyan.png" type="image/png" />
     <link rel="apple-touch-icon" href="assets/iceman-symbol-cyan.png" />
-    <link rel="preload" as="image" href="assets/editorial/golden-fries-alpine-1672.webp" imagesrcset="assets/editorial/golden-fries-alpine-768.webp 768w, assets/editorial/golden-fries-alpine-1672.webp 1672w" imagesizes="100vw" fetchpriority="high" />
+    <script>
+      const requestedRoute = new URLSearchParams(location.search).get("__route") || location.pathname;
+      const normalizedRoute = requestedRoute.replace(/^\/ICEMAN\.com(?=\/|$)/, "").replace(/\/+$/, "") || "/";
+      if (normalizedRoute === "/") {
+        const heroPreload = document.createElement("link");
+        heroPreload.rel = "preload";
+        heroPreload.as = "image";
+        heroPreload.href = "assets/editorial/golden-fries-alpine-1672.webp";
+        heroPreload.setAttribute("imagesrcset", "assets/editorial/golden-fries-alpine-768.webp 768w, assets/editorial/golden-fries-alpine-1672.webp 1672w");
+        heroPreload.setAttribute("imagesizes", "100vw");
+        heroPreload.fetchPriority = "high";
+        document.head.append(heroPreload);
+      }
+    </script>
     <link rel="stylesheet" href="styles.css?v=responsive-production-20261020" />
     <link rel="stylesheet" href="mobile-menu-fix.css" />
     <link rel="stylesheet" href="home-redesign.css?v=stockist-logo-scale-20261020" />
     <link rel="stylesheet" href="motion-experience.css?v=mobile-products-20261020" />
     <link rel="stylesheet" href="product-discovery.css?v=balanced-pack-scale-20261020" />
     <link rel="stylesheet" href="brand-experience.css?v=category-grid-editorial-final-20261028" />
-    <link rel="stylesheet" href="recipe-experience.css?v=edamame-frame-fit-20261029" />
+    <link rel="stylesheet" href="recipe-experience.css?v=edamame-frame-fit-20261029-page-speed" />
     <script defer src="catalog.js?v=20261023-2"></script>
     <script defer src="editorial-data.js?v=unique-context-images-20261028"></script>
     <script defer src="motion-experience.js?v=category-motion-20-percent"></script>
-    <script defer src="app.js?v=category-grid-editorial-final-20261028"></script>
+    <script defer src="app.js?v=page-speed-images-20261029"></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Saltar al contenido</a>
