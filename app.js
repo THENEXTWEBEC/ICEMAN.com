@@ -270,12 +270,12 @@
 
   function home() {
     const categoryPhotos = {
-      papas:{pack:"air-fryer.webp", prepared:"prepared-cutout/papas-air-fryer.png"},
-      vegetales:{pack:"mix-jardinera-450.webp", prepared:"prepared-cutout/mix-jardinera-450.png"},
-      especialidades:{pack:"aros-cebolla.webp", prepared:"prepared-cutout/aros-de-cebolla.png"},
-      smoothies:{pack:"smoothie-red.webp", prepared:"prepared-cutout/smoothie-red.png"},
-      helados:{pack:"helado-mora.webp", prepared:"prepared-cutout/helado-paila-mora.png"},
-      waffles:{pack:"waffle.webp", prepared:"prepared-cutout/waffle-glaseado.png"}
+      papas:{pack:"cutout/air-fryer.png", prepared:"prepared-cutout/papas-air-fryer.png"},
+      vegetales:{pack:"cutout/mix-jardinera-450.png", prepared:"prepared-cutout/mix-jardinera-450.png"},
+      especialidades:{pack:"cutout/aros-cebolla.png", prepared:"prepared-cutout/aros-de-cebolla.png"},
+      smoothies:{pack:"cutout/smoothie-green.png", prepared:"prepared-cutout/smoothie-red.png"},
+      helados:{pack:"cutout/helado-mora.png", prepared:"prepared-cutout/helado-paila-mora.png"},
+      waffles:{pack:"cutout/waffle.png", prepared:"prepared-cutout/waffle-glaseado.png"}
     };
     const categoryLinks = categories.map((category, index) => {
       const photo = categoryPhotos[category.slug] || {pack:`${category.image}.webp`,prepared:`prepared-cutout/${category.image}.png`};
