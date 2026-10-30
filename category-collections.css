@@ -226,39 +226,39 @@
 }
 
 /* Refined category cards: one consistent product portrait and a calmer color field. */
-#del-congelador .transformation-categories{margin-top:clamp(48px,5vw,70px)!important}
+#del-congelador .transformation-categories{margin-top:clamp(44px,5vw,68px)!important}
 #del-congelador .transformation-categories .home-category-grid{
-  max-width:1600px!important;
+  max-width:1740px!important;
   grid-template-columns:repeat(6,minmax(0,1fr))!important;
   grid-auto-rows:auto!important;
-  gap:clamp(14px,1.35vw,22px)!important;
-  margin-top:24px!important;
+  gap:clamp(12px,1.2vw,20px)!important;
+  margin-top:22px!important;
 }
 #del-congelador .transformation-categories .home-category{
-  aspect-ratio:4 / 5;
+  aspect-ratio:4 / 5.1;
   min-height:0!important;
   grid-template-rows:minmax(0,1fr) auto!important;
   gap:0;
-  padding:clamp(13px,1.2vw,19px)!important;
-  border:1px solid rgba(255,255,255,.48)!important;
-  border-radius:20px!important;
-  box-shadow:0 12px 28px rgba(28,49,68,.105),inset 0 1px 0 rgba(255,255,255,.4)!important;
+  padding:clamp(11px,1vw,16px)!important;
+  border:1px solid rgba(255,255,255,.38)!important;
+  border-radius:18px!important;
+  box-shadow:0 10px 24px rgba(28,49,68,.09),inset 0 1px 0 rgba(255,255,255,.32)!important;
 }
-#del-congelador .home-category-papas{--category-gradient:linear-gradient(155deg,#f7da58 0%,#f4ae4f 100%);--category-ink:#fff}
-#del-congelador .home-category-vegetales{--category-gradient:linear-gradient(155deg,#a9d879 0%,#55b98d 100%)}
-#del-congelador .home-category-especialidades{--category-gradient:linear-gradient(155deg,#ef8290 0%,#d94d72 100%)}
-#del-congelador .home-category-smoothies{--category-gradient:linear-gradient(155deg,#df79ad 0%,#8b78bd 100%)}
-#del-congelador .home-category-helados{--category-gradient:linear-gradient(155deg,#78cba4 0%,#b7d75c 100%);--category-ink:#fff}
-#del-congelador .home-category-waffles{--category-gradient:linear-gradient(155deg,#e7a45a 0%,#d96f62 100%)}
+#del-congelador .home-category-papas{--category-gradient:linear-gradient(155deg,#f1d875 0%,#e8a75d 100%);--category-ink:#17354a}
+#del-congelador .home-category-vegetales{--category-gradient:linear-gradient(155deg,#b9d59a 0%,#79b99a 100%);--category-ink:#173b42}
+#del-congelador .home-category-especialidades{--category-gradient:linear-gradient(155deg,#e99a91 0%,#ce6d78 100%);--category-ink:#fff}
+#del-congelador .home-category-smoothies{--category-gradient:linear-gradient(155deg,#d8a0bd 0%,#9787b9 100%);--category-ink:#fff}
+#del-congelador .home-category-helados{--category-gradient:linear-gradient(155deg,#9ac8a5 0%,#bfd16f 100%);--category-ink:#173b42}
+#del-congelador .home-category-waffles{--category-gradient:linear-gradient(155deg,#e5b773 0%,#d68a69 100%);--category-ink:#3b302a}
 #del-congelador .home-category-image{
   display:grid!important;
   min-height:0!important;
   height:100%!important;
   place-items:center!important;
   overflow:hidden!important;
-  border-radius:48% 48% 42% 42% / 43% 43% 39% 39%!important;
-  background:rgba(255,255,255,.12)!important;
-  box-shadow:inset 0 0 0 1px rgba(255,255,255,.17);
+  border-radius:46% 46% 40% 40% / 43% 43% 39% 39%!important;
+  background:radial-gradient(ellipse at 50% 55%,rgba(255,255,255,.32),rgba(255,255,255,.08) 58%,transparent 76%)!important;
+  box-shadow:none!important;
 }
 #del-congelador .home-category-image::before{display:none!important}
 #del-congelador .home-category-image .home-category-pack{display:none!important}
@@ -267,41 +267,52 @@
   inset:auto!important;
   width:100%!important;
   height:100%!important;
-  object-fit:cover!important;
+  object-fit:contain!important;
   object-position:center!important;
-  border-radius:inherit!important;
-  filter:saturate(.94) drop-shadow(0 9px 12px rgba(34,45,55,.14))!important;
+  filter:saturate(.96) drop-shadow(0 10px 10px rgba(34,45,55,.16))!important;
   transform:none!important;
 }
-#del-congelador .home-category-copy{gap:11px!important;padding:15px 0 0!important}
+#del-congelador .home-category-copy{
+  position:relative!important;
+  inset:auto!important;
+  display:flex!important;
+  min-height:0!important;
+  align-items:stretch!important;
+  flex-direction:column!important;
+  gap:10px!important;
+  padding:12px 0 0!important;
+  background:none!important;
+}
+#del-congelador .home-category-copy::before,#del-congelador .home-category-copy::after{display:none!important;content:none!important}
 #del-congelador .home-category-copy strong{
-  color:#fff!important;
-  font-size:clamp(18px,1.45vw,23px)!important;
-  text-shadow:0 2px 10px rgba(25,35,45,.24)!important;
+  color:var(--category-ink)!important;
+  font-size:clamp(16px,1.15vw,20px)!important;
+  line-height:1.05!important;
+  text-shadow:none!important;
 }
 #del-congelador .home-category-cta{
-  min-height:38px!important;
-  padding:5px 7px 5px 12px!important;
+  min-height:34px!important;
+  padding:4px 6px 4px 10px!important;
   border:0!important;
-  background:#fff!important;
-  color:#173c51!important;
-  font-size:13px!important;
-  box-shadow:0 3px 10px rgba(26,43,54,.12);
+  background:#173b50!important;
+  color:#fff!important;
+  font-size:12px!important;
+  box-shadow:0 3px 9px rgba(26,43,54,.12);
 }
-#del-congelador .home-category-cta .thin-arrow{width:26px!important;height:26px!important;background:#173c51!important}
+#del-congelador .home-category-cta .thin-arrow{width:24px!important;height:24px!important;background:#087b98!important}
 #del-congelador .home-category:hover .home-category-ready,
 #del-congelador .home-category:focus-visible .home-category-ready{transform:scale(1.035)!important}
-#del-congelador .transformation-foot{max-width:1600px!important;margin-top:23px!important}
+#del-congelador .transformation-foot{max-width:1740px!important;margin-top:23px!important}
 #del-congelador .transformation-foot .home-inline-link{color:#087b98!important}
-@media(max-width:1040px){
+@media(max-width:920px){
   #del-congelador .transformation-categories .home-category-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}
-  #del-congelador .transformation-categories .home-category{aspect-ratio:4 / 4.5}
+  #del-congelador .transformation-categories .home-category{aspect-ratio:4 / 4.8}
 }
 @media(max-width:640px){
   #del-congelador .transformation-categories .home-category-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important}
-  #del-congelador .transformation-categories .home-category{aspect-ratio:4 / 4.8;min-height:0!important;padding:11px!important;border-radius:17px!important}
-  #del-congelador .home-category-copy{gap:8px!important;padding-top:11px!important}
-  #del-congelador .home-category-copy strong{font-size:clamp(17px,4.5vw,21px)!important}
-  #del-congelador .home-category-cta{min-height:34px!important;font-size:12px!important}
+  #del-congelador .transformation-categories .home-category{aspect-ratio:4 / 4.7;min-height:0!important;padding:10px!important;border-radius:16px!important}
+  #del-congelador .home-category-copy{gap:8px!important;padding-top:10px!important}
+  #del-congelador .home-category-copy strong{font-size:clamp(16px,4.1vw,19px)!important}
+  #del-congelador .home-category-cta{min-height:32px!important;font-size:11px!important}
 }
-@media(max-width:360px){#del-congelador .transformation-categories .home-category{aspect-ratio:4 / 5.1}}
+@media(max-width:380px){#del-congelador .transformation-categories .home-category-grid{grid-template-columns:1fr!important}}
