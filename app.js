@@ -28,7 +28,7 @@
       { name:"Tipti", logo:"tipti.png" },
       { name:"Datu Deli", logo:"datu-deli-white.png" },
       { name:"Casa Deli", logo:"casa-deli-white.png" },
-      { name:"Conorque", logo:"conorque.png" }
+      { name:"Conorque", logo:"conorque-horizontal.png" }
     ];
 
   let experienceCleanup = null;

@@ -936,14 +936,6 @@ body:has(.catalog-results) #main{background:#161d46}.page-intro:has(+ .catalog-t
   max-height:52px;
   object-fit:contain;
 }
-.stockists-grid .stockists-logo-frame-conorque{
-  height:92px;
-  padding:8px 18px;
-}
-.stockists-grid .stockists-logo-frame-conorque img{
-  width:auto;
-  max-height:76px;
-}
 @media(max-width:600px){
   .stockists-grid .stockists-logo-frame{
     width:min(88%,240px);
