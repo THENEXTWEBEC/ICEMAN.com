@@ -132,7 +132,7 @@
 .transformation-copy p{color:#697286;font-size:13px}
 .transformation-copy a{display:inline-flex;gap:8px;margin-top:13px;color:#292b61;font-size:12px;font-weight:700;text-decoration:underline;text-underline-offset:5px}
 .transformation-stage .product-comparison{width:100%;max-width:650px;margin:auto;--comparison-radius:0px}
-.transformation-stage .comparison-scene{aspect-ratio:1.22;background:transparent}
+.transformation-stage .comparison-scene{width:100%;aspect-ratio:1.22;background:transparent}
 .transformation-stage .comparison-dish img{object-fit:contain}
 .transformation-stage .comparison-pack img{object-fit:contain}
 .transformation-stage .comparison-captions,.transformation-stage .comparison-cue{font-size:10px}
