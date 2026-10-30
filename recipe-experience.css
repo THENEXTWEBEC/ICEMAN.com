@@ -65,3 +65,13 @@
 @media(max-width:640px){.recipe-discovery{padding:66px 0 76px}.recipe-discovery-heading{margin-bottom:28px}.recipe-discovery-heading h1{font-size:clamp(68px,18vw,118px)}.recipe-pack-shelf{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.recipe-pack-choice{min-height:205px;padding:10px 9px 13px;border-radius:10px}.recipe-pack-image{width:min(100%,148px);height:115px}.recipe-pack-name{font-size:13px}.recipe-pack-hint{font-size:10px}.recipe-feature-panel{margin-top:30px}.recipe-feature-content{grid-template-columns:1fr;gap:22px}.recipe-feature-image{position:relative;top:auto;aspect-ratio:1.05}.recipe-feature-heading{display:block}.recipe-feature-heading h2{font-size:clamp(29px,8vw,39px)}.recipe-back-to-packs{margin-top:13px}.recipe-feature-description{font-size:15px}.recipe-full-details{gap:23px}.recipe-full-details h3{font-size:19px}.recipe-full-details ol p,.recipe-ingredient-group ul{font-size:14px}.recipe-library-list{grid-template-columns:1fr}.home-category-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.home-category-grid .home-category{min-height:230px;padding:10px}.home-category-grid .home-category-image,.home-category-grid .home-category-image img{height:144px;min-height:144px}.home-category-grid .home-category strong{font-size:18px}.home-category-cta{font-size:11px}.home-stockists-head h2{font-size:clamp(35px,9vw,44px)}}
 @media(max-width:360px){.home-category-grid{grid-template-columns:1fr}.home-category-grid .home-category{min-height:245px}.home-category-grid .home-category-image,.home-category-grid .home-category-image img{height:165px;min-height:165px}}
 @media(prefers-reduced-motion:reduce){.recipe-pack-image img{animation:none!important;will-change:auto}.recipe-pack-choice,.recipe-feature-content,.home-category-grid .home-category,.home-category-grid .home-category-image img{transition:none!important}.recipe-feature-content{opacity:1;transform:none}}
+
+/* Fill the homepage recipe frames; two source photos include a white footer in the file. */
+.home-recipe .home-recipe-image{overflow:hidden}
+.home-recipe .home-recipe-image img{display:block;transform-origin:50% 0}
+.home-recipe .home-recipe-image img[src*="customer-potatoes-onduladas"],
+.home-recipe .home-recipe-image img[src*="customer-onion-rings"]{transform:scale(1.13)!important}
+.home-recipe:hover .home-recipe-image img[src*="customer-potatoes-onduladas"],
+.home-recipe:hover .home-recipe-image img[src*="customer-onion-rings"],
+.home-recipe:focus-within .home-recipe-image img[src*="customer-potatoes-onduladas"],
+.home-recipe:focus-within .home-recipe-image img[src*="customer-onion-rings"]{transform:scale(1.16)!important}
