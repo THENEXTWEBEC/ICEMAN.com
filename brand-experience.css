@@ -959,3 +959,9 @@ body:has(.catalog-results) #main{background:#161d46}.page-intro:has(+ .catalog-t
   }
   .stockists-grid .stockists-logo-frame img{max-height:48px}
 }
+
+/* Bring the first product cards into view sooner on the catalogue page. */
+.page-intro:has(+ .catalog-toolbar){padding:38px 0}
+.page-intro:has(+ .catalog-toolbar) h1{font-size:clamp(42px,5.5vw,68px)}
+.catalog-results{padding-top:24px}
+.category-section>h2{margin-bottom:12px}
