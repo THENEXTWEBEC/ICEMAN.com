@@ -79,6 +79,11 @@
   transform:none!important;
   transition:transform .35s cubic-bezier(.2,.8,.2,1)!important;
 }
+#del-congelador .home-category-vegetales .home-category-image .home-category-pack{
+  width:auto!important;
+  height:72%!important;
+  max-width:72%!important;
+}
 #del-congelador .home-category-copy{
   position:relative!important;
   z-index:2;
