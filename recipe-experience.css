@@ -75,3 +75,31 @@
 .home-recipe:hover .home-recipe-image img[src*="customer-onion-rings"],
 .home-recipe:focus-within .home-recipe-image img[src*="customer-potatoes-onduladas"],
 .home-recipe:focus-within .home-recipe-image img[src*="customer-onion-rings"]{transform:scale(1.16)!important}
+
+/* Recipe photography fills each recipe frame instead of inheriting poster containment. */
+.recipe-cover-art.recipe-visual-dish>.recipe-cover-dish,
+.editorial-recipe-media.recipe-visual-dish>.editorial-recipe-dish,
+.recipe-detail .editorial-detail-image.recipe-visual-dish>img,
+.recipe-detail .editorial-detail-image.editorial-detail-poster>img,
+.home-recipe .home-recipe-image.recipe-visual-dish>img{
+  display:block;
+  width:100%;
+  height:100%;
+  padding:0!important;
+  background:transparent!important;
+  object-fit:cover!important;
+  object-position:50% 46%;
+}
+
+/* These source photos include a narrow white footer; trim it without losing the dish. */
+.recipe-cover-dish[src*="customer-potatoes-onduladas"],
+.recipe-cover-dish[src*="customer-onion-rings"],
+.editorial-recipe-dish[src*="customer-potatoes-onduladas"],
+.editorial-recipe-dish[src*="customer-onion-rings"],
+.recipe-detail .editorial-detail-image img[src*="customer-potatoes-onduladas"],
+.recipe-detail .editorial-detail-image img[src*="customer-onion-rings"],
+.home-recipe .home-recipe-image img[src*="customer-potatoes-onduladas"],
+.home-recipe .home-recipe-image img[src*="customer-onion-rings"]{
+  transform:scale(1.13)!important;
+  transform-origin:50% 0;
+}
