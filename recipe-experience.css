@@ -103,3 +103,12 @@
   transform:scale(1.13)!important;
   transform-origin:50% 0;
 }
+/* Las fotos originales ya incluyen el empaque; no duplicarlo sobre el plato. */
+.recipe-cover-art .recipe-cover-dish{object-fit:contain;background:#17234d}
+.planner-result-top img[hidden],.planner-result [hidden]{display:none!important}
+.planner-result-top img{width:min(100%, 280px);aspect-ratio:4/3;object-fit:contain;background:#eef4f5}
+.planner-result [data-planner-facts]{font-weight:700;color:#202958}
+.recipe-occasions .recipe-library-heading h2{max-width:1050px;font-size:clamp(38px,5.3vw,76px);line-height:1.05}
+.story-purpose.purpose-light .purpose-copy,.story-purpose.purpose-light .purpose-copy p,.story-purpose.purpose-light .story-number{color:#17234d}
+.story-purpose.purpose-light .purpose-copy h2 span,.story-purpose.purpose-light .purpose-copy h2 span.lit{color:#17234d}
+@media(max-width:600px){.recipe-occasions .recipe-library-heading h2{font-size:clamp(35px,9vw,50px)}.planner-result-top img{width:min(100%,220px)}}
