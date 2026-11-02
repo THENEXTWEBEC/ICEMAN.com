@@ -112,3 +112,12 @@
 .story-purpose.purpose-light .purpose-copy,.story-purpose.purpose-light .purpose-copy p,.story-purpose.purpose-light .story-number{color:#17234d}
 .story-purpose.purpose-light .purpose-copy h2 span,.story-purpose.purpose-light .purpose-copy h2 span.lit{color:#17234d}
 @media(max-width:600px){.recipe-occasions .recipe-library-heading h2{font-size:clamp(35px,9vw,50px)}.planner-result-top img{width:min(100%,220px)}}
+/* Mostrar completos los originales que ya contienen el producto. */
+.recipe-cover-art.recipe-visual-dish > .recipe-cover-dish{object-fit:contain!important;object-position:center!important;background:#1c294d!important;transform:none!important}
+.recipe-cover-art .recipe-cover-pack{width:25%;height:38%;left:2%;bottom:2%;object-fit:contain;transform:none}
+.recipe-cover-art:hover .recipe-cover-pack{transform:translateY(-5px)}
+.story-purpose:not(.purpose-light) .purpose-copy h2 span,.story-purpose:not(.purpose-light) .purpose-copy h2 span.lit{color:#fff}
+.planner-result-top{position:relative;display:block}
+.planner-result-top .planner-result-icon{position:absolute;top:8px;left:8px;z-index:1}
+.planner-result-top img{display:block;width:100%;max-width:none;height:220px;object-fit:contain;background:transparent}
+@media(max-width:560px){.planner-result-top img{width:100%;height:190px}}
