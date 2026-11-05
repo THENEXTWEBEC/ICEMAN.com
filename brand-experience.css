@@ -961,3 +961,10 @@ body:has(.catalog-results) #main{background:#161d46}.page-intro:has(+ .catalog-t
 .page-intro:has(+ .catalog-toolbar) h1{font-size:clamp(42px,5.5vw,68px)}
 .catalog-results{padding-top:24px}
 .category-section>h2{margin-bottom:12px}
+.home-recipes.table-story{background:#f6f3ea;color:#182448;border-top:0}
+.home-recipes.table-story .home-section-heading h2,.home-recipes.table-story .home-recipe h3{color:#162346}
+.home-recipes.table-story .home-section-heading h2 em{color:#159fc6}
+.home-recipes.table-story .home-section-heading p,.home-recipes.table-story .home-recipes-foot p{color:#526278}
+.home-recipes.table-story .home-recipe>a{border:0;background:transparent;box-shadow:none}
+.home-recipes.table-story .home-recipe-label,.home-recipes.table-story .home-recipe-arrow,.home-recipes.table-story .home-recipe-arrow .thin-arrow{color:#147eaa}
+.home-recipes.table-story .home-inline-link{color:#12375a}
