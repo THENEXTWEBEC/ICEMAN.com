@@ -692,8 +692,8 @@
 
   function contactPage(path) {
     const cities = [
-      ["Quito · Matriz", "Antonio Castillo OE1-464 y Av. Juan de Selis. Carcelén Industrial.", "PBX: 02 394 8180 · 099 946 2554"],
-      ["Cuenca", "Luis Vélez Álvarez y Av. Loja.", "Cel.: 099 417 3515"],
+      ["Quito · Matriz", "Antonio Castillo OE1-464 y Av. Juan de Selis. Carcelén Industrial.", "PBX: 02 394 9180 · 099 946 2554"],
+      ["Cuenca · Monay Baguanchi", "Av. Luis Quintuña Arias y calle de Las Lechuzas 15, sector Monay Baguanchi (referencia: Stilo Muebles Fábrica), Valle, Cuenca.", "Cel.: 099 417 3515"],
       ["Manta", "D.A. PRODUCONG. Calle 124 y Av. 103 / Los Esteros.", "Cel.: 099 300 4128 · 096 857 4624"],
       ["Santo Domingo", "D.A. Disbar. Urb. Las Guaduas, Calle H. Fierro y Crespo Toral.", "Cel.: 099 759 9620"],
       ["Guayaquil", "Km 7½ Vía Daule, Bodegas Hilantex.", "Telf.: 099 364 3640"],
