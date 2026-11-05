@@ -968,3 +968,12 @@ body:has(.catalog-results) #main{background:#161d46}.page-intro:has(+ .catalog-t
 .home-recipes.table-story .home-recipe>a{border:0;background:transparent;box-shadow:none}
 .home-recipes.table-story .home-recipe-label,.home-recipes.table-story .home-recipe-arrow,.home-recipes.table-story .home-recipe-arrow .thin-arrow{color:#147eaa}
 .home-recipes.table-story .home-inline-link{color:#12375a}
+
+/* Keep every category package fully inside its picture frame. */
+.home-category-grid .home-category .home-category-image img.home-category-pack{
+  box-sizing:border-box!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  padding:12px clamp(18px,5vw,64px) clamp(112px,16vw,148px)!important;
+  filter:drop-shadow(0 16px 16px rgba(20,40,66,.16))!important;
+}
