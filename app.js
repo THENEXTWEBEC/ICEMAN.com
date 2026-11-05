@@ -826,6 +826,33 @@
   function setupExperience() {
     const controller = new AbortController(), signal = controller.signal;
     const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+    const normalizeComparisonImage = img => {
+      const scene = img.closest(".comparison-scene");
+      if (!scene || !img.complete || !img.naturalWidth) return;
+      try {
+        const canvas = document.createElement("canvas");
+        canvas.width = 192; canvas.height = 192;
+        const ctx = canvas.getContext("2d", { willReadFrequently:true });
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        const { data, width, height } = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        let top = height, bottom = -1;
+        for (let y = 0; y < height; y++) for (let x = 0; x < width; x++) {
+          if (data[(y * width + x) * 4 + 3] > 24) { top = Math.min(top, y); bottom = Math.max(bottom, y); }
+        }
+        if (bottom < top) return;
+        const bounds = scene.getBoundingClientRect();
+        const contentWidth = Math.max(1, bounds.width - 48), contentHeight = Math.max(1, bounds.height - 48);
+        const fit = Math.min(contentWidth / img.naturalWidth, contentHeight / img.naturalHeight);
+        const visibleHeight = ((bottom - top + 1) / height) * (height / img.naturalHeight) * fit / bounds.height;
+        const scale = Math.max(.5, Math.min(1.8, .76 / visibleHeight));
+        const kind = img.closest(".comparison-pack") ? "pack" : "dish";
+        scene.style.setProperty(`--${kind}-normalized-scale`, scale.toFixed(3));
+      } catch { /* Keep the authored fallback scale if the image cannot be sampled. */ }
+    };
+    const normalizeComparisons = () => root.querySelectorAll(".comparison-scene img").forEach(normalizeComparisonImage);
+    normalizeComparisons();
+    root.querySelectorAll(".comparison-scene img").forEach(img => img.addEventListener("load", () => normalizeComparisonImage(img), { signal }));
+    window.addEventListener("resize", normalizeComparisons, { signal, passive:true });
     const recipeExplorer = root.querySelector("[data-recipe-explorer]");
     if (recipeExplorer) {
       const observer = new IntersectionObserver(([entry]) => recipeExplorer.classList.toggle("is-in-view", entry.isIntersecting));

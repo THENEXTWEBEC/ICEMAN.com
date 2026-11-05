@@ -245,7 +245,7 @@ body:has(.catalog-results) #main{background:#161d46}.page-intro:has(+ .catalog-t
 
 /* Product-to-plate comparison: one frame, fixed pack scale and per-product
    optical correction for the prepared dish at each responsive range. */
-.comparison-scene{--active-dish-scale:var(--dish-scale,1);background:#eaf1f4}
+.comparison-scene{--active-dish-scale:var(--dish-normalized-scale,var(--dish-scale,1));background:#eaf1f4}
 .comparison-dish,.comparison-pack{background:transparent!important}
 .comparison-dish img,.comparison-pack img,
 .detail-image .comparison-dish img,.detail-image .comparison-pack img{
@@ -260,7 +260,7 @@ body:has(.catalog-results) #main{background:#161d46}.page-intro:has(+ .catalog-t
   mix-blend-mode:normal!important;
   transform-origin:center!important;
 }
-.comparison-pack img,.detail-image .comparison-pack img{transform:none!important}
+.comparison-pack img,.detail-image .comparison-pack img{transform:scale(var(--pack-normalized-scale,1))!important}
 .comparison-dish img,.detail-image .comparison-dish img{
   transform:scale(var(--active-dish-scale))!important;
 }
