@@ -977,3 +977,7 @@ body:has(.catalog-results) #main{background:#161d46}.page-intro:has(+ .catalog-t
   padding:12px clamp(18px,5vw,64px) clamp(112px,16vw,148px)!important;
   filter:drop-shadow(0 16px 16px rgba(20,40,66,.16))!important;
 }
+
+/* Keep keyboard focus on the slider handle instead of outlining the whole frame. */
+.comparison-scene:focus-within{outline:none}
+.comparison-scene:focus-within .comparison-line b{box-shadow:0 0 0 3px #eaf1f4,0 0 0 5px #149ed7}
