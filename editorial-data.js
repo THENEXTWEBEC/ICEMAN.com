@@ -6,7 +6,7 @@ window.ICEMAN_EDITORIAL = {
       title: "Brochetas de carne con papas rejilla y chimichurri",
       description: "Brochetas de res y vegetales acompañadas de papas rejilla IceMan y chimichurri casero.",
       category: "Recetas", time: "", servings: "4",
-      image: "editorial/customer-potatoes-rejilla.webp", heroAlt: "Brochetas con vegetales y papas rejilla IceMan",
+      image: "editorial/customer-potatoes-rejilla.webp", homeImage: "editorial/recipe-table-brochetas-fries.jpg", heroAlt: "Brochetas de carne y vegetales con papas rejilla en una mesa familiar",
       products: ["papas-rejilla"], tags: ["papas rejilla", "brochetas", "carne", "chimichurri"], occasions: ["reunion", "cena", "fin-de-semana"],
       ingredients: ["750 g de papas corte rejilla IceMan", "600 g de carne de res cortada en cubos", "1 pimiento amarillo", "1 zucchini", "1 cebolla", "8 tomates cherry", "1 cucharada de aceite de oliva", "Sal, pimienta y ajo al gusto", "Palitos para brochetas", "Para el chimichurri", "½ taza de perejil picado", "2 dientes de ajo picados", "4 cucharadas de aceite de oliva", "2 cucharadas de vinagre", "1 cucharadita de orégano", "Sal y ají al gusto"],
       steps: ["Mezcla los ingredientes del chimichurri y déjalo reposar mientras preparas las brochetas.", "Corta los vegetales en trozos y altérnalos con la carne en los palitos. Sazona con aceite, sal, pimienta y ajo.", "Cocina las brochetas en una parrilla o sartén caliente, girándolas hasta alcanzar el punto de cocción deseado.", "Cocina las papas directamente congeladas siguiendo las indicaciones del empaque. Distribúyelas sin amontonarlas para que se doren uniformemente.", "Sirve las brochetas con las papas rejilla. Agrega el chimichurri sobre la carne o sírvelo aparte."]
