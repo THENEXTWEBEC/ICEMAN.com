@@ -293,7 +293,7 @@
     const leadArticles = editorial.articles.slice(0, 3);
     return `<div class="home-hero-journey" data-hero-journey><section class="home-hero" id="inicio" data-nav-section="home"><div class="home-hero-image" data-parallax="0.16"><img src="${projectBase}/assets/editorial/golden-fries-alpine-1672.webp" srcset="${projectBase}/assets/editorial/golden-fries-alpine-768.webp 768w, ${projectBase}/assets/editorial/golden-fries-alpine-1672.webp 1672w" sizes="100vw" alt="Papas doradas flotando sobre un paisaje alpino congelado" fetchpriority="high" decoding="async" width="1672" height="941"></div><div class="home-hero-shade"></div><div class="hero-orbit hero-orbit-one" data-pointer-depth="12" aria-hidden="true"></div><div class="hero-orbit hero-orbit-two" data-pointer-depth="-8" aria-hidden="true"></div><div class="wrap home-hero-inner"><div class="home-hero-copy"><span class="home-kicker hero-sequence">Alimentos congelados IceMan</span><h1><span class="hero-line"><span>Sabor a</span></span><span class="hero-line"><em>tu ritmo.</em></span></h1><p class="hero-sequence">Lo hacemos fácil. Tú lo haces especial.</p><div class="home-hero-actions hero-sequence"><a class="btn btn-primary magnetic" href="/productos" data-link>Explorar productos ${iconArrow()}</a><a class="home-hero-link" href="/donde-encontrarnos" data-link>Encuéntranos ${iconArrow()}</a></div></div><div class="hero-scroll-story" aria-hidden="true"><span>IceMan · Congelados</span><strong>Siempre hay algo rico<br>que preparar</strong><small>Productos prácticos para cada día</small></div><div class="hero-pack-wrap" data-pointer-depth="-16"><span class="hero-pack-halo" aria-hidden="true"></span><img class="hero-pack" src="${asset(homeShowcase[0].product.image)}" alt="Empaque oficial de ${escapeHTML(homeShowcase[0].product.name)} IceMan" fetchpriority="high" decoding="async"></div><div class="hero-journey-progress" aria-hidden="true"><span>01</span><i><b></b></i><span>02</span></div><span class="hero-side-note" aria-hidden="true">Del congelador a tu mesa · IceMan Ecuador</span><a class="hero-scroll" href="#productos-destacados" aria-label="Explorar productos destacados">${iconArrow("down")} Desliza para descubrir</a></div></section></div>
     <section class="home-showcase" id="productos-destacados" aria-labelledby="showcase-title" data-nav-section="products"><div class="wrap"><div class="home-showcase-heading"><span class="home-kicker">Productos que se mueven contigo</span><h2 id="showcase-title">Elige. Descubre. Disfruta.</h2><p>Toca para descubrir. Toca de nuevo para ver el producto.</p></div></div><div class="discovery-grid" aria-label="Productos destacados de IceMan">${showcasePanels}</div></section>
-    <section class="home-stockists" id="donde-encontrarnos" aria-labelledby="stockists-title" data-nav-section="stockists"><div class="wrap home-stockists-head"><span class="home-kicker">02 / CERCA DE TI</span><h2 id="stockists-title">Siempre<br><em>cerca de ti.</em></h2><p>Encuentra productos IceMan en establecimientos y plataformas de Ecuador.</p></div><div class="stockists-track" id="stockists-track" role="list" aria-label="Establecimientos donde encuentras productos IceMan"><div class="stockists-set">${stockistItems}</div><div class="stockists-set" aria-hidden="true" inert>${stockistItems}</div></div><div class="wrap stockists-note"><a class="home-inline-link" href="/donde-encontrarnos" data-link>Ver establecimientos ${iconArrow()}</a><span>La disponibilidad y el surtido pueden variar según el establecimiento y el local.</span></div></section>
+    <section class="home-stockists" id="donde-encontrarnos" aria-labelledby="stockists-title" data-nav-section="stockists"><div class="wrap home-stockists-head"><span class="home-kicker">02 / CERCA DE TI</span><h2 id="stockists-title">Siempre<br><em>cerca de ti.</em></h2><p>Encuentra productos IceMan en establecimientos y plataformas de Ecuador.</p></div><p class="stockists-drag-hint">Arrastra o desliza para explorar <span aria-hidden="true">↔</span></p><div class="stockists-track" id="stockists-track" role="list" tabindex="0" aria-label="Establecimientos donde encuentras productos IceMan. Usa las flechas izquierda y derecha para recorrerlos"><div class="stockists-set">${stockistItems}</div><div class="stockists-set" aria-hidden="true" inert>${stockistItems}</div></div><div class="wrap stockists-note"><a class="home-inline-link" href="/donde-encontrarnos" data-link>Ver establecimientos ${iconArrow()}</a><span>La disponibilidad y el surtido pueden variar según el establecimiento y el local.</span></div></section>
     <section class="home-transformation" id="del-congelador" aria-labelledby="transformation-title"><div class="wrap transformation-heading"><span class="home-kicker">03 / DEL CONGELADOR A TU MESA</span><h2 id="transformation-title">El comienzo<br>de algo <em>rico.</em></h2><p>Un empaque. Muchas formas de disfrutarlo.</p></div>${categorySection}<div class="wrap transformation-stage"><div class="transformation-copy"><span>01 — ELIGE</span><h3>Listo para tu próxima idea.</h3><p>${escapeHTML(transformProduct.name)} · ${escapeHTML(transformProduct.presentation)}</p><a href="${productPath(transformProduct)}" data-link>Descubrir el producto ${iconArrow()}</a></div>${productScene(transformProduct,true,true)}<div class="transformation-caption"><span>02 — PREPARA</span><strong>Del frío, directo a tu mesa.</strong></div></div><div class="wrap transformation-foot"><a href="/productos" data-link class="home-inline-link">Explorar todas las categorías ${iconArrow()}</a><span>Consulta las instrucciones de preparación en el empaque.</span></div></section>
     <section class="home-recipes table-story" id="ideas" aria-labelledby="recipes-title" data-nav-section="editorial"><div class="wrap"><div class="home-section-heading table-story-heading"><span class="home-kicker">04 / RECETAS Y MOMENTOS</span><h2 id="recipes-title">No vendemos congelados.<br><em>Inspiramos momentos.</em></h2><p>Ideas reales para preparar, servir y compartir.</p></div><article class="table-story-feature"><a class="table-story-photo recipe-visual-${featuredVisual.treatment}" href="/recetas/${featuredRecipe.slug}" data-link><img src="${featuredImage}" alt="${escapeHTML(featuredVisual.alt)}" loading="lazy" decoding="async"><span class="table-story-photo-note">Al centro, para todos</span></a><div class="table-story-copy"><span class="table-story-eyebrow">La mesa está lista · Receta protagonista</span><h3>${escapeHTML(featuredRecipe.title)}</h3><p>Una idea fácil para poner algo rico al centro y alargar la conversación.</p><a class="table-story-recipe-link" href="/recetas/${featuredRecipe.slug}" data-link>Preparar esta receta ${iconArrow()}</a>${featuredProduct ? `<div class="table-story-product"><img src="${asset(featuredProduct.image)}" alt="Empaque IceMan de ${escapeHTML(featuredProduct.name)}" loading="lazy" decoding="async"><span><small>Lo práctico</small><strong>${escapeHTML(featuredProduct.name)}</strong><a href="${productPath(featuredProduct)}" data-link>Conocer producto ${iconArrow()}</a></span></div>` : ""}</div></article><div class="table-story-later"><div class="table-story-later-heading"><span>Y para otro día…</span><a class="home-inline-link" href="/recetas" data-link>Ver todas las recetas ${iconArrow()}</a></div><div class="home-recipe-grid">${recipeCards}</div></div><div class="home-recipes-foot"><p>IceMan pone lo práctico. El momento lo creas tú.</p><a class="home-inline-link" href="/recetas" data-link>Ver todas las recetas ${iconArrow()}</a></div></div></section>
     <section class="home-business" id="para-empresas" aria-labelledby="business-title" data-nav-section="business"><div class="wrap business-editorial"><div class="home-business-image"><img src="${projectBase}/assets/editorial/business-choose-restaurant.webp" alt="Equipo de restaurante evaluando opciones para su operación" loading="lazy" decoding="async" width="1200" height="800"></div><div class="home-business-copy"><span class="home-kicker">05 / ICEMAN PARA EMPRESAS</span><h2 id="business-title">Tu cocina<br>no se detiene.</h2><p>Opciones para restaurantes, cafeterías, hoteles y comercios. Conversemos sobre los productos y presentaciones que necesita tu operación.</p><a class="btn btn-primary" href="/empresas" data-link>Contactar a Televentas ${iconArrow()}</a><a class="home-inline-link" href="${waLink(businessMessage)}" data-wa target="_blank" rel="noopener">WhatsApp · +593 99 915 2518 ${iconArrow()}</a></div></div></section>
@@ -347,48 +347,108 @@
     const track = root.querySelector("#stockists-track");
     if (!track) return;
     const set = track.querySelector(".stockists-set");
-    let frame = 0;
-    let previous = 0;
-    let paused = false;
-    let visible = false;
-    let setWidth = set.getBoundingClientRect().width;
-    const pixelsPerMillisecond = .028 * 1.15;
     const reduced = matchMedia("(prefers-reduced-motion: reduce)");
-    track.scrollLeft = setWidth;
+    const pixelsPerMillisecond = .028 * 1.15;
+    let setWidth = 0, frame = 0, previous = 0, cooldownTimer = 0;
+    let visible = false, hovered = false, focused = false, touching = false;
+    let drag = null;
+    const measure = () => {
+      setWidth = set.getBoundingClientRect().width + (parseFloat(getComputedStyle(track).columnGap) || 0);
+    };
+    const wrap = (position) => setWidth ? ((position % setWidth) + setWidth) % setWidth : position;
+    const stop = () => { if (frame) cancelAnimationFrame(frame); frame = 0; previous = 0; };
+    const busy = () => hovered || focused || touching || Boolean(drag) || Boolean(cooldownTimer);
     const tick = (now) => {
       frame = 0;
-      if (!visible || paused || reduced.matches) return;
-      if (!paused) {
-        const elapsed = previous ? Math.min(now - previous, 50) : 16;
-        track.scrollLeft -= elapsed * pixelsPerMillisecond;
-        if (track.scrollLeft <= 0) track.scrollLeft += setWidth;
-      }
+      if (!visible || reduced.matches || busy()) return;
+      const elapsed = previous ? Math.min(now - previous, 50) : 16;
+      track.scrollLeft = wrap(track.scrollLeft - elapsed * pixelsPerMillisecond);
       previous = now;
       frame = requestAnimationFrame(tick);
     };
-    const pause = () => { paused = true; if (frame) cancelAnimationFrame(frame); frame = 0; };
-    const resume = () => { paused = false; previous = 0; if (visible && !frame && !reduced.matches) frame = requestAnimationFrame(tick); };
+    const start = () => { if (visible && !reduced.matches && !busy() && !frame) frame = requestAnimationFrame(tick); };
+    const rest = () => {
+      clearTimeout(cooldownTimer);
+      cooldownTimer = setTimeout(() => { cooldownTimer = 0; start(); }, 3000);
+    };
+    measure();
+    track.scrollLeft = setWidth;
     const observer = new IntersectionObserver(([entry]) => {
       visible = entry.isIntersecting && !document.hidden;
-      previous = 0;
-      if (visible && !frame && !reduced.matches) frame = requestAnimationFrame(tick);
-      if (!visible && frame) { cancelAnimationFrame(frame); frame = 0; }
+      if (visible) start(); else stop();
     });
     observer.observe(track);
-    const onVisibility = () => { visible = !document.hidden && track.getBoundingClientRect().bottom > 0 && track.getBoundingClientRect().top < innerHeight; if (visible && !frame && !reduced.matches) frame = requestAnimationFrame(tick); else if (!visible && frame) { cancelAnimationFrame(frame); frame = 0; } };
-    const onResize = () => { setWidth = set.getBoundingClientRect().width; };
-    const onMotion = () => { if (reduced.matches && frame) { cancelAnimationFrame(frame); frame = 0; } else if (visible && !frame) frame = requestAnimationFrame(tick); };
+    const onVisibility = () => {
+      visible = !document.hidden && track.getBoundingClientRect().bottom > 0 && track.getBoundingClientRect().top < innerHeight;
+      if (visible) start(); else stop();
+    };
+    const onResize = () => { measure(); track.scrollLeft = wrap(track.scrollLeft); };
+    const onMotion = () => { if (reduced.matches) stop(); else start(); };
+    const onEnter = () => { hovered = true; stop(); };
+    const onLeave = () => { hovered = false; start(); };
+    const onFocus = () => { focused = true; stop(); };
+    const onBlur = () => { focused = false; start(); };
+    const onTouchStart = () => { touching = true; clearTimeout(cooldownTimer); cooldownTimer = 0; stop(); };
+    const onTouchEnd = () => { touching = false; track.scrollLeft = wrap(track.scrollLeft); rest(); };
+    const onPointerDown = (event) => {
+      if (event.pointerType === "touch" || event.button !== 0) return;
+      clearTimeout(cooldownTimer); cooldownTimer = 0;
+      drag = { id:event.pointerId, x:event.clientX, scroll:track.scrollLeft };
+      track.setPointerCapture(event.pointerId);
+      track.classList.add("is-dragging");
+      stop();
+    };
+    const onPointerMove = (event) => {
+      if (!drag || event.pointerId !== drag.id) return;
+      event.preventDefault();
+      track.scrollLeft = wrap(drag.scroll - (event.clientX - drag.x));
+    };
+    const onPointerEnd = (event) => {
+      if (!drag || event.pointerId !== drag.id) return;
+      drag = null;
+      track.classList.remove("is-dragging");
+      if (track.hasPointerCapture(event.pointerId)) track.releasePointerCapture(event.pointerId);
+      rest();
+    };
+    const onKeyDown = (event) => {
+      if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+      event.preventDefault();
+      track.scrollLeft = wrap(track.scrollLeft + (event.key === "ArrowRight" ? 180 : -180));
+      stop(); rest();
+    };
     document.addEventListener("visibilitychange", onVisibility);
     window.addEventListener("resize", onResize);
     reduced.addEventListener("change", onMotion);
-    track.addEventListener("mouseenter", pause);
-    track.addEventListener("mouseleave", resume);
-    track.addEventListener("focusin", pause);
-    track.addEventListener("focusout", resume);
-    track.addEventListener("touchstart", pause, { passive:true });
-    track.addEventListener("touchend", resume, { passive:true });
-    track.addEventListener("touchcancel", resume, { passive:true });
-    stockistsCleanup = () => { cancelAnimationFrame(frame); observer.disconnect(); document.removeEventListener("visibilitychange", onVisibility); window.removeEventListener("resize", onResize); reduced.removeEventListener("change", onMotion); track.removeEventListener("mouseenter", pause); track.removeEventListener("mouseleave", resume); track.removeEventListener("focusin", pause); track.removeEventListener("focusout", resume); track.removeEventListener("touchstart", pause); track.removeEventListener("touchend", resume); track.removeEventListener("touchcancel", resume); };
+    track.addEventListener("mouseenter", onEnter);
+    track.addEventListener("mouseleave", onLeave);
+    track.addEventListener("focusin", onFocus);
+    track.addEventListener("focusout", onBlur);
+    track.addEventListener("touchstart", onTouchStart, { passive:true });
+    track.addEventListener("touchend", onTouchEnd, { passive:true });
+    track.addEventListener("touchcancel", onTouchEnd, { passive:true });
+    track.addEventListener("pointerdown", onPointerDown);
+    track.addEventListener("pointermove", onPointerMove);
+    track.addEventListener("pointerup", onPointerEnd);
+    track.addEventListener("pointercancel", onPointerEnd);
+    track.addEventListener("keydown", onKeyDown);
+    stockistsCleanup = () => {
+      stop(); clearTimeout(cooldownTimer); observer.disconnect();
+      document.removeEventListener("visibilitychange", onVisibility);
+      window.removeEventListener("resize", onResize);
+      reduced.removeEventListener("change", onMotion);
+      track.removeEventListener("mouseenter", onEnter);
+      track.removeEventListener("mouseleave", onLeave);
+      track.removeEventListener("focusin", onFocus);
+      track.removeEventListener("focusout", onBlur);
+      track.removeEventListener("touchstart", onTouchStart);
+      track.removeEventListener("touchend", onTouchEnd);
+      track.removeEventListener("touchcancel", onTouchEnd);
+      track.removeEventListener("pointerdown", onPointerDown);
+      track.removeEventListener("pointermove", onPointerMove);
+      track.removeEventListener("pointerup", onPointerEnd);
+      track.removeEventListener("pointercancel", onPointerEnd);
+      track.removeEventListener("keydown", onKeyDown);
+    };
   }
 
   function breadcrumbs(parts) {
