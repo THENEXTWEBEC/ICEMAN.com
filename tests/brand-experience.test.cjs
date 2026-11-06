@@ -39,11 +39,13 @@ test('recipe selector starts empty and allows selection through button controls'
  assert.match(app,/function recipeFeaturePanel\(recipe\)/);
  assert.match(app,/IntersectionObserver/);
 });
-test('home categories render as a six-card catalog grid with working routes',()=>{
+test('home categories render the six reference cards with working routes',()=>{
  assert.deepEqual(Array.from(catalog.categories,category=>category.name),['Papas','Vegetales','Especialidades','Smoothies','Helados','Waffles']);
- assert.match(app,/home-category-grid/);
+ assert.match(app,/reference-category-grid/);
  assert.match(app,/href="\/productos\/\$\{category\.slug\}/);
- assert.match(app,/class="home-category-cta">Explorar/);
+ assert.match(app,/class="reference-category-button">Explorar/);
+ assert.match(app,/papas:\["papas-spices","air-fryer"\]/);
+ assert.match(app,/waffles:\["waffle"\]/);
 });
 test('sitemap lists the five recipe pages',()=>{
  const sitemap=fs.readFileSync(path.join(base,'sitemap.xml'),'utf8');
