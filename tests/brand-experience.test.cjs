@@ -32,6 +32,18 @@ test('only the five client-approved recipes are in the recipe collection',()=>{
   'bowl-salmon-teriyaki-edamame-mayonesa-picante'
  ]);
 });
+test('planner recommends recipes for the selected occasion and product method',()=>{
+ const source=app.slice(app.indexOf('  const plannerMatches ='),app.indexOf('  function updateRecipePlanner()'));
+ const choose=vm.runInNewContext(source+';choosePlannerRecipe',{editorial});
+ const pick=(people,plan,method)=>choose({people,plan,method})?.slug;
+ assert.equal(pick('1–2','Cena rápida','Air Fryer'),'carne-plancha-papas-onduladas-salsa-ajo');
+ assert.equal(pick('3–4','Partido','Sartén'),'brochetas-carne-papas-rejilla-chimichurri');
+ assert.equal(pick('1–2','Película','Horno'),'waffles-iceman-franui-frutos-rojos');
+ assert.equal(pick('1–2','Cena rápida','Sartén'),'bowl-salmon-teriyaki-edamame-mayonesa-picante');
+ assert.equal(pick('1–2','Película','Sartén'),undefined);
+ assert.match(app,/link\.href = withBase\("\/recetas#las-recetas"\)/);
+ assert.match(app,/link\.href = withBase\(editorialPath\(recipe\)\)/);
+});
 test('recipe selector starts empty and allows selection through button controls',()=>{
  assert.match(app,/data-recipe-explorer/);
  assert.match(app,/aria-pressed="false" aria-controls="recipe-feature-panel"/);
