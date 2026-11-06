@@ -46,6 +46,7 @@ test('home categories render the six reference cards with working routes',()=>{
  assert.match(app,/class="reference-category-button">Explorar/);
  assert.match(app,/papas:\["papas-spices","air-fryer"\]/);
  assert.match(app,/waffles:\["waffle"\]/);
+ assert.match(app,/Un empaque\. Muchas formas de disfrutarlo\.<\/p><\/div>\$\{categorySection\}<div class="wrap transformation-stage">/);
 });
 test('sitemap lists the five recipe pages',()=>{
  const sitemap=fs.readFileSync(path.join(base,'sitemap.xml'),'utf8');
