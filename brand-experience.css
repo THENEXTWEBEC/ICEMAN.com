@@ -243,8 +243,7 @@ body:has(.catalog-results) #main{background:#161d46}.page-intro:has(+ .catalog-t
   .home-categories.scene-ready .home-category{opacity:1}
 }
 
-/* Product-to-plate comparison: one frame, fixed pack scale and per-product
-   optical correction for the prepared dish at each responsive range. */
+/* Product and prepared dish share a visible height and meet at the reveal line. */
 .comparison-scene{--active-dish-scale:var(--dish-normalized-scale,var(--dish-scale,1));background:#eaf1f4}
 .comparison-dish,.comparison-pack{background:transparent!important}
 .comparison-dish img,.comparison-pack img,
@@ -260,17 +259,17 @@ body:has(.catalog-results) #main{background:#161d46}.page-intro:has(+ .catalog-t
   mix-blend-mode:normal!important;
   transform-origin:center!important;
 }
-.comparison-pack img,.detail-image .comparison-pack img{transform:scale(var(--pack-normalized-scale,1))!important}
+.comparison-pack img,.detail-image .comparison-pack img{transform:translate(-8%,var(--pack-normalized-y,0px)) scale(var(--pack-normalized-scale,1))!important}
 .comparison-dish img,.detail-image .comparison-dish img{
-  transform:scale(var(--active-dish-scale))!important;
+  transform:translate(8%,var(--dish-normalized-y,0px)) scale(var(--active-dish-scale))!important;
 }
 .comparison-scene,.comparison-dish,.comparison-pack{isolation:auto!important}
 .product-comparison[data-comparison-side="pack"] .comparison-dish{visibility:hidden}
 @media(min-width:601px) and (max-width:899px){
-  .comparison-scene{--active-dish-scale:var(--dish-scale-tablet,var(--dish-scale,1))}
+  .comparison-scene{--active-dish-scale:var(--dish-normalized-scale,var(--dish-scale-tablet,var(--dish-scale,1)))}
 }
 @media(max-width:600px){
-  .comparison-scene{--active-dish-scale:var(--dish-scale-mobile,var(--dish-scale,1))}
+  .comparison-scene{--active-dish-scale:var(--dish-normalized-scale,var(--dish-scale-mobile,var(--dish-scale,1)))}
 }
 
 /* Responsive category grid: the pack and its label share one stable, clickable card. */

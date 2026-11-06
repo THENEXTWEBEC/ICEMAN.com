@@ -826,32 +826,46 @@
   function setupExperience() {
     const controller = new AbortController(), signal = controller.signal;
     const reduced = matchMedia("(prefers-reduced-motion: reduce)");
-    const normalizeComparisonImage = img => {
-      const scene = img.closest(".comparison-scene");
-      if (!scene || !img.complete || !img.naturalWidth) return;
+    const normalizeComparisonScene = scene => {
+      const images = [...scene.querySelectorAll(".comparison-pack img,.comparison-dish img")];
+      if (images.length !== 2 || images.some(img => !img.complete || !img.naturalWidth)) return;
       try {
         const canvas = document.createElement("canvas");
         canvas.width = 192; canvas.height = 192;
         const ctx = canvas.getContext("2d", { willReadFrequently:true });
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-        const { data, width, height } = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        let top = height, bottom = -1;
-        for (let y = 0; y < height; y++) for (let x = 0; x < width; x++) {
-          if (data[(y * width + x) * 4 + 3] > 24) { top = Math.min(top, y); bottom = Math.max(bottom, y); }
-        }
-        if (bottom < top) return;
         const bounds = scene.getBoundingClientRect();
         const contentWidth = Math.max(1, bounds.width - 48), contentHeight = Math.max(1, bounds.height - 48);
-        const fit = Math.min(contentWidth / img.naturalWidth, contentHeight / img.naturalHeight);
-        const visibleHeight = ((bottom - top + 1) / height) * (height / img.naturalHeight) * fit / bounds.height;
-        const scale = Math.max(.5, Math.min(1.8, .76 / visibleHeight));
-        const kind = img.closest(".comparison-pack") ? "pack" : "dish";
-        scene.style.setProperty(`--${kind}-normalized-scale`, scale.toFixed(3));
+        const measurements = images.map(img => {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          const { data, width, height } = ctx.getImageData(0, 0, canvas.width, canvas.height);
+          let left = width, right = -1, top = height, bottom = -1;
+          for (let y = 0; y < height; y++) for (let x = 0; x < width; x++) {
+            if (data[(y * width + x) * 4 + 3] > 24) {
+              left = Math.min(left, x); right = Math.max(right, x);
+              top = Math.min(top, y); bottom = Math.max(bottom, y);
+            }
+          }
+          if (bottom < top) return null;
+          const fit = Math.min(contentWidth / img.naturalWidth, contentHeight / img.naturalHeight);
+          return { img, visibleWidth:(right - left + 1) / width * img.naturalWidth * fit,
+            visibleHeight:(bottom - top + 1) / height * img.naturalHeight * fit,
+            centerY:((top + bottom + 1) / (2 * height) - .5) * img.naturalHeight * fit };
+        });
+        if (measurements.some(value => !value)) return;
+        const targetHeight = Math.min(bounds.height * .78,
+          ...measurements.map(({ visibleWidth, visibleHeight }) => bounds.width * .84 * visibleHeight / visibleWidth));
+        measurements.forEach(({ img, visibleHeight, centerY }) => {
+          const scale = targetHeight / visibleHeight;
+          const kind = img.closest(".comparison-pack") ? "pack" : "dish";
+          scene.style.setProperty(`--${kind}-normalized-scale`, scale.toFixed(3));
+          scene.style.setProperty(`--${kind}-normalized-y`, `${(-centerY * scale).toFixed(1)}px`);
+        });
       } catch { /* Keep the authored fallback scale if the image cannot be sampled. */ }
     };
-    const normalizeComparisons = () => root.querySelectorAll(".comparison-scene img").forEach(normalizeComparisonImage);
+    const normalizeComparisons = () => root.querySelectorAll(".comparison-scene").forEach(normalizeComparisonScene);
     normalizeComparisons();
-    root.querySelectorAll(".comparison-scene img").forEach(img => img.addEventListener("load", () => normalizeComparisonImage(img), { signal }));
+    root.querySelectorAll(".comparison-scene img").forEach(img => img.addEventListener("load", () => normalizeComparisonScene(img.closest(".comparison-scene")), { signal }));
     window.addEventListener("resize", normalizeComparisons, { signal, passive:true });
     const recipeExplorer = root.querySelector("[data-recipe-explorer]");
     if (recipeExplorer) {
