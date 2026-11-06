@@ -560,60 +560,56 @@
     return `<article class="recipe-cover" data-editorial-card data-category="recetas" data-search="${escapeHTML(search)}"><a class="recipe-cover-art recipe-visual-${visual.treatment}" href="${editorialPath(recipe)}" data-link aria-label="Abrir ${escapeHTML(recipe.title)}"><img class="recipe-cover-dish" src="${editorialImage(image)}" alt="${escapeHTML(visual.alt)}" loading="lazy"${imagePriority}><span class="recipe-cover-index">${String(index+1).padStart(2,"0")} / LA MESA IceMan</span>${cleanPhotos[recipe.slug] && product ? `<img class="recipe-cover-pack" src="${cutoutAsset(product.image)}" alt="Empaque de ${escapeHTML(product.name)}" loading="lazy">` : ""}<span class="recipe-cover-open" aria-hidden="true">${iconArrow("up-right")}</span></a><div class="recipe-cover-copy"><span class="story-kicker">${escapeHTML([recipe.time,recipe.servings].filter(Boolean).join(" · "))}</span><h3><a href="${editorialPath(recipe)}" data-link>${escapeHTML(recipe.title)}</a></h3><p>${escapeHTML(recipe.description)}</p><a href="${editorialPath(recipe)}" data-link class="recipe-link">Ver receta ${iconArrow()}</a></div></article>`;
   }
   function recipePlanner() {
-    return `<section class="editorial-planner" data-recipe-planner><div class="wrap planner-layout"><div class="planner-copy"><div class="eyebrow">Una idea a tu medida</div><h2>¿Qué preparamos hoy?</h2><p>Cuéntanos cuántos son, cuál es el plan y cómo quieres preparar el producto IceMan. Te sugerimos una receta que combine con tus elecciones.</p><div class="planner-step"><span>01</span><div><strong>¿Para cuántas personas?</strong><div class="planner-options"><button class="is-selected" data-planner-choice="people" data-value="1–2" aria-pressed="true">1–2</button><button data-planner-choice="people" data-value="3–4" aria-pressed="false">3–4</button><button data-planner-choice="people" data-value="5–8" aria-pressed="false">5–8</button><button data-planner-choice="people" data-value="8+" aria-pressed="false">8+</button></div></div></div><div class="planner-step"><span>02</span><div><strong>¿Cuál es el plan?</strong><div class="planner-options"><button class="is-selected" data-planner-choice="plan" data-value="Cena rápida" aria-pressed="true">Cena rápida</button><button data-planner-choice="plan" data-value="Película" aria-pressed="false">Película</button><button data-planner-choice="plan" data-value="Partido" aria-pressed="false">Partido</button><button data-planner-choice="plan" data-value="Reunión" aria-pressed="false">Reunión</button></div></div></div><div class="planner-step"><span>03</span><div><strong>¿Cómo prepararás el producto IceMan?</strong><div class="planner-options"><button class="is-selected" data-planner-choice="method" data-value="Air Fryer" aria-pressed="true">Air Fryer</button><button data-planner-choice="method" data-value="Horno" aria-pressed="false">Horno</button><button data-planner-choice="method" data-value="Sartén" aria-pressed="false">Sartén</button><button data-planner-choice="method" data-value="Lo más rápido" aria-pressed="false">Lo más rápido</button></div></div></div></div><aside class="planner-result" aria-live="polite"><div class="planner-result-top"><span class="planner-result-icon" aria-hidden="true">${iconSpark()}</span><img data-planner-image src="${editorialImage("editorial/occasion-quick-dinner.webp")}" alt="Idea de menú IceMan para una cena rápida" loading="lazy" decoding="async" width="176" height="99"></div><small>UNA IDEA PARA TI</small><h3 data-planner-title></h3><p data-planner-description></p><p data-planner-facts></p><p data-planner-match></p><div class="planner-products" data-planner-products></div><a href="${withBase(editorialPath(editorial.recipes[0]))}" class="btn btn-primary" data-planner-recipe-link data-link>Ver cómo prepararlo ${iconArrow()}</a></aside></div></section>`;
+    return `<section class="editorial-planner" data-recipe-planner><div class="wrap planner-layout"><div class="planner-copy"><div class="eyebrow">Una idea a tu medida</div><h2>¿Qué preparamos hoy?</h2><p>Cuéntanos cuántos son, cuál es el plan y cómo quieres preparar el producto IceMan. Te sugerimos una idea para tu momento.</p><div class="planner-step"><span>01</span><div><strong>¿Para cuántas personas?</strong><div class="planner-options"><button class="is-selected" data-planner-choice="people" data-value="1–2" aria-pressed="true">1–2</button><button data-planner-choice="people" data-value="3–4" aria-pressed="false">3–4</button><button data-planner-choice="people" data-value="5–8" aria-pressed="false">5–8</button><button data-planner-choice="people" data-value="8+" aria-pressed="false">8+</button></div></div></div><div class="planner-step"><span>02</span><div><strong>¿Cuál es el plan?</strong><div class="planner-options"><button class="is-selected" data-planner-choice="plan" data-value="Cena rápida" aria-pressed="true">Cena rápida</button><button data-planner-choice="plan" data-value="Película" aria-pressed="false">Película</button><button data-planner-choice="plan" data-value="Partido" aria-pressed="false">Partido</button><button data-planner-choice="plan" data-value="Reunión" aria-pressed="false">Reunión</button></div></div></div><div class="planner-step"><span>03</span><div><strong>¿Cómo prepararás el producto IceMan?</strong><div class="planner-options"><button class="is-selected" data-planner-choice="method" data-value="Air Fryer" aria-pressed="true">Air Fryer</button><button data-planner-choice="method" data-value="Horno" aria-pressed="false">Horno</button><button data-planner-choice="method" data-value="Sartén" aria-pressed="false">Sartén</button><button data-planner-choice="method" data-value="Lo más rápido" aria-pressed="false">Lo más rápido</button></div></div></div></div><aside class="planner-result" aria-live="polite"><div class="planner-result-top"><span class="planner-result-icon" aria-hidden="true">${iconSpark()}</span><img data-planner-image src="${editorialImage("editorial/occasion-quick-dinner.webp")}" alt="Idea de menú IceMan para una cena rápida" loading="lazy" decoding="async" width="176" height="99"></div><small>UNA IDEA PARA TI</small><h3 data-planner-title></h3><p data-planner-description></p><p data-planner-facts></p><p data-planner-match></p><div class="planner-products" data-planner-products></div><a href="${withBase("/productos/papas-air-fryer")}" class="btn btn-primary" data-planner-recipe-link data-link>Ver producto y preparación ${iconArrow()}</a></aside></div></section>`;
   }
-  const plannerMatches = {
-    "brochetas-carne-papas-rejilla-chimichurri": {methods:["Air Fryer", "Horno", "Sartén"], plans:["Partido", "Reunión"], servings:4},
-    "carne-plancha-papas-onduladas-salsa-ajo": {methods:["Air Fryer", "Horno", "Sartén"], plans:["Cena rápida"], servings:4},
-    "pollo-hierbas-aros-cebolla-ensalada-repollo": {methods:["Air Fryer", "Horno", "Sartén"], plans:["Cena rápida", "Partido", "Reunión"], servings:4},
-    "waffles-iceman-franui-frutos-rojos": {methods:["Air Fryer", "Horno"], plans:["Película", "Reunión"], servings:1},
-    "bowl-salmon-teriyaki-edamame-mayonesa-picante": {methods:["Sartén"], plans:["Cena rápida"], servings:1}
-  };
-  function choosePlannerRecipe(selected) {
-    const requested = {"1–2":2, "3–4":4, "5–8":8, "8+":9}[selected.people] || 2;
-    return editorial.recipes.filter(recipe => {
-      const meta = plannerMatches[recipe.slug];
-      return meta?.plans.includes(selected.plan) && (selected.method === "Lo más rápido" ? Number.isFinite(parseInt(recipe.time,10)) : meta.methods.includes(selected.method));
-    }).sort((a,b) => {
-      const score = recipe => (selected.method === "Lo más rápido" ? -parseInt(recipe.time,10) * 10 : 0) - Math.abs(plannerMatches[recipe.slug].servings-requested);
-      return score(b)-score(a);
-    })[0] || null;
+  const plannerIdeas = [
+    {id:"cena-papas-huevo",plan:"Cena rápida",method:"Air Fryer",audience:"small",title:"Papas Air Fryer con huevo y ensalada",description:"Sirve papas doradas junto a un huevo y una ensalada fresca para resolver la cena.",products:["papas-air-fryer"]},
+    {id:"cena-papas-pollo",plan:"Cena rápida",method:"Air Fryer",audience:"group",title:"Papas onduladas con pollo para compartir",description:"Acompaña el pollo con papas onduladas crujientes y vegetales frescos.",products:["corte-ondulado-900-premium"]},
+    {id:"cena-papa-steak",plan:"Cena rápida",method:"Horno",title:"Papa Steak con verduras asadas",description:"Hornea las papas y acompáñalas con los vegetales que tengas a mano.",products:["papa-steak"]},
+    {id:"cena-salteado",plan:"Cena rápida",method:"Sartén",title:"Salteado de verduras con arroz",description:"Combina el salteado IceMan con arroz cocido y tu proteína favorita.",products:["salteado-de-verduras"]},
+    {id:"cena-zanahoria",plan:"Cena rápida",method:"Lo más rápido",prepMethod:"Microondas",title:"Tortilla con zanahoria ondulada",description:"Calienta la zanahoria y sírvela junto a una tortilla y hojas verdes.",products:["zanahoria-ondulada"]},
+    {id:"pelicula-aros",plan:"Película",method:"Air Fryer",audience:"small",title:"Aros de cebolla con dip de yogur",description:"Un bocado crujiente para acompañar la película con una salsa fresca.",products:["aros-de-cebolla"]},
+    {id:"pelicula-picada",plan:"Película",method:"Air Fryer",audience:"group",title:"Picada de aros y croquetas de yuca",description:"Prepara ambos productos por tandas y ponlos al centro con tus salsas favoritas.",products:["aros-de-cebolla","croqueta-de-yuca"]},
+    {id:"pelicula-hash",plan:"Película",method:"Horno",title:"Hash Brown con salsa de queso",description:"Sirve los Hash Brown calientes con salsa de queso para picar.",products:["hash-brown"]},
+    {id:"pelicula-rejilla",plan:"Película",method:"Sartén",title:"Papas rejilla para picar",description:"Dora las papas rejilla y acompáñalas con kétchup o un dip casero.",products:["papas-rejilla"]},
+    {id:"pelicula-waffles",plan:"Película",method:"Lo más rápido",prepMethod:"Microondas",title:"Waffles tibios con fruta",description:"Calienta los waffles y termina con fruta fresca para una pausa dulce.",products:["waffle-glaseado"]},
+    {id:"partido-spices",plan:"Partido",method:"Air Fryer",audience:"small",title:"Papas Spices con salsa picante",description:"Sirve las papas especiadas en un bowl para seguir cada jugada.",products:["papas-spices"]},
+    {id:"partido-mixto",plan:"Partido",method:"Air Fryer",audience:"group",title:"Papas y aros para el entretiempo",description:"Prepara papas y aros de cebolla por tandas para compartir durante el partido.",products:["papas-spices","aros-de-cebolla"]},
+    {id:"partido-yuca",plan:"Partido",method:"Horno",title:"Croquetas de yuca con dip de ajo",description:"Lleva las croquetas calientes a la mesa con un dip de ajo.",products:["croqueta-de-yuca"]},
+    {id:"partido-rejilla",plan:"Partido",method:"Sartén",title:"Papas rejilla y aros crujientes",description:"Dora papas y aros por separado y sírvelos con salsas para picar.",products:["papas-rejilla","aros-de-cebolla"]},
+    {id:"partido-airfryer",plan:"Partido",method:"Lo más rápido",prepMethod:"Air Fryer",title:"Papas Air Fryer de último minuto",description:"Pon las papas en la Air Fryer y sirve con dos salsas para compartir.",products:["papas-air-fryer"]},
+    {id:"reunion-croquetas",plan:"Reunión",method:"Air Fryer",audience:"small",title:"Croquetas de yuca con ají",description:"Ofrece croquetas doradas con ají o una salsa suave para empezar la reunión.",products:["croqueta-de-yuca"]},
+    {id:"reunion-tabla",plan:"Reunión",method:"Air Fryer",audience:"group",title:"Tabla de croquetas, aros y papas",description:"Prepara cada producto por tandas y arma una tabla para poner al centro.",products:["croqueta-de-yuca","aros-de-cebolla","papas-spices"]},
+    {id:"reunion-hierbas",plan:"Reunión",method:"Horno",title:"Papas finas hierbas con dip",description:"Hornea las papas y sírvelas con una salsa de yogur y hierbas.",products:["papas-finas-hierbas"]},
+    {id:"reunion-salteado",plan:"Reunión",method:"Sartén",title:"Salteado y papas onduladas al centro",description:"Saltea los vegetales y dora las papas aparte para servir en fuentes compartidas.",products:["salteado-de-verduras","corte-ondulado-900-premium"]},
+    {id:"reunion-rusa",plan:"Reunión",method:"Lo más rápido",prepMethod:"Microondas",title:"Vasitos de ensalada rusa",description:"Calienta los vegetales, enfríalos y mezcla con el aderezo de tu preferencia antes de servir.",products:["ensalada-rusa"]}
+  ];
+  function choosePlannerIdea(selected) {
+    const audience = selected.people === "1–2" ? "small" : "group";
+    const ideas = plannerIdeas.filter(idea => idea.plan === selected.plan && idea.method === selected.method);
+    return ideas.find(idea => idea.audience === audience) || ideas.find(idea => !idea.audience) || ideas[0] || null;
   }
   function updateRecipePlanner() {
     const planner = root.querySelector("[data-recipe-planner]");
     if (!planner) return;
     const selected = Object.fromEntries([...planner.querySelectorAll("[data-planner-choice].is-selected")].map(button => [button.dataset.plannerChoice, button.dataset.value]));
-    const peopleRange = {"1–2":[1,2], "3–4":[3,4], "5–8":[5,8], "8+":[9,Infinity]}[selected.people] || [1,2];
-    const recipe = choosePlannerRecipe(selected);
+    const idea = choosePlannerIdea(selected);
+    if (!idea) return;
+    const product = productBySlug(idea.products[0]);
+    if (!product) return;
+    const prepMethod = idea.prepMethod || selected.method;
+    const preparation = product.prep.find(item => item.startsWith(`${prepMethod} ·`)) || "Consulta las indicaciones del empaque";
     const image = planner.querySelector("[data-planner-image]");
     const link = planner.querySelector("[data-planner-recipe-link]");
-    image.hidden = !recipe;
-    if (!recipe) {
-      link.href = withBase("/recetas#las-recetas");
-      link.innerHTML = `Explorar recetas ${iconArrow()}`;
-      planner.querySelector("[data-planner-title]").textContent = "Aún no hay una receta para esta combinación";
-      planner.querySelector("[data-planner-description]").textContent = `Para ${selected.plan.toLowerCase()} con ${selected.method.toLowerCase()}, prueba otro método de preparación o descubre las recetas disponibles más abajo.`;
-      planner.querySelector("[data-planner-facts]").textContent = "";
-      planner.querySelector("[data-planner-match]").textContent = "";
-      planner.querySelector("[data-planner-products]").innerHTML = "";
-      return;
-    }
-    const meta = plannerMatches[recipe.slug];
-    image.src = editorialImage(recipeVisual(recipe).image);
-    image.alt = recipeVisual(recipe).alt;
-    planner.querySelector("[data-planner-title]").textContent = recipe.title;
-    planner.querySelector("[data-planner-description]").textContent = recipe.description;
-    planner.querySelector("[data-planner-facts]").textContent = [recipe.time, recipe.servings ? `Rinde ${recipe.servings}` : ""].filter(Boolean).join(" · ");
-    const notes = [];
-    if (meta.servings < peopleRange[0] || meta.servings > peopleRange[1]) notes.push("Ajusta las cantidades según el número de personas.");
-    if (selected.method !== "Lo más rápido" && recipe.slug !== "waffles-iceman-franui-frutos-rojos" && recipe.slug !== "bowl-salmon-teriyaki-edamame-mayonesa-picante") notes.push("El ingrediente principal se prepara aparte, siguiendo la receta.");
-    if (recipe.slug === "waffles-iceman-franui-frutos-rojos") notes.push("La salsa también se prepara en una olla.");
-    if (recipe.slug === "bowl-salmon-teriyaki-edamame-mayonesa-picante") notes.push("El edamame también se cocina en una olla.");
-    if (meta.servings === 4) notes.push("Prepara el acompañamiento siguiendo las indicaciones de su empaque.");
-    planner.querySelector("[data-planner-match]").textContent = notes.join(" ");
-    planner.querySelector("[data-planner-products]").innerHTML = editorialProducts(recipe.products).map(product => `<a href="${productPath(product)}" data-link>${escapeHTML(product.name)}</a>`).join("");
-    link.href = withBase(editorialPath(recipe));
-    link.innerHTML = `Ver cómo prepararlo ${iconArrow()}`;
+    image.src = asset(product.image);
+    image.alt = `Empaque de ${product.name} IceMan`;
+    planner.querySelector("[data-planner-title]").textContent = idea.title;
+    planner.querySelector("[data-planner-description]").textContent = idea.description;
+    planner.querySelector("[data-planner-facts]").textContent = `Para ${selected.people} personas · ${preparation}`;
+    planner.querySelector("[data-planner-match]").textContent = idea.products.length > 1 ? "Prepara cada producto por separado siguiendo sus indicaciones." : "Ajusta las cantidades según el número de personas y sigue las indicaciones del empaque.";
+    planner.querySelector("[data-planner-products]").innerHTML = editorialProducts(idea.products).map(item => `<a href="${productPath(item)}" data-link>${escapeHTML(item.name)}</a>`).join("");
+    link.href = withBase(productPath(product));
+    link.innerHTML = `Ver producto y preparación ${iconArrow()}`;
   }
   function recipeProductChoices() {
     const desktop = window.matchMedia("(min-width: 981px)").matches;

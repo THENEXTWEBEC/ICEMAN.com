@@ -32,17 +32,25 @@ test('only the five client-approved recipes are in the recipe collection',()=>{
   'bowl-salmon-teriyaki-edamame-mayonesa-picante'
  ]);
 });
-test('planner recommends recipes for the selected occasion and product method',()=>{
- const source=app.slice(app.indexOf('  const plannerMatches ='),app.indexOf('  function updateRecipePlanner()'));
- const choose=vm.runInNewContext(source+';choosePlannerRecipe',{editorial});
- const pick=(people,plan,method)=>choose({people,plan,method})?.slug;
- assert.equal(pick('1–2','Cena rápida','Air Fryer'),'carne-plancha-papas-onduladas-salsa-ajo');
- assert.equal(pick('3–4','Partido','Sartén'),'brochetas-carne-papas-rejilla-chimichurri');
- assert.equal(pick('1–2','Película','Horno'),'waffles-iceman-franui-frutos-rojos');
- assert.equal(pick('1–2','Cena rápida','Sartén'),'bowl-salmon-teriyaki-edamame-mayonesa-picante');
- assert.equal(pick('1–2','Película','Sartén'),undefined);
- assert.match(app,/link\.href = withBase\("\/recetas#las-recetas"\)/);
- assert.match(app,/link\.href = withBase\(editorialPath\(recipe\)\)/);
+test('planner offers distinct ideas for every plan and preparation method',()=>{
+ const source=app.slice(app.indexOf('  const plannerIdeas ='),app.indexOf('  function updateRecipePlanner()'));
+ const {ideas,choose}=vm.runInNewContext(source+';({ideas:plannerIdeas,choose:choosePlannerIdea})');
+ const plans=['Cena rápida','Película','Partido','Reunión'];
+ const methods=['Air Fryer','Horno','Sartén','Lo más rápido'];
+ const people=['1–2','3–4','5–8','8+'];
+ assert.ok(ideas.length>=20);
+ assert.equal(new Set(ideas.map(idea=>idea.title)).size,ideas.length);
+ for(const plan of plans) for(const method of methods) for(const group of people){
+  const idea=choose({plan,method,people:group});
+  assert.ok(idea,`${group} · ${plan} · ${method}`);
+  assert.equal(idea.plan,plan);
+  assert.equal(idea.method,method);
+  const product=catalog.products.find(item=>item.slug===idea.products[0]);
+  assert.ok(product,idea.id);
+  assert.ok(product.prep.some(prep=>prep.startsWith(`${idea.prepMethod||method} ·`)),idea.id);
+ }
+ assert.notEqual(choose({people:'1–2',plan:'Película',method:'Air Fryer'}).id,choose({people:'5–8',plan:'Película',method:'Air Fryer'}).id);
+ assert.match(app,/link\.href = withBase\(productPath\(product\)\)/);
 });
 test('recipe selector starts empty and allows selection through button controls',()=>{
  assert.match(app,/data-recipe-explorer/);
