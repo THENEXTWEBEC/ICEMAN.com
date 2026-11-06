@@ -839,9 +839,11 @@
           ctx.clearRect(0, 0, canvas.width, canvas.height);
           ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
           const { data, width, height } = ctx.getImageData(0, 0, canvas.width, canvas.height);
+          const waffleDish = scene.closest('[data-comparison-product="waffle-glaseado"]') && img.closest(".comparison-dish");
           let left = width, right = -1, top = height, bottom = -1;
           for (let y = 0; y < height; y++) for (let x = 0; x < width; x++) {
-            if (data[(y * width + x) * 4 + 3] > 24) {
+            const pixel = (y * width + x) * 4;
+            if (data[pixel + 3] > 24 && (!waffleDish || Math.min(data[pixel], data[pixel + 1], data[pixel + 2]) < 225)) {
               left = Math.min(left, x); right = Math.max(right, x);
               top = Math.min(top, y); bottom = Math.max(bottom, y);
             }
@@ -854,7 +856,10 @@
         });
         if (measurements.some(value => !value)) return;
         const targetHeight = Math.min(bounds.height * .78,
-          ...measurements.map(({ visibleWidth, visibleHeight }) => bounds.width * .84 * visibleHeight / visibleWidth));
+          ...measurements.map(({ img, visibleWidth, visibleHeight }) => {
+            const waffleDish = scene.closest('[data-comparison-product="waffle-glaseado"]') && img.closest(".comparison-dish");
+            return bounds.width * (waffleDish ? .98 : .84) * visibleHeight / visibleWidth;
+          }));
         measurements.forEach(({ img, visibleHeight, centerY }) => {
           const scale = targetHeight / visibleHeight;
           const kind = img.closest(".comparison-pack") ? "pack" : "dish";
