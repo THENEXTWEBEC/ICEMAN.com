@@ -1,0 +1,102 @@
+/* The recipe collection is an editorial index: readable copy leads, food photography supports. */
+.recipe-experience .recipe-library{padding:86px 0 92px;background:#f4f8fa;color:#202958}
+.recipe-experience .recipe-library>.wrap:first-child{margin-bottom:42px}
+.recipe-experience .recipe-library-heading{align-items:end;margin:0;gap:40px}
+.recipe-experience .recipe-library-heading .story-kicker{color:#0789b6;font-size:13px;letter-spacing:.11em}
+.recipe-experience .recipe-library-heading h2{max-width:840px;margin:14px 0 0;color:#202958;font-size:clamp(42px,5vw,68px);line-height:1.04;letter-spacing:-.055em}
+.recipe-experience .recipe-library-heading h2 em{color:#08a7d7;font-style:normal}
+.recipe-experience .recipe-library-heading>p{max-width:265px;margin:0 0 5px;color:#596a80;font-size:16px;line-height:1.55}
+
+.recipe-experience .editorial-planner{padding:46px 0;background:#273169}
+.recipe-experience .planner-layout{grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(35px,5vw,75px);align-items:center}
+.recipe-experience .planner-copy h2{max-width:none;margin:12px 0 14px;font-size:clamp(36px,3.6vw,52px);line-height:1.04}
+.recipe-experience .planner-copy>p{max-width:580px;margin:0;color:#d9e3f4;font-size:16px;line-height:1.55}
+.recipe-experience .planner-step{margin-top:18px}
+.recipe-experience .planner-step strong{margin-bottom:9px;font-size:15px}
+.recipe-experience .planner-options button{min-height:40px;padding:0 13px;font-size:13px}
+.recipe-experience .planner-result{padding:24px 28px 27px;border-radius:18px;box-shadow:none}
+.recipe-experience .planner-result-top{height:104px;display:flex;align-items:flex-start;justify-content:space-between}
+.recipe-experience .planner-result-top .planner-result-icon{position:static;flex:none}
+.recipe-experience .planner-result-top img{width:144px;height:104px;flex:none;object-fit:contain;background:transparent}
+.recipe-experience .planner-result>small{margin-top:10px;font-size:11px}
+.recipe-experience .planner-result h3{margin:8px 0 10px;font-size:clamp(26px,2.3vw,34px);line-height:1.12}
+.recipe-experience .planner-result>p{margin:10px 0;color:#56677b;font-size:15px;line-height:1.55}
+.recipe-experience .planner-result [data-planner-facts]{font-size:14px}
+.recipe-experience .planner-products{margin:13px 0 17px}
+.recipe-experience .planner-products a{font-size:12px}
+
+.recipe-experience .recipe-library>.wrap:last-child{padding-top:46px}
+.recipe-experience .recipe-section-nav{margin-bottom:24px;border-bottom-color:#cddce5;color:#202958;font-size:15px}
+.recipe-experience .recipe-section-nav a[aria-current]{color:#078fbe}
+.recipe-experience .recipe-search input{min-height:45px;border-color:#cddce5;background:#fff;color:#202958;font-size:14px}
+.recipe-experience .recipe-search input::placeholder{color:#627187}
+.recipe-experience .recipe-library-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.recipe-experience .recipe-cover,.recipe-experience .recipe-cover:nth-child(even),.recipe-experience .recipe-cover:nth-child(3n){display:grid;grid-template-columns:minmax(0,42%) minmax(0,1fr);gap:23px;min-height:260px;margin:0;padding:14px;border:1px solid #d9e5eb;border-radius:18px;background:#fff;color:#202958;box-shadow:0 8px 24px rgba(24,45,76,.045)}
+.recipe-experience .recipe-cover-art{height:250px;min-height:250px;max-height:250px;overflow:hidden;border-radius:12px;background:#e8f0f3}
+.recipe-experience .recipe-cover-art.recipe-visual-dish>.recipe-cover-dish{width:100%;height:100%;object-fit:contain!important;object-position:center!important;background:#e8f0f3!important}
+.recipe-experience .recipe-cover-index{top:10px;left:10px;padding:7px 10px;background:#e7f7fc;color:#157a9d;font-size:10px;letter-spacing:.07em}
+.recipe-experience .recipe-cover-pack{width:23%;height:34%;left:3%;bottom:3%}
+.recipe-experience .recipe-cover-copy{display:flex;min-width:0;flex-direction:column;justify-content:center;padding:8px 7px 8px 0}
+.recipe-experience .recipe-cover-kicker{color:#1285a9;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+.recipe-experience .recipe-cover-copy h3{margin:12px 0;color:#202958;font-size:clamp(23px,2.2vw,31px);line-height:1.11;letter-spacing:-.04em}
+.recipe-experience .recipe-cover-copy h3 a:hover{color:#078fbe}
+.recipe-experience .recipe-cover-copy p{margin:0;color:#526176;font-size:15px;line-height:1.5}
+.recipe-experience .recipe-cover-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:18px}
+.recipe-experience .recipe-cover-product{color:#5b6c7d;font-size:12px;font-weight:700}
+.recipe-experience .recipe-link{gap:9px;margin:0;padding:0 0 3px;border-bottom:1px solid #08a7d7;color:#077ca5;font-size:14px;white-space:nowrap}
+.recipe-experience .recipe-cover:nth-child(5){grid-column:1/-1;grid-template-columns:minmax(0,28%) minmax(0,1fr)}
+.recipe-experience .recipe-cover:nth-child(5) .recipe-cover-copy h3{max-width:720px}
+
+.recipe-experience .recipe-occasions{padding:75px 0 88px;background:#1c2555}
+.recipe-experience .recipe-occasions .recipe-library-heading{margin-bottom:32px}
+.recipe-experience .recipe-occasions .recipe-library-heading .story-kicker{color:#8cdbf2}
+.recipe-experience .recipe-occasions .recipe-library-heading h2{max-width:950px;color:#fff;font-size:clamp(39px,4.5vw,62px)}
+.recipe-experience .recipe-occasions .recipe-library-heading h2 em{color:#7dd9f1}
+.recipe-experience .recipe-occasions .occasion-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:16px}
+.recipe-experience .recipe-occasions .occasion-card{grid-column:span 2;min-height:0;height:245px;border-radius:14px}
+.recipe-experience .recipe-occasions .occasion-card:nth-child(n+4){grid-column:span 3}
+.recipe-experience .occasion-card:after{inset:20% 0 0;background:linear-gradient(transparent,rgba(12,21,45,.82))}
+.recipe-experience .occasion-overlay{right:20px;bottom:19px;left:20px;gap:5px}
+.recipe-experience .occasion-overlay strong{font-size:24px;line-height:1.1}
+.recipe-experience .occasion-overlay>span{font-size:14px;line-height:1.4}
+.recipe-experience .occasion-overlay b{margin-top:5px;font-size:13px}
+
+@media(max-width:1100px){
+  .recipe-experience .recipe-library-list{grid-template-columns:1fr}
+  .recipe-experience .recipe-cover:nth-child(5){grid-column:auto;grid-template-columns:minmax(0,42%) minmax(0,1fr)}
+  .recipe-experience .recipe-cover-art{height:245px;min-height:245px;max-height:245px}
+}
+@media(max-width:760px){
+  .recipe-experience .recipe-library{padding:65px 0 70px}
+  .recipe-experience .recipe-library>.wrap:first-child{margin-bottom:28px}
+  .recipe-experience .recipe-library-heading{display:block}
+  .recipe-experience .recipe-library-heading h2{font-size:clamp(39px,7vw,54px)}
+  .recipe-experience .recipe-library-heading>p{max-width:520px;margin-top:18px}
+  .recipe-experience .planner-layout{grid-template-columns:1fr;gap:28px}
+  .recipe-experience .editorial-planner{padding:42px 0}
+  .recipe-experience .recipe-occasions .occasion-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .recipe-experience .recipe-occasions .occasion-card,.recipe-experience .recipe-occasions .occasion-card:nth-child(n+4){grid-column:span 1;height:235px}
+  .recipe-experience .recipe-occasions .occasion-card:last-child{grid-column:1/-1}
+}
+@media(max-width:600px){
+  .recipe-experience .recipe-library-heading h2{font-size:clamp(38px,9vw,49px)}
+  .recipe-experience .recipe-library>.wrap:last-child{padding-top:32px}
+  .recipe-experience .recipe-section-nav{gap:16px;font-size:14px}
+  .recipe-experience .recipe-search{width:100%}
+  .recipe-experience .recipe-cover,.recipe-experience .recipe-cover:nth-child(even),.recipe-experience .recipe-cover:nth-child(3n),.recipe-experience .recipe-cover:nth-child(5){grid-template-columns:1fr;gap:0;padding:11px;min-height:0}
+  .recipe-experience .recipe-cover-art{height:190px;min-height:190px;max-height:190px}
+  .recipe-experience .recipe-cover-copy{padding:19px 8px 13px}
+  .recipe-experience .recipe-cover-copy h3{font-size:clamp(25px,6.7vw,31px)}
+  .recipe-experience .recipe-cover-copy p{font-size:16px}
+  .recipe-experience .recipe-cover-foot{margin-top:17px}
+  .recipe-experience .planner-copy h2{font-size:clamp(36px,9vw,46px)}
+  .recipe-experience .planner-copy>p{font-size:15px}
+  .recipe-experience .planner-result{padding:20px}
+  .recipe-experience .planner-result-top{height:90px}
+  .recipe-experience .planner-result-top img{width:118px;height:90px}
+  .recipe-experience .planner-result h3{font-size:27px}
+  .recipe-experience .recipe-occasions{padding:59px 0 68px}
+  .recipe-experience .recipe-occasions .occasion-grid{grid-template-columns:1fr}
+  .recipe-experience .recipe-occasions .occasion-card,.recipe-experience .recipe-occasions .occasion-card:nth-child(n+4),.recipe-experience .recipe-occasions .occasion-card:last-child{grid-column:1;height:210px;aspect-ratio:auto}
+  .recipe-experience .occasion-overlay strong{font-size:23px}
+}
