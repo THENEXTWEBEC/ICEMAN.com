@@ -33,6 +33,16 @@
 .reference-category-smoothies .reference-category-pack-2{width:47%;top:21%;right:8%;transform:rotate(5deg)}
 .reference-category-smoothies .reference-category-pack-1{transform:rotate(-5deg) scale(1.4)}
 .reference-category-smoothies .reference-category-pack-2{transform:rotate(5deg) scale(1.28)}
+.reference-category-smoothies .reference-category-pack-1{
+  top:15%;left:-14%;width:84%;height:auto;aspect-ratio:1;object-fit:fill;
+  clip-path:polygon(24.5% 8.5%,75% 8.5%,75.5% 88.5%,26% 89%,24.5% 8.5%);
+  transform:rotate(-5deg);
+}
+.reference-category-smoothies .reference-category-pack-2{
+  top:15%;right:auto;left:37%;width:70%;height:auto;aspect-ratio:600/765;object-fit:fill;
+  clip-path:polygon(19% 13.5%,80% 13.5%,80.5% 90%,21% 90%,19% 13.5%);
+  transform:rotate(5deg);
+}
 .reference-category-helados .reference-category-pack-1{width:44%;top:20%;left:11%;transform:rotate(-3deg)}
 .reference-category-helados .reference-category-pack-2{width:46%;top:11%;right:8%;transform:rotate(4deg)}
 .reference-category-helados .reference-category-pack-1{transform:rotate(-3deg) scale(1.28)}
@@ -43,4 +53,8 @@
 .reference-category-button span{font-size:1.25em;font-weight:400;line-height:.8}
 @media(max-width:900px){.reference-categories-inner{width:calc(100% - 48px)}.reference-category-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.reference-category strong{font-size:clamp(26px,4.4vw,40px)}}
 @media(max-width:560px){.reference-brand{gap:5px;height:54px}.reference-brand img:first-child{width:37px;height:34px}.reference-brand img:last-child{width:130px;height:34px}.reference-categories{padding:27px 0 48px}.reference-categories-inner{width:calc(100% - 32px)}.reference-categories-heading{margin-bottom:22px}.reference-categories-heading>span{font-size:15px}.reference-categories-heading h2{font-size:clamp(38px,10vw,54px);line-height:.98}.reference-category-grid{grid-template-columns:minmax(0,1fr);gap:14px}.reference-category{aspect-ratio:.9}.reference-category strong{bottom:15%;font-size:clamp(30px,9vw,42px)}.reference-category-button{font-size:17px;min-height:9%}}
+@media(max-width:560px){
+  .reference-category-smoothies .reference-category-pack-1{top:10%;left:-10%;width:80%}
+  .reference-category-smoothies .reference-category-pack-2{top:10%;left:42%;width:65%}
+}
 @media(prefers-reduced-motion:reduce){.reference-category{transition:none}}

@@ -306,7 +306,8 @@
     };
     const categoryCards = categories.map((category, index) => {
       const packs = categoryPacks[category.slug] || [category.image];
-      return `<a class="reference-category reference-category-${category.slug}" href="/productos/${category.slug}" data-link data-category-link="${category.slug}" aria-label="Explorar ${escapeHTML(category.name)}"><span class="reference-category-products" aria-hidden="true">${packs.map((pack, packIndex) => { const src = cutoutAsset(pack); return `<img class="reference-category-pack reference-category-pack-${packIndex + 1}" src="${src}"${responsiveImageAttrs(src,"(max-width: 560px) 58vw, 300px")} alt="" loading="${index < 3 ? "eager" : "lazy"}" decoding="async">`; }).join("")}</span><strong>${escapeHTML(category.name)}</strong><span class="reference-category-button">Explorar <span aria-hidden="true">→</span></span></a>`;
+      return `<a class="reference-category reference-category-${category.slug}" href="/productos/${category.slug}" data-link data-category-link="${category.slug}" aria-label="Explorar ${escapeHTML(category.name)}"><span class="reference-category-products" aria-hidden="true">${packs.map((pack, packIndex) => { const src = category.slug === "smoothies" ? asset(pack) : cutoutAsset(pack); const responsive = category.slug === "smoothies" ? "" : responsiveImageAttrs(src,"(max-width: 560px) 58vw, 300px"); return `<img class="reference-category-pack reference-category-pack-${packIndex + 1}" src="${src}"${responsive} alt="" loading="${index < 3 ? "eager" : "lazy"}" decoding="async">`; }).join("")}</span><strong>${escapeHTML(category.name)}</strong><span class="reference-category-button">Explorar <span aria-hidden="true">→</span></span></a>`;
+
     }).join("");
     const featuredRecipe = orderedRecipes()[0];
     const featuredVisual = { ...recipeVisual(featuredRecipe), image:featuredRecipe.homeImage || recipeVisual(featuredRecipe).image };
