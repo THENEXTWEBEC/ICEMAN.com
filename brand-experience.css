@@ -273,6 +273,14 @@ body:has(.catalog-results) #main{background:#161d46}.page-intro:has(+ .catalog-t
   .comparison-scene{--active-dish-scale:var(--dish-normalized-scale,var(--dish-scale-mobile,var(--dish-scale,1)))}
 }
 
+/* The home comparison reveals the complete plated serving as the divider moves. */
+.home-transformation .comparison-pack img{
+  transform:translate(0,var(--pack-normalized-y,0px)) scale(var(--pack-normalized-scale,1))!important;
+}
+.home-transformation .comparison-dish img{
+  transform:translate(0,var(--dish-normalized-y,0px)) scale(var(--active-dish-scale))!important;
+}
+
 /* Responsive category grid: the pack and its label share one stable, clickable card. */
 .home-categories{
   min-height:0;
