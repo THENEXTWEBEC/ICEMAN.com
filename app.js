@@ -83,11 +83,12 @@
   };
   const responsivePackImages = new Set(["papas-rejilla", "papas-ondulado-premium", "aros-cebolla", "waffle", "edamame-grano"]);
   const responsivePackSrcset = (name) => `${projectBase}/assets/catalog/responsive/${encodeURIComponent(name)}-180.webp 180w, ${projectBase}/assets/catalog/responsive/${encodeURIComponent(name)}-360.webp 360w, ${projectBase}/assets/catalog/responsive/${encodeURIComponent(name)}-540.webp 540w`;
-  const completeCutoutAssets = {
-    "smoothie-green": `${projectBase}/assets/catalog/cutout/smoothie-green-category.webp`
-  };
-  const cutoutAsset = (name) => optimizedImage(completeCutoutAssets[name] || `${projectBase}/assets/catalog/cutout/${encodeURIComponent(name)}.png`);
+  const intactSmoothiePacks = new Set(["smoothie-green", "smoothie-orange", "smoothie-red"]);
+  const cutoutAsset = (name) => intactSmoothiePacks.has(name)
+    ? asset(name)
+    : optimizedImage(`${projectBase}/assets/catalog/cutout/${encodeURIComponent(name)}.png`);
   const editorialImage = (name) => /^(editorial|catalog|category)\//.test(name || "") ? optimizedImage(`${projectBase}/assets/${name}`) : asset(name);
+
   const waLink = (message) => `https://wa.me/${waNumber}?text=${encodeURIComponent(message)}`;
   const contactMessage = "Hola, equipo de IceMan. Me gustaría recibir información sobre sus productos.";
   const businessMessage = "Hola, equipo de IceMan. Me interesa conocer sus opciones de distribución y abastecimiento para empresas.";
@@ -306,7 +307,7 @@
     };
     const categoryCards = categories.map((category, index) => {
       const packs = categoryPacks[category.slug] || [category.image];
-      return `<a class="reference-category reference-category-${category.slug}" href="/productos/${category.slug}" data-link data-category-link="${category.slug}" aria-label="Explorar ${escapeHTML(category.name)}"><span class="reference-category-products" aria-hidden="true">${packs.map((pack, packIndex) => { const src = category.slug === "smoothies" ? asset(pack) : cutoutAsset(pack); const responsive = category.slug === "smoothies" ? "" : responsiveImageAttrs(src,"(max-width: 560px) 58vw, 300px"); return `<img class="reference-category-pack reference-category-pack-${packIndex + 1}" src="${src}"${responsive} alt="" loading="${index < 3 ? "eager" : "lazy"}" decoding="async">`; }).join("")}</span><strong>${escapeHTML(category.name)}</strong><span class="reference-category-button">Explorar <span aria-hidden="true">→</span></span></a>`;
+      return `<a class="reference-category reference-category-${category.slug}" href="/productos/${category.slug}" data-link data-category-link="${category.slug}" aria-label="Explorar ${escapeHTML(category.name)}"><span class="reference-category-products" aria-hidden="true">${packs.map((pack, packIndex) => { const src = cutoutAsset(pack); const responsive = category.slug === "smoothies" ? "" : responsiveImageAttrs(src,"(max-width: 560px) 58vw, 300px"); return `<img class="reference-category-pack reference-category-pack-${packIndex + 1}" src="${src}"${responsive} alt="" loading="${index < 3 ? "eager" : "lazy"}" decoding="async">`; }).join("")}</span><strong>${escapeHTML(category.name)}</strong><span class="reference-category-button">Explorar <span aria-hidden="true">→</span></span></a>`;
 
     }).join("");
     const featuredRecipe = orderedRecipes()[0];

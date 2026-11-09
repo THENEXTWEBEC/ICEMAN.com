@@ -35,12 +35,10 @@
 .reference-category-smoothies .reference-category-pack-2{transform:rotate(5deg) scale(1.28)}
 .reference-category-smoothies .reference-category-pack-1{
   top:15%;left:-14%;width:84%;height:auto;aspect-ratio:1;object-fit:fill;
-  clip-path:polygon(24.5% 8.5%,75% 8.5%,75.5% 88.5%,26% 89%,24.5% 8.5%);
   transform:rotate(-5deg);
 }
 .reference-category-smoothies .reference-category-pack-2{
   top:15%;right:auto;left:37%;width:70%;height:auto;aspect-ratio:600/765;object-fit:fill;
-  clip-path:polygon(19% 13.5%,80% 13.5%,80.5% 90%,21% 90%,19% 13.5%);
   transform:rotate(5deg);
 }
 .reference-category-helados .reference-category-pack-1{width:44%;top:20%;left:11%;transform:rotate(-3deg)}

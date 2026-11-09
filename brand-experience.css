@@ -244,6 +244,60 @@ body:has(.catalog-results) #main{background:#161d46}.page-intro:has(+ .catalog-t
 }
 
 /* Both assets use one shared frame: the dish stays behind the pack as it is revealed. */
+img[src*="/assets/catalog/smoothie-green.webp"],
+img[src*="/assets/catalog/smoothie-orange.webp"]{
+  -webkit-mask:url("assets/catalog/masks/smoothie-square.svg") center/contain no-repeat;
+  mask:url("assets/catalog/masks/smoothie-square.svg") center/contain no-repeat;
+  -webkit-mask-origin:content-box;
+  mask-origin:content-box;
+}
+img[src*="/assets/catalog/smoothie-red.webp"]{
+  -webkit-mask:url("assets/catalog/masks/smoothie-red.svg") center/contain no-repeat;
+  mask:url("assets/catalog/masks/smoothie-red.svg") center/contain no-repeat;
+  -webkit-mask-origin:content-box;
+  mask-origin:content-box;
+}
+
+/* Several supplied cutouts have transparent holes across the printed white
+   pouch. A white backing constrained to the pouch silhouette restores it
+   without recreating or changing any printed artwork. */
+img[src*="/assets/catalog/cutout/papa-steak."],
+img[src*="/assets/catalog/cutout/papas-ondulado-premium."],
+img[src*="/assets/catalog/cutout/papas-recto-premium."],
+img[src*="/assets/catalog/cutout/salteado-verduras."],
+img[src*="/assets/catalog/cutout/yuca-congelada."],
+img[src*="/assets/catalog/cutout/zanahoria-ondulada."]{
+  background:linear-gradient(to bottom,transparent 64%,#fff 64%);
+  -webkit-mask-position:center;
+  mask-position:center;
+  -webkit-mask-size:contain;
+  mask-size:contain;
+  -webkit-mask-repeat:no-repeat;
+  mask-repeat:no-repeat;
+  -webkit-mask-origin:content-box;
+  mask-origin:content-box;
+}
+img[src*="/assets/catalog/cutout/papa-steak."]{
+  background:linear-gradient(to bottom,transparent 52%,#fff 52%);
+  -webkit-mask-image:url("assets/catalog/masks/papa-steak.svg");
+  mask-image:url("assets/catalog/masks/papa-steak.svg");
+}
+img[src*="/assets/catalog/cutout/papas-ondulado-premium."],
+img[src*="/assets/catalog/cutout/papas-recto-premium."]{
+  background:linear-gradient(to bottom,transparent 64%,#c69147 64%);
+  -webkit-mask-image:url("assets/catalog/masks/papas-premium.svg");
+  mask-image:url("assets/catalog/masks/papas-premium.svg");
+}
+img[src*="/assets/catalog/cutout/salteado-verduras."]{
+  -webkit-mask-image:url("assets/catalog/masks/salteado-verduras.svg");
+  mask-image:url("assets/catalog/masks/salteado-verduras.svg");
+}
+img[src*="/assets/catalog/cutout/yuca-congelada."],
+img[src*="/assets/catalog/cutout/zanahoria-ondulada."]{
+  -webkit-mask-image:url("assets/catalog/masks/vegetales-ondulados.svg");
+  mask-image:url("assets/catalog/masks/vegetales-ondulados.svg");
+}
+
 .comparison-scene{--active-dish-scale:var(--dish-normalized-scale,var(--dish-scale,1));background:#eaf1f4}
 .comparison-dish,.comparison-pack{inset:0!important;width:100%!important;height:100%!important;background:transparent!important}
 .comparison-dish{z-index:1!important;clip-path:none!important}
