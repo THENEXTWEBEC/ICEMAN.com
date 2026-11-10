@@ -85,7 +85,8 @@
   const responsivePackSrcset = (name) => `${projectBase}/assets/catalog/responsive/${encodeURIComponent(name)}-180.webp 180w, ${projectBase}/assets/catalog/responsive/${encodeURIComponent(name)}-360.webp 360w, ${projectBase}/assets/catalog/responsive/${encodeURIComponent(name)}-540.webp 540w`;
   const intactSmoothiePacks = new Set(["smoothie-green", "smoothie-orange", "smoothie-red"]);
   const cleanCutoutAssets = {
-    "mix-jardinera-450": `${projectBase}/assets/catalog/cutout/mix-jardinera-450-clean.png`
+    "mix-jardinera-450": `${projectBase}/assets/catalog/cutout/mix-jardinera-450-clean.png`,
+    "papas-rejilla": `${projectBase}/assets/catalog/cutout/papas-rejilla-clean.png`
   };
   const cutoutAsset = (name) => cleanCutoutAssets[name] || (intactSmoothiePacks.has(name)
     ? asset(name)
