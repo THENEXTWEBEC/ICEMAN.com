@@ -438,7 +438,7 @@
   const editorialPath = (item) => `/recetas/${item.slug}`;
   const articleHref = (item) => item.kind === "recipe" ? editorialPath(item) : editorialPath(item);
   function editorialCard(item, featured = false, prioritizeImage = false) {
-    const imagePriority = prioritizeImage && eagerImage ? ' fetchpriority="high"' : "";
+    const imagePriority = prioritizeImage ? ' fetchpriority="high"' : "";
     const visual = item.kind === "recipe" ? recipeVisual(item) : null;
     if (visual) item = {...item, image:visual.image};
     const product = productBySlug(item.products?.[0]);
