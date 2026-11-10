@@ -23,14 +23,27 @@ jobs:
     steps:
       - name: Check out source
         uses: actions/checkout@v4
+      - name: Set up Python for responsive image optimization
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check JavaScript syntax and run regression tests
+        run: |
+          node --check app.js
+          node --check motion-experience.js
+          node --test tests/*.test.cjs
+      - name: Install image optimizer
+        run: python -m pip install Pillow==11.3.0
+      - name: Build optimized production site
+        run: python scripts/build_site.py
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
         with:
           enablement: true
-      - name: Upload site
+      - name: Upload optimized site
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: _site
       - name: Publish site
         id: deployment
         uses: actions/deploy-pages@v4

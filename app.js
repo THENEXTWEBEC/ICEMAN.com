@@ -84,9 +84,13 @@
   const responsivePackImages = new Set(["papas-rejilla", "papas-ondulado-premium", "aros-cebolla", "waffle", "edamame-grano"]);
   const responsivePackSrcset = (name) => `${projectBase}/assets/catalog/responsive/${encodeURIComponent(name)}-180.webp 180w, ${projectBase}/assets/catalog/responsive/${encodeURIComponent(name)}-360.webp 360w, ${projectBase}/assets/catalog/responsive/${encodeURIComponent(name)}-540.webp 540w`;
   const intactSmoothiePacks = new Set(["smoothie-green", "smoothie-orange", "smoothie-red"]);
+  // CI produces transparent WebP equivalents; local previews retain source PNGs.
+  const productionImage = (path = "") => document.documentElement.dataset.icemanOptimized === "true"
+    ? path.replace(/\.png(?=([?#]|$))/i, ".webp")
+    : path;
   const cleanCutoutAssets = {
-    "mix-jardinera-450": `${projectBase}/assets/catalog/cutout/mix-jardinera-450-clean.png`,
-    "papas-rejilla": `${projectBase}/assets/catalog/cutout/papas-rejilla-clean.png`
+    "mix-jardinera-450": productionImage(`${projectBase}/assets/catalog/cutout/mix-jardinera-450-clean.png`),
+    "papas-rejilla": productionImage(`${projectBase}/assets/catalog/cutout/papas-rejilla-clean.png`)
   };
   const cutoutAsset = (name) => cleanCutoutAssets[name] || (intactSmoothiePacks.has(name)
     ? asset(name)
@@ -94,7 +98,7 @@
   const editorialImage = (name) => {
     if (!/^(editorial|catalog|category)\//.test(name || "")) return asset(name);
     const imagePath = `${projectBase}/assets/${name}`;
-    return /\.png(?:[?#]|$)/i.test(imagePath) ? imagePath : optimizedImage(imagePath);
+    return /\.png(?:[?#]|$)/i.test(imagePath) ? productionImage(imagePath) : optimizedImage(imagePath);
   };
 
   const waLink = (message) => `https://wa.me/${waNumber}?text=${encodeURIComponent(message)}`;
@@ -176,7 +180,7 @@
     const navLink = ([href, label, key]) => `<a href="${href}" data-link data-nav="${key}" ${activeNav === key ? 'aria-current="page"' : ""}>${label}</a>`;
     return `<header class="site-header"><div class="wrap header-inner header-inner-centered">
       <nav class="desktop-nav desktop-nav-left" aria-label="Navegación principal, primera parte">${links.slice(0,2).map(navLink).join("")}</nav>
-      <a href="/" data-link class="brand brand-centered" aria-label="IceMan Ecuador, inicio"><img class="brand-official-logo" src="${projectBase}/assets/iceman-logo-cliente-420.webp" alt="IceMan, alimentos congelados" width="420" height="287" fetchpriority="high" decoding="async"></a>
+      <a href="/" data-link class="brand brand-centered" aria-label="IceMan Ecuador, inicio"><img class="brand-official-logo" src="${projectBase}/assets/iceman-logo-cliente-420.webp" alt="IceMan, alimentos congelados" width="420" height="287" fetchpriority="low" decoding="async"></a>
       <div class="header-right"><nav class="desktop-nav desktop-nav-right" aria-label="Navegación principal, segunda parte">${links.slice(2).map(navLink).join("")}</nav>
       <div class="header-actions"><button class="icon-btn" type="button" data-action="search" aria-label="Buscar productos" aria-controls="site-search-panel" aria-expanded="${searchOpened}"><span class="search-glyph" aria-hidden="true"></span></button><button class="menu-toggle" type="button" data-action="menu" aria-label="${menuOpened ? "Cerrar menú" : "Abrir menú"}" aria-expanded="${menuOpened}" aria-controls="mobile-menu"><span class="menu-lines ${menuOpened ? "is-open" : ""}" aria-hidden="true"><span></span><span></span></span></button></div></div>
       </div>
@@ -315,7 +319,7 @@
     };
     const categoryCards = categories.map((category, index) => {
       const packs = categoryPacks[category.slug] || [category.image];
-      return `<a class="reference-category reference-category-${category.slug}" href="/productos/${category.slug}" data-link data-category-link="${category.slug}" aria-label="Explorar ${escapeHTML(category.name)}"><span class="reference-category-products" aria-hidden="true">${packs.map((pack, packIndex) => { const src = cutoutAsset(pack); const responsive = category.slug === "smoothies" ? "" : responsiveImageAttrs(src,"(max-width: 560px) 58vw, 300px"); return `<img class="reference-category-pack reference-category-pack-${packIndex + 1}" src="${src}"${responsive} alt="" loading="${index < 3 ? "eager" : "lazy"}" decoding="async">`; }).join("")}</span><strong>${escapeHTML(category.name)}</strong><span class="reference-category-button">Explorar <span aria-hidden="true">→</span></span></a>`;
+      return `<a class="reference-category reference-category-${category.slug}" href="/productos/${category.slug}" data-link data-category-link="${category.slug}" aria-label="Explorar ${escapeHTML(category.name)}"><span class="reference-category-products" aria-hidden="true">${packs.map((pack, packIndex) => { const src = cutoutAsset(pack); const responsive = category.slug === "smoothies" ? "" : responsiveImageAttrs(src,"(max-width: 560px) 58vw, 300px"); return `<img class="reference-category-pack reference-category-pack-${packIndex + 1}" src="${src}"${responsive} alt="" loading="lazy" fetchpriority="low" decoding="async">`; }).join("")}</span><strong>${escapeHTML(category.name)}</strong><span class="reference-category-button">Explorar <span aria-hidden="true">→</span></span></a>`;
 
     }).join("");
     const featuredRecipe = orderedRecipes()[0];
@@ -330,7 +334,7 @@
     <section class="home-stockists" id="donde-encontrarnos" aria-labelledby="stockists-title" data-nav-section="stockists"><div class="wrap home-stockists-head"><span class="home-kicker">02 / CERCA DE TI</span><h2 id="stockists-title">Siempre<br><em>cerca de ti.</em></h2><p>Encuentra productos IceMan en establecimientos y plataformas de Ecuador.</p></div><p class="stockists-drag-hint">Arrastra o desliza para explorar <span aria-hidden="true">↔</span></p><div class="stockists-track" id="stockists-track" role="list" tabindex="0" aria-label="Establecimientos donde encuentras productos IceMan. Usa las flechas izquierda y derecha para recorrerlos"><div class="stockists-set">${stockistItems}</div><div class="stockists-set" aria-hidden="true" inert>${stockistItems}</div></div><div class="wrap stockists-note"><a class="home-inline-link" href="/donde-encontrarnos" data-link>Ver establecimientos ${iconArrow()}</a><span>La disponibilidad y el surtido pueden variar según el establecimiento y el local.</span></div></section>
     <section class="home-recipes table-story" id="ideas" aria-labelledby="recipes-title" data-nav-section="editorial"><div class="wrap"><div class="home-section-heading table-story-heading"><span class="home-kicker">04 / RECETAS Y MOMENTOS</span><h2 id="recipes-title"><span class="recipes-title-line">No vendemos SOLO congelados.</span><em>Inspiramos momentos.</em></h2><p>Ideas reales para preparar, servir y compartir.</p></div><article class="table-story-feature"><a class="table-story-photo recipe-visual-${featuredVisual.treatment}" href="/recetas/${featuredRecipe.slug}" data-link><img src="${featuredImage}" alt="${escapeHTML(featuredVisual.alt)}" loading="lazy" decoding="async"><span class="table-story-photo-note">Al centro, para todos</span></a><div class="table-story-copy"><span class="table-story-eyebrow">La mesa está lista · Receta protagonista</span><h3>${escapeHTML(featuredRecipe.title)}</h3><p>Una idea fácil para poner algo rico al centro y alargar la conversación.</p><a class="table-story-recipe-link" href="${editorialPath(featuredRecipe)}" data-link>Preparar esta receta ${iconArrow()}</a>${featuredProduct ? `<div class="table-story-product"><img src="${asset(featuredProduct.image)}" alt="Empaque IceMan de ${escapeHTML(featuredProduct.name)}" loading="lazy" decoding="async"><span><small>Lo práctico</small><strong>${escapeHTML(featuredProduct.name)}</strong><a href="${productPath(featuredProduct)}" data-link>Conocer producto ${iconArrow()}</a></span></div>` : ""}</div></article><div class="table-story-later"><div class="table-story-later-heading"><span>Y para otro día…</span><a class="home-inline-link" href="/recetas" data-link>Ver todas las recetas ${iconArrow()}</a></div><div class="home-recipe-grid">${recipeCards}</div></div><div class="home-recipes-foot"><p>IceMan pone lo práctico. El momento lo creas tú.</p><a class="home-inline-link" href="/recetas" data-link>Ver todas las recetas ${iconArrow()}</a></div></div></section>
     <section class="home-business" id="para-empresas" aria-labelledby="business-title" data-nav-section="business"><div class="wrap business-editorial"><div class="home-business-image"><img src="${projectBase}/assets/editorial/business-choose-restaurant.webp" alt="Equipo de restaurante evaluando opciones para su operación" loading="lazy" decoding="async" width="1200" height="800"></div><div class="home-business-copy"><span class="home-kicker">05 / ICEMAN PARA EMPRESAS</span><h2 id="business-title">Tu cocina<br>no se detiene.</h2><p>Opciones para restaurantes, cafeterías, hoteles y comercios. Conversemos sobre los productos y presentaciones que necesita tu operación.</p><a class="btn btn-primary" href="/empresas" data-link>Contactar a Televentas ${iconArrow()}</a><a class="home-inline-link" href="${waLink(businessMessage)}" data-wa target="_blank" rel="noopener">WhatsApp · +593 99 915 2518 ${iconArrow()}</a></div></div></section>
-    <section class="home-closing" aria-labelledby="closing-title"><div class="closing-image"><img src="${projectBase}/assets/editorial/sharing-table.png" alt="Mesa con preparaciones IceMan para compartir" loading="lazy" decoding="async" width="1600" height="1000"></div><div class="closing-shade"></div><div class="wrap closing-copy"><span class="home-kicker">IceMan está en tus mejores momentos</span><h2 id="closing-title">Elige.<br>Descubre.<br><em>Disfruta.</em></h2><p>Encuentra el próximo sabor para tu mesa.</p><a class="btn btn-primary" href="/productos" data-link>Descubrir productos ${iconArrow()}</a></div></section>`;
+    <section class="home-closing" aria-labelledby="closing-title"><div class="closing-image"><img src="${productionImage(`${projectBase}/assets/editorial/sharing-table.png`)}" alt="Mesa con preparaciones IceMan para compartir" loading="lazy" decoding="async" width="1600" height="1000"></div><div class="closing-shade"></div><div class="wrap closing-copy"><span class="home-kicker">IceMan está en tus mejores momentos</span><h2 id="closing-title">Elige.<br>Descubre.<br><em>Disfruta.</em></h2><p>Encuentra el próximo sabor para tu mesa.</p><a class="btn btn-primary" href="/productos" data-link>Descubrir productos ${iconArrow()}</a></div></section>`;
   }
 
   function setupHomeProducts() {
@@ -668,12 +672,12 @@
       return;
     }
     if (filter !== "todos") {
-      content.innerHTML = `<div class="product-grid">${shown.map((product, index) => productCard(product, index === 0, index < 2)).join("")}</div>`;
+      content.innerHTML = `<div class="product-grid">${shown.map((product, index) => productCard(product, index === 0, index === 0)).join("")}</div>`;
       setupMotion(content);
       return;
     }
     const grouped = categories.map((category) => ({ category, items: shown.filter((product) => product.category === category.slug) })).filter((group) => group.items.length);
-    content.innerHTML = grouped.map(({ category, items }, groupIndex) => `<section class="category-section"><h2>${escapeHTML(category.name)}</h2><div class="product-grid">${items.map((product, index) => productCard(product, groupIndex === 0 && index === 0, groupIndex === 0 && index < 2)).join("")}</div></section>`).join("");
+    content.innerHTML = grouped.map(({ category, items }, groupIndex) => `<section class="category-section"><h2>${escapeHTML(category.name)}</h2><div class="product-grid">${items.map((product, index) => productCard(product, groupIndex === 0 && index === 0, groupIndex === 0 && index === 0)).join("")}</div></section>`).join("");
     setupMotion(content);
   }
 
@@ -804,7 +808,7 @@
   };
   function productScene(product, prioritizeImage = false, eagerImage = false, imageSizes = "(max-width: 640px) 82vw, 520px") {
     const imageLoading = eagerImage ? "eager" : "lazy";
-    const imagePriority = prioritizeImage ? ' fetchpriority="high"' : "";
+    const imagePriority = prioritizeImage && eagerImage ? ' fetchpriority="high"' : "";
     const dish = dishScenes[product.slug];
     const packSrc = cutoutAsset(product.image);
     const pack = `<img src="${packSrc}"${responsiveImageAttrs(packSrc,imageSizes)} alt="Empaque de ${escapeHTML(product.name)}, ${escapeHTML(product.presentation)}" loading="${imageLoading}"${imagePriority} decoding="async">`;
@@ -823,11 +827,11 @@
     closing:["mix-jardinera-450","smoothie-red","waffle"]
   };
   const floatingPackCutouts = {
-    "smoothie-red": `${projectBase}/assets/catalog/cutout/smoothie-red-clean.png`,
-    waffle: `${projectBase}/assets/catalog/cutout/waffle-clean.png`
+    "smoothie-red": productionImage(`${projectBase}/assets/catalog/cutout/smoothie-red-clean.png`),
+    waffle: productionImage(`${projectBase}/assets/catalog/cutout/waffle-clean.png`)
   };
   function floatPacks(className = "", packNames = floatingPackSets.default) {
-    return `<div class="floating-packs ${className}" aria-hidden="true">${packNames.map((name,index)=>`<img src="${floatingPackCutouts[name] || cutoutAsset(name)}" alt="" class="float-pack pack-${["one","two","three"][index]}" loading="lazy"${index === 0 ? ' fetchpriority="high"' : ""}>`).join("")}</div>`;
+    return `<div class="floating-packs ${className}" aria-hidden="true">${packNames.map((name,index)=>`<img src="${floatingPackCutouts[name] || cutoutAsset(name)}" alt="" class="float-pack pack-${["one","two","three"][index]}" loading="lazy" decoding="async">`).join("")}</div>`;
   }
   const storyVisuals = {
     hero:{image:"editorial/advice-store-frozen-products.webp",alt:"Selección de productos IceMan conservados en el congelador"},
