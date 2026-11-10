@@ -114,3 +114,25 @@
 .planner-result-top .planner-result-icon{position:absolute;top:8px;left:8px;z-index:1}
 .planner-result-top img{display:block;width:100%;max-width:none;height:220px;object-fit:contain;background:transparent}
 @media(max-width:560px){.planner-result-top img{width:100%;height:190px}}
+
+/* This portrait recipe photo already includes the complete serving and package.
+   Keep its original composition instead of cropping either one into landscape frames. */
+.table-story-photo:has(>img[src*="customer-potatoes-rejilla"]),
+.recipe-detail .editorial-detail-image:has(>img[src*="customer-potatoes-rejilla"]){
+  display:grid;
+  place-items:center;
+  background:#e9e5dc;
+}
+.table-story-photo>img[src*="customer-potatoes-rejilla"],
+.recipe-detail .editorial-detail-image>img[src*="customer-potatoes-rejilla"]{
+  position:relative!important;
+  inset:auto!important;
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  max-height:100%!important;
+  padding:0!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  transform:none!important;
+}
