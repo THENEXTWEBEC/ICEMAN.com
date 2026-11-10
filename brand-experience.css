@@ -316,19 +316,10 @@ img[src*="/assets/catalog/cutout/zanahoria-ondulada."]{
   mix-blend-mode:normal!important;
   transform-origin:center!important;
 }
-.comparison-pack img,.detail-image .comparison-pack img{transform:translate(0,var(--pack-normalized-y,0px)) scale(var(--pack-normalized-scale,1))!important}
-.comparison-dish img,.detail-image .comparison-dish img{
-  transform:translate(0,var(--dish-normalized-y,0px)) scale(var(--active-dish-scale))!important;
-}
-.product-comparison[data-comparison-product="waffle-glaseado"] .comparison-dish img{transform:translate(0,var(--dish-normalized-y,0px)) scale(var(--active-dish-scale))!important}
+.comparison-pack img,.detail-image .comparison-pack img{transform:translate(var(--pack-normalized-x,0px),var(--pack-normalized-y,0px)) scale(var(--pack-normalized-scale,1))!important}
+.comparison-dish img,.detail-image .comparison-dish img{transform:translate(var(--dish-normalized-x,0px),var(--dish-normalized-y,0px)) scale(var(--dish-normalized-scale,1))!important}
 .comparison-scene,.comparison-dish,.comparison-pack{isolation:auto!important}
 .product-comparison[data-comparison-side="pack"] .comparison-dish{visibility:hidden}
-@media(min-width:601px) and (max-width:899px){
-  .comparison-scene{--active-dish-scale:var(--dish-normalized-scale,var(--dish-scale-tablet,var(--dish-scale,1)))}
-}
-@media(max-width:600px){
-  .comparison-scene{--active-dish-scale:var(--dish-normalized-scale,var(--dish-scale-mobile,var(--dish-scale,1)))}
-}
 
 /* The home comparison reveals the complete plated serving as the divider moves. */
 .home-transformation .comparison-pack img{

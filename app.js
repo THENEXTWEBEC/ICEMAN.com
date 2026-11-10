@@ -763,37 +763,36 @@
     "smoothie-red": {image:"catalog/prepared/smoothie-red.png",alt:"Smoothie Red servido en un plato verde"},
     "waffle-glaseado": {image:"catalog/prepared/waffle-glaseado.png",alt:"Waffle glaseado preparado y servido en un plato verde"}
   };
-  // The transparent and photographic canvases have different intrinsic ratios.
-  // These optical corrections keep the visible dish as tall as its pack without
-  // changing the pack scale or distorting either image.
-  const comparisonScales = {
-    "papas-air-fryer":[1,1,1],
-    "corte-ondulado-900-premium":[.87,.87,.62],
-    "corte-recto-900-premium":[.88,.88,.63],
-    "papa-steak":[.95,.95,1.11],
-    "papas-spices":[.97,.97,.97],
-    "papas-finas-hierbas":[.81,.81,.81],
-    "papas-rejilla":[.85,.85,.85],
-    "hash-brown":[.66,.66,.66],
-    "aros-de-cebolla":[.65,.65,.65],
-    "croqueta-de-yuca":[.75,.75,.75],
-    "salteado-de-verduras":[1.06,1.06,1.06],
-    "edamame-vaina":[1.07,1.07,1.07],
-    "edamame-grano":[1.07,1.07,1.07],
-    "maiz-dulce-450":[1.01,1.01,1.01],
-    "arvejas-450":[.99,.99,.99],
-    "ensalada-rusa":[1,1,1],
-    "mix-jardinera-450":[1.01,1.01,1.01],
-    "yuca-500":[.71,.71,.71],
-    "zanahoria-ondulada":[.71,.71,.71],
-    "helado-paila-mora":[1.15,1.15,1.09],
-    "helado-paila-naranjilla":[1.34,1.34,1.34],
-    "helado-paila-guanabana":[1.16,1.16,1.09],
-    "helado-paila-naranjilla-hierbabuena":[1.19,1.19,1.19],
-    "smoothie-green":[.92,.92,.92],
-    "smoothie-orange":[.91,.91,.91],
-    "smoothie-red":[.87,.87,.87],
-    "waffle-glaseado":[1.68,1.68,1.20]
+  // Orientation comes from the visible pack silhouette, not its PNG canvas.
+  // The same profile is applied to both states so the divider never moves them.
+  const comparisonConfig = {
+    "papas-air-fryer":{orientation:"vertical"},
+    "corte-ondulado-900-premium":{orientation:"horizontal"},
+    "corte-recto-900-premium":{orientation:"horizontal"},
+    "papa-steak":{orientation:"horizontal"},
+    "papas-spices":{orientation:"vertical"},
+    "papas-finas-hierbas":{orientation:"vertical"},
+    "papas-rejilla":{orientation:"vertical"},
+    "hash-brown":{orientation:"vertical"},
+    "aros-de-cebolla":{orientation:"vertical"},
+    "croqueta-de-yuca":{orientation:"vertical"},
+    "salteado-de-verduras":{orientation:"vertical"},
+    "edamame-vaina":{orientation:"vertical"},
+    "edamame-grano":{orientation:"vertical"},
+    "maiz-dulce-450":{orientation:"vertical"},
+    "arvejas-450":{orientation:"vertical"},
+    "ensalada-rusa":{orientation:"vertical"},
+    "mix-jardinera-450":{orientation:"vertical"},
+    "yuca-500":{orientation:"vertical"},
+    "zanahoria-ondulada":{orientation:"vertical"},
+    "helado-paila-mora":{orientation:"compact"},
+    "helado-paila-naranjilla":{orientation:"compact"},
+    "helado-paila-guanabana":{orientation:"compact"},
+    "helado-paila-naranjilla-hierbabuena":{orientation:"compact"},
+    "smoothie-green":{orientation:"compact"},
+    "smoothie-orange":{orientation:"compact"},
+    "smoothie-red":{orientation:"compact"},
+    "waffle-glaseado":{orientation:"horizontal"}
   };
   function productScene(product, prioritizeImage = false, eagerImage = false, imageSizes = "(max-width: 640px) 82vw, 520px") {
     const imageLoading = eagerImage ? "eager" : "lazy";
@@ -804,9 +803,8 @@
     if (!dish) return `<div class="product-photo">${pack}</div>`;
     const dishBaseSrc = optimizedImage(dish.source === "prepared" ? `${projectBase}/assets/${dish.image}` : dish.image.startsWith("catalog/prepared/") ? `${projectBase}/assets/catalog/prepared-cutout/${dish.image.split("/").pop()}` : editorialImage(dish.image));
     const dishSrc = dish.version ? `${dishBaseSrc}?v=${dish.version}` : dishBaseSrc;
-    const [desktopScale=1,tabletScale=desktopScale,mobileScale=desktopScale] = comparisonScales[product.slug] || [];
-    const scaleStyle = `--dish-scale:${desktopScale};--dish-scale-tablet:${tabletScale};--dish-scale-mobile:${mobileScale}`;
-    return `<div class="product-comparison" data-comparison data-comparison-product="${product.slug}" data-comparison-side="mix" style="--split:50%;${scaleStyle}"><div class="comparison-scene"><div class="comparison-dish ${dish.className || ""}"><img src="${dishSrc}"${responsiveImageAttrs(dishSrc,imageSizes)} alt="${dish.alt}" loading="${imageLoading}"${imagePriority} decoding="async"></div><div class="comparison-pack">${pack}</div><span class="comparison-line" aria-hidden="true"><b>↔</b></span><input type="range" min="0" max="100" value="50" data-compare-range aria-label="Revelar preparación de ${escapeHTML(product.name)}" aria-valuetext="50% empaque, 50% preparación"></div><div class="comparison-captions"><span>En el empaque</span><span>En tu mesa</span></div><p class="comparison-cue">Desliza y descubre <span aria-hidden="true">↔</span></p></div>`;
+    const orientation = comparisonConfig[product.slug]?.orientation || "vertical";
+    return `<div class="product-comparison" data-comparison data-comparison-product="${product.slug}" data-comparison-orientation="${orientation}" data-comparison-side="mix" style="--split:50%"><div class="comparison-scene"><div class="comparison-dish ${dish.className || ""}"><img src="${dishSrc}"${responsiveImageAttrs(dishSrc,imageSizes)} alt="${dish.alt}" loading="${imageLoading}"${imagePriority} decoding="async"></div><div class="comparison-pack">${pack}</div><span class="comparison-line" aria-hidden="true"><b>↔</b></span><input type="range" min="0" max="100" value="50" data-compare-range aria-label="Revelar preparación de ${escapeHTML(product.name)}" aria-valuetext="50% empaque, 50% preparación"></div><div class="comparison-captions"><span>En el empaque</span><span>En tu mesa</span></div><p class="comparison-cue">Desliza y descubre <span aria-hidden="true">↔</span></p></div>`;
   }
   const floatingPackSets = {
     default:["air-fryer","edamame-grano","papas-rejilla"],
@@ -857,44 +855,48 @@
   function setupExperience() {
     const controller = new AbortController(), signal = controller.signal;
     const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+    const silhouetteCache = new WeakMap();
     const normalizeComparisonScene = scene => {
       const images = [...scene.querySelectorAll(".comparison-pack img,.comparison-dish img")];
       if (images.length !== 2 || images.some(img => !img.complete || !img.naturalWidth)) return;
       try {
         const canvas = document.createElement("canvas");
-        canvas.width = 192; canvas.height = 192;
+        canvas.width = 256; canvas.height = 256;
         const ctx = canvas.getContext("2d", { willReadFrequently:true });
         const bounds = scene.getBoundingClientRect();
         const contentWidth = Math.max(1, bounds.width - 48), contentHeight = Math.max(1, bounds.height - 48);
+        const orientation = scene.closest("[data-comparison-orientation]")?.dataset.comparisonOrientation || "vertical";
+        const profile = orientation === "horizontal" ? [.84,.66] : orientation === "compact" ? [.72,.72] : [.66,.84];
         const measurements = images.map(img => {
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-          const { data, width, height } = ctx.getImageData(0, 0, canvas.width, canvas.height);
-          const waffleDish = scene.closest('[data-comparison-product="waffle-glaseado"]') && img.closest(".comparison-dish");
-          let left = width, right = -1, top = height, bottom = -1;
-          for (let y = 0; y < height; y++) for (let x = 0; x < width; x++) {
-            const pixel = (y * width + x) * 4;
-            if (data[pixel + 3] > 24 && (!waffleDish || Math.min(data[pixel], data[pixel + 1], data[pixel + 2]) < 225)) {
-              left = Math.min(left, x); right = Math.max(right, x);
-              top = Math.min(top, y); bottom = Math.max(bottom, y);
+          let shape = silhouetteCache.get(img);
+          if (!shape || shape.naturalWidth !== img.naturalWidth || shape.naturalHeight !== img.naturalHeight) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const fit = Math.min(canvas.width / img.naturalWidth, canvas.height / img.naturalHeight);
+            const drawWidth = img.naturalWidth * fit, drawHeight = img.naturalHeight * fit;
+            ctx.drawImage(img, (canvas.width-drawWidth)/2, (canvas.height-drawHeight)/2, drawWidth, drawHeight);
+            const { data, width, height } = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            let left=width,right=-1,top=height,bottom=-1;
+            for (let y=0; y<height; y++) for (let x=0; x<width; x++) {
+              const pixel=(y*width+x)*4;
+              if (data[pixel+3] > 24) { left=Math.min(left,x); right=Math.max(right,x); top=Math.min(top,y); bottom=Math.max(bottom,y); }
             }
+            if (bottom < top) return null;
+            shape={naturalWidth:img.naturalWidth,naturalHeight:img.naturalHeight,
+              left:(left-(canvas.width-drawWidth)/2)/drawWidth,right:(right+1-(canvas.width-drawWidth)/2)/drawWidth,
+              top:(top-(canvas.height-drawHeight)/2)/drawHeight,bottom:(bottom+1-(canvas.height-drawHeight)/2)/drawHeight};
+            silhouetteCache.set(img,shape);
           }
-          if (bottom < top) return null;
-          const fit = Math.min(contentWidth / img.naturalWidth, contentHeight / img.naturalHeight);
-          return { img, visibleWidth:(right - left + 1) / width * img.naturalWidth * fit,
-            visibleHeight:(bottom - top + 1) / height * img.naturalHeight * fit,
-            centerY:((top + bottom + 1) / (2 * height) - .5) * img.naturalHeight * fit };
+          const fit=Math.min(contentWidth/img.naturalWidth,contentHeight/img.naturalHeight);
+          const renderedWidth=img.naturalWidth*fit, renderedHeight=img.naturalHeight*fit;
+          return {img,visibleWidth:(shape.right-shape.left)*renderedWidth,visibleHeight:(shape.bottom-shape.top)*renderedHeight,
+            centerX:((shape.left+shape.right)/2-.5)*renderedWidth,centerY:((shape.top+shape.bottom)/2-.5)*renderedHeight};
         });
         if (measurements.some(value => !value)) return;
-        const targetHeight = Math.min(bounds.height * .78,
-          ...measurements.map(({ img, visibleWidth, visibleHeight }) => {
-            const waffleDish = scene.closest('[data-comparison-product="waffle-glaseado"]') && img.closest(".comparison-dish");
-            return bounds.width * (waffleDish ? .98 : .84) * visibleHeight / visibleWidth;
-          }));
-        measurements.forEach(({ img, visibleHeight, centerY }) => {
-          const scale = targetHeight / visibleHeight;
+        measurements.forEach(({img,visibleWidth,visibleHeight,centerX,centerY}) => {
+          const scale=Math.min(bounds.width*profile[0]/visibleWidth,bounds.height*profile[1]/visibleHeight);
           const kind = img.closest(".comparison-pack") ? "pack" : "dish";
           scene.style.setProperty(`--${kind}-normalized-scale`, scale.toFixed(3));
+          scene.style.setProperty(`--${kind}-normalized-x`, `${(-centerX*scale).toFixed(1)}px`);
           scene.style.setProperty(`--${kind}-normalized-y`, `${(-centerY * scale).toFixed(1)}px`);
         });
       } catch { /* Keep the authored fallback scale if the image cannot be sampled. */ }
