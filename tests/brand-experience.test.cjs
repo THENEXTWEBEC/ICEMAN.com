@@ -36,7 +36,7 @@ test('recipe explorer displays only catalog products and preserves product links
  assert.match(app,/function recipeProductChoices\(/);
  assert.match(app,/function recipeFeaturePanel\(/);
  assert.match(app,/data-recipe-select/);
- assert.match(app,/link\.href = withBase\(productPath\(product\)\)/);
+ assert.match(app,/href="\$\{productPath\(product\)\}"/);
  editorial.recipes.forEach(recipe=>{
    assert.ok(recipe.products.length>0,recipe.slug);
    recipe.products.forEach(slug=>assert.ok(catalog.products.some(product=>product.slug===slug),slug));
