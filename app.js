@@ -87,7 +87,11 @@
   const cutoutAsset = (name) => intactSmoothiePacks.has(name)
     ? asset(name)
     : optimizedImage(`${projectBase}/assets/catalog/cutout/${encodeURIComponent(name)}.png`);
-  const editorialImage = (name) => /^(editorial|catalog|category)\//.test(name || "") ? optimizedImage(`${projectBase}/assets/${name}`) : asset(name);
+  const editorialImage = (name) => {
+    if (!/^(editorial|catalog|category)\//.test(name || "")) return asset(name);
+    const imagePath = `${projectBase}/assets/${name}`;
+    return /\.png(?:[?#]|$)/i.test(imagePath) ? imagePath : optimizedImage(imagePath);
+  };
 
   const waLink = (message) => `https://wa.me/${waNumber}?text=${encodeURIComponent(message)}`;
   const contactMessage = "Hola, equipo de IceMan. Me gustaría recibir información sobre sus productos.";
