@@ -84,9 +84,12 @@
   const responsivePackImages = new Set(["papas-rejilla", "papas-ondulado-premium", "aros-cebolla", "waffle", "edamame-grano"]);
   const responsivePackSrcset = (name) => `${projectBase}/assets/catalog/responsive/${encodeURIComponent(name)}-180.webp 180w, ${projectBase}/assets/catalog/responsive/${encodeURIComponent(name)}-360.webp 360w, ${projectBase}/assets/catalog/responsive/${encodeURIComponent(name)}-540.webp 540w`;
   const intactSmoothiePacks = new Set(["smoothie-green", "smoothie-orange", "smoothie-red"]);
-  const cutoutAsset = (name) => intactSmoothiePacks.has(name)
+  const cleanCutoutAssets = {
+    "mix-jardinera-450": `${projectBase}/assets/catalog/cutout/mix-jardinera-450-clean.png`
+  };
+  const cutoutAsset = (name) => cleanCutoutAssets[name] || (intactSmoothiePacks.has(name)
     ? asset(name)
-    : optimizedImage(`${projectBase}/assets/catalog/cutout/${encodeURIComponent(name)}.png`);
+    : optimizedImage(`${projectBase}/assets/catalog/cutout/${encodeURIComponent(name)}.png`));
   const editorialImage = (name) => {
     if (!/^(editorial|catalog|category)\//.test(name || "")) return asset(name);
     const imagePath = `${projectBase}/assets/${name}`;
