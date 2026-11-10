@@ -774,8 +774,8 @@
   // Orientation comes from the visible pack silhouette, not its PNG canvas.
   // The same profile is applied to both states so the divider never moves them.
   const comparisonConfig = {
-    "papas-air-fryer":{orientation:"vertical"},
-    "corte-ondulado-900-premium":{orientation:"horizontal",dishRotation:90},
+    "papas-air-fryer":{orientation:"vertical",dishScale:0.92},
+    "corte-ondulado-900-premium":{orientation:"horizontal",dishRotation:90,dishScale:1.2},
     "corte-recto-900-premium":{orientation:"horizontal",dishRotation:90},
     "papa-steak":{orientation:"horizontal"},
     "papas-spices":{orientation:"vertical"},
@@ -814,7 +814,8 @@
     const config = comparisonConfig[product.slug] || {};
     const orientation = config.orientation || "vertical";
     const dishRotation = config.dishRotation || 0;
-    return `<div class="product-comparison" data-comparison data-comparison-product="${product.slug}" data-comparison-orientation="${orientation}" data-comparison-dish-rotation="${dishRotation}" data-comparison-side="mix" style="--split:50%"><div class="comparison-scene"><div class="comparison-dish ${dish.className || ""}"><img src="${dishSrc}"${responsiveImageAttrs(dishSrc,imageSizes)} alt="${dish.alt}" loading="${imageLoading}"${imagePriority} decoding="async"></div><div class="comparison-pack">${pack}</div><span class="comparison-line" aria-hidden="true"><b>↔</b></span><input type="range" min="0" max="100" value="50" data-compare-range aria-label="Revelar preparación de ${escapeHTML(product.name)}" aria-valuetext="50% empaque, 50% preparación"></div><div class="comparison-captions"><span>En el empaque</span><span>En tu mesa</span></div><p class="comparison-cue">Desliza y descubre <span aria-hidden="true">↔</span></p></div>`;
+    const dishScale = config.dishScale || 1;
+    return `<div class="product-comparison" data-comparison data-comparison-product="${product.slug}" data-comparison-orientation="${orientation}" data-comparison-dish-rotation="${dishRotation}" data-comparison-side="mix" style="--split:50%;--dish-size:${dishScale}"><div class="comparison-scene"><div class="comparison-dish ${dish.className || ""}"><img src="${dishSrc}"${responsiveImageAttrs(dishSrc,imageSizes)} alt="${dish.alt}" loading="${imageLoading}"${imagePriority} decoding="async"></div><div class="comparison-pack">${pack}</div><span class="comparison-line" aria-hidden="true"><b>↔</b></span><input type="range" min="0" max="100" value="50" data-compare-range aria-label="Revelar preparación de ${escapeHTML(product.name)}" aria-valuetext="50% empaque, 50% preparación"></div><div class="comparison-captions"><span>En el empaque</span><span>En tu mesa</span></div><p class="comparison-cue">Desliza y descubre <span aria-hidden="true">↔</span></p></div>`;
   }
   const floatingPackSets = {
     default:["air-fryer","edamame-grano","papas-rejilla"],
@@ -836,7 +837,7 @@
   };
   const storyConcepts = [
     {title:"PRACTICIDAD",text:"Soluciones que hacen más fácil tu día.",image:"editorial/hero-crispy-potatoes.webp",alt:"Papas crocantes listas para servir"},
-    {title:"VERSATILIDAD",text:"Un producto, muchas formas de disfrutarlo.",image:"editorial/08-test-preferencias.webp",alt:"Selección de snacks, smoothie y helado IceMan"},
+    {title:"VERSATILIDAD",text:"Un producto, muchas formas de disfrutarlo.",image:"editorial/purpose-versatility-table.png",alt:"Papas doradas, smoothie de frutos rojos y vegetales salteados listos para disfrutar"},
     {title:"PARA COMPARTIR",text:"Sabores que reúnen alrededor de la mesa.",image:"editorial/sharing-table.png",alt:"Personas compartiendo una bandeja de aros, papas y vegetales alrededor de la mesa"}
   ];
   const storyValues = [

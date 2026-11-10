@@ -298,7 +298,7 @@ img[src*="/assets/catalog/cutout/zanahoria-ondulada."]{
   mask-image:url("assets/catalog/masks/vegetales-ondulados.svg");
 }
 
-.comparison-scene{--active-dish-scale:var(--dish-normalized-scale,var(--dish-scale,1));background:#eaf1f4}
+.comparison-scene{--active-dish-scale:calc(var(--dish-normalized-scale,var(--dish-scale,1)) * var(--dish-size,1));background:#eaf1f4}
 .comparison-dish,.comparison-pack{inset:0!important;width:100%!important;height:100%!important;background:transparent!important}
 .comparison-dish{z-index:1!important;clip-path:none!important}
 .comparison-pack{z-index:2!important;clip-path:inset(0 calc(100% - var(--split)) 0 0)!important}
@@ -317,8 +317,8 @@ img[src*="/assets/catalog/cutout/zanahoria-ondulada."]{
   transform-origin:center!important;
 }
 .comparison-pack img,.detail-image .comparison-pack img{transform:translate(var(--pack-normalized-x,0px),var(--pack-normalized-y,0px)) scale(var(--pack-normalized-scale,1))!important}
-.comparison-dish img,.detail-image .comparison-dish img{transform:translate(var(--dish-normalized-x,0px),var(--dish-normalized-y,0px)) scale(var(--dish-normalized-scale,1))!important}
-.product-comparison[data-comparison-dish-rotation="90"] .comparison-dish img{transform:translate(var(--dish-normalized-x,0px),var(--dish-normalized-y,0px)) scale(var(--dish-normalized-scale,1)) rotate(90deg)!important}
+.comparison-dish img,.detail-image .comparison-dish img{transform:translate(var(--dish-normalized-x,0px),var(--dish-normalized-y,0px)) scale(calc(var(--dish-normalized-scale,1) * var(--dish-size,1)))!important}
+.product-comparison[data-comparison-dish-rotation="90"] .comparison-dish img{transform:translate(var(--dish-normalized-x,0px),var(--dish-normalized-y,0px)) scale(calc(var(--dish-normalized-scale,1) * var(--dish-size,1))) rotate(90deg)!important}
 .comparison-scene,.comparison-dish,.comparison-pack{isolation:auto!important}
 .product-comparison[data-comparison-side="pack"] .comparison-dish{visibility:hidden}
 
