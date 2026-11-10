@@ -10,8 +10,8 @@ body{overflow-x:clip}
 .home-hero:after{position:absolute;right:0;bottom:0;left:0;height:16%;content:"";background:linear-gradient(transparent,rgba(27,53,67,.13));pointer-events:none}
 .home-hero-inner{z-index:2}
 .home-hero-copy{position:relative;z-index:3;max-width:570px;opacity:var(--journey-copy-opacity,1);transform:translate3d(0,var(--journey-copy-y,0),0);animation:none;will-change:opacity,transform}
-.home-hero h1{margin:21px 0 24px;font-size:clamp(66px,7.6vw,116px);line-height:.88;letter-spacing:-.085em}
-.hero-line{display:block;overflow:hidden;padding:.08em 0;margin:-.08em 0}
+.home-hero h1{margin:21px 0 24px;font-size:clamp(66px,7.6vw,116px);line-height:.95;letter-spacing:-.085em}
+.hero-line{display:block;overflow:hidden;padding:.08em 0 .18em;margin:-.08em 0 -.18em}
 .hero-line>span,.hero-line>em{display:block;transform:translateY(112%);animation:hero-type-arrive .9s var(--motion-out) both}
 .hero-line:nth-child(1)>span{animation-delay:.37s}
 .hero-line:nth-child(2)>em{animation-delay:.52s}
