@@ -59,14 +59,11 @@ test('recipe selector starts empty and allows selection through button controls'
  assert.match(app,/function recipeFeaturePanel\(recipe\)/);
  assert.match(app,/IntersectionObserver/);
 });
-test('home categories render the six reference cards with working routes',()=>{
+test('home product showcase directs visitors to the catalog categories',()=>{
  assert.deepEqual(Array.from(catalog.categories,category=>category.name),['Papas','Vegetales','Especialidades','Smoothies','Helados','Waffles']);
- assert.match(app,/reference-category-grid/);
- assert.match(app,/href="\/productos\/\$\{category\.slug\}/);
- assert.match(app,/class="reference-category-button">Explorar/);
- assert.match(app,/papas:\["papas-spices","air-fryer"\]/);
- assert.match(app,/waffles:\["waffle"\]/);
- assert.match(app,/Un empaque\. Muchas formas de disfrutarlo\.<\/p><\/div>\$\{categorySection\}<div class="wrap transformation-stage">/);
+ assert.match(app,/EXPLORA NUESTRAS CATEGORÍAS/);
+ assert.match(app,/href="\/productos" data-link>Explorar categorías/);
+ assert.match(app,/showcasePairings/);
 });
 test('sitemap lists the five recipe pages',()=>{
  const sitemap=fs.readFileSync(path.join(base,'sitemap.xml'),'utf8');

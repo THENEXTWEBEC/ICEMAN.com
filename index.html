@@ -23,6 +23,20 @@
     <meta name="iceman-lead-endpoint" content="https://formspree.io/f/mzedjaza" />
     <link rel="icon" href="assets/iceman-symbol-cyan.png" type="image/png" />
     <link rel="apple-touch-icon" href="assets/iceman-symbol-cyan.png" />
+    <script>
+      const requestedRoute = new URLSearchParams(location.search).get("__route") || location.pathname;
+      const normalizedRoute = requestedRoute.replace(/^\/ICEMAN\.com(?=\/|$)/, "").replace(/\/+$/, "") || "/";
+      if (normalizedRoute === "/") {
+        const heroPreload = document.createElement("link");
+        heroPreload.rel = "preload";
+        heroPreload.as = "image";
+        heroPreload.href = "assets/editorial/golden-fries-alpine-1672.webp";
+        heroPreload.setAttribute("imagesrcset", "assets/editorial/golden-fries-alpine-480.webp 480w, assets/editorial/golden-fries-alpine-768.webp 768w, assets/editorial/golden-fries-alpine-960.webp 960w, assets/editorial/golden-fries-alpine-1200.webp 1200w, assets/editorial/golden-fries-alpine-1672.webp 1672w");
+        heroPreload.setAttribute("imagesizes", "100vw");
+        heroPreload.fetchPriority = "high";
+        document.head.append(heroPreload);
+      }
+    </script>
     <link rel="stylesheet" href="styles.css?v=conorque-white-20261029" />
     <link rel="stylesheet" href="mobile-menu-fix.css" />
     <link rel="stylesheet" href="home-redesign.css?v=stockists-drag-20261106" />

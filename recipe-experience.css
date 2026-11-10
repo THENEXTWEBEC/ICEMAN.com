@@ -66,15 +66,9 @@
 @media(max-width:360px){.home-category-grid{grid-template-columns:1fr}.home-category-grid .home-category{min-height:245px}.home-category-grid .home-category-image,.home-category-grid .home-category-image img{height:165px;min-height:165px}}
 @media(prefers-reduced-motion:reduce){.recipe-pack-image img{animation:none!important;will-change:auto}.recipe-pack-choice,.recipe-feature-content,.home-category-grid .home-category,.home-category-grid .home-category-image img{transition:none!important}.recipe-feature-content{opacity:1;transform:none}}
 
-/* Fill the homepage recipe frames; two source photos include a white footer in the file. */
+/* Keep every recipe photo on the same optical frame without source-specific zoom. */
 .home-recipe .home-recipe-image{overflow:hidden}
 .home-recipe .home-recipe-image img{display:block;transform-origin:50% 0}
-.home-recipe .home-recipe-image img[src*="customer-potatoes-onduladas"],
-.home-recipe .home-recipe-image img[src*="customer-onion-rings"]{transform:scale(1.13)!important}
-.home-recipe:hover .home-recipe-image img[src*="customer-potatoes-onduladas"],
-.home-recipe:hover .home-recipe-image img[src*="customer-onion-rings"],
-.home-recipe:focus-within .home-recipe-image img[src*="customer-potatoes-onduladas"],
-.home-recipe:focus-within .home-recipe-image img[src*="customer-onion-rings"]{transform:scale(1.16)!important}
 
 /* Recipe photography fills each recipe frame instead of inheriting poster containment. */
 .recipe-cover-art.recipe-visual-dish>.recipe-cover-dish,
@@ -109,14 +103,13 @@
 .planner-result-top img{width:min(100%, 280px);aspect-ratio:4/3;object-fit:contain;background:#eef4f5}
 .planner-result [data-planner-facts]{font-weight:700;color:#202958}
 .recipe-occasions .recipe-library-heading h2{max-width:1050px;font-size:clamp(38px,5.3vw,76px);line-height:1.05}
-.story-purpose.purpose-light .purpose-copy,.story-purpose.purpose-light .purpose-copy p,.story-purpose.purpose-light .story-number{color:#17234d}
-.story-purpose.purpose-light .purpose-copy h2 span,.story-purpose.purpose-light .purpose-copy h2 span.lit{color:#17234d}
 @media(max-width:600px){.recipe-occasions .recipe-library-heading h2{font-size:clamp(35px,9vw,50px)}.planner-result-top img{width:min(100%,220px)}}
 /* Mostrar completos los originales que ya contienen el producto. */
 .recipe-cover-art.recipe-visual-dish > .recipe-cover-dish{object-fit:contain!important;object-position:center!important;background:#1c294d!important;transform:none!important}
 .recipe-cover-art .recipe-cover-pack{width:25%;height:38%;left:2%;bottom:2%;object-fit:contain;transform:none}
 .recipe-cover-art:hover .recipe-cover-pack{transform:translateY(-5px)}
-.story-purpose:not(.purpose-light) .purpose-copy h2 span,.story-purpose:not(.purpose-light) .purpose-copy h2 span.lit{color:#fff}
+.story-purpose .purpose-copy h2 span{color:#8d9cc4;transition:color .32s ease}
+.story-purpose .purpose-copy h2 span.lit{color:var(--purpose-word-color,#fff)}
 .planner-result-top{position:relative;display:block}
 .planner-result-top .planner-result-icon{position:absolute;top:8px;left:8px;z-index:1}
 .planner-result-top img{display:block;width:100%;max-width:none;height:220px;object-fit:contain;background:transparent}

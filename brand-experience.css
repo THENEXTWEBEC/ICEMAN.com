@@ -986,6 +986,14 @@ body:has(.catalog-results) #main{background:#161d46}.page-intro:has(+ .catalog-t
   filter:drop-shadow(0 16px 16px rgba(20,40,66,.16))!important;
 }
 
+/* Papas Spices needs a little extra room when it shares a frame with another package. */
+.home-category-grid .home-category .home-category-image img[src*="papas-spices"],.discovery-pack[src*="papas-spices"]{
+  object-fit:contain!important;
+  object-position:center bottom!important;
+  transform:scale(.84)!important;
+  transform-origin:center bottom;
+}
+
 /* Keep keyboard focus on the slider handle instead of outlining the whole frame. */
 .comparison-scene:focus-within{outline:none}
 .comparison-scene:focus-within .comparison-line b{box-shadow:0 0 0 3px #eaf1f4,0 0 0 5px #149ed7}
