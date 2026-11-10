@@ -1,0 +1,38 @@
+name: Mobile performance checks
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test-and-build:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check JavaScript syntax
+        run: |
+          node --check app.js
+          node --check motion-experience.js
+          node --check catalog.js
+          node --check editorial-data.js
+      - name: Run regression tests
+        run: node --test tests/*.test.cjs
+      - name: Install WebP encoder
+        run: python -m pip install Pillow==11.3.0
+      - name: Build production artifact and check asset paths
+        run: python scripts/build_site.py
+      - name: Validate generated production assets
+        run: |
+          test -f _site/iceman.bundle.css
+          test -f _site/assets/catalog/cutout/waffle-clean.webp
+          test -f _site/assets/catalog/responsive/cutout-waffle-clean-320.webp
+          test -f _site/assets/editorial/sharing-table.webp
