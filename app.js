@@ -878,7 +878,9 @@
         const bounds = scene.getBoundingClientRect();
         const contentWidth = Math.max(1, bounds.width - 48), contentHeight = Math.max(1, bounds.height - 48);
         const orientation = scene.closest("[data-comparison-orientation]")?.dataset.comparisonOrientation || "vertical";
-        const profile = orientation === "horizontal" ? [.84,.66] : orientation === "compact" ? [.72,.72] : [.66,.84];
+        // Give every package and plated serving the same visible height, independent
+        // of product category or source image dimensions.
+        const profile = [.70,.70];
         const measurements = images.map(img => {
           let shape = silhouetteCache.get(img);
           if (!shape || shape.naturalWidth !== img.naturalWidth || shape.naturalHeight !== img.naturalHeight) {

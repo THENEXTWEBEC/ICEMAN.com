@@ -1046,3 +1046,17 @@ img[src*="/assets/catalog/cutout/zanahoria-ondulada."]{
 /* Keep keyboard focus on the slider handle instead of outlining the whole frame. */
 .comparison-scene:focus-within{outline:none}
 .comparison-scene:focus-within .comparison-line b{box-shadow:0 0 0 3px #eaf1f4,0 0 0 5px #149ed7}
+
+/* Product catalog: a shared canvas and shared object scale for all 27 comparisons. */
+.catalog-results .comparison-scene{
+  width:100%;
+  height:auto;
+  min-height:0;
+  aspect-ratio:1.1;
+}
+.catalog-results .comparison-dish img,
+.catalog-results .comparison-pack img{
+  object-fit:contain!important;
+  object-position:center!important;
+}
+.catalog-results .comparison-line{left:var(--split,50%)}
