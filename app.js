@@ -776,7 +776,7 @@
   const comparisonConfig = {
     "papas-air-fryer":{orientation:"vertical",dishScale:0.92},
     "corte-ondulado-900-premium":{orientation:"horizontal",dishRotation:90,dishScale:1.2},
-    "corte-recto-900-premium":{orientation:"horizontal",dishRotation:90},
+    "corte-recto-900-premium":{orientation:"horizontal",dishRotation:90,dishScale:1.2},
     "papa-steak":{orientation:"horizontal"},
     "papas-spices":{orientation:"vertical"},
     "papas-finas-hierbas":{orientation:"vertical"},
