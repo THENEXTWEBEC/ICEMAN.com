@@ -318,6 +318,7 @@ img[src*="/assets/catalog/cutout/zanahoria-ondulada."]{
 }
 .comparison-pack img,.detail-image .comparison-pack img{transform:translate(var(--pack-normalized-x,0px),var(--pack-normalized-y,0px)) scale(var(--pack-normalized-scale,1))!important}
 .comparison-dish img,.detail-image .comparison-dish img{transform:translate(var(--dish-normalized-x,0px),var(--dish-normalized-y,0px)) scale(var(--dish-normalized-scale,1))!important}
+.product-comparison[data-comparison-dish-rotation="90"] .comparison-dish img{transform:translate(var(--dish-normalized-x,0px),var(--dish-normalized-y,0px)) scale(var(--dish-normalized-scale,1)) rotate(90deg)!important}
 .comparison-scene,.comparison-dish,.comparison-pack{isolation:auto!important}
 .product-comparison[data-comparison-side="pack"] .comparison-dish{visibility:hidden}
 

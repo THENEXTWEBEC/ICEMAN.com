@@ -767,8 +767,8 @@
   // The same profile is applied to both states so the divider never moves them.
   const comparisonConfig = {
     "papas-air-fryer":{orientation:"vertical"},
-    "corte-ondulado-900-premium":{orientation:"horizontal"},
-    "corte-recto-900-premium":{orientation:"horizontal"},
+    "corte-ondulado-900-premium":{orientation:"horizontal",dishRotation:90},
+    "corte-recto-900-premium":{orientation:"horizontal",dishRotation:90},
     "papa-steak":{orientation:"horizontal"},
     "papas-spices":{orientation:"vertical"},
     "papas-finas-hierbas":{orientation:"vertical"},
@@ -803,8 +803,10 @@
     if (!dish) return `<div class="product-photo">${pack}</div>`;
     const dishBaseSrc = optimizedImage(dish.source === "prepared" ? `${projectBase}/assets/${dish.image}` : dish.image.startsWith("catalog/prepared/") ? `${projectBase}/assets/catalog/prepared-cutout/${dish.image.split("/").pop()}` : editorialImage(dish.image));
     const dishSrc = dish.version ? `${dishBaseSrc}?v=${dish.version}` : dishBaseSrc;
-    const orientation = comparisonConfig[product.slug]?.orientation || "vertical";
-    return `<div class="product-comparison" data-comparison data-comparison-product="${product.slug}" data-comparison-orientation="${orientation}" data-comparison-side="mix" style="--split:50%"><div class="comparison-scene"><div class="comparison-dish ${dish.className || ""}"><img src="${dishSrc}"${responsiveImageAttrs(dishSrc,imageSizes)} alt="${dish.alt}" loading="${imageLoading}"${imagePriority} decoding="async"></div><div class="comparison-pack">${pack}</div><span class="comparison-line" aria-hidden="true"><b>↔</b></span><input type="range" min="0" max="100" value="50" data-compare-range aria-label="Revelar preparación de ${escapeHTML(product.name)}" aria-valuetext="50% empaque, 50% preparación"></div><div class="comparison-captions"><span>En el empaque</span><span>En tu mesa</span></div><p class="comparison-cue">Desliza y descubre <span aria-hidden="true">↔</span></p></div>`;
+    const config = comparisonConfig[product.slug] || {};
+    const orientation = config.orientation || "vertical";
+    const dishRotation = config.dishRotation || 0;
+    return `<div class="product-comparison" data-comparison data-comparison-product="${product.slug}" data-comparison-orientation="${orientation}" data-comparison-dish-rotation="${dishRotation}" data-comparison-side="mix" style="--split:50%"><div class="comparison-scene"><div class="comparison-dish ${dish.className || ""}"><img src="${dishSrc}"${responsiveImageAttrs(dishSrc,imageSizes)} alt="${dish.alt}" loading="${imageLoading}"${imagePriority} decoding="async"></div><div class="comparison-pack">${pack}</div><span class="comparison-line" aria-hidden="true"><b>↔</b></span><input type="range" min="0" max="100" value="50" data-compare-range aria-label="Revelar preparación de ${escapeHTML(product.name)}" aria-valuetext="50% empaque, 50% preparación"></div><div class="comparison-captions"><span>En el empaque</span><span>En tu mesa</span></div><p class="comparison-cue">Desliza y descubre <span aria-hidden="true">↔</span></p></div>`;
   }
   const floatingPackSets = {
     default:["air-fryer","edamame-grano","papas-rejilla"],
@@ -888,8 +890,14 @@
           }
           const fit=Math.min(contentWidth/img.naturalWidth,contentHeight/img.naturalHeight);
           const renderedWidth=img.naturalWidth*fit, renderedHeight=img.naturalHeight*fit;
-          return {img,visibleWidth:(shape.right-shape.left)*renderedWidth,visibleHeight:(shape.bottom-shape.top)*renderedHeight,
-            centerX:((shape.left+shape.right)/2-.5)*renderedWidth,centerY:((shape.top+shape.bottom)/2-.5)*renderedHeight};
+          let visibleWidth=(shape.right-shape.left)*renderedWidth, visibleHeight=(shape.bottom-shape.top)*renderedHeight;
+          let centerX=((shape.left+shape.right)/2-.5)*renderedWidth, centerY=((shape.top+shape.bottom)/2-.5)*renderedHeight;
+          const rotation=img.closest(".comparison-dish") ? Number(scene.closest("[data-comparison-dish-rotation]")?.dataset.comparisonDishRotation || 0) : 0;
+          if (Math.abs(rotation)%180===90) {
+            [visibleWidth,visibleHeight]=[visibleHeight,visibleWidth];
+            [centerX,centerY]=[-centerY,centerX];
+          }
+          return {img,visibleWidth,visibleHeight,centerX,centerY};
         });
         if (measurements.some(value => !value)) return;
         measurements.forEach(({img,visibleWidth,visibleHeight,centerX,centerY}) => {
@@ -932,7 +940,7 @@
       const value=Number(e.target.value);
       const comparison=e.target.closest("[data-comparison]");
       comparison.style.setProperty("--split",`${value}%`);
-      comparison.dataset.comparisonSide=value >= 98 ? "pack" : value <= 2 ? "dish" : "mix";
+      comparison.dataset.comparisonSide=value === 100 ? "pack" : value === 0 ? "dish" : "mix";
       e.target.setAttribute("aria-valuetext",`${value}% empaque, ${100-value}% preparación`);
     },{signal});
     root.querySelectorAll("[data-story-selector]").forEach(section=>{
