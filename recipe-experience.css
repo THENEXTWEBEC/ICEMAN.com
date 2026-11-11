@@ -85,6 +85,17 @@
   object-position:50% 46%;
 }
 
+/* Keep the unselected state compact; the recipe details expand naturally after a choice. */
+.recipe-discovery:has(.recipe-selection-empty){padding-bottom:clamp(34px,4vw,58px)}
+.recipe-discovery:has(.recipe-selection-empty) .recipe-feature-panel{margin-top:clamp(28px,3.5vw,46px)}
+.recipe-selection-empty{min-height:70px;padding:16px 25px}
+
+@media(max-width:640px){
+  .recipe-discovery:has(.recipe-selection-empty){padding-bottom:38px}
+  .recipe-discovery:has(.recipe-selection-empty) .recipe-feature-panel{margin-top:26px}
+  .recipe-selection-empty{min-height:64px;padding:14px 18px}
+}
+
 /* These source photos include a narrow white footer; trim it without losing the dish. */
 .recipe-cover-dish[src*="customer-potatoes-onduladas"],
 .recipe-cover-dish[src*="customer-onion-rings"],
