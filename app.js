@@ -32,6 +32,7 @@
     ];
 
   let experienceCleanup = null;
+  let refreshComparisons = () => {};
   let activeFilter = "todos";
   let searchValue = "";
   let searchOpened = false;
@@ -64,7 +65,8 @@
   const optimizedImage = (path = "") => {
     const webpPath = webpSupported ? path.replace(/\.png(?=([?#]|$))/i, ".webp") : path;
     if (!/\.webp(?:[?#]|$)/i.test(webpPath) || /[?&]v=/.test(webpPath)) return webpPath;
-    return `${webpPath}${webpPath.includes("?") ? "&" : "?"}v=images-20261030`;
+    const version = webpPath.includes("/prepared-cutout/") ? "comparison-20261111" : "images-20261030";
+    return `${webpPath}${webpPath.includes("?") ? "&" : "?"}v=${version}`;
   };
   const asset = (name) => optimizedImage(`${projectBase}/assets/catalog/${encodeURIComponent(name)}.webp`);
   const responsiveImageAttrs = (path, sizes = "(max-width: 640px) 88vw, 480px") => {
@@ -708,11 +710,13 @@
     }
     if (filter !== "todos") {
       content.innerHTML = `<div class="product-grid">${shown.map((product, index) => productCard(product, index === 0, index === 0)).join("")}</div>`;
+      refreshComparisons();
       setupMotion(content);
       return;
     }
     const grouped = categories.map((category) => ({ category, items: shown.filter((product) => product.category === category.slug) })).filter((group) => group.items.length);
     content.innerHTML = grouped.map(({ category, items }, groupIndex) => `<section class="category-section"><h2>${escapeHTML(category.name)}</h2><div class="product-grid">${items.map((product, index) => productCard(product, groupIndex === 0 && index === 0, groupIndex === 0 && index === 0)).join("")}</div></section>`).join("");
+    refreshComparisons();
     setupMotion(content);
   }
 
@@ -810,52 +814,55 @@
     "smoothie-red": {image:"catalog/prepared/smoothie-red.png",alt:"Smoothie Red servido en un plato verde"},
     "waffle-glaseado": {image:"catalog/prepared/waffle-glaseado.png",alt:"Waffle glaseado preparado y servido en un plato verde"}
   };
-  // Orientation comes from the visible pack silhouette, not its PNG canvas.
-  // The same profile is applied to both states so the divider never moves them.
+  // The two photographed objects have independent visible shapes. Arvejas is the
+  // baseline; only products needing an optical adjustment override the defaults.
   const comparisonConfig = {
-    "papas-air-fryer":{orientation:"vertical",dishScale:0.92},
-    "corte-ondulado-900-premium":{orientation:"horizontal",dishRotation:90,dishScale:1.2},
-    "corte-recto-900-premium":{orientation:"horizontal",dishRotation:90,dishScale:1.2},
-    "papa-steak":{orientation:"horizontal",dishScale:0.82,packScale:1.035},
-    "papas-spices":{orientation:"vertical"},
-    "papas-finas-hierbas":{orientation:"vertical"},
-    "papas-rejilla":{orientation:"vertical"},
-    "hash-brown":{orientation:"vertical"},
-    "aros-de-cebolla":{orientation:"vertical"},
-    "croqueta-de-yuca":{orientation:"vertical"},
-    "salteado-de-verduras":{orientation:"vertical"},
-    "edamame-vaina":{orientation:"vertical"},
-    "edamame-grano":{orientation:"vertical"},
-    "maiz-dulce-450":{orientation:"vertical"},
-    "arvejas-450":{orientation:"vertical"},
-    "ensalada-rusa":{orientation:"vertical"},
-    "mix-jardinera-450":{orientation:"vertical"},
-    "yuca-500":{orientation:"vertical"},
-    "zanahoria-ondulada":{orientation:"vertical"},
-    "helado-paila-mora":{orientation:"compact"},
-    "helado-paila-naranjilla":{orientation:"compact"},
-    "helado-paila-guanabana":{orientation:"compact"},
-    "helado-paila-naranjilla-hierbabuena":{orientation:"compact"},
-    "smoothie-green":{orientation:"compact"},
-    "smoothie-orange":{orientation:"compact"},
-    "smoothie-red":{orientation:"compact"},
-    "waffle-glaseado":{orientation:"horizontal"}
+    "papas-air-fryer":{packageOrientation:"vertical",dishOrientation:"vertical"},
+    "corte-ondulado-900-premium":{packageOrientation:"horizontal",dishOrientation:"horizontal",dishRotation:90,dishScale:1.08},
+    "corte-recto-900-premium":{packageOrientation:"horizontal",dishOrientation:"horizontal",dishRotation:90,dishScale:1.08},
+    "papa-steak":{packageOrientation:"horizontal",dishOrientation:"horizontal",dishScale:.94},
+    "papas-spices":{packageOrientation:"vertical",dishOrientation:"vertical"},
+    "papas-finas-hierbas":{packageOrientation:"vertical",dishOrientation:"vertical"},
+    "papas-rejilla":{packageOrientation:"vertical",dishOrientation:"vertical"},
+    "hash-brown":{packageOrientation:"vertical",dishOrientation:"vertical"},
+    "aros-de-cebolla":{packageOrientation:"vertical",dishOrientation:"vertical"},
+    "croqueta-de-yuca":{packageOrientation:"vertical",dishOrientation:"vertical"},
+    "salteado-de-verduras":{packageOrientation:"vertical",dishOrientation:"vertical"},
+    "edamame-vaina":{packageOrientation:"vertical",dishOrientation:"vertical"},
+    "edamame-grano":{packageOrientation:"vertical",dishOrientation:"vertical"},
+    "maiz-dulce-450":{packageOrientation:"vertical",dishOrientation:"vertical"},
+    "arvejas-450":{packageOrientation:"vertical",dishOrientation:"vertical"},
+    "ensalada-rusa":{packageOrientation:"vertical",dishOrientation:"vertical"},
+    "mix-jardinera-450":{packageOrientation:"vertical",dishOrientation:"vertical"},
+    "yuca-500":{packageOrientation:"vertical",dishOrientation:"vertical"},
+    "zanahoria-ondulada":{packageOrientation:"vertical",dishOrientation:"vertical"},
+    "helado-paila-mora":{packageOrientation:"compact",dishOrientation:"compact"},
+    "helado-paila-naranjilla":{packageOrientation:"compact",dishOrientation:"compact"},
+    "helado-paila-guanabana":{packageOrientation:"compact",dishOrientation:"compact"},
+    "helado-paila-naranjilla-hierbabuena":{packageOrientation:"compact",dishOrientation:"compact"},
+    "smoothie-green":{packageOrientation:"vertical",dishOrientation:"vertical"},
+    "smoothie-orange":{packageOrientation:"vertical",dishOrientation:"vertical"},
+    "smoothie-red":{packageOrientation:"vertical",dishOrientation:"vertical"},
+    "waffle-glaseado":{packageOrientation:"horizontal",dishOrientation:"horizontal",packageScale:1.04,dishScale:.98}
   };
   function productScene(product, prioritizeImage = false, eagerImage = false, imageSizes = "(max-width: 640px) 82vw, 520px") {
     const imageLoading = eagerImage ? "eager" : "lazy";
     const imagePriority = prioritizeImage && eagerImage ? ' fetchpriority="high"' : "";
     const dish = dishScenes[product.slug];
-    const packSrc = cutoutAsset(product.image);
+    // The comparison needs a transparent canvas even for smoothie packs that
+    // use their original white-background photograph elsewhere on the site.
+    const packSrc = intactSmoothiePacks.has(product.image)
+      ? optimizedImage(`${projectBase}/assets/catalog/cutout/${encodeURIComponent(product.image)}.png`)
+      : cutoutAsset(product.image);
     const pack = `<img src="${packSrc}"${responsiveImageAttrs(packSrc,imageSizes)} alt="Empaque de ${escapeHTML(product.name)}, ${escapeHTML(product.presentation)}" loading="${imageLoading}"${imagePriority} decoding="async">`;
     if (!dish) return `<div class="product-photo">${pack}</div>`;
     const dishBaseSrc = optimizedImage(dish.source === "prepared" ? `${projectBase}/assets/${dish.image}` : dish.image.startsWith("catalog/prepared/") ? `${projectBase}/assets/catalog/prepared-cutout/${dish.image.split("/").pop()}` : editorialImage(dish.image));
-    const dishSrc = dish.version ? `${dishBaseSrc}?v=${dish.version}` : dishBaseSrc;
+    const dishSrc = dishBaseSrc;
     const config = comparisonConfig[product.slug] || {};
-    const orientation = config.orientation || "vertical";
     const dishRotation = config.dishRotation || 0;
     const dishScale = config.dishScale || 1;
-    const packScale = (config.packScale || (dishScale * 1.035)).toFixed(3);
-    return `<div class="product-comparison" data-comparison data-comparison-product="${product.slug}" data-comparison-orientation="${orientation}" data-comparison-dish-rotation="${dishRotation}" data-comparison-side="mix" style="--split:50%;--dish-size:${dishScale};--pack-size:${packScale}"><div class="comparison-scene"><div class="comparison-dish ${dish.className || ""}"><img src="${dishSrc}"${responsiveImageAttrs(dishSrc,imageSizes)} alt="${dish.alt}" loading="${imageLoading}"${imagePriority} decoding="async"></div><div class="comparison-pack">${pack}</div><span class="comparison-line" aria-hidden="true"><b>↔</b></span><input type="range" min="0" max="100" value="50" data-compare-range aria-label="Revelar preparación de ${escapeHTML(product.name)}" aria-valuetext="50% empaque, 50% preparación"></div><div class="comparison-captions"><span>En el empaque</span><span>En tu mesa</span></div><p class="comparison-cue">Desliza y descubre <span aria-hidden="true">↔</span></p></div>`;
+    const packageScale = config.packageScale || 1;
+    return `<div class="product-comparison" data-comparison data-comparison-product="${product.slug}" data-package-orientation="${config.packageOrientation || "vertical"}" data-dish-orientation="${config.dishOrientation || "vertical"}" data-comparison-dish-rotation="${dishRotation}" data-comparison-side="mix" style="--split:50%;--dish-size:${dishScale};--pack-size:${packageScale};--pack-offset-x:${config.packagePositionX || 0};--pack-offset-y:${config.packagePositionY || 0};--dish-offset-x:${config.dishPositionX || 0};--dish-offset-y:${config.dishPositionY || 0}"><div class="comparison-scene"><div class="comparison-dish ${dish.className || ""}"><img src="${dishSrc}"${responsiveImageAttrs(dishSrc,imageSizes)} alt="${dish.alt}" loading="${imageLoading}"${imagePriority} decoding="async"></div><div class="comparison-pack">${pack}</div><span class="comparison-line" aria-hidden="true"><b>↔</b></span><input type="range" min="0" max="100" value="50" data-compare-range aria-label="Revelar preparación de ${escapeHTML(product.name)}" aria-valuetext="50% empaque, 50% preparación"></div><div class="comparison-captions"><span>En el empaque</span><span>En tu mesa</span></div><p class="comparison-cue">Desliza y descubre <span aria-hidden="true">↔</span></p></div>`;
   }
   const floatingPackSets = {
     default:["air-fryer","edamame-grano","papas-rejilla"],
@@ -916,10 +923,10 @@
         const ctx = canvas.getContext("2d", { willReadFrequently:true });
         const bounds = scene.getBoundingClientRect();
         const contentWidth = Math.max(1, bounds.width - 48), contentHeight = Math.max(1, bounds.height - 48);
-        const orientation = scene.closest("[data-comparison-orientation]")?.dataset.comparisonOrientation || "vertical";
-        // Give every package and plated serving the same visible height, independent
-        // of product category or source image dimensions.
-        const profile = [.70,.70];
+        const comparison = scene.closest("[data-comparison]");
+        // Arvejas establishes the vertical 70% silhouette height. Wide packs
+        // use more of the available width without stretching their photographs.
+        const profiles = { vertical:[.70,.70], horizontal:[.84,.62], compact:[.70,.64] };
         const measurements = images.map(img => {
           let shape = silhouetteCache.get(img);
           if (!shape || shape.naturalWidth !== img.naturalWidth || shape.naturalHeight !== img.naturalHeight) {
@@ -952,18 +959,36 @@
         });
         if (measurements.some(value => !value)) return;
         measurements.forEach(({img,visibleWidth,visibleHeight,centerX,centerY}) => {
-          const scale=Math.min(bounds.width*profile[0]/visibleWidth,bounds.height*profile[1]/visibleHeight);
           const kind = img.closest(".comparison-pack") ? "pack" : "dish";
+          const orientation = comparison.dataset[kind === "pack" ? "packageOrientation" : "dishOrientation"] || "vertical";
+          const profile = profiles[orientation] || profiles.vertical;
+          const scale=Math.min(bounds.width*profile[0]/visibleWidth,bounds.height*profile[1]/visibleHeight);
+          const authoredScale=Number(comparison.style.getPropertyValue(`--${kind}-size`)) || 1;
+          const offsetX=Number(comparison.style.getPropertyValue(`--${kind}-offset-x`)) || 0;
+          const offsetY=Number(comparison.style.getPropertyValue(`--${kind}-offset-y`)) || 0;
           scene.style.setProperty(`--${kind}-normalized-scale`, scale.toFixed(3));
-          scene.style.setProperty(`--${kind}-normalized-x`, `${(-centerX*scale).toFixed(1)}px`);
-          scene.style.setProperty(`--${kind}-normalized-y`, `${(-centerY * scale).toFixed(1)}px`);
+          scene.style.setProperty(`--${kind}-normalized-x`, `${(-centerX*scale*authoredScale + bounds.width*offsetX/100).toFixed(1)}px`);
+          scene.style.setProperty(`--${kind}-normalized-y`, `${(-centerY*scale*authoredScale + bounds.height*offsetY/100).toFixed(1)}px`);
         });
       } catch { /* Keep the authored fallback scale if the image cannot be sampled. */ }
     };
-    const normalizeComparisons = () => root.querySelectorAll(".comparison-scene").forEach(normalizeComparisonScene);
-    normalizeComparisons();
-    root.querySelectorAll(".comparison-scene img").forEach(img => img.addEventListener("load", () => normalizeComparisonScene(img.closest(".comparison-scene")), { signal }));
-    window.addEventListener("resize", normalizeComparisons, { signal, passive:true });
+    let comparisonObserver;
+    refreshComparisons = () => {
+      comparisonObserver?.disconnect();
+      root.querySelectorAll(".comparison-scene").forEach(scene => {
+        comparisonObserver?.observe(scene);
+        normalizeComparisonScene(scene);
+      });
+    };
+    if (window.ResizeObserver) {
+      comparisonObserver = new ResizeObserver(entries => entries.forEach(entry => normalizeComparisonScene(entry.target)));
+      signal.addEventListener("abort", () => comparisonObserver.disconnect(), { once:true });
+    }
+    refreshComparisons();
+    root.addEventListener("load", event => {
+      if (event.target.matches?.(".comparison-scene img")) normalizeComparisonScene(event.target.closest(".comparison-scene"));
+    }, { capture:true, signal });
+    window.addEventListener("resize", refreshComparisons, { signal, passive:true });
     const recipeExplorer = root.querySelector("[data-recipe-explorer]");
     if (recipeExplorer) {
       const observer = new IntersectionObserver(([entry]) => recipeExplorer.classList.toggle("is-in-view", entry.isIntersecting));

@@ -1,0 +1,55 @@
+# Auditoría del comparador IceMan — 11 nov 2026
+
+Referencia visual: Arvejas 450 g. Los perfiles usan el límite visible alfa, no el lienzo completo. El empaque y el plato se miden, escalan y centran por separado; los ajustes X/Y declarados valen 0 porque la compensación óptica se calcula desde el límite alfa. Los dos platos de papas onduladas y corte recto se giran 90° sin deformación.
+
+| Producto y SAP | Empaque (archivo; píxeles; aspecto visible; centro X/Y) | Plato (archivo; píxeles; aspecto visible; centro X/Y) | Perfil y escala E/P | Estado |
+|---|---|---|---|---|
+| Papas Air Fryer 750 g · SAP sin registrar | `assets/catalog/cutout/air-fryer.webp` · vertical · 1424×2018; visible 0.70; centro 0.50/0.50 | `assets/catalog/prepared-cutout/papas-air-fryer.webp` · vertical · 1075×1463; visible 0.65; centro 0.49/0.50 | vertical/vertical; 1.00/1.00 | Aprobado local |
+| Papas onduladas 900 g · PTCO00523 | `assets/catalog/cutout/papas-ondulado-premium.webp` · horizontal · 1656×1154; visible 1.38; centro 0.49/0.48 | `assets/catalog/prepared-cutout/corte-ondulado-900-premium.webp` · horizontal; giro 90° · 1060×1484; visible 1.71; centro 0.52/0.51 | horizontal/horizontal; 1.00/1.08 | Aprobado local |
+| Corte recto 900 g · PTCO00522 | `assets/catalog/cutout/papas-recto-premium.webp` · horizontal · 1660×1156; visible 1.38; centro 0.49/0.48 | `assets/catalog/prepared-cutout/corte-recto-900-premium.webp` · horizontal; giro 90° · 1060×1484; visible 1.68; centro 0.52/0.51 | horizontal/horizontal; 1.00/1.08 | Aprobado local |
+| Papa Steak 900 g · PTCO00569 | `assets/catalog/cutout/papa-steak.webp` · horizontal · 1664×1664; visible 1.41; centro 0.51/0.50 | `assets/catalog/prepared-cutout/papa-steak.webp` · horizontal · 1368×1150; visible 1.62; centro 0.51/0.50 | horizontal/horizontal; 1.00/0.94 | Aprobado local |
+| Spices 750 g · PTCO00226 | `assets/catalog/cutout/papas-spices.webp` · vertical · 1192×1674; visible 0.69; centro 0.50/0.51 | `assets/catalog/prepared-cutout/papas-spices.webp` · vertical · 1076×1462; visible 0.68; centro 0.51/0.50 | vertical/vertical; 1.00/1.00 | Aprobado local |
+| Finas hierbas 750 g · PTCO00227 | `assets/catalog/cutout/papas-finas-hierbas.webp` · vertical · 1427×1579; visible 0.69; centro 0.53/0.50 | `assets/catalog/prepared-cutout/papas-finas-hierbas.webp` · vertical · 1075×1463; visible 0.66; centro 0.52/0.50 | vertical/vertical; 1.00/1.00 | Aprobado local |
+| Papas corte rejilla 750 g · PTCO00279 | `assets/catalog/cutout/papas-rejilla-clean.png` · vertical · 1168×1346; visible 0.74; centro 0.53/0.50 | `assets/catalog/prepared-cutout/papas-rejilla.webp` · vertical · 1060×1484; visible 0.60; centro 0.53/0.52 | vertical/vertical; 1.00/1.00 | Aprobado local |
+| Hash Brown 500 g · PTCO00191 | `assets/catalog/cutout/hash-brown.webp` · vertical · 1660×1808; visible 0.69; centro 0.49/0.50 | `assets/catalog/prepared-cutout/hash-brown.webp` · vertical · 1075×1463; visible 0.63; centro 0.52/0.51 | vertical/vertical; 1.00/1.00 | Aprobado local |
+| Aros de cebolla 400 g · PTCO00210 | `assets/catalog/cutout/aros-cebolla.webp` · vertical · 1660×1808; visible 0.69; centro 0.49/0.50 | `assets/catalog/prepared-cutout/aros-de-cebolla.webp` · vertical · 1075×1463; visible 0.72; centro 0.51/0.50 | vertical/vertical; 1.00/1.00 | Aprobado local |
+| Croqueta de yuca 400 g · PTCO00193 | `assets/catalog/cutout/croqueta-yuca.webp` · vertical · 1660×1808; visible 0.69; centro 0.49/0.50 | `assets/catalog/prepared-cutout/croqueta-de-yuca.webp` · vertical · 1060×1484; visible 0.59; centro 0.52/0.51 | vertical/vertical; 1.00/1.00 | Aprobado local |
+| Salteado de verduras 500 g · PTCO00503 | `assets/catalog/cutout/salteado-verduras.webp` · vertical · 1424×2020; visible 0.67; centro 0.50/0.50 | `assets/catalog/prepared-cutout/salteado-de-verduras.webp` · vertical · 1060×1484; visible 0.59; centro 0.53/0.52 | vertical/vertical; 1.00/1.00 | Aprobado local |
+| Edamame vaina 400 g · PTCO00591 | `assets/catalog/cutout/edamame-vaina.webp` · vertical · 1430×1968; visible 0.70; centro 0.49/0.50 | `assets/catalog/prepared-cutout/edamame-vaina.webp` · vertical · 1060×1484; visible 0.60; centro 0.50/0.48 | vertical/vertical; 1.00/1.00 | Aprobado local |
+| Edamame grano 400 g · PTCO00592 | `assets/catalog/cutout/edamame-grano.webp` · vertical · 1430×1964; visible 0.70; centro 0.50/0.50 | `assets/catalog/prepared-cutout/edamame-grano.webp` · vertical · 1060×1484; visible 0.59; centro 0.52/0.51 | vertical/vertical; 1.00/1.00 | Aprobado local |
+| Maíz dulce 450 g · PTCO00545 | `assets/catalog/cutout/maiz-dulce.webp` · vertical · 1428×2210; visible 0.66; centro 0.48/0.50 | `assets/catalog/prepared-cutout/maiz-dulce-450.webp` · vertical · 1060×1484; visible 0.60; centro 0.53/0.52 | vertical/vertical; 1.00/1.00 | Aprobado local |
+| Arvejas 450 g · PTCO00546 | `assets/catalog/cutout/arvejas.webp` · vertical · 1422×2306; visible 0.66; centro 0.50/0.51 | `assets/catalog/prepared-cutout/arvejas-450.webp` · vertical · 1060×1484; visible 0.60; centro 0.53/0.51 | vertical/vertical; 1.00/1.00 | Aprobado local |
+| Ensalada rusa 450 g · PTCO00064 | `assets/catalog/cutout/ensalada-rusa.webp` · vertical · 237×348; visible 0.66; centro 0.50/0.49 | `assets/catalog/prepared-cutout/ensalada-rusa.webp` · vertical · 1060×1484; visible 0.61; centro 0.54/0.51 | vertical/vertical; 1.00/1.00 | Pendiente foto HD del empaque |
+| Mix jardinera 450 g · PTCO00547 | `assets/catalog/cutout/mix-jardinera-450-clean.png` · vertical · 978×1608; visible 0.65; centro 0.50/0.49 | `assets/catalog/prepared-cutout/mix-jardinera-450.webp` · vertical · 1060×1484; visible 0.61; centro 0.54/0.52 | vertical/vertical; 1.00/1.00 | Aprobado local |
+| Yuca congelada 500 g · PTCO00064 | `assets/catalog/cutout/yuca-congelada.webp` · vertical · 1422×1694; visible 0.70; centro 0.51/0.49 | `assets/catalog/prepared-cutout/yuca-500.webp` · vertical · 1060×1484; visible 0.59; centro 0.53/0.52 | vertical/vertical; 1.00/1.00 | Aprobado local |
+| Zanahoria ondulada 500 g · PTCO00546 | `assets/catalog/cutout/zanahoria-ondulada.webp` · vertical · 1422×1694; visible 0.70; centro 0.51/0.49 | `assets/catalog/prepared-cutout/zanahoria-ondulada.webp` · vertical · 1060×1484; visible 0.61; centro 0.54/0.51 | vertical/vertical; 1.00/1.00 | Aprobado local |
+| Helado de paila · Mora 900 ml · PTCO00489 | `assets/catalog/cutout/helado-mora.webp` · compacto · 1660×1540; visible 0.76; centro 0.50/0.50 | `assets/catalog/prepared-cutout/helado-paila-mora.webp` · compacto · 1024×1536; visible 0.96; centro 0.50/0.55 | compacto/compacto; 1.00/1.00 | Aprobado local |
+| Helado de paila · Naranjilla 900 ml · PTCO00490 | `assets/catalog/cutout/helado-naranjilla.webp` · compacto · 1665×1702; visible 0.76; centro 0.36/0.52 | `assets/catalog/prepared-cutout/helado-paila-naranjilla.webp` · compacto · 1024×1536; visible 0.94; centro 0.50/0.55 | compacto/compacto; 1.00/1.00 | Aprobado local |
+| Helado de paila · Guanábana 900 ml · PTCO00491 | `assets/catalog/cutout/helado-guanabana.webp` · compacto · 1664×1544; visible 0.76; centro 0.50/0.50 | `assets/catalog/prepared-cutout/helado-paila-guanabana.webp` · compacto · 1024×1536; visible 0.96; centro 0.50/0.55 | compacto/compacto; 1.00/1.00 | Aprobado local |
+| Helado de paila · Naranjilla & Hierbabuena 900 ml · PTCO00539 | `assets/catalog/cutout/sorbetto-naranjilla-hierbabuena.webp` · compacto · 1662×1661; visible 0.76; centro 0.50/0.50 | `assets/catalog/prepared-cutout/helado-paila-naranjilla-hierbabuena.webp` · compacto · 1024×1536; visible 0.95; centro 0.50/0.55 | compacto/compacto; 1.00/1.00 | Aprobado local |
+| Smoothie Green 500 g · PTCO00298 | `assets/catalog/cutout/smoothie-green.webp` · vertical · 500×500; visible 0.61; centro 0.50/0.50 | `assets/catalog/prepared-cutout/smoothie-green.webp` · vertical · 1024×1536; visible 0.46; centro 0.54/0.51 | vertical/vertical; 1.00/1.00 | Aprobado local |
+| Smoothie Orange 500 g · PTCO00303 | `assets/catalog/cutout/smoothie-orange.webp` · vertical · 500×500; visible 0.61; centro 0.50/0.50 | `assets/catalog/prepared-cutout/smoothie-orange.webp` · vertical · 1024×1536; visible 0.48; centro 0.56/0.51 | vertical/vertical; 1.00/1.00 | Aprobado local |
+| Smoothie Red 500 g · PTCO00296 | `assets/catalog/cutout/smoothie-red.webp` · vertical · 600×765; visible 0.62; centro 0.49/0.53 | `assets/catalog/prepared-cutout/smoothie-red.webp` · vertical · 1024×1536; visible 0.46; centro 0.54/0.50 | vertical/vertical; 1.00/1.00 | Aprobado local |
+| Waffle glaseado 220 g · PTCO00280 | `assets/catalog/cutout/waffle.webp` · horizontal · 675×405; visible 1.72; centro 0.50/0.50 | `assets/catalog/prepared-cutout/waffle-glaseado.webp` · horizontal · 1024×1536; visible 1.31; centro 0.51/0.52 | horizontal/horizontal; 1.04/0.98 | Aprobado local |
+
+## Ajustes realizados
+
+- Estructura de dos capas con máscaras complementarias. Al 0% se ve solo el plato; al 100%, solo el empaque. La línea y el círculo siguen exactamente el valor del control.
+- Perfil visible vertical 70% de altura; horizontal hasta 84% del ancho y 62% del alto; compacto hasta 70% del ancho y 64% del alto. Solo cuatro productos requieren escala adicional.
+- Nueve platos tenían un velo blanco semitransparente. Se regeneraron sus WebP principal y derivados de 320/640/960 px a partir de los PNG existentes, sin retocar el contenido fotográfico: aros-de-cebolla, helado-paila-guanabana, helado-paila-naranjilla, helado-paila-naranjilla-hierbabuena, papa-steak, papas-air-fryer, smoothie-green, smoothie-orange, waffle-glaseado.
+- Los tres empaques de Smoothies usan ahora los recortes transparentes existentes dentro del comparador.
+- El catálogo calibra también las tarjetas insertadas después de renderizar la página. La misma configuración sirve para tarjeta y ficha individual.
+- El marco individual crece con los textos inferiores en móvil y escritorio, sin recortarlos.
+
+## Verificación
+
+- 27 fichas: recursos cargados, calibración aplicada, marco y control alineados a 320 y 1440 px.
+- 27 fichas móviles: se probaron 0%, 25%, 50%, 75% y 100% sin fallos de máscara. Se revisaron visualmente las 27 composiciones al 50%.
+- 27 tarjetas de catálogo: se probaron 0%, 25%, 50%, 75% y 100%; los controles actúan independientemente.
+- Catálogo completo: 27 comparadores calibrados y sin desbordamiento a 320, 375, ~390, ~430, 768, 1024, 1440 y 1920 px. Arvejas se verificó en los ocho anchos; el teclado y el arrastre del control funcionaron.
+- Navegador de prueba: Chromium. Queda por ejecutar una comprobación manual final en Safari, Firefox y dispositivos físicos.
+
+## Recursos que requieren seguimiento
+
+- `assets/catalog/cutout/ensalada-rusa.png` y `.webp`: la fuente disponible es de solo 237×348 px; los archivos responsive más grandes son ampliaciones. Se necesita una foto oficial del mismo empaque en mayor resolución para que quede nítido en pantallas de alta densidad.
+- Papas Air Fryer no tiene SAP registrado en `catalog.js`; Yuca/Ensalada rusa y Zanahoria/Arvejas comparten códigos en los datos actuales. Confirmar estos códigos con el catálogo oficial antes de editar la información comercial.
