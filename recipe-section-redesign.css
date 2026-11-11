@@ -100,3 +100,236 @@
   .recipe-experience .recipe-occasions .occasion-card,.recipe-experience .recipe-occasions .occasion-card:nth-child(n+4),.recipe-experience .recipe-occasions .occasion-card:last-child{grid-column:1;height:210px;aspect-ratio:auto}
   .recipe-experience .occasion-overlay strong{font-size:23px}
 }
+
+
+/* Composicion editorial con empaques originales IceMan (2026-11-10). */
+/* El empaque viene directamente de /assets/catalog/cutout; no es una recreacion por IA. */
+.recipe-experience .recipe-cover-art.recipe-cover-art--authentic-pack {
+  display:grid!important;
+  position:relative;
+  grid-template-columns:minmax(0,35%) minmax(0,65%);
+  align-items:stretch;
+  overflow:hidden;
+  isolation:isolate;
+  background:linear-gradient(90deg,#eaf2f6 0%,#eaf2f6 35%,#edf3f6 35%,#edf3f6 100%)!important;
+  border-radius:14px;
+}
+.recipe-experience .recipe-cover-art.recipe-cover-art--authentic-pack > .recipe-cover-dish {
+  position:relative!important;
+  inset:auto!important;
+  top:auto!important;
+  left:auto!important;
+  grid-column:2;
+  grid-row:1;
+  display:block;
+  width:100%!important;
+  height:100%!important;
+  max-height:100%!important;
+  min-width:0;
+  margin:0!important;
+  padding:8px 7px 8px 0!important;
+  border:0!important;
+  border-radius:0!important;
+  object-fit:contain!important;
+  object-position:center center!important;
+  transform:none!important;
+  background:transparent!important;
+  mix-blend-mode:normal!important;
+  filter:none!important;
+}
+.recipe-experience .recipe-cover-art.recipe-cover-art--authentic-pack > .recipe-cover-pack {
+  position:relative!important;
+  inset:auto!important;
+  top:auto!important;
+  right:auto!important;
+  bottom:auto!important;
+  left:auto!important;
+  grid-column:1;
+  grid-row:1;
+  display:block!important;
+  align-self:end;
+  justify-self:center;
+  width:88%!important;
+  height:79%!important;
+  max-width:185px;
+  max-height:79%;
+  min-width:0;
+  margin:0 0 8px!important;
+  padding:0 6px!important;
+  border:0;
+  object-fit:contain!important;
+  object-position:center bottom!important;
+  transform:none!important;
+  filter:drop-shadow(0 6px 9px rgba(25,48,74,.17))!important;
+  z-index:1;
+}
+.recipe-experience .recipe-cover-art.recipe-cover-art--authentic-pack:hover > .recipe-cover-pack,
+.recipe-experience .recipe-cover-art.recipe-cover-art--authentic-pack:hover > .recipe-cover-dish {
+  transform:none!important;
+}
+.recipe-experience .recipe-cover-art.recipe-cover-art--authentic-pack > .recipe-cover-index {
+  position:absolute;
+  top:12px;
+  left:12px;
+  max-width:calc(100% - 88px);
+  z-index:3;
+  white-space:nowrap;
+}
+.recipe-experience .recipe-cover-art.recipe-cover-art--authentic-pack > .recipe-cover-open {
+  position:absolute;
+  right:14px;
+  bottom:14px;
+  z-index:3;
+}
+@media (max-width:600px) {
+  .recipe-experience .recipe-cover-art.recipe-cover-art--authentic-pack {
+    height:216px!important;
+    min-height:216px!important;
+    max-height:216px!important;
+    grid-template-columns:minmax(0,36%) minmax(0,64%);
+    background:linear-gradient(90deg,#eaf2f6 0%,#eaf2f6 36%,#edf3f6 36%,#edf3f6 100%)!important;
+  }
+  .recipe-experience .recipe-cover-art.recipe-cover-art--authentic-pack > .recipe-cover-pack {
+    width:91%!important;
+    height:75%!important;
+    max-height:75%;
+    margin-bottom:10px!important;
+    padding:0 4px!important;
+  }
+  .recipe-experience .recipe-cover-art.recipe-cover-art--authentic-pack > .recipe-cover-dish {
+    padding:8px 5px 8px 0!important;
+  }
+  .recipe-experience .recipe-cover-art.recipe-cover-art--authentic-pack > .recipe-cover-index {
+    top:10px;
+    left:9px;
+    max-width:calc(100% - 58px);
+    padding:7px 9px;
+    font-size:9px;
+  }
+  .recipe-experience .recipe-cover-art.recipe-cover-art--authentic-pack > .recipe-cover-open {
+    right:10px;
+    bottom:10px;
+  }
+}
+@media (max-width:360px) {
+  .recipe-experience .recipe-cover-art.recipe-cover-art--authentic-pack {
+    height:190px!important;
+    min-height:190px!important;
+    max-height:190px!important;
+  }
+}
+
+
+/* Waffles IceMan: su empaque auténtico es una caja negra horizontal. */
+.recipe-experience .recipe-cover-art.recipe-cover-art--waffle-box {
+  grid-template-columns:minmax(0,44%) minmax(0,56%);
+  background:linear-gradient(90deg,#e8eef3 0%,#e8eef3 44%,#edf3f6 44%,#edf3f6 100%)!important;
+}
+.recipe-experience .recipe-cover-art.recipe-cover-art--waffle-box > .recipe-cover-pack {
+  align-self:center!important;
+  width:96%!important;
+  height:60%!important;
+  max-height:60%;
+  max-width:none;
+  margin:20px 0 0!important;
+  padding:0 3px!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  filter:drop-shadow(0 9px 10px rgba(17,26,47,.17))!important;
+}
+.recipe-experience .recipe-cover-art.recipe-cover-art--waffle-box > .recipe-cover-dish {
+  object-fit:contain!important;
+  object-position:center!important;
+}
+@media(max-width:600px) {
+  .recipe-experience .recipe-cover-art.recipe-cover-art--waffle-box {
+    grid-template-columns:minmax(0,46%) minmax(0,54%);
+    background:linear-gradient(90deg,#e8eef3 0%,#e8eef3 46%,#edf3f6 46%,#edf3f6 100%)!important;
+  }
+  .recipe-experience .recipe-cover-art.recipe-cover-art--waffle-box > .recipe-cover-pack {
+    width:100%!important;
+    height:65%!important;
+    max-height:65%;
+    margin:19px 0 0!important;
+    padding:0 3px!important;
+  }
+}
+
+
+/* Production recipe index: one precomposed real package + food image.
+   Avoid the old grid/overlay that duplicated packs and clipped portrait shots. */
+.recipe-experience .recipe-cover-art.recipe-cover-art--composite {
+  display:block!important;
+  position:relative!important;
+  width:100%;
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  aspect-ratio:5 / 3;
+  overflow:hidden!important;
+  isolation:isolate;
+  border-radius:14px;
+  background:#e9f2f6!important;
+  align-self:center;
+}
+.recipe-experience .recipe-cover-art.recipe-cover-art--composite > .recipe-cover-dish {
+  display:block!important;
+  position:absolute!important;
+  inset:0!important;
+  top:0!important;
+  right:0!important;
+  bottom:0!important;
+  left:0!important;
+  width:100%!important;
+  height:100%!important;
+  max-width:none!important;
+  max-height:none!important;
+  min-width:0!important;
+  padding:0!important;
+  margin:0!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  background:transparent!important;
+  border:0!important;
+  border-radius:0!important;
+  transform:none!important;
+  filter:none!important;
+  mix-blend-mode:normal!important;
+}
+.recipe-experience .recipe-cover-art.recipe-cover-art--composite:hover > .recipe-cover-dish {
+  transform:none!important;
+}
+.recipe-experience .recipe-cover-art.recipe-cover-art--composite > .recipe-cover-pack {
+  display:none!important;
+}
+.recipe-experience .recipe-cover-art.recipe-cover-art--composite > .recipe-cover-index {
+  position:absolute!important;
+  top:12px!important;
+  left:12px!important;
+  z-index:3;
+  max-width:calc(100% - 84px);
+}
+.recipe-experience .recipe-cover-art.recipe-cover-art--composite > .recipe-cover-open {
+  position:absolute!important;
+  right:12px!important;
+  bottom:12px!important;
+  z-index:3;
+}
+@media(max-width:600px) {
+  .recipe-experience .recipe-cover-art.recipe-cover-art--composite {
+    aspect-ratio:5 / 3;
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+  }
+  .recipe-experience .recipe-cover-art.recipe-cover-art--composite > .recipe-cover-index {
+    top:9px!important;
+    left:9px!important;
+    padding:7px 9px!important;
+    font-size:9px!important;
+  }
+  .recipe-experience .recipe-cover-art.recipe-cover-art--composite > .recipe-cover-open {
+    right:10px!important;
+    bottom:10px!important;
+  }
+}

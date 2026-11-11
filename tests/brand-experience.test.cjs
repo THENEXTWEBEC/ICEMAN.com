@@ -32,25 +32,15 @@ test('only the five client-approved recipes are in the recipe collection',()=>{
   'bowl-salmon-teriyaki-edamame-mayonesa-picante'
  ]);
 });
-test('planner offers distinct ideas for every plan and preparation method',()=>{
- const source=app.slice(app.indexOf('  const plannerIdeas ='),app.indexOf('  function updateRecipePlanner()'));
- const {ideas,choose}=vm.runInNewContext(source+';({ideas:plannerIdeas,choose:choosePlannerIdea})');
- const plans=['Cena rápida','Película','Partido','Reunión'];
- const methods=['Air Fryer','Horno','Sartén','Lo más rápido'];
- const people=['1–2','3–4','5–8','8+'];
- assert.ok(ideas.length>=20);
- assert.equal(new Set(ideas.map(idea=>idea.title)).size,ideas.length);
- for(const plan of plans) for(const method of methods) for(const group of people){
-  const idea=choose({plan,method,people:group});
-  assert.ok(idea,`${group} · ${plan} · ${method}`);
-  assert.equal(idea.plan,plan);
-  assert.equal(idea.method,method);
-  const product=catalog.products.find(item=>item.slug===idea.products[0]);
-  assert.ok(product,idea.id);
-  assert.ok(product.prep.some(prep=>prep.startsWith(`${idea.prepMethod||method} ·`)),idea.id);
- }
- assert.notEqual(choose({people:'1–2',plan:'Película',method:'Air Fryer'}).id,choose({people:'5–8',plan:'Película',method:'Air Fryer'}).id);
- assert.match(app,/link\.href = withBase\(productPath\(product\)\)/);
+test('recipe explorer displays only catalog products and preserves product links',()=>{
+ assert.match(app,/function recipeProductChoices\(/);
+ assert.match(app,/function recipeFeaturePanel\(/);
+ assert.match(app,/data-recipe-select/);
+ assert.match(app,/href="\$\{productPath\(product\)\}"/);
+ editorial.recipes.forEach(recipe=>{
+   assert.ok(recipe.products.length>0,recipe.slug);
+   recipe.products.forEach(slug=>assert.ok(catalog.products.some(product=>product.slug===slug),slug));
+ });
 });
 test('recipe selector starts empty and allows selection through button controls',()=>{
  assert.match(app,/data-recipe-explorer/);
@@ -61,7 +51,7 @@ test('recipe selector starts empty and allows selection through button controls'
 });
 test('home category showcase renders the six catalog routes',()=>{
  assert.deepEqual(Array.from(catalog.categories,category=>category.name),['Papas','Vegetales','Especialidades','Smoothies','Helados','Waffles']);
- assert.match(app,/EXPLORA NUESTRAS CATEGORÍAS/);
+ assert.match(app,/Explora nuestras categorías/);
  assert.match(app,/reference-category-grid/);
  assert.match(app,/href="\/productos\/\$\{category\.slug\}/);
  assert.match(app,/papas:\["papas-spices","air-fryer"\]/);
@@ -80,7 +70,7 @@ test('story selections retain the approved descriptions',()=>{
 });
 test('about sections use distinct, context-specific images',()=>{
  const source=app.slice(app.indexOf('  const floatingPackSets ='),app.indexOf('  function storySelector('));
- const {floatingPackSets,storyVisuals,storyConcepts,storyValues}=vm.runInNewContext(source+';({floatingPackSets,storyVisuals,storyConcepts,storyValues});');
+ const {floatingPackSets,storyVisuals,storyConcepts,storyValues}=vm.runInNewContext(source+';({floatingPackSets,storyVisuals,storyConcepts,storyValues});',{projectBase:'',productionImage:path=>path});
  const images=[storyVisuals.hero.image,storyVisuals.history.image,...storyVisuals.purpose.map(item=>item.image),...storyConcepts.map(item=>item.image),...storyValues.map(item=>item.image)];
  assert.equal(new Set(images).size,images.length);
  images.forEach(image=>assert.ok(fs.existsSync(path.join(base,'assets',image)),image));
@@ -100,24 +90,22 @@ test('editorial imagery is unique and matches the subject of corrected sections'
  assert.equal(image('business','simplificar-preparacion-menu'),'editorial/business-simplify-menu.webp');
  assert.match(app,/home-business-image[^<]*><img src="\$\{projectBase\}\/assets\/editorial\/business-choose-restaurant\.webp"/);
 });
-test('every enabled comparison resolves to existing imagery and responsive optical scales',()=>{
+test('every enabled comparison references valid product imagery and current orientation config',()=>{
  const source=app.slice(app.indexOf('  const dishScenes ='),app.indexOf('  function productScene('));
- const {scenes,scales}=vm.runInNewContext(source+';({scenes:dishScenes,scales:comparisonScales});');
+ const {scenes,configs}=vm.runInNewContext(source+';({scenes:dishScenes,configs:comparisonConfig});');
  assert.equal(Object.keys(scenes).length,27);
- assert.deepEqual(Object.keys(scales).sort(),Object.keys(scenes).sort());
+ assert.deepEqual(Object.keys(configs).sort(),Object.keys(scenes).sort());
  assert.equal(scenes['edamame-vaina'].version,'full-plate-20261028');
- assert.equal(scenes['edamame-vaina'].source,undefined);
- assert.deepEqual(Array.from(scales['yuca-500']),[.71,.71,.71]);
- assert.deepEqual(Array.from(scales['zanahoria-ondulada']),[.71,.71,.71]);
- assert.deepEqual(Array.from(scales['hash-brown']),[.66,.66,.66]);
- assert.deepEqual(Array.from(scales['aros-de-cebolla']),[.65,.65,.65]);
- assert.deepEqual(Array.from(scales['croqueta-de-yuca']),[.75,.75,.75]);
+ assert.equal(configs['papas-air-fryer'].orientation,'vertical');
+ assert.equal(configs['corte-ondulado-900-premium'].orientation,'horizontal');
  Object.entries(scenes).forEach(([slug,dish])=>{
-  const product=catalog.products.find(p=>p.slug===slug); assert.ok(product,slug);
-  assert.ok(fs.existsSync(path.join(base,'assets/catalog',product.image+'.webp')));
-  assert.ok(fs.existsSync(path.join(base,'assets',dish.image)));
-  assert.equal(scales[slug].length,3,slug);
-  scales[slug].forEach(scale=>assert.ok(Number.isFinite(scale)&&scale>0,`${slug}: ${scale}`));
+   const product=catalog.products.find(p=>p.slug===slug); assert.ok(product,slug);
+   assert.ok(fs.existsSync(path.join(base,'assets/catalog',product.image+'.webp')));
+   assert.ok(fs.existsSync(path.join(base,'assets',dish.image)));
+   assert.ok(['vertical','horizontal','compact'].includes(configs[slug].orientation),slug);
+   if (configs[slug].dishScale !== undefined) {
+     assert.ok(Number.isFinite(configs[slug].dishScale)&&configs[slug].dishScale>0,slug);
+   }
  });
 });
 

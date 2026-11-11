@@ -81,16 +81,12 @@
     };
     const renderCategoryFloat = (now) => {
       categoryFrame = 0;
-      if (!categoryVisible || reduced.matches) return;
+      if (!categoryVisible || reduced.matches || innerWidth < 821) return;
       const delta = categoryLastFrame ? Math.min(40, now - categoryLastFrame) : 16.7;
       categoryLastFrame = now;
       const response = 1 - Math.exp(-delta * .018);
       const time = now / 1000;
       categoryItems.forEach((item, index) => {
-        if (innerWidth < 821) {
-          item.style.transform = "none";
-          return;
-        }
         const p = floatProfiles[index];
         const state = categoryMotion[index];
         const primary = time * p.speed + p.phase;
@@ -112,12 +108,23 @@
       });
       categoryFrame = requestAnimationFrame(renderCategoryFloat);
     };
+    // Mobile displays static category compositions; avoid scheduling 60fps
+    // animation frames merely to write the same transform on every frame.
+    const syncCategoryMotion = () => {
+      const animate = categoryVisible && innerWidth >= 821 && !reduced.matches && !document.hidden;
+      if (animate && !categoryFrame) categoryFrame = requestAnimationFrame(renderCategoryFloat);
+      if (!animate && categoryFrame) { cancelAnimationFrame(categoryFrame); categoryFrame = 0; }
+      if (innerWidth < 821) categoryItems.forEach(item => {
+        if (item.style.transform !== "none") item.style.transform = "none";
+      });
+    };
     const categoryObserver = categoryScene ? new IntersectionObserver(([entry]) => {
-      categoryVisible = entry.isIntersecting && !document.hidden;
-      if (categoryVisible && !categoryFrame && !reduced.matches) categoryFrame = requestAnimationFrame(renderCategoryFloat);
-      if (!categoryVisible && categoryFrame) { cancelAnimationFrame(categoryFrame); categoryFrame = 0; }
+      categoryVisible = entry.isIntersecting;
+      syncCategoryMotion();
     }, { rootMargin:"18% 0px" }) : null;
     if (categoryScene) categoryObserver.observe(categoryScene);
+    addEventListener("resize", syncCategoryMotion, { passive:true, signal });
+    document.addEventListener("visibilitychange", syncCategoryMotion, { signal });
     if (categoryScene && categoryField && finePointer.matches) {
       categoryScene.addEventListener("pointermove", (event) => {
         if (categoryPointerFrame) return;
