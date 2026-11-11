@@ -66,6 +66,27 @@
   .recipe-experience .recipe-cover:nth-child(5){grid-column:auto;grid-template-columns:minmax(0,42%) minmax(0,1fr)}
   .recipe-experience .recipe-cover-art{height:245px;min-height:245px;max-height:245px}
 }
+
+/* Recipe cards use the served dish as the hero visual, without package overlays. */
+.recipe-experience .recipe-cover-art--clean{
+  display:block!important;
+  position:relative!important;
+  grid-template-columns:none!important;
+  background:#edf2f2!important;
+}
+.recipe-experience .recipe-cover-art--clean > .recipe-cover-dish{
+  position:absolute!important;
+  inset:0!important;
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  max-height:none!important;
+  padding:0!important;
+  border-radius:inherit!important;
+  object-fit:cover!important;
+  object-position:center!important;
+  background:transparent!important;
+}
 @media(max-width:760px){
   .recipe-experience .recipe-library{padding:65px 0 70px}
   .recipe-experience .recipe-library>.wrap:first-child{margin-bottom:28px}
