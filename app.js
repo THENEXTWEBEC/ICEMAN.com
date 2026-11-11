@@ -777,7 +777,7 @@
     "papas-air-fryer":{orientation:"vertical",dishScale:0.92},
     "corte-ondulado-900-premium":{orientation:"horizontal",dishRotation:90,dishScale:1.2},
     "corte-recto-900-premium":{orientation:"horizontal",dishRotation:90,dishScale:1.2},
-    "papa-steak":{orientation:"horizontal"},
+    "papa-steak":{orientation:"horizontal",dishScale:0.82},
     "papas-spices":{orientation:"vertical"},
     "papas-finas-hierbas":{orientation:"vertical"},
     "papas-rejilla":{orientation:"vertical"},
