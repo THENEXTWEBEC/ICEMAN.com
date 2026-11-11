@@ -218,3 +218,39 @@
     max-height:190px!important;
   }
 }
+
+
+/* Waffles IceMan: su empaque auténtico es una caja negra horizontal. */
+.recipe-experience .recipe-cover-art.recipe-cover-art--waffle-box {
+  grid-template-columns:minmax(0,44%) minmax(0,56%);
+  background:linear-gradient(90deg,#e8eef3 0%,#e8eef3 44%,#edf3f6 44%,#edf3f6 100%)!important;
+}
+.recipe-experience .recipe-cover-art.recipe-cover-art--waffle-box > .recipe-cover-pack {
+  align-self:center!important;
+  width:96%!important;
+  height:60%!important;
+  max-height:60%;
+  max-width:none;
+  margin:20px 0 0!important;
+  padding:0 3px!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  filter:drop-shadow(0 9px 10px rgba(17,26,47,.17))!important;
+}
+.recipe-experience .recipe-cover-art.recipe-cover-art--waffle-box > .recipe-cover-dish {
+  object-fit:contain!important;
+  object-position:center!important;
+}
+@media(max-width:600px) {
+  .recipe-experience .recipe-cover-art.recipe-cover-art--waffle-box {
+    grid-template-columns:minmax(0,46%) minmax(0,54%);
+    background:linear-gradient(90deg,#e8eef3 0%,#e8eef3 46%,#edf3f6 46%,#edf3f6 100%)!important;
+  }
+  .recipe-experience .recipe-cover-art.recipe-cover-art--waffle-box > .recipe-cover-pack {
+    width:100%!important;
+    height:65%!important;
+    max-height:65%;
+    margin:19px 0 0!important;
+    padding:0 3px!important;
+  }
+}
