@@ -100,3 +100,121 @@
   .recipe-experience .recipe-occasions .occasion-card,.recipe-experience .recipe-occasions .occasion-card:nth-child(n+4),.recipe-experience .recipe-occasions .occasion-card:last-child{grid-column:1;height:210px;aspect-ratio:auto}
   .recipe-experience .occasion-overlay strong{font-size:23px}
 }
+
+
+/* Composicion editorial con empaques originales IceMan (2026-11-10). */
+/* El empaque viene directamente de /assets/catalog/cutout; no es una recreacion por IA. */
+.recipe-experience .recipe-cover-art.recipe-cover-art--authentic-pack {
+  display:grid!important;
+  position:relative;
+  grid-template-columns:minmax(0,35%) minmax(0,65%);
+  align-items:stretch;
+  overflow:hidden;
+  isolation:isolate;
+  background:linear-gradient(90deg,#eaf2f6 0%,#eaf2f6 35%,#edf3f6 35%,#edf3f6 100%)!important;
+  border-radius:14px;
+}
+.recipe-experience .recipe-cover-art.recipe-cover-art--authentic-pack > .recipe-cover-dish {
+  position:relative!important;
+  inset:auto!important;
+  top:auto!important;
+  left:auto!important;
+  grid-column:2;
+  grid-row:1;
+  display:block;
+  width:100%!important;
+  height:100%!important;
+  max-height:100%!important;
+  min-width:0;
+  margin:0!important;
+  padding:8px 7px 8px 0!important;
+  border:0!important;
+  border-radius:0!important;
+  object-fit:contain!important;
+  object-position:center center!important;
+  transform:none!important;
+  background:transparent!important;
+  mix-blend-mode:normal!important;
+  filter:none!important;
+}
+.recipe-experience .recipe-cover-art.recipe-cover-art--authentic-pack > .recipe-cover-pack {
+  position:relative!important;
+  inset:auto!important;
+  top:auto!important;
+  right:auto!important;
+  bottom:auto!important;
+  left:auto!important;
+  grid-column:1;
+  grid-row:1;
+  display:block!important;
+  align-self:end;
+  justify-self:center;
+  width:88%!important;
+  height:79%!important;
+  max-width:185px;
+  max-height:79%;
+  min-width:0;
+  margin:0 0 8px!important;
+  padding:0 6px!important;
+  border:0;
+  object-fit:contain!important;
+  object-position:center bottom!important;
+  transform:none!important;
+  filter:drop-shadow(0 6px 9px rgba(25,48,74,.17))!important;
+  z-index:1;
+}
+.recipe-experience .recipe-cover-art.recipe-cover-art--authentic-pack:hover > .recipe-cover-pack,
+.recipe-experience .recipe-cover-art.recipe-cover-art--authentic-pack:hover > .recipe-cover-dish {
+  transform:none!important;
+}
+.recipe-experience .recipe-cover-art.recipe-cover-art--authentic-pack > .recipe-cover-index {
+  position:absolute;
+  top:12px;
+  left:12px;
+  max-width:calc(100% - 88px);
+  z-index:3;
+  white-space:nowrap;
+}
+.recipe-experience .recipe-cover-art.recipe-cover-art--authentic-pack > .recipe-cover-open {
+  position:absolute;
+  right:14px;
+  bottom:14px;
+  z-index:3;
+}
+@media (max-width:600px) {
+  .recipe-experience .recipe-cover-art.recipe-cover-art--authentic-pack {
+    height:216px!important;
+    min-height:216px!important;
+    max-height:216px!important;
+    grid-template-columns:minmax(0,36%) minmax(0,64%);
+    background:linear-gradient(90deg,#eaf2f6 0%,#eaf2f6 36%,#edf3f6 36%,#edf3f6 100%)!important;
+  }
+  .recipe-experience .recipe-cover-art.recipe-cover-art--authentic-pack > .recipe-cover-pack {
+    width:91%!important;
+    height:75%!important;
+    max-height:75%;
+    margin-bottom:10px!important;
+    padding:0 4px!important;
+  }
+  .recipe-experience .recipe-cover-art.recipe-cover-art--authentic-pack > .recipe-cover-dish {
+    padding:8px 5px 8px 0!important;
+  }
+  .recipe-experience .recipe-cover-art.recipe-cover-art--authentic-pack > .recipe-cover-index {
+    top:10px;
+    left:9px;
+    max-width:calc(100% - 58px);
+    padding:7px 9px;
+    font-size:9px;
+  }
+  .recipe-experience .recipe-cover-art.recipe-cover-art--authentic-pack > .recipe-cover-open {
+    right:10px;
+    bottom:10px;
+  }
+}
+@media (max-width:360px) {
+  .recipe-experience .recipe-cover-art.recipe-cover-art--authentic-pack {
+    height:190px!important;
+    min-height:190px!important;
+    max-height:190px!important;
+  }
+}
