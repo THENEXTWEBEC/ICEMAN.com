@@ -1074,6 +1074,15 @@ body:has(.home-hero-journey) .site-header .brand-official-logo{width:158px;heigh
   .closing-copy h2{font-size:clamp(52px,12vw,82px)}
 }
 
+/* En mobile, deja el plato como protagonista y recorta el empaque integrado en la foto. */
+@media(max-width:600px){
+  .home-recipes.table-story .table-story-photo.recipe-visual-dish > img{
+    object-position:50% 0%;
+    transform:scale(1.42);
+    transform-origin:50% 0;
+  }
+}
+
 /* Bring the first product cards into view sooner on the catalogue page. */
 .page-intro:has(+ .catalog-toolbar){padding:38px 0}
 .page-intro:has(+ .catalog-toolbar) h1{font-size:clamp(42px,5.5vw,68px)}
