@@ -10,11 +10,11 @@
     return { image:recipe.heroImage || recipe.image, alt:recipe.heroAlt || recipe.title, treatment:"dish" };
   }
   const cleanRecipeImages = {
-    "brochetas-carne-papas-rejilla-chimichurri": "editorial/recipe-brochetas-clean.png",
-    "carne-plancha-papas-onduladas-salsa-ajo": "editorial/home-recipe-steak-fries-v2.webp",
-    "pollo-hierbas-aros-cebolla-ensalada-repollo": "editorial/recipe-onion-chicken-plate.webp",
-    "waffles-iceman-franui-frutos-rojos": "editorial/recipe-waffles-franui-clean.webp",
-    "bowl-salmon-teriyaki-edamame-mayonesa-picante": "editorial/recipe-salmon-edamame-clean.png"
+    "brochetas-carne-papas-rejilla-chimichurri": "editorial/recipe-brochetas-generated.png",
+    "carne-plancha-papas-onduladas-salsa-ajo": "editorial/recipe-steak-generated.png",
+    "pollo-hierbas-aros-cebolla-ensalada-repollo": "editorial/recipe-onion-chicken-generated.png",
+    "waffles-iceman-franui-frutos-rojos": "editorial/recipe-waffles-generated.png",
+    "bowl-salmon-teriyaki-edamame-mayonesa-picante": "editorial/recipe-salmon-generated.png"
   };
   const recipeDishImage = (recipe) => cleanRecipeImages[recipe.slug] || recipeVisual(recipe).image;
   const categories = catalog.categories;
@@ -333,11 +333,11 @@
 
     }).join("");
     const featuredRecipe = orderedRecipes()[0];
-    const featuredVisual = { ...recipeVisual(featuredRecipe), image:featuredRecipe.homeImage || recipeDishImage(featuredRecipe) };
+    const featuredVisual = { ...recipeVisual(featuredRecipe), image:recipeDishImage(featuredRecipe) };
     const featuredProduct = products.find((product) => product.slug === featuredRecipe.products?.[0]);
     const featuredImage = editorialImage(featuredVisual.image);
     const mobileFeaturedImage = editorialImage("editorial/customer-potatoes-rejilla-plate-mobile.png");
-    const recipeCards = orderedRecipes().slice(1, 3).map((recipe, index) => { const visual = recipeVisual(recipe); const src = editorialImage(recipe.homeImage || recipeDishImage(recipe)); return `<article class="home-recipe home-recipe-${index + 2}"><a href="/recetas/${recipe.slug}" data-link><div class="home-recipe-image recipe-visual-${visual.treatment}"><img src="${src}" alt="${escapeHTML(visual.alt)}" loading="lazy" decoding="async"></div><div class="home-recipe-copy"><span class="home-recipe-label">Para compartir</span><h3>${escapeHTML(recipe.title)}</h3><span class="home-recipe-arrow">Ver receta ${iconArrow()}</span></div></a></article>`; }).join("");
+    const recipeCards = orderedRecipes().slice(1, 3).map((recipe, index) => { const visual = recipeVisual(recipe); const src = editorialImage(recipeDishImage(recipe)); return `<article class="home-recipe home-recipe-${index + 2}"><a href="/recetas/${recipe.slug}" data-link><div class="home-recipe-image recipe-visual-${visual.treatment}"><img src="${src}" alt="${escapeHTML(visual.alt)}" loading="lazy" decoding="async"></div><div class="home-recipe-copy"><span class="home-recipe-label">Para compartir</span><h3>${escapeHTML(recipe.title)}</h3><span class="home-recipe-arrow">Ver receta ${iconArrow()}</span></div></a></article>`; }).join("");
     const stockistItems = stockists.map(({ name, logo }) => `<div class="stockist-logo stockist-logo-${logo.replace(/\.[^.]+$/, "").replace(/[^a-z0-9-]/gi, "-")}" role="listitem"><img src="${optimizedImage(`${projectBase}/assets/stockists/${logo}`)}" alt="${escapeHTML(name)}" loading="lazy" decoding="async"></div>`).join("");
     const leadArticles = editorial.articles.slice(0, 3);
     return `<div class="home-hero-journey" data-hero-journey><section class="home-hero" id="inicio" data-nav-section="home"><div class="home-hero-image" data-parallax="0.16"><img src="${projectBase}/assets/editorial/golden-fries-alpine-1672.webp" srcset="${projectBase}/assets/editorial/golden-fries-alpine-480.webp 480w, ${projectBase}/assets/editorial/golden-fries-alpine-768.webp 768w, ${projectBase}/assets/editorial/golden-fries-alpine-960.webp 960w, ${projectBase}/assets/editorial/golden-fries-alpine-1200.webp 1200w, ${projectBase}/assets/editorial/golden-fries-alpine-1672.webp 1672w" sizes="100vw" alt="Papas doradas flotando sobre un paisaje alpino congelado" fetchpriority="high" decoding="async" width="1672" height="941"></div><div class="home-hero-shade"></div><div class="hero-orbit hero-orbit-one" data-pointer-depth="12" aria-hidden="true"></div><div class="hero-orbit hero-orbit-two" data-pointer-depth="-8" aria-hidden="true"></div><div class="wrap home-hero-inner"><div class="home-hero-copy"><span class="home-kicker hero-sequence">Alimentos congelados IceMan</span><h1><span class="hero-line"><span>Mucho más</span></span><span class="hero-line"><em>que congelados.</em></span></h1><p class="hero-sequence">Lo hacemos fácil. Tú lo haces especial.</p><div class="home-hero-actions hero-sequence"><a class="btn btn-primary magnetic" href="/productos" data-link>Explorar productos ${iconArrow()}</a><a class="home-hero-link" href="/donde-encontrarnos" data-link>Encuéntranos ${iconArrow()}</a></div></div><div class="hero-scroll-story" aria-hidden="true"><span>IceMan · Congelados</span><strong>Facilitamos tus días,<br>disfrutamos tus momentos.</strong><small>Productos prácticos para cada día</small></div><div class="hero-pack-wrap" data-pointer-depth="-16"><span class="hero-pack-halo" aria-hidden="true"></span><img class="hero-pack" src="${asset(homeShowcase[0].product.image)}"${responsiveImageAttrs(asset(homeShowcase[0].product.image),"(max-width: 640px) 38vw, 230px")} alt="Empaque oficial de ${escapeHTML(homeShowcase[0].product.name)} IceMan" fetchpriority="high" decoding="async"></div><div class="hero-journey-progress" aria-hidden="true"><span>01</span><i><b></b></i><span>02</span></div><span class="hero-side-note" aria-hidden="true">Del congelador a tu mesa · IceMan Ecuador</span><a class="hero-scroll" href="#productos-destacados" aria-label="Explorar productos destacados">${iconArrow("down")} Desliza para descubrir</a></div></section></div>
