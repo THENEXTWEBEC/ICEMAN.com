@@ -12,6 +12,7 @@ from pathlib import Path
 import re
 import shutil
 from PIL import Image
+from build_recipe_cards import build_cards
 
 ROOT = Path(__file__).resolve().parents[1]
 DIST = ROOT / "_site"
@@ -114,6 +115,7 @@ def verify() -> None:
     assert (ASSETS / "catalog/cutout/waffle-clean.webp").is_file()
     assert (ASSETS / "catalog/responsive/cutout-waffle-clean-320.webp").is_file()
     assert (ASSETS / "editorial/sharing-table.webp").is_file()
+    assert (ASSETS / "editorial/recipe-card-waffles-iceman-franui-frutos-rojos.webp").is_file()
     for path in ASSETS.rglob("*.webp"):
         if path.stat().st_size == 0:
             raise RuntimeError(f"Empty generated asset: {path}")
@@ -121,6 +123,7 @@ def verify() -> None:
 
 def main() -> None:
     copy_source()
+    cards = build_cards(ASSETS)
     converted, responsive = optimize_images()
     entry = DIST / "index.html"
     html = entry.read_text(encoding="utf-8")
@@ -129,7 +132,7 @@ def main() -> None:
     html = fingerprint_scripts(html)
     entry.write_text(html, encoding="utf-8")
     verify()
-    print(f"Production build complete: {converted} new WebP files, {responsive} responsive variants, one CSS bundle.")
+    print(f"Production build complete: {cards} recipe compositions, {converted} new WebP files, {responsive} responsive variants, one CSS bundle.")
 
 
 if __name__ == "__main__":
