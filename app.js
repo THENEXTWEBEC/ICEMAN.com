@@ -816,7 +816,7 @@
     "papas-air-fryer":{orientation:"vertical",dishScale:0.92},
     "corte-ondulado-900-premium":{orientation:"horizontal",dishRotation:90,dishScale:1.2},
     "corte-recto-900-premium":{orientation:"horizontal",dishRotation:90,dishScale:1.2},
-    "papa-steak":{orientation:"horizontal",dishScale:0.82},
+    "papa-steak":{orientation:"horizontal",dishScale:0.82,packScale:1.035},
     "papas-spices":{orientation:"vertical"},
     "papas-finas-hierbas":{orientation:"vertical"},
     "papas-rejilla":{orientation:"vertical"},
@@ -854,7 +854,7 @@
     const orientation = config.orientation || "vertical";
     const dishRotation = config.dishRotation || 0;
     const dishScale = config.dishScale || 1;
-    const packScale = (dishScale * 1.035).toFixed(3);
+    const packScale = (config.packScale || (dishScale * 1.035)).toFixed(3);
     return `<div class="product-comparison" data-comparison data-comparison-product="${product.slug}" data-comparison-orientation="${orientation}" data-comparison-dish-rotation="${dishRotation}" data-comparison-side="mix" style="--split:50%;--dish-size:${dishScale};--pack-size:${packScale}"><div class="comparison-scene"><div class="comparison-dish ${dish.className || ""}"><img src="${dishSrc}"${responsiveImageAttrs(dishSrc,imageSizes)} alt="${dish.alt}" loading="${imageLoading}"${imagePriority} decoding="async"></div><div class="comparison-pack">${pack}</div><span class="comparison-line" aria-hidden="true"><b>↔</b></span><input type="range" min="0" max="100" value="50" data-compare-range aria-label="Revelar preparación de ${escapeHTML(product.name)}" aria-valuetext="50% empaque, 50% preparación"></div><div class="comparison-captions"><span>En el empaque</span><span>En tu mesa</span></div><p class="comparison-cue">Desliza y descubre <span aria-hidden="true">↔</span></p></div>`;
   }
   const floatingPackSets = {
