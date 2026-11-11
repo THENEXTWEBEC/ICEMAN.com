@@ -96,13 +96,16 @@ test('every enabled comparison references valid product imagery and current orie
  assert.equal(Object.keys(scenes).length,27);
  assert.deepEqual(Object.keys(configs).sort(),Object.keys(scenes).sort());
  assert.equal(scenes['edamame-vaina'].version,'full-plate-20261028');
- assert.equal(configs['papas-air-fryer'].orientation,'vertical');
- assert.equal(configs['corte-ondulado-900-premium'].orientation,'horizontal');
+ assert.equal(configs['papas-air-fryer'].packageOrientation,'vertical');
+ assert.equal(configs['papas-air-fryer'].dishOrientation,'vertical');
+ assert.equal(configs['corte-ondulado-900-premium'].packageOrientation,'horizontal');
+ assert.equal(configs['corte-ondulado-900-premium'].dishOrientation,'horizontal');
  Object.entries(scenes).forEach(([slug,dish])=>{
    const product=catalog.products.find(p=>p.slug===slug); assert.ok(product,slug);
    assert.ok(fs.existsSync(path.join(base,'assets/catalog',product.image+'.webp')));
    assert.ok(fs.existsSync(path.join(base,'assets',dish.image)));
-   assert.ok(['vertical','horizontal','compact'].includes(configs[slug].orientation),slug);
+   assert.ok(['vertical','horizontal','compact'].includes(configs[slug].packageOrientation),slug);
+   assert.ok(['vertical','horizontal','compact'].includes(configs[slug].dishOrientation),slug);
    if (configs[slug].dishScale !== undefined) {
      assert.ok(Number.isFinite(configs[slug].dishScale)&&configs[slug].dishScale>0,slug);
    }
