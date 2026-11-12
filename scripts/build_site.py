@@ -88,8 +88,10 @@ def bundle_css(html: str) -> str:
         chunks.append(f"/* {css_filename} */\n" + css_file.read_text(encoding="utf-8"))
     bundle = "\n".join(chunks) + "\n"
     fingerprint = hashlib.sha256(bundle.encode("utf-8")).hexdigest()[:12]
-    (DIST / "iceman.bundle.css").write_text(bundle, encoding="utf-8")
-    replacement = f'<link rel="stylesheet" href="iceman.bundle.css?v={fingerprint}" />'
+    base_bundle_name = "iceman.bundle.css"
+    bundle_name = f"{base_bundle_name[:-4]}.{fingerprint}.css"
+    (DIST / bundle_name).write_text(bundle, encoding="utf-8")
+    replacement = f'<link rel="stylesheet" href="{bundle_name}" />'
     html = html.replace(found[0].group(0), replacement, 1)
     for link in found[1:]:
         html = html.replace(link.group(0), "", 1)
