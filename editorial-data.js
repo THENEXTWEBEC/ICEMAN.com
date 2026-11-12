@@ -13,13 +13,13 @@ window.ICEMAN_EDITORIAL = {
     },
     {
       slug: "carne-plancha-papas-onduladas-salsa-ajo",
-      title: "Carne a la plancha con papas onduladas y salsa de ajo",
-      description: "Filetes de res con papas onduladas, ensalada fresca y salsa cremosa de ajo servida aparte.",
+      title: "Carne a la plancha con papas tipo rejilla y salsa de ajo",
+      description: "Filetes de res con papas tipo rejilla IceMan, ensalada fresca y salsa cremosa de ajo servida aparte.",
       category: "Recetas", time: "", servings: "4",
-      image: "editorial/customer-potatoes-onduladas.webp", homeImage: "editorial/home-recipe-steak-fries-v2.webp", heroAlt: "Carne a la plancha con papas onduladas, ensalada fresca y salsa de ajo",
-      products: ["corte-ondulado-900-premium"], tags: ["papas onduladas", "carne", "salsa de ajo", "cena"], occasions: ["cena", "fin-de-semana"],
-      ingredients: ["1 funda de papas corte ondulado IceMan de 900 g", "4 filetes de res", "1 cucharada de aceite de oliva", "2 dientes de ajo picados", "Sal, pimienta y perejil al gusto", "Lechuga y tomates cherry", "Para la salsa", "½ taza de yogur natural sin azúcar", "1 cucharada de mayonesa", "½ diente de ajo rallado", "1 cucharadita de jugo de limón", "Perejil picado y sal al gusto"],
-      steps: ["Cocina las papas directamente congeladas siguiendo el tiempo y la temperatura indicados en el empaque para el método elegido. Distribúyelas sin amontonarlas.", "Unta los filetes con aceite, ajo, sal y pimienta.", "Cocina los filetes en una plancha o sartén caliente hasta alcanzar el punto deseado. Déjalos reposar unos minutos antes de servir.", "Mezcla el yogur, la mayonesa, el ajo, el limón, el perejil y la sal.", "Sirve la carne con las papas onduladas, la lechuga y los tomates cherry cortados por la mitad. Presenta la salsa aparte para que las papas conserven su textura crujiente."]
+      image: "editorial/customer-potatoes-onduladas.webp", homeImage: "editorial/home-recipe-steak-fries-v2.webp", heroAlt: "Carne a la plancha con papas tipo rejilla IceMan, ensalada fresca y salsa de ajo",
+      products: ["papas-rejilla"], tags: ["papas tipo rejilla", "carne", "salsa de ajo", "cena"], occasions: ["cena", "fin-de-semana"],
+      ingredients: ["1 funda de papas corte rejilla IceMan de 750 g", "4 filetes de res", "1 cucharada de aceite de oliva", "2 dientes de ajo picados", "Sal, pimienta y perejil al gusto", "Lechuga y tomates cherry", "Para la salsa", "½ taza de yogur natural sin azúcar", "1 cucharada de mayonesa", "½ diente de ajo rallado", "1 cucharadita de jugo de limón", "Perejil picado y sal al gusto"],
+      steps: ["Cocina las papas tipo rejilla directamente congeladas siguiendo el tiempo y la temperatura indicados en el empaque para el método elegido. Distribúyelas sin amontonarlas.", "Unta los filetes con aceite, ajo, sal y pimienta.", "Cocina los filetes en una plancha o sartén caliente hasta alcanzar el punto deseado. Déjalos reposar unos minutos antes de servir.", "Mezcla el yogur, la mayonesa, el ajo, el limón, el perejil y la sal.", "Sirve la carne con las papas tipo rejilla, la lechuga y los tomates cherry cortados por la mitad. Presenta la salsa aparte para que las papas conserven su textura crujiente."]
     },
     {
       slug: "pollo-hierbas-aros-cebolla-ensalada-repollo",
