@@ -845,7 +845,7 @@
     "helado-paila-mora":{packageOrientation:"compact",dishOrientation:"compact",dishPositionY:9},
     "helado-paila-naranjilla":{packageOrientation:"compact",dishOrientation:"compact",dishPositionY:4},
     "helado-paila-guanabana":{packageOrientation:"compact",dishOrientation:"compact",dishPositionY:4},
-    "helado-paila-naranjilla-hierbabuena":{packageOrientation:"compact",dishOrientation:"compact"},
+    "helado-paila-naranjilla-hierbabuena":{packageOrientation:"compact",dishOrientation:"compact",dishPositionY:4},
     "smoothie-green":{packageOrientation:"vertical",dishOrientation:"vertical"},
     "smoothie-orange":{packageOrientation:"vertical",dishOrientation:"vertical"},
     "smoothie-red":{packageOrientation:"vertical",dishOrientation:"vertical"},
