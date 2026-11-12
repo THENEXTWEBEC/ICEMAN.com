@@ -1037,11 +1037,12 @@ body:has(.home-hero-journey) .site-header .brand-official-logo{width:158px;heigh
 .home-stockists .stockist-logo{width:clamp(144px,15vw,216px);height:76px;padding:12px 18px}
 .home-recipes.table-story{padding:var(--home-section-space) 0}
 .table-story>.wrap,.home-business .business-editorial,.home-closing .closing-copy,.home-stockists-head,.stockists-note{max-width:1060px}
-.table-story .table-story-heading{margin-bottom:28px}
+.table-story .table-story-heading{max-width:900px;margin-bottom:28px}
 .table-story .home-section-heading h2{font-size:clamp(32px,4.2vw,58px)}
 .table-story h2 .recipes-title-line{font-size:inherit;white-space:normal}
 .table-story .home-section-heading p{font-size:15px}
 .table-story-feature{grid-template-rows:auto;min-height:0}
+@media(min-width:821px){.table-story-feature{grid-template-columns:minmax(0,1.15fr) minmax(320px,.85fr)}}
 .table-story-photo{height:100%;min-height:300px}
 .table-story-copy{min-height:0;padding:clamp(18px,2.6vw,32px)}
 .table-story-copy h3{font-size:clamp(22px,2.3vw,32px)}
