@@ -116,7 +116,7 @@
 .recipe-occasions .recipe-library-heading h2{max-width:1050px;font-size:clamp(38px,5.3vw,76px);line-height:1.05}
 @media(max-width:600px){.recipe-occasions .recipe-library-heading h2{font-size:clamp(35px,9vw,50px)}.planner-result-top img{width:min(100%,220px)}}
 /* Mostrar completos los originales que ya contienen el producto. */
-.recipe-cover-art.recipe-visual-dish > .recipe-cover-dish{object-fit:contain!important;object-position:center!important;background:#1c294d!important;transform:none!important}
+.recipe-cover-art.recipe-visual-dish:not(.recipe-cover-art--clean) > .recipe-cover-dish{object-fit:contain!important;object-position:center!important;background:#1c294d!important;transform:none!important}
 .recipe-cover-art .recipe-cover-pack{width:25%;height:38%;left:2%;bottom:2%;object-fit:contain;transform:none}
 .recipe-cover-art:hover .recipe-cover-pack{transform:translateY(-5px)}
 .story-purpose .purpose-copy h2 span{color:#8d9cc4;transition:color .32s ease}
