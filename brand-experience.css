@@ -1015,12 +1015,12 @@ img[src*="/assets/catalog/cutout/zanahoria-ondulada."]{
 }
 
 /* Home scale refinement: keep the editorial composition, with a calmer visual scale. */
-body:has(.home-hero-journey){--home-section-space:clamp(44px,5vw,68px)}
+body:has(.home-hero-journey){--home-section-space:clamp(52px,5.5vw,80px)}
 body:has(.home-hero-journey) .site-header .brand-official-logo{width:158px;height:55px}
-.home-hero h1{margin:14px 0 16px;font-size:clamp(44px,5vw,76px)}
-.home-hero p{font-size:clamp(15px,1.1vw,16px)}
-.home-hero-actions{margin-top:20px}
-.home-hero-actions .btn,.home-business .btn,.closing-copy .btn{min-height:46px;padding-inline:16px}
+.home-hero h1{margin:16px 0 18px;font-size:clamp(49px,5.6vw,84px)}
+.home-hero p{font-size:clamp(15px,1.2vw,17px)}
+.home-hero-actions{margin-top:24px}
+.home-hero-actions .btn,.home-business .btn,.closing-copy .btn{min-height:49px;padding-inline:19px}
 .home-hero-link{min-height:44px}
 .home-categories,.home-showcase,.home-stockists,.home-recipes,.home-business{padding-block:var(--home-section-space)}
 .home-section-heading,.home-showcase-heading{margin-bottom:32px}
@@ -1030,39 +1030,39 @@ body:has(.home-hero-journey) .site-header .brand-official-logo{width:158px;heigh
 .home-category-image img{height:175px}
 .showcase-accordion{height:520px}
 #donde-encontrarnos.home-stockists{min-height:0;padding:var(--home-section-space) 0}
-#donde-encontrarnos.home-stockists h2{margin:14px 0;font-size:clamp(46px,6.5vw,94px)}
+#donde-encontrarnos.home-stockists h2{margin:16px 0;font-size:clamp(54px,8.2vw,116px)}
 .home-stockists .stockists-drag-hint{margin-top:20px}
 .home-stockists .stockists-track{margin-top:10px}
 .home-stockists .stockists-note{margin-top:16px}
-.home-stockists .stockist-logo{width:clamp(144px,15vw,216px);height:76px;padding:12px 18px}
+.home-stockists .stockist-logo{width:clamp(156px,16.5vw,232px);height:86px;padding:15px 22px}
 .home-recipes.table-story{padding:var(--home-section-space) 0}
-.table-story>.wrap,.home-business .business-editorial,.home-closing .closing-copy,.home-stockists-head,.stockists-note{max-width:1060px}
-.table-story .table-story-heading{max-width:900px;margin-bottom:28px}
-.table-story .home-section-heading h2{font-size:clamp(32px,4.2vw,58px)}
+.table-story>.wrap,.home-business .business-editorial,.home-closing .closing-copy,.home-stockists-head,.stockists-note{max-width:1130px}
+.table-story .table-story-heading{max-width:940px;margin-bottom:32px}
+.table-story .home-section-heading h2{font-size:clamp(36px,4.6vw,65px)}
 .table-story h2 .recipes-title-line{font-size:inherit;white-space:normal}
 .table-story .home-section-heading p{font-size:15px}
 .table-story-feature{grid-template-rows:auto;min-height:0}
 @media(min-width:821px){.table-story-feature{grid-template-columns:minmax(0,1.15fr) minmax(320px,.85fr)}}
-.table-story-photo{height:100%;min-height:300px}
-.table-story-copy{min-height:0;padding:clamp(18px,2.6vw,32px)}
-.table-story-copy h3{font-size:clamp(22px,2.3vw,32px)}
+.table-story-photo{height:100%;min-height:335px}
+.table-story-copy{min-height:0;padding:clamp(20px,2.8vw,36px)}
+.table-story-copy h3{font-size:clamp(23px,2.45vw,34px)}
 .table-story-product{margin-top:22px;padding-top:17px}
 .table-story-product>img{width:56px;height:72px}
-.table-story-later{margin-top:34px}
-.table-story .home-recipe-grid{max-width:740px}
+.table-story-later{margin-top:40px}
+.table-story .home-recipe-grid{max-width:790px}
 .table-story .home-recipe h3{font-size:clamp(18px,2vw,24px)}
 .home-business{padding-top:var(--home-section-space);padding-bottom:var(--home-section-space)}
-.home-business .business-editorial{min-height:0;gap:clamp(22px,5vw,64px)}
-.home-business .home-business-image{aspect-ratio:1.32}
+.home-business .business-editorial{min-height:0;gap:clamp(26px,5.5vw,76px)}
+.home-business .home-business-image{aspect-ratio:1.24}
 .home-business .home-business-copy{padding:16px 0}
-.home-business-copy h2{margin:18px 0;font-size:clamp(36px,4.9vw,66px)}
-.home-closing{min-height:min(540px,74svh)}
-.closing-copy{padding-block:clamp(38px,5vw,60px)}
-.closing-copy h2{margin:20px 0;font-size:clamp(44px,6.8vw,90px);line-height:.86}
+.home-business-copy h2{margin:18px 0;font-size:clamp(42px,5.5vw,75px)}
+.home-closing{min-height:min(620px,78svh)}
+.closing-copy{padding-block:clamp(44px,5.4vw,65px)}
+.closing-copy h2{margin:20px 0;font-size:clamp(50px,7.8vw,105px);line-height:.86}
 
 @media(max-width:820px){
   body:has(.home-hero-journey) .site-header .brand-official-logo{width:142px;height:51px}
-  .home-hero h1{font-size:clamp(36px,8.7vw,62px)}
+  .home-hero h1{font-size:clamp(42px,9.8vw,66px)}
   .home-category{min-height:250px}
   .home-category-image,.home-category-image img{height:145px;min-height:145px}
   .showcase-accordion{height:480px}
@@ -1071,14 +1071,14 @@ body:has(.home-hero-journey) .site-header .brand-official-logo{width:158px;heigh
 @media(max-width:600px){
   .home-section-heading,.home-showcase-heading{margin-bottom:26px}
   .home-section-heading h2,.home-showcase h2,.home-stockists h2,.home-business h2,.home-contact h2{font-size:clamp(34px,9.5vw,44px)}
-  #donde-encontrarnos.home-stockists h2{font-size:clamp(40px,10vw,56px)}
+  #donde-encontrarnos.home-stockists h2{font-size:clamp(47px,11.5vw,72px)}
   .table-story .table-story-heading{margin-bottom:26px}
-  .table-story .home-section-heading h2{font-size:clamp(29px,7.6vw,42px)}
-  .table-story-photo{height:auto;min-height:0;aspect-ratio:1.24}
+  .table-story .home-section-heading h2{font-size:clamp(32px,8.4vw,48px)}
+  .table-story-photo{height:auto;min-height:0;aspect-ratio:1.18}
   .table-story-copy{padding:20px 18px 21px}
   .table-story-copy h3{font-size:24px}
-  .home-business-copy h2{font-size:clamp(34px,9.4vw,52px)}
-  .closing-copy h2{font-size:clamp(40px,10vw,58px)}
+  .home-business-copy h2{font-size:clamp(40px,10.7vw,60px)}
+  .closing-copy h2{font-size:clamp(46px,11vw,70px)}
 }
 
 /* Bring the first product cards into view sooner on the catalogue page. */

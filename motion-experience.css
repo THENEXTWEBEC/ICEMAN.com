@@ -2,7 +2,7 @@
 :root{--motion-out:cubic-bezier(.16,1,.3,1);--motion-state:cubic-bezier(.65,0,.25,1);--motion-ink:#252753;--motion-blue:#087fa6}
 html{scroll-behavior:smooth}
 body{overflow-x:clip}
-.home-hero-journey{position:relative;height:142dvh;background:#d8edf3}
+.home-hero-journey{position:relative;height:162dvh;background:#d8edf3}
 .home-hero{position:sticky;top:76px;height:calc(100dvh - 76px);min-height:calc(100dvh - 76px);background:#d8edf3}
 .home-hero-image{transform:translate3d(0,var(--journey-bg-y,var(--hero-shift,0px)),0) scale(var(--journey-bg-scale,1));transform-origin:center center;will-change:transform}
 .home-hero-image img{transform:scale(1.055);animation:hero-photo-arrive 1.1s var(--motion-out) both}
@@ -22,9 +22,9 @@ body{overflow-x:clip}
 .home-hero-actions.hero-sequence{animation-delay:1.18s}
 .hero-scroll-story{position:absolute;z-index:3;top:40%;left:0;max-width:590px;opacity:var(--journey-story-opacity,0);transform:translate3d(0,var(--journey-story-y,42px),0);pointer-events:none;will-change:opacity,transform}
 .hero-scroll-story span{display:block;margin-bottom:18px;color:#1b6c89;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase}
-.hero-scroll-story strong{display:block;color:var(--motion-ink);font-size:clamp(44px,5.2vw,72px);font-weight:700;letter-spacing:-.085em;line-height:.82;text-wrap:balance}
+.hero-scroll-story strong{display:block;color:var(--motion-ink);font-size:clamp(50px,5.8vw,84px);font-weight:700;letter-spacing:-.085em;line-height:.82;text-wrap:balance}
 .hero-scroll-story small{display:block;margin-top:24px;color:#344e62;font-size:13px;font-weight:700;letter-spacing:.04em}
-.hero-pack-wrap{position:absolute;z-index:2;right:3%;bottom:11%;width:min(20vw,260px);aspect-ratio:.76;display:grid;place-items:center;pointer-events:none;transform:translate3d(calc(var(--pointer-x,0px) + var(--journey-pack-x,0px)),calc(var(--pointer-y,0px) + var(--journey-pack-y,0px)),0) scale(var(--journey-pack-scale,1)) rotate(var(--journey-pack-rotate,0deg));transform-origin:center center;will-change:transform}
+.hero-pack-wrap{position:absolute;z-index:2;right:3%;bottom:11%;width:min(22.5vw,295px);aspect-ratio:.76;display:grid;place-items:center;pointer-events:none;transform:translate3d(calc(var(--pointer-x,0px) + var(--journey-pack-x,0px)),calc(var(--pointer-y,0px) + var(--journey-pack-y,0px)),0) scale(var(--journey-pack-scale,1)) rotate(var(--journey-pack-rotate,0deg));transform-origin:center center;will-change:transform}
 .hero-pack-halo{position:absolute;width:135%;aspect-ratio:1;border:1px solid rgba(255,255,255,.7);border-radius:50%;box-shadow:0 0 0 28px rgba(255,255,255,.14),0 0 0 62px rgba(255,255,255,.07);transform:scale(.6);opacity:0;animation:hero-halo-arrive 1.1s var(--motion-out) .75s forwards}
 .hero-pack{position:relative;z-index:1;width:100%;height:100%;object-fit:contain;filter:drop-shadow(18px 24px 19px rgba(18,37,54,.25));transform:translate3d(50px,55px,0) rotate(10deg) scale(.85);opacity:0;animation:hero-pack-arrive 1s var(--motion-out) .66s forwards,hero-pack-float 7s ease-in-out 1.7s infinite alternate}
 .hero-orbit{position:absolute;border:1px solid rgba(255,255,255,.48);border-radius:50%;pointer-events:none;transition:transform .7s var(--motion-out)}
@@ -379,8 +379,8 @@ a:focus-visible,button:focus-visible{outline:3px solid #087fa6;outline-offset:4p
 @media(max-width:640px){
   /* Stable viewport units prevent toolbar expansion from resizing the story
      during a touch scroll; keep the original sticky scene and its depth. */
-  .home-hero-journey{height:max(790px,133svh)}
-  .home-hero{height:max(530px,calc(100svh - var(--header-height) - var(--safe-top)));min-height:max(530px,calc(100svh - var(--header-height) - var(--safe-top)))}
+  .home-hero-journey{height:max(930px,146svh)}
+  .home-hero{height:max(590px,calc(100svh - var(--header-height) - var(--safe-top)));min-height:max(590px,calc(100svh - var(--header-height) - var(--safe-top)))}
   .home-hero-actions{flex-wrap:wrap;gap:12px}
   .hero-scroll{font-size:10px;letter-spacing:.06em}
   .home-hero-actions .btn{min-height:48px}
@@ -424,9 +424,9 @@ a:focus-visible,button:focus-visible{outline:3px solid #087fa6;outline-offset:4p
   }
   /* The story occupies the upper band; the pack stays below it throughout scroll. */
   .hero-scroll-story{top:34%;max-width:100%}
-  .hero-scroll-story strong{font-size:clamp(30px,6.8vw,50px);line-height:.95}
+  .hero-scroll-story strong{font-size:clamp(36px,7.4vw,57px);line-height:.95}
   .hero-scroll-story span{margin-bottom:12px;font-size:9px}
   .hero-scroll-story small{max-width:100%;margin-top:14px;font-size:10px;line-height:1.4}
-  .hero-pack-wrap{right:3%;bottom:5%;width:clamp(106px,22vw,155px)}
+  .hero-pack-wrap{right:3%;bottom:5%;width:clamp(118px,23.5vw,168px)}
 }
 
