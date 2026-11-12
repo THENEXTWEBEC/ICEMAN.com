@@ -15,9 +15,9 @@
 .recipe-experience .planner-step strong{margin-bottom:9px;font-size:15px}
 .recipe-experience .planner-options button{min-height:40px;padding:0 13px;font-size:13px}
 .recipe-experience .planner-result{padding:24px 28px 27px;border-radius:18px;box-shadow:none}
-.recipe-experience .planner-result-top{height:104px;display:flex;align-items:flex-start;justify-content:space-between}
+.recipe-experience .planner-result-top{height:135px;display:flex;align-items:flex-start;justify-content:space-between}
 .recipe-experience .planner-result-top .planner-result-icon{position:static;flex:none}
-.recipe-experience .planner-result-top img{width:144px;height:104px;flex:none;object-fit:contain;background:transparent}
+.recipe-experience .planner-result-top img{width:187px;height:135px;flex:none;object-fit:contain;background:transparent}
 .recipe-experience .planner-result>small{margin-top:10px;font-size:11px}
 .recipe-experience .planner-result h3{margin:8px 0 10px;font-size:clamp(26px,2.3vw,34px);line-height:1.12}
 .recipe-experience .planner-result>p{margin:10px 0;color:#56677b;font-size:15px;line-height:1.55}
@@ -113,8 +113,8 @@
   .recipe-experience .planner-copy h2{font-size:clamp(36px,9vw,46px)}
   .recipe-experience .planner-copy>p{font-size:15px}
   .recipe-experience .planner-result{padding:20px}
-  .recipe-experience .planner-result-top{height:90px}
-  .recipe-experience .planner-result-top img{width:118px;height:90px}
+  .recipe-experience .planner-result-top{height:117px}
+  .recipe-experience .planner-result-top img{width:153px;height:117px}
   .recipe-experience .planner-result h3{font-size:27px}
   .recipe-experience .recipe-occasions{padding:59px 0 68px}
   .recipe-experience .recipe-occasions .occasion-grid{grid-template-columns:1fr}
@@ -353,4 +353,16 @@
     right:10px!important;
     bottom:10px!important;
   }
+}
+
+/* Planner expansion: keep the added decision variables readable and scannable. */
+.recipe-experience .planner-copy{max-height:none}
+.recipe-experience .planner-options{display:flex;flex-wrap:wrap;gap:8px 9px}
+.recipe-experience .planner-step{margin-top:16px}
+.recipe-experience .planner-step strong{display:block}
+@media(max-width:760px){
+  .recipe-experience .planner-step{margin-top:18px}
+  .recipe-experience .planner-options{gap:8px}
+  .recipe-experience .planner-options button{min-height:42px;padding-inline:12px}
+  .recipe-experience .planner-result-top{height:117px}
 }
