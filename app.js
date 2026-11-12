@@ -824,7 +824,7 @@
   // baseline; only products needing an optical adjustment override the defaults.
   const comparisonConfig = {
     "papas-air-fryer":{packageOrientation:"vertical",dishOrientation:"vertical"},
-    "corte-ondulado-900-premium":{packageOrientation:"horizontal",dishOrientation:"horizontal",dishRotation:90,dishScale:1.08},
+    "corte-ondulado-900-premium":{packageOrientation:"horizontal",dishOrientation:"horizontal",dishRotation:90,dishScale:.96,dishPositionY:1},
     "corte-recto-900-premium":{packageOrientation:"horizontal",dishOrientation:"horizontal",dishRotation:90,dishScale:1.08},
     "papa-steak":{packageOrientation:"horizontal",dishOrientation:"horizontal",dishScale:.94},
     "papas-spices":{packageOrientation:"vertical",dishOrientation:"vertical"},
