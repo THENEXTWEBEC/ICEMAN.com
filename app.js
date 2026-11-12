@@ -849,7 +849,7 @@
     "smoothie-green":{packageOrientation:"vertical",dishOrientation:"vertical"},
     "smoothie-orange":{packageOrientation:"vertical",dishOrientation:"vertical"},
     "smoothie-red":{packageOrientation:"vertical",dishOrientation:"vertical"},
-    "waffle-glaseado":{packageOrientation:"horizontal",dishOrientation:"horizontal",packageScale:1.04,dishScale:.98}
+    "waffle-glaseado":{packageOrientation:"horizontal",dishOrientation:"horizontal",packageScale:1.04,dishScale:.98,dishPositionY:3.8}
   };
   function productScene(product, prioritizeImage = false, eagerImage = false, imageSizes = "(max-width: 640px) 82vw, 520px") {
     const imageLoading = eagerImage ? "eager" : "lazy";
