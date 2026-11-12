@@ -905,9 +905,9 @@
     const words = "Hacerlo fácil no significa hacerlo siempre igual.".split(" ");
     const content = `<div class="brand-story"><section class="story-hero" data-reveal-hero><div class="story-hidden-photo" aria-hidden="true"><img src="${editorialImage(storyVisuals.hero.image)}" alt="${storyVisuals.hero.alt}" fetchpriority="high" decoding="async"></div><div class="wrap story-hero-inner"><div class="story-hero-copy"><span class="story-kicker">SOMOS IceMan</span><h1>Lo hacemos fácil.<br><em>Tú lo haces especial.</em></h1><p class="story-reveal-hint">Mueve el cursor o toca para destapar nuestra mesa</p><div class="story-hero-actions"><a href="#trayectoria" class="story-scroll">${iconArrow("down")} <span>Desliza para conocernos</span></a><button class="story-reveal-toggle" type="button" data-reveal-toggle aria-pressed="false">Descubre nuestra mesa ${iconArrow("up-right")}</button></div></div>${floatPacks("hero-story-packs")}</div></section>
     <section class="story-section story-history" id="trayectoria"><div class="wrap"><span class="story-number">02 / CERCA DE TI</span><div class="story-history-grid"><h2>Más de <em>20 años</em> cerca de tu mesa</h2><div class="story-history-copy"><p>IceMan es una marca ecuatoriana de alimentos congelados con más de 20 años de trayectoria. Forma parte de Kypross, una empresa especializada en la elaboración, importación y distribución de alimentos. Ofrecemos una amplia variedad de productos pensados para hacer más fáciles tus comidas de todos los días y abrirte nuevas posibilidades en la cocina.</p><p>A lo largo de los años hemos ampliado nuestras categorías y nuestra presencia en el país, manteniendo nuestro compromiso con la calidad, la variedad y la confianza. También queremos demostrarte que elegir congelados no significa renunciar al sabor ni al valor nutricional: procesos como IQF ayudan a conservar las características de los alimentos.</p></div></div><div class="story-history-foot"><img src="${editorialImage(storyVisuals.history.image)}" alt="${storyVisuals.history.alt}" loading="lazy" decoding="async"><p>Pensamos en ti, en tu familia y en las necesidades reales de cada día.</p></div></div></section>
-    ${storySelector(storyConcepts,"concepts","Elegir IceMan significa elegir…","Toca cada concepto y mira cómo cambia la historia","03")}
+    ${storySelector(storyConcepts,"concepts","Elegir IceMan significa elegir…","Desliza hacia abajo y mira cómo cambia la historia","03")}
     <section class="story-purpose" data-story-purpose><div class="wrap purpose-sticky"><div class="purpose-copy"><span class="story-number">04 / NUESTRO PROPÓSITO</span><h2 aria-label="Hacerlo fácil no significa hacerlo siempre igual.">${words.map(w=>`<span aria-hidden="true">${w}</span>`).join(" ")}</h2><p>Existimos para que la falta de tiempo nunca limite la posibilidad de comer rico, crear algo diferente y compartir.</p></div><div class="purpose-photos">${storyVisuals.purpose.map((visual,i)=>`<img class="${i===0?"is-active":""}" src="${editorialImage(visual.image)}" alt="${visual.alt}" loading="lazy" decoding="async">`).join("")}</div></div></section>
-    ${storySelector(storyValues,"values","Así hacemos las cosas","Selecciona un valor para descubrir cómo se vive en IceMan","05")}
+    ${storySelector(storyValues,"values","Así hacemos las cosas","Desliza hacia abajo para descubrir cómo vivimos estos valores","05")}
     <section class="story-closing"><div class="wrap"><span class="story-number">06 / ESTO RECIÉN EMPIEZA</span><h2>Hay mucho<br>por <em>descubrir.</em></h2><a class="btn btn-primary" href="/productos" data-link>Conoce nuestros productos ${iconArrow()}</a>${floatPacks("closing-packs",floatingPackSets.closing)}</div></section></div>`;
     pageShell(content,path);
     updateHead(path,"Somos IceMan — Lo hacemos fácil. Tú lo haces especial.","Conoce IceMan, una marca ecuatoriana con más de 20 años cerca de tu mesa.");
@@ -1025,16 +1025,41 @@
       comparison.dataset.comparisonSide=value === 100 ? "pack" : value === 0 ? "dish" : "mix";
       e.target.setAttribute("aria-valuetext",`${value}% empaque, ${100-value}% preparación`);
     },{signal});
-    root.querySelectorAll("[data-story-selector]").forEach(section=>{
-      section.addEventListener("click",e=>{
-        const button=e.target.closest("[data-story-option]"); if (!button) return;
-        const items=section.dataset.storySelector==="concepts"?storyConcepts:storyValues;
-        const item=items[Number(button.dataset.storyOption)];
-        section.querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed",String(b===button)));
-        const image=section.querySelector(".story-panel img"); image.src=editorialImage(item.image); image.alt=item.alt;
-        section.querySelector(".story-panel p").textContent=item.text;
-      },{signal});
-    });
+    const storySections=[...root.querySelectorAll("[data-story-selector]")];
+    const activateStoryOption=(section,index)=>{
+      const buttons=[...section.querySelectorAll("[data-story-option]")];
+      const button=buttons[index]; if(!button || button.getAttribute("aria-pressed")==="true") return;
+      const items=section.dataset.storySelector==="concepts"?storyConcepts:storyValues;
+      const item=items[index];
+      buttons.forEach(b=>b.setAttribute("aria-pressed",String(b===button)));
+      const image=section.querySelector(".story-panel img"); image.classList.add("is-changing"); image.src=editorialImage(item.image); image.alt=item.alt;
+      requestAnimationFrame(()=>image.classList.remove("is-changing"));
+      section.querySelector(".story-panel p").textContent=item.text;
+    };
+    storySections.forEach(section=>section.addEventListener("click",e=>{
+      const button=e.target.closest("[data-story-option]"); if(button) activateStoryOption(section,Number(button.dataset.storyOption));
+    },{signal}));
+    let storyFrame=0;
+    const updateScrollStories=()=>{
+      storyFrame=0;
+      const targetY=window.innerHeight*.48;
+      storySections.forEach(section=>{
+        const sectionRect=section.getBoundingClientRect();
+        if(sectionRect.bottom<0 || sectionRect.top>window.innerHeight) return;
+        let nearestIndex=0,nearestDistance=Infinity;
+        section.querySelectorAll("[data-story-option]").forEach((button,index)=>{
+          const rect=button.getBoundingClientRect();
+          const distance=Math.abs((rect.top+rect.bottom)/2-targetY);
+          if(distance<nearestDistance){nearestDistance=distance;nearestIndex=index;}
+        });
+        activateStoryOption(section,nearestIndex);
+      });
+    };
+    const scheduleScrollStories=()=>{if(!storyFrame) storyFrame=requestAnimationFrame(updateScrollStories);};
+    window.addEventListener("scroll",scheduleScrollStories,{signal,passive:true});
+    window.addEventListener("resize",scheduleScrollStories,{signal,passive:true});
+    scheduleScrollStories();
+    signal.addEventListener("abort",()=>{if(storyFrame) cancelAnimationFrame(storyFrame);},{once:true});
     const hero=root.querySelector("[data-reveal-hero]");
     if(hero){
       const update=e=>{ if (e.target.closest("a,button")) return; const rect=hero.getBoundingClientRect(); hero.style.setProperty("--reveal-x",`${e.clientX-rect.left}px`);hero.style.setProperty("--reveal-y",`${e.clientY-rect.top}px`);hero.classList.add("is-revealing");};
