@@ -378,3 +378,42 @@
 .recipe-experience .planner-recommendation small{color:#6a788b;font-size:11px}
 .recipe-experience .planner-recommendation .thin-arrow{width:17px;color:#1686aa}
 @media(max-width:760px){.recipe-experience .planner-more-heading{margin-top:22px}.recipe-experience .planner-recommendation strong{font-size:13px}}
+
+/* Desktop one-screen planner: questions and recommendations stay visible together. */
+@media(min-width:821px){
+  .recipe-experience .editorial-planner{
+    min-height:calc(100svh - var(--header-height) - var(--safe-top));
+    height:calc(100svh - var(--header-height) - var(--safe-top));
+    padding:22px 0;
+    overflow:hidden;
+  }
+  .recipe-experience .planner-layout{
+    height:100%;
+    grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);
+    gap:clamp(28px,4vw,58px);
+    align-items:stretch;
+  }
+  .recipe-experience .planner-copy{justify-content:center}
+  .recipe-experience .planner-copy h2{margin:8px 0 10px;font-size:clamp(34px,3.15vw,48px)}
+  .recipe-experience .planner-copy>p{font-size:14px;line-height:1.4}
+  .recipe-experience .planner-step{margin-top:10px}
+  .recipe-experience .planner-step strong{margin-bottom:6px;font-size:14px}
+  .recipe-experience .planner-options{gap:6px 8px}
+  .recipe-experience .planner-options button{min-height:36px;padding:0 11px;font-size:12px}
+  .recipe-experience .planner-result{align-self:center;max-height:100%;overflow:hidden;padding:18px 24px 20px;border-radius:18px}
+  .recipe-experience .planner-result-top{height:180px}
+  .recipe-experience .planner-result-top img{width:240px;height:180px}
+  .recipe-experience .planner-result>small{margin-top:5px;font-size:10px}
+  .recipe-experience .planner-result h3{margin:6px 0 7px;font-size:clamp(23px,2.05vw,31px);line-height:1.08}
+  .recipe-experience .planner-result>p{margin:7px 0;font-size:13px;line-height:1.4}
+  .recipe-experience .planner-result [data-planner-facts]{font-size:13px}
+  .recipe-experience .planner-products{margin:9px 0 11px}
+  .recipe-experience .planner-products a{font-size:11px}
+  .recipe-experience .planner-result .btn{min-height:46px;padding:0 18px;font-size:13px}
+  .recipe-experience .planner-more-heading{margin:13px 0 7px;font-size:10px}
+  .recipe-experience .planner-recommendations{gap:6px}
+  .recipe-experience .planner-recommendation{grid-template-columns:52px minmax(0,1fr) 16px;gap:8px;padding:6px 8px}
+  .recipe-experience .planner-recommendation img{width:52px;height:43px}
+  .recipe-experience .planner-recommendation strong{font-size:11px}
+  .recipe-experience .planner-recommendation small{font-size:10px}
+}
