@@ -576,7 +576,7 @@
   }
   function recipePlanner() {
     const plannerOption = (choice, value, selected = false) => `<button class="${selected ? "is-selected" : ""}" data-planner-choice="${choice}" data-value="${value}" aria-pressed="${selected}">${value}</button>`;
-    return `<section class="editorial-planner" data-recipe-planner><div class="wrap planner-layout"><div class="planner-copy"><div class="eyebrow">Una idea a tu medida</div><h2>¿Qué preparamos hoy?</h2><p>Cuéntanos cómo quieres comer, cuánto tiempo tienes y qué producto te gustaría usar. Te sugerimos una combinación del catálogo.</p><div class="planner-step"><span>01</span><div><strong>¿Para cuántas personas?</strong><div class="planner-options">${[
+    return `<section class="editorial-planner" data-recipe-planner><div class="wrap planner-layout"><div class="planner-copy"><div class="eyebrow">Una idea a tu medida</div><h2>¿Qué preparamos hoy?</h2><p>Responde cuatro preguntas y recibe varias ideas IceMan para tu momento.</p><div class="planner-step"><span>01</span><div><strong>¿Para cuántas personas?</strong><div class="planner-options">${[
       plannerOption("people","1–2",true), plannerOption("people","3–4"), plannerOption("people","5–8"), plannerOption("people","8+")
     ].join("")}</div></div></div><div class="planner-step"><span>02</span><div><strong>¿Cuál es el plan?</strong><div class="planner-options">${[
       plannerOption("plan","Cena rápida",true), plannerOption("plan","Película"), plannerOption("plan","Partido"), plannerOption("plan","Reunión"), plannerOption("plan","Fin de semana")
@@ -584,26 +584,18 @@
       plannerOption("method","Air Fryer",true), plannerOption("method","Horno"), plannerOption("method","Sartén"), plannerOption("method","Olla"), plannerOption("method","Lo más rápido")
     ].join("")}</div></div></div><div class="planner-step"><span>04</span><div><strong>¿Cuánto tiempo tienes?</strong><div class="planner-options">${[
       plannerOption("time","Menos de 15 min"), plannerOption("time","15–30 min",true), plannerOption("time","30–45 min"), plannerOption("time","45+ min")
-    ].join("")}</div></div></div><div class="planner-step"><span>05</span><div><strong>¿Qué quieres preparar?</strong><div class="planner-options">${[
-      plannerOption("dish","Plato fuerte",true), plannerOption("dish","Acompañamiento"), plannerOption("dish","Snack"), plannerOption("dish","Postre"), plannerOption("dish","Bowl")
-    ].join("")}</div></div></div><div class="planner-step"><span>06</span><div><strong>¿Qué sabor prefieres?</strong><div class="planner-options">${[
-      plannerOption("flavor","Salado",true), plannerOption("flavor","Dulce"), plannerOption("flavor","Agridulce"), plannerOption("flavor","Picante"), plannerOption("flavor","Indiferente")
-    ].join("")}</div></div></div><div class="planner-step"><span>07</span><div><strong>¿Qué producto quieres usar?</strong><div class="planner-options">${[
-      plannerOption("product","Papas",true), plannerOption("product","Vegetales"), plannerOption("product","Waffles"), plannerOption("product","Edamame"), plannerOption("product","Cualquier producto")
-    ].join("")}</div></div></div><div class="planner-step"><span>08</span><div><strong>¿Qué tan fácil lo quieres?</strong><div class="planner-options">${[
-      plannerOption("difficulty","Muy fácil"), plannerOption("difficulty","Fácil",true), plannerOption("difficulty","Intermedio")
-    ].join("")}</div></div></div></div><aside class="planner-result" aria-live="polite"><div class="planner-result-top"><span class="planner-result-icon" aria-hidden="true">${iconSpark()}</span><img data-planner-image src="${editorialImage("editorial/occasion-quick-dinner.webp")}" alt="Idea de menú IceMan para una cena rápida" loading="lazy" decoding="async" width="187" height="135"></div><small>UNA IDEA PARA TI</small><h3 data-planner-title></h3><p data-planner-description></p><p data-planner-facts></p><p data-planner-match></p><div class="planner-products" data-planner-products></div><a href="${withBase(editorialPath(editorial.recipes[0]))}" class="btn btn-primary" data-planner-recipe-link data-link>Ver cómo prepararlo ${iconArrow()}</a></aside></div></section>`;
+    ].join("")}</div></div></div></div><aside class="planner-result" aria-live="polite"><div class="planner-result-top"><span class="planner-result-icon" aria-hidden="true">${iconSpark()}</span><img data-planner-image src="${editorialImage("editorial/occasion-quick-dinner.webp")}" alt="Idea de menú IceMan para una cena rápida" loading="lazy" decoding="async" width="187" height="135"></div><small>MEJOR OPCIÓN PARA TI</small><h3 data-planner-title></h3><p data-planner-description></p><p data-planner-facts></p><p data-planner-match></p><div class="planner-products" data-planner-products></div><a href="${withBase(editorialPath(editorial.recipes[0]))}" class="btn btn-primary" data-planner-recipe-link data-link>Ver cómo prepararlo ${iconArrow()}</a><div class="planner-more-heading">También podrías preparar</div><div class="planner-recommendations" data-planner-recommendations></div></aside></div></section>`;
   }
   function updateRecipePlanner() {
     const planner = root.querySelector("[data-recipe-planner]");
     if (!planner) return;
     const selected = Object.fromEntries([...planner.querySelectorAll("[data-planner-choice].is-selected")].map(button => [button.dataset.plannerChoice, button.dataset.value]));
     const profiles = {
-      "brochetas-carne-papas-rejilla-chimichurri": {methods:["Sartén","Parrilla","Horno"], plans:["Reunión","Fin de semana"], times:["30–45 min","45+ min"], dishes:["Plato fuerte"], flavors:["Salado","Agridulce"], products:["Papas"], difficulty:"Intermedio", servings:4},
-      "carne-plancha-papas-onduladas-salsa-ajo": {methods:["Sartén","Horno","Air Fryer"], plans:["Cena rápida","Fin de semana"], times:["30–45 min"], dishes:["Plato fuerte"], flavors:["Salado"], products:["Papas"], difficulty:"Fácil", servings:4},
-      "pollo-hierbas-aros-cebolla-ensalada-repollo": {methods:["Sartén","Horno","Air Fryer"], plans:["Cena rápida","Reunión"], times:["30–45 min"], dishes:["Plato fuerte"], flavors:["Salado"], products:["Papas"], difficulty:"Fácil", servings:4},
-      "waffles-iceman-franui-frutos-rojos": {methods:["Air Fryer","Horno","Olla"], plans:["Película","Fin de semana"], times:["15–30 min"], dishes:["Postre","Desayuno"], flavors:["Dulce"], products:["Waffles"], difficulty:"Muy fácil", servings:1},
-      "bowl-salmon-teriyaki-edamame-mayonesa-picante": {methods:["Sartén","Olla"], plans:["Cena rápida","Fin de semana"], times:["30–45 min"], dishes:["Bowl","Plato fuerte"], flavors:["Agridulce","Picante"], products:["Edamame"], difficulty:"Intermedio", servings:1}
+      "brochetas-carne-papas-rejilla-chimichurri": {methods:["Sartén","Parrilla","Horno"], plans:["Reunión","Fin de semana"], times:["30–45 min","45+ min"], servings:4},
+      "carne-plancha-papas-onduladas-salsa-ajo": {methods:["Sartén","Horno","Air Fryer"], plans:["Cena rápida","Fin de semana"], times:["30–45 min"], servings:4},
+      "pollo-hierbas-aros-cebolla-ensalada-repollo": {methods:["Sartén","Horno","Air Fryer"], plans:["Cena rápida","Reunión"], times:["30–45 min"], servings:4},
+      "waffles-iceman-franui-frutos-rojos": {methods:["Air Fryer","Horno","Olla"], plans:["Película","Fin de semana"], times:["15–30 min"], servings:1},
+      "bowl-salmon-teriyaki-edamame-mayonesa-picante": {methods:["Sartén","Olla"], plans:["Cena rápida","Fin de semana"], times:["30–45 min"], servings:1}
     };
     const requested = {"1–2":2, "3–4":4, "5–8":8, "8+":9}[selected.people] || 2;
     const scoreRecipe = (recipe) => {
@@ -614,20 +606,15 @@
       if (selected.method === "Lo más rápido") score += meta.times.includes("15–30 min") ? 35 : meta.times.includes("30–45 min") ? 18 : 5;
       else if (meta.methods.includes(selected.method)) score += 30;
       if (meta.times.includes(selected.time)) score += 25;
-      if (meta.dishes.includes(selected.dish)) score += 25;
-      if (selected.flavor === "Indiferente" || meta.flavors.includes(selected.flavor)) score += 20;
-      if (selected.product === "Cualquier producto" || meta.products.includes(selected.product)) score += 25;
-      if (meta.difficulty === selected.difficulty) score += 12;
       score -= Math.abs(meta.servings - requested);
       return score;
     };
-    const recipe = editorial.recipes.slice().sort((a,b) => scoreRecipe(b)-scoreRecipe(a))[0];
-    const image = planner.querySelector("[data-planner-image]");
-    const link = planner.querySelector("[data-planner-recipe-link]");
+    const recommendations = editorial.recipes.slice().sort((a,b) => scoreRecipe(b)-scoreRecipe(a)).slice(0,3);
+    const recipe = recommendations[0];
     if (!recipe) return;
     const meta = profiles[recipe.slug];
-    image.hidden = false;
-    link.hidden = false;
+    const image = planner.querySelector("[data-planner-image]");
+    const link = planner.querySelector("[data-planner-recipe-link]");
     image.src = editorialImage(recipeDishImage(recipe));
     image.alt = recipeVisual(recipe).alt;
     planner.querySelector("[data-planner-title]").textContent = recipe.title;
@@ -637,12 +624,12 @@
     if (!meta.plans.includes(selected.plan)) notes.push("Una alternativa para otro tipo de ocasión.");
     if (!meta.times.includes(selected.time)) notes.push("Ajusta el tiempo según el método de preparación elegido.");
     if (requested !== meta.servings) notes.push("Ajusta las cantidades según el número de personas.");
-    if (meta.difficulty !== selected.difficulty) notes.push(`Una opción ${meta.difficulty.toLocaleLowerCase("es")} para preparar en casa.`);
     if (recipe.slug === "waffles-iceman-franui-frutos-rojos") notes.push("La salsa también se prepara en una olla.");
     if (recipe.slug === "bowl-salmon-teriyaki-edamame-mayonesa-picante") notes.push("El edamame también se cocina en una olla.");
     planner.querySelector("[data-planner-match]").textContent = notes.join(" ");
     planner.querySelector("[data-planner-products]").innerHTML = editorialProducts(recipe.products).map(product => `<a href="${productPath(product)}" data-link>${escapeHTML(product.name)}</a>`).join("");
     link.href = withBase(editorialPath(recipe));
+    planner.querySelector("[data-planner-recommendations]").innerHTML = recommendations.slice(1).map((alternative) => `<a class="planner-recommendation" href="${withBase(editorialPath(alternative))}" data-link><img src="${editorialImage(recipeDishImage(alternative))}" alt="" loading="lazy" decoding="async"><span><strong>${escapeHTML(alternative.title)}</strong><small>${escapeHTML(alternative.time || "Idea IceMan")}</small></span>${iconArrow()}</a>`).join("");
   }
   function recipeProductChoices() {
     const desktop = window.matchMedia("(min-width: 981px)").matches;
