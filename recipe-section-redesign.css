@@ -366,3 +366,15 @@
   .recipe-experience .planner-options button{min-height:42px;padding-inline:12px}
   .recipe-experience .planner-result-top{height:117px}
 }
+
+/* Compact planner: four questions, multiple useful recommendations. */
+.recipe-experience .planner-more-heading{margin:24px 0 10px;color:#1686aa;font-size:11px;font-weight:800;letter-spacing:.11em;text-transform:uppercase}
+.recipe-experience .planner-recommendations{display:grid;gap:8px}
+.recipe-experience .planner-recommendation{display:grid;grid-template-columns:58px minmax(0,1fr) 18px;align-items:center;gap:10px;padding:8px 10px;border:1px solid #e1e9ee;border-radius:10px;background:#f8fbfc;color:#202958;transition:border-color .2s ease,transform .2s ease,background .2s ease}
+.recipe-experience .planner-recommendation:hover,.recipe-experience .planner-recommendation:focus-visible{border-color:#48a9d6;background:#eef9fc;transform:translateY(-1px)}
+.recipe-experience .planner-recommendation img{width:58px;height:48px;object-fit:cover;border-radius:6px;background:#edf3f5}
+.recipe-experience .planner-recommendation span{display:grid;min-width:0;gap:3px}
+.recipe-experience .planner-recommendation strong{overflow:hidden;font-size:12px;line-height:1.2;text-overflow:ellipsis;white-space:nowrap}
+.recipe-experience .planner-recommendation small{color:#6a788b;font-size:11px}
+.recipe-experience .planner-recommendation .thin-arrow{width:17px;color:#1686aa}
+@media(max-width:760px){.recipe-experience .planner-more-heading{margin-top:22px}.recipe-experience .planner-recommendation strong{font-size:13px}}
