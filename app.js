@@ -842,7 +842,7 @@
     "mix-jardinera-450":{packageOrientation:"vertical",dishOrientation:"vertical"},
     "yuca-500":{packageOrientation:"vertical",dishOrientation:"vertical"},
     "zanahoria-ondulada":{packageOrientation:"vertical",dishOrientation:"vertical"},
-    "helado-paila-mora":{packageOrientation:"compact",dishOrientation:"compact"},
+    "helado-paila-mora":{packageOrientation:"compact",dishOrientation:"compact",dishPositionY:9},
     "helado-paila-naranjilla":{packageOrientation:"compact",dishOrientation:"compact"},
     "helado-paila-guanabana":{packageOrientation:"compact",dishOrientation:"compact"},
     "helado-paila-naranjilla-hierbabuena":{packageOrientation:"compact",dishOrientation:"compact"},
