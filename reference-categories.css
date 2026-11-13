@@ -70,3 +70,15 @@
   .reference-category-waffles .reference-category-pack-1{width:76%;height:60%;top:18%;left:12%}
 }
 @media(prefers-reduced-motion:reduce){.reference-category{transition:none}}
+
+/* Desktop: keep the smoothie packs above the title and CTA. */
+@media(min-width:901px){
+  .reference-category-smoothies .reference-category-pack-1{
+    top:13%;left:0;width:66%;height:auto;aspect-ratio:1;object-fit:contain;
+    transform:rotate(-5deg);
+  }
+  .reference-category-smoothies .reference-category-pack-2{
+    top:14%;right:auto;left:39%;width:53%;height:auto;aspect-ratio:600/765;object-fit:contain;
+    transform:rotate(5deg);
+  }
+}
