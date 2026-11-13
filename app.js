@@ -864,11 +864,16 @@
     if (!dish) return `<div class="product-photo">${pack}</div>`;
     const dishBaseSrc = optimizedImage(dish.source === "prepared" ? `${projectBase}/assets/${dish.image}` : dish.image.startsWith("catalog/prepared/") ? `${projectBase}/assets/catalog/prepared-cutout/${dish.image.split("/").pop()}` : editorialImage(dish.image));
     const dishSrc = dishBaseSrc;
+    const dishResponsiveAttrs = responsiveImageAttrs(dishSrc, imageSizes);
+    const deferDishImage = !eagerImage;
+    const dishImageAttrs = deferDishImage
+      ? `data-deferred-src="${dishSrc}"${dishResponsiveAttrs.replace(/\bsrcset=/, "data-deferred-srcset=").replace(/\bsizes=/, "data-deferred-sizes=")}`
+      : `src="${dishSrc}"${dishResponsiveAttrs}`;
     const config = comparisonConfig[product.slug] || {};
     const dishRotation = config.dishRotation || 0;
     const dishScale = config.dishScale || 1;
     const packageScale = config.packageScale || 1;
-    return `<div class="product-comparison" data-comparison data-comparison-product="${product.slug}" data-package-orientation="${config.packageOrientation || "vertical"}" data-dish-orientation="${config.dishOrientation || "vertical"}" data-comparison-dish-rotation="${dishRotation}" data-comparison-side="mix" style="--split:50%;--dish-size:${dishScale};--pack-size:${packageScale};--pack-offset-x:${config.packagePositionX || 0};--pack-offset-y:${config.packagePositionY || 0};--dish-offset-x:${config.dishPositionX || 0};--dish-offset-y:${config.dishPositionY || 0}"><div class="comparison-scene"><div class="comparison-dish ${dish.className || ""}"><img src="${dishSrc}"${responsiveImageAttrs(dishSrc,imageSizes)} alt="${dish.alt}" loading="${imageLoading}"${imagePriority} decoding="async"></div><div class="comparison-pack">${pack}</div><span class="comparison-line" aria-hidden="true"><b>↔</b></span><input type="range" min="0" max="100" value="50" data-compare-range aria-label="Revelar preparación de ${escapeHTML(product.name)}" aria-valuetext="50% empaque, 50% preparación"></div><div class="comparison-captions"><span>En el empaque</span><span>En tu mesa</span></div><p class="comparison-cue">Desliza y descubre <span aria-hidden="true">↔</span></p></div>`;
+    return `<div class="product-comparison" data-comparison data-comparison-product="${product.slug}" data-package-orientation="${config.packageOrientation || "vertical"}" data-dish-orientation="${config.dishOrientation || "vertical"}" data-comparison-dish-rotation="${dishRotation}" data-comparison-side="mix" style="--split:50%;--dish-size:${dishScale};--pack-size:${packageScale};--pack-offset-x:${config.packagePositionX || 0};--pack-offset-y:${config.packagePositionY || 0};--dish-offset-x:${config.dishPositionX || 0};--dish-offset-y:${config.dishPositionY || 0}"><div class="comparison-scene"><div class="comparison-dish ${dish.className || ""}"><img ${dishImageAttrs} alt="${dish.alt}" loading="${imageLoading}"${imagePriority} decoding="async"></div><div class="comparison-pack">${pack}</div><span class="comparison-line" aria-hidden="true"><b>↔</b></span><input type="range" min="0" max="100" value="50" data-compare-range aria-label="Revelar preparación de ${escapeHTML(product.name)}" aria-valuetext="50% empaque, 50% preparación"></div><div class="comparison-captions"><span>En el empaque</span><span>En tu mesa</span></div><p class="comparison-cue">Desliza y descubre <span aria-hidden="true">↔</span></p></div>`;
   }
   const floatingPackSets = {
     default:["air-fryer","edamame-grano","papas-rejilla"],
@@ -979,8 +984,30 @@
       } catch { /* Keep the authored fallback scale if the image cannot be sampled. */ }
     };
     let comparisonObserver;
+    let dishImageObserver;
+    if ("IntersectionObserver" in window) {
+      dishImageObserver = new IntersectionObserver(entries => entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const image = entry.target;
+        if (image.dataset.deferredSrcset) image.srcset = image.dataset.deferredSrcset;
+        if (image.dataset.deferredSizes) image.sizes = image.dataset.deferredSizes;
+        image.src = image.dataset.deferredSrc;
+        delete image.dataset.deferredSrc;
+        delete image.dataset.deferredSrcset;
+        delete image.dataset.deferredSizes;
+        dishImageObserver.unobserve(image);
+      }), { rootMargin: "500px 0px" });
+      signal.addEventListener("abort", () => dishImageObserver.disconnect(), { once:true });
+    } else {
+      root.querySelectorAll(".comparison-dish img[data-deferred-src]").forEach(image => {
+        image.src = image.dataset.deferredSrc;
+        if (image.dataset.deferredSrcset) image.srcset = image.dataset.deferredSrcset;
+        if (image.dataset.deferredSizes) image.sizes = image.dataset.deferredSizes;
+      });
+    }
     refreshComparisons = () => {
       comparisonObserver?.disconnect();
+      if (dishImageObserver) root.querySelectorAll(".comparison-dish img[data-deferred-src]").forEach(image => dishImageObserver.observe(image));
       root.querySelectorAll(".comparison-scene").forEach(scene => {
         comparisonObserver?.observe(scene);
         normalizeComparisonScene(scene);
