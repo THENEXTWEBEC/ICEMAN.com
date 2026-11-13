@@ -59,8 +59,10 @@
   .reference-category-pack-2{top:13%;right:10%;transform:rotate(4deg)}
   .reference-category-vegetales .reference-category-pack-1{width:45%;top:23%;left:9%}
   .reference-category-vegetales .reference-category-pack-2{width:45%;top:13%;right:10%}
-  .reference-category-especialidades .reference-category-pack-1{width:45%;top:24%;left:9%;transform:rotate(-6deg)}
-  .reference-category-especialidades .reference-category-pack-2{width:45%;top:13%;right:10%;transform:rotate(4deg)}
+  .reference-category-especialidades .reference-category-products{top:15%;right:auto;bottom:auto;left:15%;width:70%;height:54%}
+  .reference-category-especialidades .reference-category-pack{width:56%;height:100%;object-fit:contain}
+  .reference-category-especialidades .reference-category-pack-1{top:0;left:0;transform:rotate(-6deg)}
+  .reference-category-especialidades .reference-category-pack-2{top:0;right:0;transform:rotate(4deg)}
   .reference-category-smoothies .reference-category-pack-1{width:45%;height:68%;top:18%;left:9%;transform:rotate(-5deg)}
   .reference-category-smoothies .reference-category-pack-2{width:45%;height:68%;top:13%;right:10%;left:auto;transform:rotate(5deg)}
   .reference-category-helados .reference-category-pack-1{width:45%;top:21%;left:9%;transform:rotate(-3deg)}
