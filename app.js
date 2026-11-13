@@ -1042,7 +1042,7 @@
     let storyFrame=0;
     const updateScrollStories=()=>{
       storyFrame=0;
-      const targetY=window.innerHeight*.48;
+      const targetY=window.innerHeight*(window.innerWidth<=820?0.6:0.42);
       storySections.forEach(section=>{
         const sectionRect=section.getBoundingClientRect();
         if(sectionRect.bottom<0 || sectionRect.top>window.innerHeight) return;
@@ -1075,7 +1075,7 @@
       frame=0;if(!purpose)return;
       const rect=purpose.getBoundingClientRect();
       const progress=reduced.matches?1:Math.max(0,Math.min(1,(innerHeight*.6-rect.top)/(rect.height-innerHeight*.3)));
-      const wordColors=["#ffffff","#3bb3e9","#f9d657"];
+      const wordColors=["#ffffff","#3bb3e9","#f9d657","#d2b3ff","#a98cff","#f1b7ed"];
       const words=purpose.querySelectorAll("h2 span");words.forEach((word,i)=>{word.style.setProperty("--purpose-word-color",wordColors[i%wordColors.length]);word.classList.toggle("lit",progress>=(i/(words.length+1)));});
       const purposeImages=purpose.querySelectorAll(".purpose-photos img");
       const activeImageIndex=Math.min(purposeImages.length-1,Math.floor(progress*purposeImages.length));
