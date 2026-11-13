@@ -1136,9 +1136,9 @@ body:has(.home-hero-journey) .site-header .brand-official-logo{width:158px;heigh
 .story-selector .story-options{align-self:stretch}
 .story-selector .story-options button{min-height:clamp(70px,8.5vh,100px);padding:20px 0;scroll-margin-top:20vh}
 .story-selector .story-panel{position:sticky;top:clamp(96px,13vh,150px);align-self:start}
-.story-selector .story-panel-image{height:clamp(260px,38vh,440px)}
-.story-selector .story-panel img{transition:opacity .22s ease}
-.story-selector .story-panel img.is-changing{opacity:0}
+.story-selector .story-panel-image{height:clamp(260px,38vh,440px);position:relative;isolation:isolate;overflow:hidden}
+.story-selector .story-panel-image img{position:absolute;inset:0;width:100%;height:100%;opacity:0;transition:opacity .7s cubic-bezier(.22,.61,.36,1);will-change:opacity}
+.story-selector .story-panel-image img.is-visible{opacity:1}
 @media(max-width:820px){
   .story-selector{padding-block:clamp(38px,6vh,64px)}
   .story-selector .story-selector-layout{gap:18px}
@@ -1148,3 +1148,5 @@ body:has(.home-hero-journey) .site-header .brand-official-logo{width:158px;heigh
   .story-selector .story-panel p{font-size:14px;min-height:0}
 }
 @media(max-width:600px){.story-selector .story-selector-layout{margin-top:22px}.story-selector .story-section-head h2{font-size:clamp(32px,8vw,48px);margin:14px 0}.story-selector .story-section-head>p{font-size:12px}.story-selector .story-options button{min-height:56px;padding:12px 0;font-size:clamp(20px,5.6vw,27px)}}
+
+@media(prefers-reduced-motion:reduce){.story-selector .story-panel-image img{transition:none!important}}
