@@ -126,6 +126,25 @@
 .planner-result-top img{display:block;width:100%;max-width:none;height:220px;object-fit:contain;background:transparent}
 @media(max-width:560px){.planner-result-top img{width:100%;height:190px}}
 
+/* Keep the complete recipe planner visually centered on desktop screens. */
+@media(min-width:821px){
+  .editorial-planner{display:grid;min-height:calc(100svh - 76px);align-items:center;padding:clamp(24px,4vh,48px) 0}
+  .planner-layout{width:min(calc(100% - 48px),1560px);margin-inline:auto;gap:clamp(32px,5vw,78px)}
+  .planner-step{margin-top:17px}
+  .planner-copy h2{margin:12px 0;font-size:clamp(38px,4vw,52px)}
+  .planner-copy>p{margin:0;line-height:1.55}
+  .planner-step strong{margin-bottom:8px}
+  .planner-options button{min-height:42px;padding-inline:14px;font-size:12px}
+  .planner-result{padding:clamp(24px,2.2vw,34px)}
+}
+@media(min-width:821px) and (max-height:820px){
+  .editorial-planner{padding-block:20px}
+  .planner-step{margin-top:12px}
+  .planner-options button{min-height:37px}
+  .planner-result{padding:22px}
+  .planner-result-top img{height:180px}
+}
+
 /* This portrait recipe photo already includes the complete serving and package.
    Keep its original composition instead of cropping either one into landscape frames. */
 .table-story-photo:has(>img[src*="customer-potatoes-rejilla"]),
