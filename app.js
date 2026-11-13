@@ -899,7 +899,7 @@
     {title:"CONFIANZA",text:"Cuidamos la calidad de todo lo que llevamos hasta ti.",image:"editorial/occasion-weekend-breakfast.webp",alt:"Desayuno preparado para compartir en familia"}
   ];
   function storySelector(items, id, title, hint, number) {
-    return `<section class="story-section story-selector" data-story-selector="${id}"><div class="wrap"><div class="story-section-head"><span class="story-number">${number} / SOMOS IceMan</span><h2>${title}</h2><p>${hint}</p></div><div class="story-selector-layout"><div class="story-options" role="group" aria-label="${title}">${items.map((item,i)=>`<button type="button" data-story-option="${i}" aria-pressed="${i===0}" aria-controls="story-panel-${id}"><span>0${i+1}</span>${item.title}<b aria-hidden="true">${iconArrow("up-right")}</b></button>`).join("")}</div><div class="story-panel" id="story-panel-${id}"><div class="story-panel-image"><img src="${editorialImage(items[0].image)}" alt="${items[0].alt}" loading="lazy" decoding="async"></div><p aria-live="polite">${items[0].text}</p></div></div></div></section>`;
+    return `<section class="story-section story-selector" data-story-selector="${id}"><div class="wrap"><div class="story-section-head"><span class="story-number">${number} / SOMOS IceMan</span><h2>${title}</h2><p>${hint}</p></div><div class="story-selector-layout"><div class="story-options" role="group" aria-label="${title}">${items.map((item,i)=>`<button type="button" data-story-option="${i}" aria-pressed="${i===0}" aria-controls="story-panel-${id}"><span>0${i+1}</span>${item.title}<b aria-hidden="true">${iconArrow("up-right")}</b></button>`).join("")}</div><div class="story-panel" id="story-panel-${id}"><div class="story-panel-image"><img class="is-visible" src="${editorialImage(items[0].image)}" alt="${items[0].alt}" loading="lazy" decoding="async"><img class="story-panel-image-next" alt="" aria-hidden="true" decoding="async"></div><p aria-live="polite">${items[0].text}</p></div></div></div></section>`;
   }
   function aboutPage(path) {
     const words = "Hacerlo fácil no significa hacerlo siempre igual.".split(" ");
@@ -1032,9 +1032,26 @@
       const items=section.dataset.storySelector==="concepts"?storyConcepts:storyValues;
       const item=items[index];
       buttons.forEach(b=>b.setAttribute("aria-pressed",String(b===button)));
-      const image=section.querySelector(".story-panel img"); image.classList.add("is-changing"); image.src=editorialImage(item.image); image.alt=item.alt;
-      requestAnimationFrame(()=>image.classList.remove("is-changing"));
-      section.querySelector(".story-panel p").textContent=item.text;
+      const images=[...section.querySelectorAll(".story-panel-image img")];
+      const active=images.find(image=>image.classList.contains("is-visible"))||images[0];
+      const incoming=images.find(image=>image!==active);
+      const transitionId=Number(section.dataset.storyTransitionId||0)+1;
+      section.dataset.storyTransitionId=String(transitionId);
+      incoming.onload=()=>{
+        if(Number(section.dataset.storyTransitionId)!==transitionId) return;
+        incoming.alt=item.alt;
+        incoming.removeAttribute("aria-hidden");
+        active.alt="";
+        active.setAttribute("aria-hidden","true");
+        requestAnimationFrame(()=>{
+          incoming.classList.add("is-visible");
+          active.classList.remove("is-visible");
+          section.querySelector(".story-panel p").textContent=item.text;
+        });
+      };
+      incoming.onerror=incoming.onload;
+      incoming.src=editorialImage(item.image);
+      if(incoming.complete && incoming.naturalWidth) incoming.onload();
     };
     storySections.forEach(section=>section.addEventListener("click",e=>{
       const button=e.target.closest("[data-story-option]"); if(button) activateStoryOption(section,Number(button.dataset.storyOption));
