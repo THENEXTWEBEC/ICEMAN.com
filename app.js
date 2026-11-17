@@ -830,12 +830,12 @@
   // baseline; only products needing an optical adjustment override the defaults.
   const comparisonConfig = {
     "papas-air-fryer":{packageOrientation:"vertical",dishOrientation:"vertical"},
-    "corte-ondulado-900-premium":{packageOrientation:"horizontal",dishOrientation:"horizontal",dishRotation:90,dishScale:1.08},
+    "corte-ondulado-900-premium":{packageOrientation:"horizontal",dishOrientation:"horizontal",dishRotation:90,dishScale:.88},
     "corte-recto-900-premium":{packageOrientation:"horizontal",dishOrientation:"horizontal",dishRotation:90,dishScale:.94,dishPositionY:1.4},
     "papa-steak":{packageOrientation:"horizontal",dishOrientation:"horizontal",packageScale:.78,dishScale:.84,dishPositionY:2},
     "papas-spices":{packageOrientation:"vertical",dishOrientation:"vertical"},
     "papas-finas-hierbas":{packageOrientation:"vertical",dishOrientation:"vertical"},
-    "papas-rejilla":{packageOrientation:"vertical",dishOrientation:"vertical"},
+    "papas-rejilla":{packageOrientation:"vertical",dishOrientation:"vertical",dishPositionY:4},
     "hash-brown":{packageOrientation:"vertical",dishOrientation:"vertical"},
     "aros-de-cebolla":{packageOrientation:"vertical",dishOrientation:"vertical"},
     "croqueta-de-yuca":{packageOrientation:"vertical",dishOrientation:"vertical"},
