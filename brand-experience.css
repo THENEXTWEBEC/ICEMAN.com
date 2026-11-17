@@ -1147,3 +1147,13 @@ body:has(.home-hero-journey) .site-header .brand-official-logo{width:158px;heigh
   object-position:center!important;
 }
 .catalog-results .comparison-line{left:var(--split,50%)}
+
+
+@media(max-width:640px){
+  .product-comparison[data-comparison-product="corte-ondulado-900-premium"]{
+    --dish-size:.76!important;
+  }
+  .product-comparison[data-comparison-product="corte-ondulado-900-premium"] .comparison-dish img{
+    transform:translate(var(--dish-normalized-x,0px),calc(var(--dish-normalized-y,0px) + 6%)) scale(calc(var(--dish-normalized-scale,1) * var(--dish-size,1))) rotate(90deg)!important;
+  }
+}
