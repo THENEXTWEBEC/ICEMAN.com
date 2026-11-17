@@ -1163,6 +1163,12 @@ body:has(.home-hero-journey) .site-header .brand-official-logo{width:158px;heigh
   .product-comparison[data-comparison-product="helado-paila-mora"] .comparison-dish img{
     transform:translate(var(--dish-normalized-x,0px),calc(var(--dish-normalized-y,0px) + 3%)) scale(calc(var(--dish-normalized-scale,1) * var(--dish-size,1)))!important;
   }
+  /* Match the served cutout scale of mora on mobile. */
+  .product-comparison[data-comparison-product="helado-paila-naranjilla"],
+  .product-comparison[data-comparison-product="helado-paila-guanabana"],
+  .product-comparison[data-comparison-product="helado-paila-naranjilla-hierbabuena"]{
+    --dish-size:1.5!important;
+  }
 }
 
 @media(max-width:640px){
