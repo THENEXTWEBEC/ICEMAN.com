@@ -870,7 +870,7 @@
     if (!dish) return `<div class="product-photo">${pack}</div>`;
     const dishBaseSrc = optimizedImage(dish.source === "prepared" ? `${projectBase}/assets/${dish.image}` : dish.image.startsWith("catalog/prepared/") ? `${projectBase}/assets/catalog/prepared-cutout/${dish.image.split("/").pop()}` : editorialImage(dish.image));
     const dishSrc = dishBaseSrc;
-    const dishResponsiveAttrs = responsiveImageAttrs(dishSrc, imageSizes);
+    const dishResponsiveAttrs = responsiveImageAttrs(dishSrc, imageSizes) || responsiveEditorialImageAttrs(dishSrc, imageSizes);
     const deferDishImage = !eagerImage;
     const dishImageAttrs = deferDishImage
       ? `data-deferred-src="${dishSrc}"${dishResponsiveAttrs.replace(/\bsrcset=/, "data-deferred-srcset=").replace(/\bsizes=/, "data-deferred-sizes=")}`
@@ -943,7 +943,10 @@
         const comparison = scene.closest("[data-comparison]");
         // Arvejas establishes the vertical 70% silhouette height. Wide packs
         // use more of the available width without stretching their photographs.
-        const profiles = { vertical:[.70,.70], horizontal:[.84,.62], compact:[.70,.64] };
+        const mobileViewport = window.matchMedia("(max-width: 600px)").matches;
+        const profiles = mobileViewport
+          ? { vertical:[.90,.70], horizontal:[.90,.70], compact:[.90,.70] }
+          : { vertical:[.70,.70], horizontal:[.84,.62], compact:[.70,.64] };
         const measurements = images.map(img => {
           let shape = silhouetteCache.get(img);
           if (!shape || shape.naturalWidth !== img.naturalWidth || shape.naturalHeight !== img.naturalHeight) {
@@ -979,13 +982,18 @@
           const kind = img.closest(".comparison-pack") ? "pack" : "dish";
           const orientation = comparison.dataset[kind === "pack" ? "packageOrientation" : "dishOrientation"] || "vertical";
           const profile = profiles[orientation] || profiles.vertical;
-          const scale=Math.min(bounds.width*profile[0]/visibleWidth,bounds.height*profile[1]/visibleHeight);
+          const targetScale=Math.min(bounds.width*profile[0]/visibleWidth,bounds.height*profile[1]/visibleHeight);
           const authoredScale=Number(comparison.style.getPropertyValue(`--${kind}-size`)) || 1;
           const offsetX=Number(comparison.style.getPropertyValue(`--${kind}-offset-x`)) || 0;
           const offsetY=Number(comparison.style.getPropertyValue(`--${kind}-offset-y`)) || 0;
+          // On phones, normalize both silhouettes to the same visible height;
+          // keep authored optical tweaks for larger screens.
+          const scale=mobileViewport ? targetScale/authoredScale : targetScale;
+          const mobileOffsetX=mobileViewport ? 0 : offsetX;
+          const mobileOffsetY=mobileViewport ? 0 : offsetY;
           scene.style.setProperty(`--${kind}-normalized-scale`, scale.toFixed(3));
-          scene.style.setProperty(`--${kind}-normalized-x`, `${(-centerX*scale*authoredScale + bounds.width*offsetX/100).toFixed(1)}px`);
-          scene.style.setProperty(`--${kind}-normalized-y`, `${(-centerY*scale*authoredScale + bounds.height*offsetY/100).toFixed(1)}px`);
+          scene.style.setProperty(`--${kind}-normalized-x`, `${(-centerX*scale*authoredScale + bounds.width*mobileOffsetX/100).toFixed(1)}px`);
+          scene.style.setProperty(`--${kind}-normalized-y`, `${(-centerY*scale*authoredScale + bounds.height*mobileOffsetY/100).toFixed(1)}px`);
         });
       } catch { /* Keep the authored fallback scale if the image cannot be sampled. */ }
     };
