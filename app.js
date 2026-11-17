@@ -553,8 +553,8 @@
     const responsive = isComposite
       ? responsiveEditorialImageAttrs(imageSrc, "(max-width: 600px) calc(100vw - 65px), (max-width: 1100px) 90vw, 560px")
       : "";
-    const packSrc = isWaffleBox ? asset("waffle") : (product ? cutoutAsset(product.image) : "");
-    const packageMarkup = "";
+    const packSrc = product ? productionImage(cutoutAsset(product.image)) : "";
+    const packageMarkup = packSrc ? `<img class="recipe-cover-official-pack" src="${packSrc}" alt="" aria-hidden="true" loading="lazy" decoding="async" style="position:absolute;z-index:2;left:3%;bottom:3%;width:${isWaffleBox ? "43%" : "36%"};height:43%;object-fit:contain;object-position:left bottom;filter:drop-shadow(0 3px 5px rgba(10,20,32,.5));pointer-events:none">` : "";
     const search = [recipe.title, recipe.description, ...recipe.tags, ...recipe.occasions]
       .join(" ").toLocaleLowerCase("es").normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     const imagePriority = index < 3 ? ' fetchpriority="high"' : "";
