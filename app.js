@@ -945,7 +945,7 @@
         // use more of the available width without stretching their photographs.
         const mobileViewport = window.matchMedia("(max-width: 600px)").matches;
         const profiles = mobileViewport
-          ? { vertical:[.90,.70], horizontal:[.90,.70], compact:[.90,.70] }
+          ? { vertical:[.78,.56], horizontal:[.78,.56], compact:[.78,.56] }
           : { vertical:[.70,.70], horizontal:[.84,.62], compact:[.70,.64] };
         const measurements = images.map(img => {
           let shape = silhouetteCache.get(img);
