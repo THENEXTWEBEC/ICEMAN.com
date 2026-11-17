@@ -1157,3 +1157,11 @@ body:has(.home-hero-journey) .site-header .brand-official-logo{width:158px;heigh
     transform:translate(var(--dish-normalized-x,0px),calc(var(--dish-normalized-y,0px) + 6%)) scale(calc(var(--dish-normalized-scale,1) * var(--dish-size,1))) rotate(90deg)!important;
   }
 }
+
+
+@media(max-width:640px){
+  .product-comparison[data-comparison-product="corte-recto-900-premium"]{
+    --dish-size:.80!important;
+    --dish-offset-y:6%!important;
+  }
+}
