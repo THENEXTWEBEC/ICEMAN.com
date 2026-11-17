@@ -832,7 +832,7 @@
     "papas-air-fryer":{packageOrientation:"vertical",dishOrientation:"vertical"},
     "corte-ondulado-900-premium":{packageOrientation:"horizontal",dishOrientation:"horizontal",dishRotation:90,dishScale:.88,dishPositionY:4},
     "corte-recto-900-premium":{packageOrientation:"horizontal",dishOrientation:"horizontal",dishRotation:90,dishScale:.94,dishPositionY:1.4},
-    "papa-steak":{packageOrientation:"horizontal",dishOrientation:"horizontal",packageScale:.78,dishScale:.84,dishPositionY:2},
+    "papa-steak":{packageOrientation:"horizontal",dishOrientation:"horizontal",packageScale:.78,dishScale:.84,dishPositionY:2,packageMobileScale:.82,dishMobilePositionY:1},
     "papas-spices":{packageOrientation:"vertical",dishOrientation:"vertical"},
     "papas-finas-hierbas":{packageOrientation:"vertical",dishOrientation:"vertical"},
     "papas-rejilla":{packageOrientation:"vertical",dishOrientation:"vertical",dishPositionY:4},
@@ -879,7 +879,7 @@
     const dishRotation = config.dishRotation || 0;
     const dishScale = config.dishScale || 1;
     const packageScale = config.packageScale || 1;
-    return `<div class="product-comparison" data-comparison data-comparison-product="${product.slug}" data-package-orientation="${config.packageOrientation || "vertical"}" data-dish-orientation="${config.dishOrientation || "vertical"}" data-comparison-dish-rotation="${dishRotation}" data-comparison-side="mix" style="--split:50%;--dish-size:${dishScale};--pack-size:${packageScale};--pack-offset-x:${config.packagePositionX || 0};--pack-offset-y:${config.packagePositionY || 0};--dish-offset-x:${config.dishPositionX || 0};--dish-offset-y:${config.dishPositionY || 0}"><div class="comparison-scene"><div class="comparison-dish ${dish.className || ""}"><img ${dishImageAttrs} alt="${dish.alt}" loading="${imageLoading}"${imagePriority} decoding="async"></div><div class="comparison-pack">${pack}</div><span class="comparison-line" aria-hidden="true"><b>↔</b></span><input type="range" min="0" max="100" value="50" data-compare-range aria-label="Revelar preparación de ${escapeHTML(product.name)}" aria-valuetext="50% empaque, 50% preparación"></div><div class="comparison-captions"><span>En el empaque</span><span>En tu mesa</span></div><p class="comparison-cue">Desliza y descubre <span aria-hidden="true">↔</span></p></div>`;
+    return `<div class="product-comparison" data-comparison data-comparison-product="${product.slug}" data-package-orientation="${config.packageOrientation || "vertical"}" data-dish-orientation="${config.dishOrientation || "vertical"}" data-comparison-dish-rotation="${dishRotation}" data-pack-mobile-scale="${config.packageMobileScale || 1}" data-dish-mobile-offset-y="${config.dishMobilePositionY || 0}" data-comparison-side="mix" style="--split:50%;--dish-size:${dishScale};--pack-size:${packageScale};--pack-offset-x:${config.packagePositionX || 0};--pack-offset-y:${config.packagePositionY || 0};--dish-offset-x:${config.dishPositionX || 0};--dish-offset-y:${config.dishPositionY || 0}"><div class="comparison-scene"><div class="comparison-dish ${dish.className || ""}"><img ${dishImageAttrs} alt="${dish.alt}" loading="${imageLoading}"${imagePriority} decoding="async"></div><div class="comparison-pack">${pack}</div><span class="comparison-line" aria-hidden="true"><b>↔</b></span><input type="range" min="0" max="100" value="50" data-compare-range aria-label="Revelar preparación de ${escapeHTML(product.name)}" aria-valuetext="50% empaque, 50% preparación"></div><div class="comparison-captions"><span>En el empaque</span><span>En tu mesa</span></div><p class="comparison-cue">Desliza y descubre <span aria-hidden="true">↔</span></p></div>`;
   }
   const floatingPackSets = {
     default:["air-fryer","edamame-grano","papas-rejilla"],
@@ -988,9 +988,10 @@
           const offsetY=Number(comparison.style.getPropertyValue(`--${kind}-offset-y`)) || 0;
           // On phones, normalize both silhouettes to the same visible height;
           // keep authored optical tweaks for larger screens.
-          const scale=mobileViewport ? targetScale/authoredScale : targetScale;
-          const mobileOffsetX=mobileViewport ? 0 : offsetX;
-          const mobileOffsetY=mobileViewport ? 0 : offsetY;
+          const mobileScale=mobileViewport ? (Number(comparison.dataset[`${kind}MobileScale`]) || 1) : 1;
+          const mobileOffsetX=mobileViewport ? (Number(comparison.dataset[`${kind}MobileOffsetX`]) || 0) : offsetX;
+          const mobileOffsetY=mobileViewport ? (Number(comparison.dataset[`${kind}MobileOffsetY`]) || 0) : offsetY;
+          const scale=mobileViewport ? targetScale*mobileScale/authoredScale : targetScale;
           scene.style.setProperty(`--${kind}-normalized-scale`, scale.toFixed(3));
           scene.style.setProperty(`--${kind}-normalized-x`, `${(-centerX*scale*authoredScale + bounds.width*mobileOffsetX/100).toFixed(1)}px`);
           scene.style.setProperty(`--${kind}-normalized-y`, `${(-centerY*scale*authoredScale + bounds.height*mobileOffsetY/100).toFixed(1)}px`);
