@@ -660,13 +660,13 @@
       return;
     }
     if (filter !== "todos") {
-      content.innerHTML = `<div class="product-grid">${shown.map((product, index) => productCard(product, index === 0, index === 0)).join("")}</div>`;
+      content.innerHTML = `<div class="product-grid">${shown.map((product, index) => productCard(product, index === 0, index < 4)).join("")}</div>`;
       refreshComparisons();
       setupMotion(content);
       return;
     }
     const grouped = categories.map((category) => ({ category, items: shown.filter((product) => product.category === category.slug) })).filter((group) => group.items.length);
-    content.innerHTML = grouped.map(({ category, items }, groupIndex) => `<section class="category-section"><h2>${escapeHTML(category.name)}</h2><div class="product-grid">${items.map((product, index) => productCard(product, groupIndex === 0 && index === 0, groupIndex === 0 && index === 0)).join("")}</div></section>`).join("");
+    content.innerHTML = grouped.map(({ category, items }, groupIndex) => `<section class="category-section"><h2>${escapeHTML(category.name)}</h2><div class="product-grid">${items.map((product, index) => productCard(product, groupIndex === 0 && index === 0, groupIndex === 0 && index < 4)).join("")}</div></section>`).join("");
     refreshComparisons();
     setupMotion(content);
   }
@@ -950,7 +950,7 @@
         delete image.dataset.deferredSrcset;
         delete image.dataset.deferredSizes;
         dishImageObserver.unobserve(image);
-      }), { rootMargin: "500px 0px" });
+      }), { rootMargin: "180px 0px" });
       signal.addEventListener("abort", () => dishImageObserver.disconnect(), { once:true });
     } else {
       root.querySelectorAll(".comparison-dish img[data-deferred-src]").forEach(image => {
