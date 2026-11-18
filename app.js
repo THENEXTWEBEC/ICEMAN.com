@@ -1101,7 +1101,7 @@
     let storyFrame=0;
     const updateScrollStories=()=>{
       storyFrame=0;
-      const targetY=window.innerHeight*(window.innerWidth<=820?0.6:0.42);
+      const targetY=window.innerHeight*(window.innerWidth<=820?0.7:0.6);
       storySections.forEach(section=>{
         const sectionRect=section.getBoundingClientRect();
         if(sectionRect.bottom<0 || sectionRect.top>window.innerHeight) return;
