@@ -47,6 +47,7 @@ test('choosing a package renders its matching recipe with complete ingredients a
     recipeVisual: recipe => ({ image:recipe.heroImage || recipe.image, alt:recipe.heroAlt || recipe.title, treatment:'dish' }),
     escapeHTML: value => String(value),
     editorialImage: value => `/assets/${value}`,
+    responsiveEditorialImageAttrs: () => '',
     asset: value => `/assets/catalog/${value}.webp`,
     editorialPath: recipe => `/recetas/${recipe.slug}`,
     iconArrow: () => '→'
