@@ -1186,3 +1186,11 @@ body:has(.home-hero-journey) .site-header .brand-official-logo{width:158px;heigh
 [data-story-selector="values"]>.wrap{position:sticky;top:0;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding-top:5vh;padding-bottom:5vh;box-sizing:border-box}
 [data-story-selector="values"] .story-section-head h2{margin:18px 0}
 [data-story-selector="values"] .story-selector-layout{margin-top:clamp(20px,4vh,50px)}
+
+/* Papa Steak mobile: slightly smaller serving, centered on the package equator. */
+@media(max-width:640px){
+  .product-comparison[data-comparison-product="papa-steak"]{
+    --dish-size:.80!important;
+    --dish-offset-y:0!important;
+  }
+}
