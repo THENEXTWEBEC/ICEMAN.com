@@ -1101,10 +1101,16 @@
     let storyFrame=0;
     const updateScrollStories=()=>{
       storyFrame=0;
-      const targetY=window.innerHeight*(window.innerWidth<=820?0.7:0.6);
       storySections.forEach(section=>{
         const sectionRect=section.getBoundingClientRect();
         if(sectionRect.bottom<0 || sectionRect.top>window.innerHeight) return;
+        if(section.dataset.storySelector==="values"){
+          const stepHeight=Math.max(1,window.innerHeight);
+          const progress=Math.max(0,Math.min(2,(0-sectionRect.top)/stepHeight));
+          activateStoryOption(section,Math.min(2,Math.floor(progress+0.001)));
+          return;
+        }
+        const targetY=window.innerHeight*(window.innerWidth<=820?0.7:0.6);
         let nearestIndex=0,nearestDistance=Infinity;
         section.querySelectorAll("[data-story-option]").forEach((button,index)=>{
           const rect=button.getBoundingClientRect();
