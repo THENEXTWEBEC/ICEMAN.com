@@ -168,3 +168,4 @@ html,body,#app{max-width:100%}html,body{overflow-x:clip}body{min-width:0}img{dis
 .planner-result-top img{display:block;width:clamp(152px,20vw,220px);height:auto;aspect-ratio:16/9;flex:none;border-radius:6px;background:#eef4f5;object-fit:cover;object-position:center;transition:opacity .22s ease}
 @media(max-width:560px){.planner-result-top{gap:12px}.planner-result-top img{width:clamp(112px,30vw,156px)}}
 @media(prefers-reduced-motion:reduce){.planner-result-top img{transition:none}}
+.recipe-detail .editorial-detail-layout{padding-bottom:28px}.recipe-detail .detail-related{padding-top:28px}
