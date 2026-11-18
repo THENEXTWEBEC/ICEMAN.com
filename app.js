@@ -574,69 +574,6 @@
       </div>
     </article>`;
   }
-  function recipePlanner() {
-    return `<section class="editorial-planner" data-recipe-planner><div class="wrap planner-layout"><div class="planner-copy"><div class="eyebrow">Una idea a tu medida</div><h2>¿Qué preparamos hoy?</h2><p>Cuéntanos cuántos son, cuál es el plan, cómo quieres cocinar y qué se te antoja. Te sugerimos una combinación del catálogo.</p><div class="planner-step"><span>01</span><div><strong>¿Para cuántas personas?</strong><div class="planner-options"><button class="is-selected" data-planner-choice="people" data-value="1–2" aria-pressed="true">1–2</button><button data-planner-choice="people" data-value="3–4" aria-pressed="false">3–4</button><button data-planner-choice="people" data-value="5–8" aria-pressed="false">5–8</button><button data-planner-choice="people" data-value="8+" aria-pressed="false">8+</button></div></div></div><div class="planner-step"><span>02</span><div><strong>¿Cuál es el plan?</strong><div class="planner-options"><button class="is-selected" data-planner-choice="plan" data-value="Cena rápida" aria-pressed="true">Cena rápida</button><button data-planner-choice="plan" data-value="Película" aria-pressed="false">Película</button><button data-planner-choice="plan" data-value="Partido" aria-pressed="false">Partido</button><button data-planner-choice="plan" data-value="Reunión" aria-pressed="false">Reunión</button></div></div></div><div class="planner-step"><span>03</span><div><strong>¿Cómo quieres cocinar?</strong><div class="planner-options"><button class="is-selected" data-planner-choice="method" data-value="Air Fryer" aria-pressed="true">Air Fryer</button><button data-planner-choice="method" data-value="Horno" aria-pressed="false">Horno</button><button data-planner-choice="method" data-value="Sartén" aria-pressed="false">Sartén</button><button data-planner-choice="method" data-value="Lo más rápido" aria-pressed="false">Lo más rápido</button></div></div></div><div class="planner-step"><span>04</span><div><strong>¿Qué se te antoja?</strong><div class="planner-options"><button class="is-selected" data-planner-choice="craving" data-value="Algo salado" aria-pressed="true">Algo salado</button><button data-planner-choice="craving" data-value="Algo dulce" aria-pressed="false">Algo dulce</button><button data-planner-choice="craving" data-value="Para picar" aria-pressed="false">Para picar</button><button data-planner-choice="craving" data-value="Un plato completo" aria-pressed="false">Un plato completo</button></div></div></div></div><aside class="planner-result" aria-live="polite"><div class="planner-result-top"><span class="planner-result-icon" aria-hidden="true">${iconSpark()}</span><img data-planner-image src="${editorialImage("editorial/occasion-quick-dinner.webp")}" alt="Idea de menú IceMan para una cena rápida" loading="lazy" decoding="async" width="176" height="99"></div><small>UNA IDEA PARA TI</small><h3 data-planner-title></h3><p data-planner-description></p><p data-planner-facts></p><p data-planner-match></p><div class="planner-products" data-planner-products></div><a href="${withBase(editorialPath(editorial.recipes[0]))}" class="btn btn-primary" data-planner-recipe-link data-link>Ver cómo prepararlo ${iconArrow()}</a></aside></div></section>`;
-  }
-  function updateRecipePlanner() {
-    const planner = root.querySelector("[data-recipe-planner]");
-    if (!planner) return;
-    const selected = Object.fromEntries([...planner.querySelectorAll("[data-planner-choice].is-selected")].map(button => [button.dataset.plannerChoice, button.dataset.value]));
-    // Methods describe the whole recipe, not just the frozen side dish.
-    const matches = {
-      "brochetas-carne-papas-rejilla-chimichurri": {methods:["Sartén"], plans:["Reunión"], servings:4},
-      "carne-plancha-papas-onduladas-salsa-ajo": {methods:["Sartén"], plans:["Cena rápida"], servings:4},
-      "pollo-hierbas-aros-cebolla-ensalada-repollo": {methods:["Sartén"], plans:["Cena rápida"], servings:4},
-      "waffles-iceman-franui-frutos-rojos": {methods:["Air Fryer", "Horno"], plans:["Película", "Reunión"], servings:1},
-      "bowl-salmon-teriyaki-edamame-mayonesa-picante": {methods:["Sartén"], plans:["Cena rápida"], servings:1}
-    };
-    const requested = {"1–2":2, "3–4":4, "5–8":8, "8+":9}[selected.people] || 2;
-    const cravingTerms = {
-      "Algo salado": ["salado", "carne", "pollo", "salmon", "papas", "bowl", "brochetas"],
-      "Algo dulce": ["dulce", "waffle", "franui", "postre", "frutos rojos", "desayuno"],
-      "Para picar": ["aros", "papas", "snack", "picada", "reunion", "waffle"],
-      "Un plato completo": ["carne", "pollo", "salmon", "bowl", "brochetas", "ensalada"]
-    };
-    const cravingScore = recipe => {
-      const text = [recipe.title, recipe.description, ...(recipe.tags || []), ...(recipe.ingredients || [])].join(" ").toLocaleLowerCase("es").normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-      return (cravingTerms[selected.craving] || []).reduce((score, term) => score + Number(text.includes(term.normalize("NFD").replace(/[\u0300-\u036f]/g, ""))), 0);
-    };
-    const candidates = editorial.recipes.filter(recipe => {
-      const meta = matches[recipe.slug];
-      return meta && (selected.method === "Lo más rápido" ? Boolean(recipe.time) : meta.methods.includes(selected.method));
-    }).sort((a,b) => {
-      const score = recipe => (matches[recipe.slug].plans.includes(selected.plan) ? 100 : 0) + cravingScore(recipe) * 12 - Math.abs(matches[recipe.slug].servings-requested) + (selected.method === "Lo más rápido" ? -parseInt(recipe.time,10) : 0);
-      return score(b)-score(a);
-    });
-    const recipe = candidates[0];
-    const image = planner.querySelector("[data-planner-image]");
-    const link = planner.querySelector("[data-planner-recipe-link]");
-    image.hidden = !recipe;
-    link.hidden = !recipe;
-    if (!recipe) {
-      planner.querySelector("[data-planner-title]").textContent = "No encontramos una receta para ese método";
-      planner.querySelector("[data-planner-description]").textContent = "Prueba otro método de preparación para descubrir las recetas disponibles.";
-      planner.querySelector("[data-planner-facts]").textContent = "";
-      planner.querySelector("[data-planner-match]").textContent = "";
-      planner.querySelector("[data-planner-products]").innerHTML = "";
-      return;
-    }
-    const meta = matches[recipe.slug];
-    image.src = editorialImage(recipeDishImage(recipe));
-    image.alt = recipeVisual(recipe).alt;
-    planner.querySelector("[data-planner-title]").textContent = recipe.title;
-    planner.querySelector("[data-planner-description]").textContent = recipe.description;
-    planner.querySelector("[data-planner-facts]").textContent = [recipe.time, recipe.servings ? `Rinde ${recipe.servings}` : ""].filter(Boolean).join(" · ");
-    const notes = [];
-    if (!meta.plans.includes(selected.plan)) notes.push("Una alternativa para otro tipo de ocasión.");
-    if (cravingScore(recipe) === 0) notes.push("Una alternativa cercana a lo que se te antoja.");
-    if (requested !== meta.servings) notes.push("Ajusta las cantidades según el número de personas.");
-    if (recipe.slug === "waffles-iceman-franui-frutos-rojos") notes.push("La salsa también se prepara en una olla.");
-    if (recipe.slug === "bowl-salmon-teriyaki-edamame-mayonesa-picante") notes.push("El edamame también se cocina en una olla.");
-    if (meta.servings === 4) notes.push("Prepara el acompañamiento siguiendo las indicaciones de su empaque.");
-    planner.querySelector("[data-planner-match]").textContent = notes.join(" ");
-    planner.querySelector("[data-planner-products]").innerHTML = editorialProducts(recipe.products).map(product => `<a href="${productPath(product)}" data-link>${escapeHTML(product.name)}</a>`).join("");
-    link.href = withBase(editorialPath(recipe));
-  }
   function recipeProductChoices() {
     const desktop = window.matchMedia("(min-width: 981px)").matches;
     const eagerCount = desktop ? 5 : window.matchMedia("(min-width: 641px)").matches ? 3 : 2;
@@ -662,9 +599,9 @@
   }
   function editorialPage(path) {
     const content=`<div class="recipe-experience"><section class="recipe-discovery" id="elige-tu-idea" data-recipe-explorer><div class="wrap"><div class="recipe-discovery-heading"><span class="story-kicker">INSPIRACIÓN PARA TU MESA</span><h1>RECETAS</h1><p>Elige un producto IceMan para descubrir su receta.</p></div><div class="recipe-pack-shelf" aria-label="Productos IceMan con recetas">${recipeProductChoices()}</div><div id="recipe-feature-panel" class="recipe-feature-panel" aria-live="polite"><div class="recipe-selection-empty"><span aria-hidden="true">${iconSpark()}</span><p>Selecciona un empaque para ver la receta, sus ingredientes y su preparación.</p></div></div></div></section>
-    <section class="recipe-library" id="las-recetas"><div class="wrap"><div class="recipe-library-heading"><div><span class="story-kicker">LA MESA IceMan</span><h2>Encuentra tu favorita.<br><em>Hazla tuya.</em></h2></div><p>Explora las cinco recetas y encuentra una para hoy.</p></div></div>${recipePlanner()}<div class="wrap"><nav class="recipe-section-nav" aria-label="Explorar inspiración"><a href="#las-recetas" aria-current="location">Recetas</a><a href="#ocasiones">Ocasiones ${iconArrow("up-right")}</a><label class="recipe-search"><span class="sr-only">Buscar recetas</span><input id="editorial-search" type="search" placeholder="Busca una receta o ingrediente…"></label></nav><p id="editorial-search-status" aria-live="polite"></p><div class="recipe-library-list" id="editorial-card-grid">${orderedRecipes().map(recipeCover).join("")}</div><div id="editorial-empty" class="editorial-empty" hidden>No encontramos recetas con esa búsqueda.</div></div></section>
+    <section class="recipe-library" id="las-recetas"><div class="wrap"><div class="recipe-library-heading"><div><span class="story-kicker">LA MESA IceMan</span><h2>Encuentra tu favorita.<br><em>Hazla tuya.</em></h2></div><p>Explora las cinco recetas y encuentra una para hoy.</p></div></div><div class="wrap"><nav class="recipe-section-nav" aria-label="Explorar inspiración"><a href="#las-recetas" aria-current="location">Recetas</a><a href="#ocasiones">Ocasiones ${iconArrow("up-right")}</a><label class="recipe-search"><span class="sr-only">Buscar recetas</span><input id="editorial-search" type="search" placeholder="Busca una receta o ingrediente…"></label></nav><p id="editorial-search-status" aria-live="polite"></p><div class="recipe-library-list" id="editorial-card-grid">${orderedRecipes().map(recipeCover).join("")}</div><div id="editorial-empty" class="editorial-empty" hidden>No encontramos recetas con esa búsqueda.</div></div></section>
     <section class="recipe-occasions" id="ocasiones"><div class="wrap"><div class="recipe-library-heading"><div><span class="story-kicker">CUALQUIER DÍA PUEDE SER ESPECIAL</span><h2>Momentos para disfrutar,<br><em>recetas para compartir.</em></h2></div></div><div class="occasion-grid">${editorial.occasions.map((o,index)=>`<a class="occasion-card" href="#las-recetas" data-occasion-link="${o.slug}"><img src="${editorialImage(o.image)}" alt="${escapeHTML(o.title)}" loading="lazy"${index < 3 ? ' fetchpriority="high"' : ""}><span class="occasion-overlay"><strong>${escapeHTML(o.title)}</strong><span>${escapeHTML(o.text)}</span><b>Ver ideas ${iconArrow()}</b></span></a>`).join("")}</div></div></section></div>`;
-    pageShell(content,path);updateHead(path,"Recetas — IceMan","Encuentra recetas con productos IceMan para cocinar, disfrutar y compartir.");updateRecipePlanner();
+    pageShell(content,path);updateHead(path,"Recetas — IceMan","Encuentra recetas con productos IceMan para cocinar, disfrutar y compartir.");
   }
   function editorialDetail(item, path) {
     const isRecipe = item.kind === "recipe";
@@ -1235,17 +1172,6 @@
   }
 
   root.addEventListener("click", (event) => {
-    const plannerChoice = event.target.closest("[data-planner-choice]");
-    if (plannerChoice) {
-      const planner = plannerChoice.closest("[data-recipe-planner]");
-      planner.querySelectorAll(`[data-planner-choice="${plannerChoice.dataset.plannerChoice}"]`).forEach(button => {
-        const selected = button === plannerChoice;
-        button.classList.toggle("is-selected", selected);
-        button.setAttribute("aria-pressed", String(selected));
-      });
-      updateRecipePlanner();
-      return;
-    }
     const recipeTransform = event.target.closest("[data-recipe-transform]");
     if (recipeTransform) {
       if (event.detail > 0 && matchMedia("(hover: hover) and (pointer: fine)").matches) return;
