@@ -1190,7 +1190,7 @@ body:has(.home-hero-journey) .site-header .brand-official-logo{width:158px;heigh
 /* Papa Steak mobile: slightly smaller serving, centered on the package equator. */
 @media(max-width:640px){
   .product-comparison[data-comparison-product="papa-steak"]{
-    --dish-size:.80!important;
+    --dish-size:.74!important;
     --dish-offset-y:0!important;
   }
 }
