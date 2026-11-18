@@ -1044,7 +1044,7 @@
         const sectionRect=section.getBoundingClientRect();
         if(sectionRect.bottom<0 || sectionRect.top>window.innerHeight) return;
         if(section.dataset.storySelector==="values"){
-          const stepHeight=Math.max(1,window.innerHeight);
+          const stepHeight=Math.max(1,window.innerHeight*0.25);
           const progress=Math.max(0,Math.min(2,(0-sectionRect.top)/stepHeight));
           activateStoryOption(section,Math.min(2,Math.floor(progress+0.001)));
           return;
