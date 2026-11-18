@@ -1044,9 +1044,11 @@
         const sectionRect=section.getBoundingClientRect();
         if(sectionRect.bottom<0 || sectionRect.top>window.innerHeight) return;
         if(section.dataset.storySelector==="values"){
-          const stepHeight=Math.max(1,window.innerHeight*0.25);
-          const progress=Math.max(0,Math.min(2,(0-sectionRect.top)/stepHeight));
-          activateStoryOption(section,Math.min(2,Math.floor(progress+0.001)));
+          // Advance each scene halfway through its scroll interval so the
+          // transition feels continuous without making the pinned section linger.
+          const travel=Math.max(1,section.offsetHeight-window.innerHeight);
+          const progress=Math.max(0,Math.min(2,((0-sectionRect.top)/travel)*2));
+          activateStoryOption(section,Math.min(2,Math.floor(progress+0.5)));
           return;
         }
         const targetY=window.innerHeight*(window.innerWidth<=820?0.7:0.6);
