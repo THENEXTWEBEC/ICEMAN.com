@@ -549,7 +549,7 @@
       ? responsiveEditorialImageAttrs(imageSrc, "(max-width: 600px) calc(100vw - 65px), (max-width: 1100px) 90vw, 560px")
       : "";
     const packSrc = product ? productionImage(cutoutAsset(product.image)) : "";
-    const packageMarkup = packSrc ? `<span aria-hidden="true" style="position:absolute;z-index:2;left:4%;bottom:4%;width:${isWaffleBox ? "38%" : "35%"};height:32%;display:flex;align-items:center;justify-content:center;padding:4px;background:rgba(255,255,255,.94);border-radius:8px;box-shadow:0 3px 10px rgba(10,20,32,.25);pointer-events:none"><img class="recipe-cover-official-pack" src="${packSrc}" alt="" loading="lazy" decoding="async" style="display:block;position:static;width:100%;height:100%;max-width:100%;max-height:100%;object-fit:contain;object-position:center"></span>` : "";
+    const packageMarkup = packSrc ? `<span aria-hidden="true" style="position:absolute;z-index:2;left:4%;bottom:4%;width:${isWaffleBox ? "38%" : "35%"};height:32%;display:flex;align-items:center;justify-content:center;padding:4px;pointer-events:none"><img class="recipe-cover-official-pack" src="${packSrc}" alt="" loading="lazy" decoding="async" style="display:block;position:static;width:100%;height:100%;max-width:100%;max-height:100%;object-fit:contain;object-position:center"></span>` : "";
     const search = [recipe.title, recipe.description, ...recipe.tags, ...recipe.occasions]
       .join(" ").toLocaleLowerCase("es").normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     const imageLoading = index === 0 ? 'eager' : 'lazy';
