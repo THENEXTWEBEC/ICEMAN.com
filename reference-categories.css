@@ -4,7 +4,12 @@
 .reference-brand img:last-child{display:block;width:190px;height:44px;object-fit:contain}
 .site-header:has(.reference-brand){height:70px}
 .site-header:has(.reference-brand) .header-inner{height:70px}
-.reference-categories{background:#f4f9fb;color:#111a52;padding:28px 0 32px}
+.reference-categories{background:#f4f9fb;color:#111a52;padding:0 0 32px}
+.reference-categories>.discovery-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));width:100%;margin:0 0 30px}
+.reference-categories .discovery-card{min-width:0;overflow:hidden;background:var(--panel-tone);isolation:isolate}
+.reference-categories .discovery-link{position:relative;display:block;height:clamp(280px,30vw,480px);color:inherit}
+.reference-categories .discovery-pack{position:absolute;inset:7% 5%;width:90%;height:86%;object-fit:contain;transform:translate3d(var(--repel-x,0px),var(--repel-y,0px),0);transition:transform .36s cubic-bezier(.2,.8,.2,1);pointer-events:none}
+.reference-categories .discovery-link:focus-visible{outline:3px solid #111a52;outline-offset:-5px}
 .reference-categories-inner{width:min(1110px,calc(100% - 80px));margin:auto}
 .reference-categories-heading{margin-bottom:18px;text-align:left}
 .reference-categories-heading>span{display:block;color:#1196c5;font-size:clamp(15px,1.5vw,20px);font-weight:800;letter-spacing:.075em;line-height:1.25;text-transform:uppercase}
@@ -50,7 +55,7 @@
 .reference-category-button{position:absolute;bottom:4.3%;left:50%;display:inline-flex;align-items:center;justify-content:center;gap:14px;min-width:47%;min-height:9%;padding:6px 18px;border-radius:999px;background:#202d62;color:#fff;font-size:clamp(14px,1.35vw,18px);font-weight:700;line-height:1;white-space:nowrap;transform:translateX(-50%)}
 .reference-category-button span{font-size:1.25em;font-weight:400;line-height:.8}
 @media(max-width:900px){.reference-categories-inner{width:calc(100% - 48px)}.reference-category-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.reference-category strong{font-size:clamp(24px,3.9vw,36px)}}
-@media(max-width:560px){.reference-brand{gap:5px;height:54px}.reference-brand img:first-child{width:37px;height:34px}.reference-brand img:last-child{width:130px;height:34px}.reference-categories{padding:27px 0 43px}.reference-categories-inner{width:calc(100% - 32px)}.reference-categories-heading{margin-bottom:22px}.reference-categories-heading>span{font-size:15px}.reference-categories-heading h2{font-size:clamp(34px,9vw,48px);line-height:.98}.reference-category-grid{grid-template-columns:minmax(0,1fr);gap:12px;max-width:400px;margin-inline:auto}.reference-category{aspect-ratio:1}.reference-category strong{bottom:15%;font-size:clamp(27px,7.9vw,37px)}.reference-category-button{font-size:15px;min-height:10%}}
+@media(max-width:560px){.reference-brand{gap:5px;height:54px}.reference-brand img:first-child{width:37px;height:34px}.reference-brand img:last-child{width:130px;height:34px}.reference-categories{padding:0 0 43px}.reference-categories>.discovery-grid{margin-bottom:25px}.reference-categories .discovery-link{height:clamp(190px,48vw,270px)}.reference-categories .discovery-pack{inset:8% 3%;width:94%;height:84%}.reference-categories-inner{width:calc(100% - 32px)}.reference-categories-heading{margin-bottom:22px}.reference-categories-heading>span{font-size:15px}.reference-categories-heading h2{font-size:clamp(34px,9vw,48px);line-height:.98}.reference-category-grid{grid-template-columns:minmax(0,1fr);gap:12px;max-width:400px;margin-inline:auto}.reference-category{aspect-ratio:1}.reference-category strong{bottom:15%;font-size:clamp(27px,7.9vw,37px)}.reference-category-button{font-size:15px;min-height:10%}}
 @media(max-width:560px){
   /* One shared mobile scale prevents the packs from growing by category. */
   .reference-category-products{inset:0 0 30%}
@@ -69,7 +74,7 @@
   .reference-category-helados .reference-category-pack-2{width:45%;top:13%;right:10%;transform:rotate(4deg)}
   .reference-category-waffles .reference-category-pack-1{width:76%;height:60%;top:18%;left:12%}
 }
-@media(prefers-reduced-motion:reduce){.reference-category{transition:none}}
+@media(prefers-reduced-motion:reduce){.reference-category{transition:none}.reference-categories .discovery-pack{transition:none}}
 
 /* Desktop: keep the smoothie packs above the title and CTA. */
 @media(min-width:901px){

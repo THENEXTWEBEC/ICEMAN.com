@@ -332,6 +332,7 @@
       return `<a class="reference-category reference-category-${category.slug}" href="/productos/${category.slug}" data-link data-category-link="${category.slug}" aria-label="Explorar ${escapeHTML(category.name)}"><span class="reference-category-products" aria-hidden="true">${packs.map((pack, packIndex) => { const src = cutoutAsset(pack); const responsive = category.slug === "smoothies" ? "" : responsiveImageAttrs(src,"(max-width: 560px) 58vw, 300px"); return `<img class="reference-category-pack reference-category-pack-${packIndex + 1}" src="${src}"${responsive} alt="" loading="lazy" fetchpriority="low" decoding="async">`; }).join("")}</span><strong>${escapeHTML(category.name)}</strong><span class="reference-category-button">Explorar <span aria-hidden="true">→</span></span></a>`;
 
     }).join("");
+    const showcasePanels = homeShowcase.map(({ product, tone }) => `<article class="discovery-card" style="--panel-tone:${tone}"><a class="discovery-link" href="${productPath(product)}" data-link data-product-link="${escapeHTML(product.slug)}" aria-label="Ver ${escapeHTML(product.name)}"><img class="discovery-pack discovery-pack-${escapeHTML(product.slug)}" src="${asset(product.image)}"${responsiveImageAttrs(asset(product.image),"(max-width: 640px) 25vw, 25vw")} alt="Empaque IceMan de ${escapeHTML(product.name)}" loading="lazy" decoding="async" width="480" height="480"></a></article>`).join("");
     const featuredRecipe = orderedRecipes()[0];
     const featuredVisual = { ...recipeVisual(featuredRecipe), image:recipeDishImage(featuredRecipe) };
     const featuredProduct = products.find((product) => product.slug === featuredRecipe.products?.[0]);
@@ -341,7 +342,7 @@
     const stockistItems = stockists.map(({ name, logo }) => `<div class="stockist-logo stockist-logo-${logo.replace(/\.[^.]+$/, "").replace(/[^a-z0-9-]/gi, "-")}" role="listitem"><img src="${optimizedImage(`${projectBase}/assets/stockists/${logo}`)}" alt="${escapeHTML(name)}" loading="lazy" decoding="async"></div>`).join("");
     const leadArticles = editorial.articles.slice(0, 3);
     return `<div class="home-hero-journey" data-hero-journey><section class="home-hero" id="inicio" data-nav-section="home"><div class="home-hero-image" data-parallax="0.16"><img src="${projectBase}/assets/editorial/golden-fries-alpine-1672.webp" srcset="${projectBase}/assets/editorial/golden-fries-alpine-480.webp 480w, ${projectBase}/assets/editorial/golden-fries-alpine-768.webp 768w, ${projectBase}/assets/editorial/golden-fries-alpine-960.webp 960w, ${projectBase}/assets/editorial/golden-fries-alpine-1200.webp 1200w, ${projectBase}/assets/editorial/golden-fries-alpine-1672.webp 1672w" sizes="100vw" alt="Papas doradas flotando sobre un paisaje alpino congelado" fetchpriority="high" decoding="async" width="1672" height="941"></div><div class="home-hero-shade"></div><div class="hero-orbit hero-orbit-one" data-pointer-depth="12" aria-hidden="true"></div><div class="hero-orbit hero-orbit-two" data-pointer-depth="-8" aria-hidden="true"></div><div class="wrap home-hero-inner"><div class="home-hero-copy"><span class="home-kicker hero-sequence">Alimentos congelados IceMan</span><h1><span class="hero-line"><span>Mucho más</span></span><span class="hero-line"><em>que congelados.</em></span></h1><p class="hero-sequence">Lo hacemos fácil. Tú lo haces especial.</p><div class="home-hero-actions hero-sequence"><a class="btn btn-primary magnetic" href="/productos" data-link>Explorar productos ${iconArrow()}</a><a class="home-hero-link" href="/donde-encontrarnos" data-link>Encuéntranos ${iconArrow()}</a></div></div><div class="hero-scroll-story" aria-hidden="true"><span>IceMan · Congelados</span><strong>Facilitamos tus días,<br>disfrutamos tus momentos.</strong><small>Productos prácticos para cada día</small></div><div class="hero-pack-wrap" data-pointer-depth="-16"><span class="hero-pack-halo" aria-hidden="true"></span><img class="hero-pack" src="${asset(homeShowcase[0].product.image)}"${responsiveImageAttrs(asset(homeShowcase[0].product.image),"(max-width: 640px) 38vw, 230px")} alt="Empaque oficial de ${escapeHTML(homeShowcase[0].product.name)} IceMan" fetchpriority="high" decoding="async"></div><div class="hero-journey-progress" aria-hidden="true"><span>01</span><i><b></b></i><span>02</span></div><span class="hero-side-note" aria-hidden="true">Del congelador a tu mesa · IceMan Ecuador</span><a class="hero-scroll" href="#productos-destacados" aria-label="Explorar productos destacados">${iconArrow("down")} Desliza para descubrir</a></div></section></div>
-    <section class="reference-categories" id="productos-destacados" aria-labelledby="showcase-title" data-nav-section="products"><div class="reference-categories-inner"><div class="reference-categories-heading"><span>Explora nuestras categorías</span><h2 id="showcase-title">Elige tu próximo favorito.</h2></div><div class="reference-category-grid" aria-label="Categorías de productos IceMan">${categoryCards}</div></div></section>
+    <section class="reference-categories" id="productos-destacados" aria-labelledby="showcase-title" data-nav-section="products"><div class="discovery-grid" aria-label="Productos destacados de IceMan">${showcasePanels}</div><div class="reference-categories-inner"><div class="reference-categories-heading"><span>Explora nuestras categorías</span><h2 id="showcase-title">Elige tu próximo favorito.</h2></div><div class="reference-category-grid" aria-label="Categorías de productos IceMan">${categoryCards}</div></div></section>
     <section class="home-stockists" id="donde-encontrarnos" aria-labelledby="stockists-title" data-nav-section="stockists"><div class="wrap home-stockists-head"><span class="home-kicker">02 / CERCA DE TI</span><h2 id="stockists-title">Siempre<br><em>cerca de ti.</em></h2><p>Encuentra productos IceMan en establecimientos y plataformas de Ecuador.</p></div><p class="stockists-drag-hint">Arrastra o desliza para explorar <span aria-hidden="true">↔</span></p><div class="stockists-track" id="stockists-track" role="list" tabindex="0" aria-label="Establecimientos donde encuentras productos IceMan. Usa las flechas izquierda y derecha para recorrerlos"><div class="stockists-set">${stockistItems}</div><div class="stockists-set" aria-hidden="true" inert>${stockistItems}</div></div><div class="wrap stockists-note"><a class="home-inline-link" href="/donde-encontrarnos" data-link>Ver establecimientos ${iconArrow()}</a><span>La disponibilidad y el surtido pueden variar según el establecimiento y el local.</span></div></section>
     <section class="home-recipes table-story" id="ideas" aria-labelledby="recipes-title" data-nav-section="editorial"><div class="wrap"><div class="home-section-heading table-story-heading"><span class="home-kicker">04 / recetas y momentos</span><h2 id="recipes-title"><span class="recipes-title-line">no vendemos solo congelados.</span><em>inspiramos momentos.</em></h2><p>Ideas reales para preparar, servir y compartir.</p></div><article class="table-story-feature"><a class="table-story-photo recipe-visual-${featuredVisual.treatment}" href="/recetas/${featuredRecipe.slug}" data-link><picture><source media="(max-width: 600px)" srcset="${mobileFeaturedImage}"><img src="${featuredImage}" alt="${escapeHTML(featuredVisual.alt)}" loading="lazy" decoding="async"></picture><span class="table-story-photo-note">Al centro, para todos</span></a><div class="table-story-copy"><span class="table-story-eyebrow">La mesa está lista · Receta protagonista</span><h3>${escapeHTML(featuredRecipe.title)}</h3><p>Una idea fácil para poner algo rico al centro y alargar la conversación.</p><a class="table-story-recipe-link" href="${editorialPath(featuredRecipe)}" data-link>Preparar esta receta ${iconArrow()}</a>${featuredProduct ? `<div class="table-story-product"><img src="${asset(featuredProduct.image)}" alt="Empaque IceMan de ${escapeHTML(featuredProduct.name)}" loading="lazy" decoding="async"><span><small>Lo práctico</small><strong>${escapeHTML(featuredProduct.name)}</strong><a href="${productPath(featuredProduct)}" data-link>Conocer producto ${iconArrow()}</a></span></div>` : ""}</div></article><div class="table-story-later"><div class="table-story-later-heading"><span>Y para otro día…</span><a class="home-inline-link" href="/recetas" data-link>Ver todas las recetas ${iconArrow()}</a></div><div class="home-recipe-grid">${recipeCards}</div></div><div class="home-recipes-foot"><p>IceMan pone lo práctico. El momento lo creas tú.</p><a class="home-inline-link" href="/recetas" data-link>Ver todas las recetas ${iconArrow()}</a></div></div></section>
     <section class="home-business" id="para-empresas" aria-labelledby="business-title" data-nav-section="business"><div class="wrap business-editorial"><div class="home-business-image"><img src="${projectBase}/assets/editorial/business-choose-restaurant.webp" alt="Equipo de restaurante evaluando opciones para su operación" loading="lazy" decoding="async" width="1200" height="800"></div><div class="home-business-copy"><span class="home-kicker">05 / ICEMAN PARA EMPRESAS</span><h2 id="business-title">Tu cocina<br>no se detiene.</h2><p>Opciones para restaurantes, cafeterías, hoteles y comercios. Conversemos sobre los productos y presentaciones que necesita tu operación.</p><a class="btn btn-primary" href="/empresas" data-link>Contactar a Televentas ${iconArrow()}</a><a class="home-inline-link" href="${waLink(businessMessage)}" data-wa target="_blank" rel="noopener">WhatsApp · +593 99 915 2518 ${iconArrow()}</a></div></div></section>
@@ -351,43 +352,36 @@
   function setupHomeProducts() {
     const grid = root.querySelector(".discovery-grid");
     if (!grid) return;
-    const cards = [...grid.querySelectorAll(".discovery-card")];
+    const products = [...grid.querySelectorAll(".discovery-pack")];
     const controller = new AbortController();
     const { signal } = controller;
-    let active = null;
-    let gesture = null;
-    const reveal = (card) => {
-      active = card;
-      cards.forEach((item) => item.classList.toggle("is-revealed", item === card));
-    };
-    grid.addEventListener("pointerdown", (event) => {
-      gesture = { id:event.pointerId, x:event.clientX, y:event.clientY, moved:!event.isPrimary, type:event.pointerType };
-    }, { passive:true, signal });
-    document.addEventListener("pointermove", (event) => {
-      if (gesture?.id === event.pointerId && Math.hypot(event.clientX - gesture.x, event.clientY - gesture.y) > 10) gesture.moved = true;
-    }, { passive:true, signal });
-    grid.addEventListener("pointercancel", () => { if (gesture) gesture.moved = true; }, { passive:true, signal });
-    grid.addEventListener("click", (event) => {
-      const card = event.target.closest(".discovery-card");
-      if (!card || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-      const touch = event.pointerType === "touch" || event.pointerType === "pen" || gesture?.type === "touch" || gesture?.type === "pen";
-      const moved = gesture?.moved;
-      gesture = null;
-      if (event.detail > 0 && (moved || (touch && active !== card))) {
-        event.preventDefault();
-        event.stopPropagation();
-        if (!moved) reveal(card);
-      }
-      // Keyboard activation and mouse clicks keep the existing product route.
-    }, { signal });
-    cards.forEach((card) => {
-      card.addEventListener("pointerenter", (event) => { if (event.pointerType === "mouse") reveal(card); }, { signal });
-      card.addEventListener("pointerleave", (event) => { if (event.pointerType === "mouse" && active === card) reveal(null); }, { signal });
-      card.addEventListener("focusin", () => { if (card.querySelector(":focus-visible")) reveal(card); }, { signal });
-    });
-    document.addEventListener("pointerdown", (event) => { if (!grid.contains(event.target)) reveal(null); }, { passive:true, signal });
-    document.addEventListener("focusin", (event) => { if (!grid.contains(event.target)) reveal(null); }, { signal });
-    document.addEventListener("keydown", (event) => { if (event.key === "Escape") reveal(null); }, { signal });
+    if (matchMedia("(hover: hover) and (pointer: fine)").matches && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      let frame = 0;
+      let pointerX = 0;
+      let pointerY = 0;
+      grid.addEventListener("pointermove", (event) => {
+        pointerX = event.clientX;
+        pointerY = event.clientY;
+        if (frame) return;
+        frame = requestAnimationFrame(() => {
+          products.forEach((image) => {
+            const bounds = image.getBoundingClientRect();
+            const dx = bounds.left + bounds.width / 2 - pointerX;
+            const dy = bounds.top + bounds.height / 2 - pointerY;
+            const distance = Math.hypot(dx, dy);
+            const force = Math.max(0, 1 - distance / 250);
+            image.style.setProperty("--repel-x", `${(dx / (distance || 1) * force * 38).toFixed(1)}px`);
+            image.style.setProperty("--repel-y", `${(dy / (distance || 1) * force * 38).toFixed(1)}px`);
+          });
+          frame = 0;
+        });
+      }, { passive:true, signal });
+      grid.addEventListener("pointerleave", () => products.forEach((image) => {
+        image.style.setProperty("--repel-x", "0px");
+        image.style.setProperty("--repel-y", "0px");
+      }), { signal });
+      signal.addEventListener("abort", () => { if (frame) cancelAnimationFrame(frame); }, { once:true });
+    }
     showcaseCleanup = () => controller.abort();
   }
 
