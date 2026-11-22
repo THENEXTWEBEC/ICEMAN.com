@@ -8,6 +8,7 @@ Requires Pillow: python -m pip install Pillow
 from __future__ import annotations
 
 import hashlib
+import io
 from pathlib import Path
 import re
 import shutil
@@ -76,6 +77,31 @@ def optimize_images() -> tuple[int, int]:
     return converted, responsive
 
 
+def optimize_home_category_images() -> int:
+    """Reduce the weight of the home category assets without resizing them."""
+    names = (
+        "cutout-papas-spices", "cutout-air-fryer",
+        "cutout-mix-jardinera-450-clean", "cutout-edamame-vaina",
+        "cutout-aros-cebolla", "cutout-croqueta-yuca",
+        "cutout-helado-mora", "cutout-helado-naranjilla", "cutout-waffle-clean",
+        "smoothie-green", "smoothie-red",
+    )
+    count = 0
+    for name in names:
+        for width in (320, 640, 960):
+            path = ASSETS / "catalog" / "responsive" / f"{name}-{width}.webp"
+            if not path.exists():
+                continue
+            with Image.open(path) as image:
+                output = io.BytesIO()
+                image.save(output, format="WEBP", quality=80, method=6)
+            data = output.getvalue()
+            if len(data) < path.stat().st_size * 0.9:
+                path.write_bytes(data)
+                count += 1
+    return count
+
+
 def bundle_css(html: str) -> str:
     pattern = r'<link rel="stylesheet" href="([^"]+)"\s*/>'
     found = list(re.finditer(pattern, html))
@@ -127,6 +153,7 @@ def main() -> None:
     copy_source()
     cards = build_cards(ASSETS)
     converted, responsive = optimize_images()
+    category_optimized = optimize_home_category_images()
     entry = DIST / "index.html"
     html = entry.read_text(encoding="utf-8")
     html = html.replace('<html lang="es">', '<html lang="es" data-iceman-optimized="true">')
@@ -134,8 +161,9 @@ def main() -> None:
     html = fingerprint_scripts(html)
     entry.write_text(html, encoding="utf-8")
     verify()
-    print(f"Production build complete: {cards} recipe compositions, {converted} new WebP files, {responsive} responsive variants, one CSS bundle.")
+    print(f"Production build complete: {cards} recipe compositions, {converted} new WebP files, {responsive} responsive variants, {category_optimized} optimized category images, one CSS bundle.")
 
 
 if __name__ == "__main__":
     main()
+
