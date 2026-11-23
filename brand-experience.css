@@ -1202,3 +1202,11 @@ body:has(.home-hero-journey) .site-header .brand-official-logo{width:158px;heigh
   }
   /* Waffle glaseado: enlarge the served waffles to balance the package on\n     narrow screens. The authored comparison scale remains unchanged on desktop. */\n  .product-comparison[data-comparison-product="waffle-glaseado"]{\n    --dish-size:1.28!important;\n  }
 }
+
+
+/* Lower the Papas onduladas serving slightly on desktop. */
+@media(min-width:641px){
+  .product-comparison[data-comparison-product="corte-ondulado-900-premium"] .comparison-dish img{
+    transform:translate(var(--dish-normalized-x,0px),calc(var(--dish-normalized-y,0px) - 3%)) scale(calc(var(--dish-normalized-scale,1) * var(--dish-size,1) * 1.2),calc(var(--dish-normalized-scale,1) * var(--dish-size,1))) rotate(90deg)!important;
+  }
+}
