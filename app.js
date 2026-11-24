@@ -1,3 +1,4 @@
+Warning: fs was declared with const; use let for reassignable variables.
 (() => {
   const catalog = window.ICEMAN_CATALOG;
   const projectBase = /^\/ICEMAN\.com(?:\/|$)/.test(window.location.pathname) ? "/ICEMAN.com" : "";
@@ -838,7 +839,7 @@
     {title:"PARA COMPARTIR",text:"Sabores que reúnen alrededor de la mesa.",image:"editorial/ice-man-sharing-event.webp",alt:"Equipo IceMan y asistentes compartiendo productos alrededor de la mesa"}
   ];
   const storyValues = [
-    {title:"CERCANÍA",text:"Te acompañamos a ti y a tu familia con soluciones pensadas para las necesidades de cada día.",image:"editorial/10-aros-para-compartir.webp",alt:"Un momento cercano acompañado por Aros de cebolla IceMan"},
+    {title:"CERCANÍA",text:"Te acompañamos a ti y a tu familia con soluciones pensadas para las necesidades de cada día.",image:"editorial/11-cercania-familia.jpeg",alt:"Madre e hija comparten waffles en familia"},
     {title:"INNOVACIÓN",text:"Buscamos productos y soluciones que abren nuevas posibilidades.",image:"editorial/innovation-kitchen.png",alt:"Plato creativo de vegetales y papas con cortes variados en una cocina contemporánea"},
     {title:"CONFIANZA",text:"Cuidamos la calidad de todo lo que llevamos hasta ti.",image:"editorial/occasion-weekend-breakfast.webp",alt:"Desayuno preparado para compartir en familia"}
   ];
