@@ -1229,3 +1229,6 @@ body:has(.home-hero-journey) .site-header .brand-official-logo{width:158px;heigh
 
 /* Keep story selector imagery centered in the desktop scene. */
 @media(min-width:821px){.story-selector .story-panel{top:clamp(190px,27vh,300px)}}
+
+/* Frame the family higher so both faces remain visible on all screens. */
+[data-story-selector="values"] .story-panel img[src*="11-cercania-familia"]{object-position:center 30%}
