@@ -1,4 +1,3 @@
-Warning: fs was declared with const; use let for reassignable variables.
 (() => {
   const catalog = window.ICEMAN_CATALOG;
   const projectBase = /^\/ICEMAN\.com(?:\/|$)/.test(window.location.pathname) ? "/ICEMAN.com" : "";
