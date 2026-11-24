@@ -839,7 +839,7 @@
   ];
   const storyValues = [
     {title:"CERCANÍA",text:"Te acompañamos a ti y a tu familia con soluciones pensadas para las necesidades de cada día.",image:"editorial/11-cercania-familia.jpeg",alt:"Madre e hija comparten waffles en familia"},
-    {title:"INNOVACIÓN",text:"Buscamos productos y soluciones que abren nuevas posibilidades.",image:"editorial/innovation-kitchen.png",alt:"Plato creativo de vegetales y papas con cortes variados en una cocina contemporánea"},
+    {title:"INNOVACIÓN",text:"Buscamos productos y soluciones que abren nuevas posibilidades.",image:"editorial/innovation-potato-salad.jpeg",alt:"Ensalada rusa servida en un plato blanco"},
     {title:"CONFIANZA",text:"Cuidamos la calidad de todo lo que llevamos hasta ti.",image:"editorial/trust-family-celebration.jpeg",alt:"Dos mujeres junto a una mesa con flores, platos y productos IceMan"}
   ];
   function storySelector(items, id, title, hint, number) {
