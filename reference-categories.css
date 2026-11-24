@@ -98,3 +98,10 @@
 @media(max-width:560px){.reference-categories>.discovery-grid{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));height:calc(100svh - 94px)}.reference-categories .discovery-card,.reference-categories .discovery-link{height:100%;min-height:0}}
 
 @media(max-width:560px){.reference-categories .discovery-card.is-revealed .discovery-pack{transform:translate3d(0,-36%,0) scale(.44)}.reference-categories .discovery-copy{inset:49% 0 0;padding:8px 10px}.reference-categories .discovery-copy h3{font-size:clamp(15px,4vw,21px);margin-bottom:5px}.reference-categories .discovery-copy p{font-size:clamp(11px,2.7vw,13px);line-height:1.35}.reference-categories .discovery-cta{font-size:10px;margin-top:7px}}
+
+/* Keep the category headline above the featured products band. */
+.reference-categories-intro{width:min(1110px,calc(100% - 80px));margin:0 auto;padding-top:22px;color:#1196c5}
+.reference-categories-intro span{display:block;font-size:clamp(15px,1.5vw,20px);font-weight:800;letter-spacing:.075em;line-height:1.25;text-transform:uppercase}
+.reference-categories>.discovery-grid{margin-top:14px}
+@media(max-width:900px){.reference-categories-intro{width:calc(100% - 48px)}}
+@media(max-width:560px){.reference-categories-intro{width:calc(100% - 32px);padding-top:16px}.reference-categories-intro span{font-size:15px}.reference-categories>.discovery-grid{margin-top:12px}}
