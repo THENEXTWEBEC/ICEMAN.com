@@ -1256,3 +1256,73 @@ body:has(.home-hero-journey) .site-header .brand-official-logo{width:158px;heigh
 
 /* Enlarge the contained purpose photo slightly within its clipped frame. */
 @media(min-width:821px){.purpose-photos img[src*="nosotros-proposito-carne-papas"]{transform:scale(1.16)}}
+
+/* Compact mobile layout for the two editorial sections on Nosotros. */
+@media (max-width: 600px) {
+  [data-story-selector="concepts"],
+  .story-purpose {
+    padding-block: 28px 34px;
+  }
+
+  [data-story-selector="concepts"] .story-section-head h2,
+  .story-purpose .purpose-copy h2 {
+    margin: 10px 0 8px;
+    font-size: clamp(29px, 8vw, 43px);
+    line-height: 1.08;
+  }
+
+  [data-story-selector="concepts"] .story-section-head > p,
+  .story-purpose .purpose-copy p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  [data-story-selector="concepts"] .story-selector-layout {
+    gap: 14px;
+    margin-top: 16px;
+  }
+
+  [data-story-selector="concepts"] .story-panel-image,
+  .story-purpose .purpose-photos {
+    height: auto;
+    aspect-ratio: 4 / 3;
+    max-height: 290px;
+    border-radius: 18px;
+  }
+
+  [data-story-selector="concepts"] .story-panel-image img[src*="practicidad-waffles"] {
+    object-fit: cover;
+    object-position: center 57%;
+  }
+
+  [data-story-selector="concepts"] .story-panel p {
+    margin: 9px 0 0;
+    line-height: 1.45;
+  }
+
+  [data-story-selector="concepts"] .story-options button {
+    gap: 12px;
+    min-height: 46px;
+    padding: 8px 10px;
+    font-size: clamp(16px, 4.6vw, 23px);
+  }
+
+  [data-story-selector="concepts"] .story-options button[aria-pressed="true"] {
+    background: #a8e8fa14;
+  }
+
+  .story-purpose {
+    min-height: 0;
+  }
+
+  .story-purpose .purpose-sticky {
+    position: relative;
+    top: auto;
+    gap: 16px;
+  }
+
+  .story-purpose .purpose-photos img {
+    object-position: center;
+  }
+}
