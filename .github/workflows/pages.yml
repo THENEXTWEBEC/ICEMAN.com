@@ -44,6 +44,9 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: _site
+      # GitHub's artifact list can lag behind the upload action; let it propagate before deploy-pages queries it.
+      - name: Wait for Pages artifact metadata
+        run: sleep 20
       - name: Publish site
         id: deployment
         uses: actions/deploy-pages@v4
