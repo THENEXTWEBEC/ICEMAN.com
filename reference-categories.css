@@ -107,3 +107,17 @@
 .reference-categories>.discovery-grid{margin-top:0}
 @media(max-width:900px){.reference-categories-intro{width:calc(100% - 48px)}}
 @media(max-width:560px){.reference-categories-intro{width:calc(100% - 32px);padding:18px 0 20px}.reference-categories-intro>span{font-size:15px}.reference-categories-intro h2{max-width:460px;margin-top:14px;font-size:clamp(38px,10vw,48px);line-height:.98}.reference-categories-intro p{margin-top:16px;font-size:16px;line-height:1.45}}
+
+/* Add breathing room around the moving-products headline and category row. */
+.reference-categories{padding-bottom:52px}
+.reference-categories-intro{padding-top:46px;padding-bottom:40px}
+.reference-categories-intro h2{margin-top:20px}
+.reference-categories-intro p{margin-top:24px}
+.reference-categories-inner{margin:68px auto 0}
+@media(max-width:560px){
+  .reference-categories{padding-bottom:56px}
+  .reference-categories-intro{padding-top:30px;padding-bottom:28px}
+  .reference-categories-intro h2{margin-top:18px}
+  .reference-categories-intro p{margin-top:22px}
+  .reference-categories-inner{margin-top:46px}
+}
