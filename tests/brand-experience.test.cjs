@@ -51,7 +51,7 @@ test('recipe selector starts empty and allows selection through button controls'
 });
 test('home category showcase renders the six catalog routes',()=>{
  assert.deepEqual(Array.from(catalog.categories,category=>category.name),['Papas','Vegetales','Especialidades','Smoothies','Helados','Waffles']);
- assert.match(app,/<span>Elige, descubre, disfruta\\.<\\/span><h2 id="showcase-title">Elige tu próximo favorito\\.<\\/h2>/);
+ assert.ok(app.includes('<span>Elige, descubre, disfruta.</span><h2 id="showcase-title">Elige tu próximo favorito.</h2>'));
  assert.match(app,/reference-category-grid/);
  assert.match(app,/href="\/productos\/\$\{category\.slug\}/);
  assert.match(app,/papas:\["papas-spices","air-fryer"\]/);
