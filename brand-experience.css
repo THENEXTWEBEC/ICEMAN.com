@@ -1223,3 +1223,6 @@ body:has(.home-hero-journey) .site-header .brand-official-logo{width:158px;heigh
   [data-story-selector="values"] .story-panel{margin-top:clamp(-380px,-37vh,-250px)}
   [data-story-selector="values"] .story-panel-image{height:clamp(420px,52vh,560px)}
 }
+@media(min-width:821px){
+  [data-story-selector="values"] .story-section-head{max-width:min(900px,53%)}
+}
