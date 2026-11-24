@@ -9,6 +9,11 @@
 .reference-categories .discovery-card{min-width:0;overflow:hidden;background:var(--panel-tone);isolation:isolate}
 .reference-categories .discovery-link{position:relative;display:block;height:clamp(280px,30vw,480px);color:inherit}
 .reference-categories .discovery-pack{position:absolute;inset:7% 5%;width:90%;height:86%;object-fit:contain;transform:translate3d(var(--repel-x,0px),var(--repel-y,0px),0) scale(var(--pack-scale,1));transition:transform .36s cubic-bezier(.2,.8,.2,1);pointer-events:none}
+.reference-categories .discovery-card.is-revealed .discovery-pack{transform:translate3d(0,-32%,0) scale(.5)}
+.reference-categories .discovery-copy{z-index:2;inset:51% 0 0;justify-content:flex-start;padding:12px 16px;transform:translateY(8px)}
+.reference-categories .discovery-copy h3{font-size:clamp(18px,1.8vw,26px);margin-bottom:8px}
+.reference-categories .discovery-copy p{font-size:clamp(12px,1.05vw,14px);line-height:1.4}
+.reference-categories .discovery-cta{margin-top:10px;font-size:11px}
 .reference-categories .discovery-pack-aros-de-cebolla{--pack-scale:1.24}
 .reference-categories .discovery-pack-helado-paila-mora{--pack-scale:1.24}
 .reference-categories .discovery-link:focus-visible{outline:3px solid #111a52;outline-offset:-5px}
@@ -91,3 +96,5 @@
 }
 
 @media(max-width:560px){.reference-categories>.discovery-grid{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));height:calc(100svh - 94px)}.reference-categories .discovery-card,.reference-categories .discovery-link{height:100%;min-height:0}}
+
+@media(max-width:560px){.reference-categories .discovery-card.is-revealed .discovery-pack{transform:translate3d(0,-36%,0) scale(.44)}.reference-categories .discovery-copy{inset:49% 0 0;padding:8px 10px}.reference-categories .discovery-copy h3{font-size:clamp(15px,4vw,21px);margin-bottom:5px}.reference-categories .discovery-copy p{font-size:clamp(11px,2.7vw,13px);line-height:1.35}.reference-categories .discovery-cta{font-size:10px;margin-top:7px}}
