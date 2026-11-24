@@ -833,7 +833,7 @@
     ]
   };
   const storyConcepts = [
-    {title:"PRACTICIDAD",text:"Soluciones que hacen más fácil tu día.",image:"editorial/hero-crispy-potatoes.webp",alt:"Papas crocantes listas para servir"},
+    {title:"PRACTICIDAD",text:"Soluciones que hacen más fácil tu día.",image:"catalog/prepared/salteado-de-verduras.webp",alt:"Plato servido de salteado de verduras IceMan"},
     {title:"VERSATILIDAD",text:"Un producto, muchas formas de disfrutarlo.",image:"editorial/purpose-versatility-table.png",alt:"Papas doradas, smoothie de frutos rojos y vegetales salteados listos para disfrutar"},
     {title:"PARA COMPARTIR",text:"Sabores que reúnen alrededor de la mesa.",image:"editorial/sharing-table.png",alt:"Personas compartiendo una bandeja de aros, papas y vegetales alrededor de la mesa"}
   ];
