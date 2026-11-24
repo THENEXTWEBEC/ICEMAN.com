@@ -73,7 +73,7 @@ test('about sections use distinct, context-specific images',()=>{
  const {floatingPackSets,storyVisuals,storyConcepts,storyValues}=vm.runInNewContext(source+';({floatingPackSets,storyVisuals,storyConcepts,storyValues});',{projectBase:'',productionImage:path=>path});
  const images=[storyVisuals.hero.image,storyVisuals.history.image,...storyVisuals.purpose.map(item=>item.image),...storyConcepts.map(item=>item.image),...storyValues.map(item=>item.image)];
  assert.equal(new Set(images).size,images.length);
- images.forEach(image=>assert.ok(fs.existsSync(path.join(base,'assets',image)),image));
+ images.forEach(image=>assert.ok(fs.existsSync(path.join(base,'assets',image.split('?')[0])),image));
  const packs=[...floatingPackSets.default,...floatingPackSets.closing];
  assert.equal(new Set(packs).size,packs.length);
  packs.forEach(image=>assert.ok(fs.existsSync(path.join(base,'assets/catalog',`${image}.webp`)),image));
