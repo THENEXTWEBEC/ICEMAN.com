@@ -129,3 +129,10 @@
   .reference-category strong { font-size: clamp(16px, 8cqw, 38px); }
   .reference-category-button { font-size: clamp(13px, 4.5cqw, 18px); }
 }
+
+/* Compact category cards for phones. */
+@media (max-width: 560px) {
+  .reference-category-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; max-width: none; }
+  .reference-category strong { font-size: clamp(13px, 4.1vw, 22px); }
+  .reference-category-button { min-height: 28px; padding: 5px 12px; gap: 8px; font-size: 13px; }
+}
