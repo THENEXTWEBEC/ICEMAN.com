@@ -51,8 +51,9 @@ test('recipe selector starts empty and allows selection through button controls'
 });
 test('home category showcase renders the six catalog routes',()=>{
  assert.deepEqual(Array.from(catalog.categories,category=>category.name),['Papas','Vegetales','Especialidades','Smoothies','Helados','Waffles']);
- assert.ok(app.includes('<div class="reference-categories-intro"><span>Elige, descubre, disfruta.</span></div>'));
- assert.ok(app.includes('<div class="reference-categories-heading"><h2 id="showcase-title">Elige tu próximo favorito.</h2></div>'));
+ assert.ok(app.includes('<span>PRODUCTOS QUE SE MUEVEN CONTIGO</span><h2 id="showcase-title">Elige, descubre, disfruta.</h2>'));
+ assert.ok(app.includes('<p>Toca para descubrir, toca de nuevo para ver el producto.</p>'));
+ assert.ok(app.includes('<div class="reference-categories-heading"><h2 id="categories-title">Elige tu próximo favorito.</h2></div>'));
  assert.match(app,/reference-category-grid/);
  assert.match(app,/href="\/productos\/\$\{category\.slug\}/);
  assert.match(app,/papas:\["papas-spices","air-fryer"\]/);
