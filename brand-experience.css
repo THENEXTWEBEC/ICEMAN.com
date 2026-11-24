@@ -1249,3 +1249,7 @@ body:has(.home-hero-journey) .site-header .brand-official-logo{width:158px;heigh
 
 /* Remove the blurred fill; let the section color frame the contained photo. */
 .purpose-photos:has(img[src*="nosotros-proposito-carne-papas"])::before{display:none!important}
+
+/* Remove the blurred backdrop from the full Practicidad photo. */
+.story-panel-image:has(img[src*="practicidad-waffles.webp"]){background:#14183f}
+.story-panel-image:has(img[src*="practicidad-waffles.webp"])::before{display:none!important}
