@@ -1246,3 +1246,6 @@ body:has(.home-hero-journey) .site-header .brand-official-logo{width:158px;heigh
   .purpose-photos:has(img[src*="nosotros-proposito-carne-papas"])::before{content:"";position:absolute;inset:-12px;z-index:0;pointer-events:none;background:url("assets/editorial/nosotros-proposito-carne-papas.jpeg?v=20261124-papas-correctas") center/cover no-repeat;filter:blur(20px);opacity:.34;transform:scale(1.04)}
   .purpose-photos img[src*="nosotros-proposito-carne-papas"]{object-fit:contain;object-position:center;z-index:1}
 }
+
+/* Remove the blurred fill; let the section color frame the contained photo. */
+.purpose-photos:has(img[src*="nosotros-proposito-carne-papas"])::before{display:none!important}
