@@ -22,6 +22,7 @@ body:has(.catalog-results) #main{background:#161d46}.page-intro:has(+ .catalog-t
 /* Scroll-led story selectors: each value becomes active as its row reaches the viewport. */
 .story-selector{padding-block:clamp(48px,8vh,90px)}
 .story-selector .story-selector-layout{align-items:start;gap:clamp(48px,6vw,100px)}
+@media(min-width:821px){.story-selector .story-selector-layout{margin-top:18px}}
 .story-selector .story-options{align-self:stretch}
 .story-selector .story-options button{min-height:clamp(70px,8.5vh,100px);padding:20px 0;scroll-margin-top:20vh}
 .story-selector .story-panel{position:sticky;top:clamp(96px,13vh,150px);align-self:start}
