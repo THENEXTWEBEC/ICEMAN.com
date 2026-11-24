@@ -169,3 +169,6 @@ html,body,#app{max-width:100%}html,body{overflow-x:clip}body{min-width:0}img{dis
 @media(max-width:560px){.planner-result-top{gap:12px}.planner-result-top img{width:clamp(112px,30vw,156px)}}
 @media(prefers-reduced-motion:reduce){.planner-result-top img{transition:none}}
 .recipe-detail .editorial-detail-layout{padding-bottom:28px}.recipe-detail .detail-related{padding-top:28px}
+
+/* Invert the official logo for the dark footer without a white box. */
+.site-footer .footer-official-logo { filter: grayscale(1) invert(1) contrast(1.2); mix-blend-mode: screen; }
