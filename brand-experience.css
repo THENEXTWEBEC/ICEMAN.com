@@ -1253,3 +1253,6 @@ body:has(.home-hero-journey) .site-header .brand-official-logo{width:158px;heigh
 /* Remove the blurred backdrop from the full Practicidad photo. */
 .story-panel-image:has(img[src*="practicidad-waffles.webp"]){background:#14183f}
 .story-panel-image:has(img[src*="practicidad-waffles.webp"])::before{display:none!important}
+
+/* Enlarge the contained purpose photo slightly within its clipped frame. */
+@media(min-width:821px){.purpose-photos img[src*="nosotros-proposito-carne-papas"]{transform:scale(1.16)}}
