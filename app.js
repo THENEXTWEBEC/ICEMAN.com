@@ -833,7 +833,7 @@
     ]
   };
   const storyConcepts = [
-    {title:"PRACTICIDAD",text:"Soluciones que hacen más fácil tu día.",image:"editorial/nosotros-salteado.webp",alt:"Salteado de verduras servido en una sartén"},
+    {title:"PRACTICIDAD",text:"Soluciones que hacen más fácil tu día.",image:"editorial/practicidad-waffles.webp?v=20261124",alt:"Waffles dorados con fresas y banano, servidos en un plato blanco"},
     {title:"VERSATILIDAD",text:"Un producto, muchas formas de disfrutarlo.",image:"editorial/purpose-versatility-table.jpg?v=20261124",alt:"Mesa con waffles, hash browns, papas y opciones para compartir"},
     {title:"PARA COMPARTIR",text:"Sabores que reúnen alrededor de la mesa.",image:"editorial/ice-man-sharing-event.webp",alt:"Equipo IceMan y asistentes compartiendo productos alrededor de la mesa"}
   ];
