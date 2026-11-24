@@ -827,7 +827,7 @@
   }
   const storyVisuals = {
     hero:{image:"editorial/advice-store-frozen-products.webp",alt:"Selección de productos IceMan conservados en el congelador"},
-    history:{image:"editorial/article-vegetables.webp",alt:"Vegetales preparados para una comida cotidiana"},
+    history:{image:"editorial/nosotros-salteado-user.png",alt:"Salteado de verduras servido en una sartén"},
     purpose:[
       {image:"editorial/nosotros-proposito-carne-papas.jpeg",alt:"Papas fritas con carne, salsa cremosa y hierbas frescas"}
     ]
