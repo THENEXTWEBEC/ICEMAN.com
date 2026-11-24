@@ -1211,3 +1211,9 @@ body:has(.home-hero-journey) .site-header .brand-official-logo{width:158px;heigh
     transform:translate(var(--dish-normalized-x,0px),calc(var(--dish-normalized-y,0px) - 3%)) scale(calc(var(--dish-normalized-scale,1) * var(--dish-size,1) * 1.2),calc(var(--dish-normalized-scale,1) * var(--dish-size,1))) rotate(90deg)!important;
   }
 }
+
+/* The concepts story image fills the open desktop area marked in the layout reference. */
+@media(min-width:821px){
+  [data-story-selector="concepts"] .story-panel{margin-top:clamp(-380px,-37vh,-250px)}
+  [data-story-selector="concepts"] .story-panel-image{height:clamp(420px,52vh,560px)}
+}
