@@ -99,9 +99,11 @@
 
 @media(max-width:560px){.reference-categories .discovery-card.is-revealed .discovery-pack{transform:translate3d(0,-36%,0) scale(.44)}.reference-categories .discovery-copy{inset:49% 0 0;padding:8px 10px}.reference-categories .discovery-copy h3{font-size:clamp(15px,4vw,21px);margin-bottom:5px}.reference-categories .discovery-copy p{font-size:clamp(11px,2.7vw,13px);line-height:1.35}.reference-categories .discovery-cta{font-size:10px;margin-top:7px}}
 
-/* Keep the category headline above the featured products band. */
-.reference-categories-intro{width:min(1110px,calc(100% - 80px));margin:0 auto;padding-top:22px;color:#1196c5}
-.reference-categories-intro span{display:block;font-size:clamp(15px,1.5vw,20px);font-weight:800;letter-spacing:.075em;line-height:1.25;text-transform:uppercase}
-.reference-categories>.discovery-grid{margin-top:14px}
+/* Moving products intro sits immediately above the featured product band. */
+.reference-categories-intro{width:min(1110px,calc(100% - 80px));margin:0 auto;padding:24px 0 20px;color:#111a52}
+.reference-categories-intro>span{display:block;color:#1196c5;font-size:clamp(15px,1.5vw,20px);font-weight:800;letter-spacing:.075em;line-height:1.25;text-transform:uppercase}
+.reference-categories-intro h2{margin:14px 0 0;color:#111a52;font-size:clamp(40px,5.2vw,68px);font-weight:850;letter-spacing:-.055em;line-height:.99;text-wrap:balance}
+.reference-categories-intro p{max-width:680px;margin:18px 0 0;color:#42506f;font-size:clamp(16px,1.5vw,20px);line-height:1.45}
+.reference-categories>.discovery-grid{margin-top:0}
 @media(max-width:900px){.reference-categories-intro{width:calc(100% - 48px)}}
-@media(max-width:560px){.reference-categories-intro{width:calc(100% - 32px);padding-top:16px}.reference-categories-intro span{font-size:15px}.reference-categories>.discovery-grid{margin-top:12px}}
+@media(max-width:560px){.reference-categories-intro{width:calc(100% - 32px);padding:18px 0 20px}.reference-categories-intro>span{font-size:15px}.reference-categories-intro h2{max-width:460px;margin-top:14px;font-size:clamp(38px,10vw,48px);line-height:.98}.reference-categories-intro p{margin-top:16px;font-size:16px;line-height:1.45}}
