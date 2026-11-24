@@ -1240,3 +1240,9 @@ body:has(.home-hero-journey) .site-header .brand-official-logo{width:158px;heigh
 .story-panel-image:has(img[src*="practicidad-waffles.webp"]){position:relative;background:#14183f}
 .story-panel-image:has(img[src*="practicidad-waffles.webp"])::before{content:"";position:absolute;inset:-12px;z-index:0;pointer-events:none;background:url("assets/editorial/practicidad-waffles.webp?v=20261124") center 52%/cover no-repeat;filter:blur(18px);opacity:.42;transform:scale(1.03)}
 .story-panel-image img[src*="practicidad-waffles.webp"]{object-fit:contain;object-position:center;z-index:1}
+
+/* Pull back the desktop potato dish image while keeping it inside its frame. */
+@media(min-width:821px){
+  .purpose-photos:has(img[src*="nosotros-proposito-carne-papas"])::before{content:"";position:absolute;inset:-12px;z-index:0;pointer-events:none;background:url("assets/editorial/nosotros-proposito-carne-papas.jpeg?v=20261124-papas-correctas") center/cover no-repeat;filter:blur(20px);opacity:.34;transform:scale(1.04)}
+  .purpose-photos img[src*="nosotros-proposito-carne-papas"]{object-fit:contain;object-position:center;z-index:1}
+}
