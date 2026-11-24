@@ -1226,3 +1226,6 @@ body:has(.home-hero-journey) .site-header .brand-official-logo{width:158px;heigh
 @media(min-width:821px){
   [data-story-selector="values"] .story-section-head{max-width:min(900px,53%)}
 }
+
+/* Keep story selector imagery centered in the desktop scene. */
+@media(min-width:821px){.story-selector .story-panel{top:clamp(190px,27vh,300px)}}
