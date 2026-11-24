@@ -834,8 +834,8 @@
   };
   const storyConcepts = [
     {title:"PRACTICIDAD",text:"Soluciones que hacen más fácil tu día.",image:"editorial/nosotros-salteado.webp",alt:"Salteado de verduras servido en una sartén"},
-    {title:"VERSATILIDAD",text:"Un producto, muchas formas de disfrutarlo.",image:"editorial/purpose-versatility-table.png",alt:"Papas doradas, smoothie de frutos rojos y vegetales salteados listos para disfrutar"},
-    {title:"PARA COMPARTIR",text:"Sabores que reúnen alrededor de la mesa.",image:"editorial/sharing-table.png",alt:"Personas compartiendo una bandeja de aros, papas y vegetales alrededor de la mesa"}
+    {title:"VERSATILIDAD",text:"Un producto, muchas formas de disfrutarlo.",image:"editorial/purpose-versatility-table.jpg",alt:"Mesa con waffles, hash browns, papas y opciones para compartir"},
+    {title:"PARA COMPARTIR",text:"Sabores que reúnen alrededor de la mesa.",image:"editorial/ice-man-sharing-event.png",alt:"Equipo IceMan y asistentes compartiendo productos alrededor de la mesa"}
   ];
   const storyValues = [
     {title:"CERCANÍA",text:"Te acompañamos a ti y a tu familia con soluciones pensadas para las necesidades de cada día.",image:"editorial/10-aros-para-compartir.webp",alt:"Un momento cercano acompañado por Aros de cebolla IceMan"},
