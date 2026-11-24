@@ -121,3 +121,11 @@
   .reference-categories-intro p{margin-top:22px}
   .reference-categories-inner{margin-top:46px}
 }
+
+/* Fit both category rows beneath the desktop header and section title. */
+@media (min-width: 901px) {
+  .reference-categories-inner { width: min(1110px, calc(100% - 80px), calc((100svh - 190px) * 1.38)); }
+  .reference-category { container-type: inline-size; }
+  .reference-category strong { font-size: clamp(16px, 8cqw, 38px); }
+  .reference-category-button { font-size: clamp(13px, 4.5cqw, 18px); }
+}
