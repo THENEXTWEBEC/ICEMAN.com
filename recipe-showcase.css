@@ -13,11 +13,11 @@
 .recipe-scene--purple{background:linear-gradient(125deg,#4a3b71,#423465)}
 .recipe-scene--berry{background:linear-gradient(125deg,#51448e,#35418a)}
 .recipe-scene--ocean{background:linear-gradient(125deg,#155d94,#184482)}
-.recipe-scene-photo{position:relative;width:100%;height:clamp(360px,36vw,475px);overflow:hidden;border-radius:18px;background:#dce4ed}
-.recipe-scene-dish{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
+.recipe-scene-photo{position:relative;width:100%;height:clamp(360px,36vw,475px);overflow:visible;border-radius:18px;background:#dce4ed}
+.recipe-scene-dish{display:block;width:100%;height:100%;border-radius:inherit;object-fit:cover;object-position:center}
 .recipe-scene-badge{position:absolute;top:15px;right:15px;padding:9px 13px;border-radius:50px;background:#ffd133;color:#172658;font-size:11px;font-weight:800;letter-spacing:.08em}
-.recipe-scene-pack{position:absolute;bottom:0;left:1%;width:46%;height:46%;object-fit:contain;object-position:bottom left;filter:drop-shadow(0 12px 14px rgba(0,0,0,.28))}
-.recipe-scene--ocean .recipe-scene-pack{left:auto;right:1%;object-position:bottom right}
+.recipe-scene-pack{position:absolute;z-index:2;bottom:-7%;left:-4%;width:62%;height:68%;object-fit:contain;object-position:bottom left;filter:drop-shadow(0 12px 14px rgba(0,0,0,.28));pointer-events:none}
+.recipe-scene--ocean .recipe-scene-pack{left:auto;right:-4%;object-position:bottom right}
 .recipe-scene-copy{max-width:510px;padding:12px 20px 12px 0}
 .recipe-scene-kicker{color:#9fe6ef;font-size:12px;font-weight:800;letter-spacing:.1em}
 .recipe-scene-copy h2{margin:12px 0 18px;color:#fff;font-size:clamp(37px,4.3vw,67px);font-weight:800;line-height:1.01;letter-spacing:-.065em;text-wrap:balance}
@@ -59,7 +59,8 @@
   .recipe-showcase{padding:10px;border-radius:20px}
   .recipe-scene{min-height:0;padding:9px;border-radius:14px}
   .recipe-scene-photo{aspect-ratio:1.08;border-radius:10px}
-  .recipe-scene-pack{width:50%;height:46%}
+  .recipe-scene-pack{bottom:-6%;left:-3%;width:66%;height:62%}
+  .recipe-scene--ocean .recipe-scene-pack{left:auto;right:-3%}
   .recipe-scene-badge{top:10px;right:10px;padding:7px 9px;font-size:10px}
   .recipe-scene-copy{padding:10px 8px 16px}
   .recipe-scene-copy h2{margin:9px 0 11px}
