@@ -547,12 +547,12 @@
       ? responsiveEditorialImageAttrs(imageSrc, "(max-width: 600px) calc(100vw - 65px), (max-width: 1100px) 90vw, 560px")
       : "";
     const packSrc = product ? productionImage(cutoutAsset(product.image)) : "";
-    const packageMarkup = packSrc ? `<span aria-hidden="true" class="recipe-cover-package-frame recipe-cover-package-frame--${index % 3}" style="position:absolute;z-index:2;left:4%;bottom:4%;width:${isWaffleBox ? "38%" : "35%"};height:32%;display:flex;align-items:center;justify-content:center;padding:4px;pointer-events:none"><img class="recipe-cover-official-pack" src="${packSrc}" alt="" loading="lazy" decoding="async" style="display:block;position:static;width:100%;height:100%;max-width:100%;max-height:100%;object-fit:contain;object-position:center"></span>` : "";
+    const packageMarkup = packSrc && !isComposite ? `<span aria-hidden="true" class="recipe-cover-package-frame recipe-cover-package-frame--${index % 3}" style="position:absolute;z-index:2;left:4%;bottom:4%;width:${isWaffleBox ? "38%" : "35%"};height:32%;display:flex;align-items:center;justify-content:center;padding:4px;pointer-events:none"><img class="recipe-cover-official-pack" src="${packSrc}" alt="" loading="lazy" decoding="async" style="display:block;position:static;width:100%;height:100%;max-width:100%;max-height:100%;object-fit:contain;object-position:center"></span>` : "";
     const search = [recipe.title, recipe.description, ...recipe.tags, ...recipe.occasions]
       .join(" ").toLocaleLowerCase("es").normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     const imageLoading = index === 0 ? 'eager' : 'lazy';
     const imagePriority = index === 0 ? ' fetchpriority="high"' : '';
-    const artworkClass = "recipe-cover-art--clean";
+    const artworkClass = isComposite ? "recipe-cover-art--composite" : "recipe-cover-art--clean";
     return `<article class="recipe-cover" data-editorial-card data-category="recetas" data-search="${escapeHTML(search)}">
       <a class="recipe-cover-art ${artworkClass} recipe-visual-${visual.treatment}" href="${editorialPath(recipe)}" data-link aria-label="Abrir ${escapeHTML(recipe.title)}">
         <img class="recipe-cover-dish" src="${imageSrc}"${responsive} alt="${escapeHTML(visual.alt)}" loading="${imageLoading}" decoding="async"${imagePriority} width="1200" height="720">
