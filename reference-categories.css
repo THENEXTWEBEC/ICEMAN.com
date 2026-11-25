@@ -311,3 +311,15 @@
 .reference-category-vegetales .reference-category-products .reference-category-pack{
   transform:scale(.84);
 }
+
+@media(max-width:560px){
+  .reference-category-vegetales .reference-category-products .reference-category-pack{
+    width:76%;
+    height:72%;
+    max-width:100%;
+    max-height:100%;
+    object-fit:contain;
+    object-position:center;
+    transform:none;
+  }
+}
