@@ -1326,3 +1326,9 @@ body:has(.home-hero-journey) .site-header .brand-official-logo{width:158px;heigh
     object-position: center;
   }
 }
+
+
+/* Move the full Nosotros values scene toward the vertical center on desktop. */
+@media(min-width:601px){
+  [data-story-selector="values"]{padding-top:clamp(155px,16vh,190px)}
+}
