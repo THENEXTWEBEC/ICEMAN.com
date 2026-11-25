@@ -280,3 +280,14 @@
   }
   .reference-category-button .thin-arrow{width:40%;height:40%}
 }
+
+/* Preserve the complete package inside each inset frame. */
+@media(min-width:901px){
+  .reference-category .reference-category-products .reference-category-pack{
+    max-height:300px;
+    place-self:center;
+  }
+  .reference-category .reference-category-footer strong{
+    font-weight:500;
+  }
+}
