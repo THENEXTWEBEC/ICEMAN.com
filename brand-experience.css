@@ -1332,3 +1332,10 @@ body:has(.home-hero-journey) .site-header .brand-official-logo{width:158px;heigh
 @media(min-width:601px){
   [data-story-selector="values"]{padding-top:clamp(155px,16vh,190px)}
 }
+
+
+/* Keep every image in the Nosotros values selector in the same 4:3 frame. */
+[data-story-selector="values"] .story-panel-image {
+  height: auto;
+  aspect-ratio: 4 / 3;
+}
