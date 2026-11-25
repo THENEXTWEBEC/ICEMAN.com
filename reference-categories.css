@@ -291,3 +291,18 @@
     font-weight:500;
   }
 }
+
+/* Keep the specialty category package frame aligned with the other cards.
+   Older mobile-specific selectors narrowed this frame to 70% of the card. */
+.reference-category-especialidades .reference-category-products{
+  position:relative;
+  inset:auto;
+  display:grid;
+  width:100%;
+  height:auto;
+  min-height:0;
+  align-self:stretch;
+  flex:1 1 auto;
+  place-items:center;
+  overflow:hidden;
+}
