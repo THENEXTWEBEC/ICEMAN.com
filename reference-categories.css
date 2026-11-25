@@ -164,3 +164,12 @@
   .reference-category-vegetales .reference-category-pack-1,
   .reference-category-vegetales .reference-category-pack-2{width:42%;height:64%;object-fit:contain}
 }
+
+/* Separate category titles from the CTA in the two-column phone grid. */
+@media(max-width:560px){
+  .reference-category strong{
+    bottom:25%;
+    font-size:clamp(12px,3.5vw,18px);
+  }
+  .reference-category-button{bottom:5%;min-height:27px}
+}
