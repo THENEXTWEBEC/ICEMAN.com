@@ -571,16 +571,26 @@
     </article>`;
   }
   function recipeProductChoices() {
-    const desktop = window.matchMedia("(min-width: 981px)").matches;
-    const eagerCount = desktop ? 5 : window.matchMedia("(min-width: 641px)").matches ? 3 : 2;
     return orderedRecipes().map((recipe, index) => {
       const product = productBySlug(recipe.products[0]);
       if (!product) return "";
-      const loading = index < eagerCount ? "eager" : "lazy";
-      const priority = index < eagerCount ? "high" : "auto";
-      const responsiveSources = responsivePackImages.has(product.image) ? `srcset="${responsivePackSrcset(product.image)}" sizes="(max-width: 640px) 148px, 172px"` : "";
-      return `<button class="recipe-pack-choice" type="button" data-recipe-select="${escapeHTML(recipe.slug)}" aria-pressed="false" aria-controls="recipe-feature-panel"><span class="recipe-pack-image"><img src="${asset(product.image)}" ${responsiveSources} alt="" loading="${loading}" fetchpriority="${priority}" decoding="async" width="172" height="158"></span><span class="recipe-pack-name">${escapeHTML(product.name)}</span><span class="recipe-pack-hint">Ver receta ${iconArrow()}</span></button>`;
+      const labels = ["Rejilla", "Onduladas", "Aros", "Waffles", "Edamame"];
+      return `<button class="recipe-pack-choice ${index === 0 ? "is-selected" : ""}" type="button" data-recipe-select="${escapeHTML(recipe.slug)}" aria-pressed="${index === 0}" aria-controls="recipe-feature-panel"><span class="recipe-pack-image"><img src="${asset(product.image)}" alt="" loading="${index < 2 ? "eager" : "lazy"}" decoding="async" width="84" height="84"></span><span class="recipe-pack-name">${escapeHTML(labels[index] || product.name)}</span></button>`;
     }).join("");
+  }
+  const recipeSceneThemes = [
+    { label:"PARA COMPARTIR", title:"Brochetas con papas rejilla", color:"blue" },
+    { label:"PARA DISFRUTAR", title:"Steak con papas onduladas", color:"violet" },
+    { label:"CRUJIENTE Y FRESCO", title:"Pollo con aros de cebolla", color:"purple" },
+    { label:"UN TOQUE DULCE", title:"Waffles con frutos rojos", color:"berry" },
+    { label:"ALGO DIFERENTE", title:"Poke de salmón y edamame", color:"ocean" }
+  ];
+  function recipeScene(recipe) {
+    const index = Math.max(0, orderedRecipes().findIndex(item => item.slug === recipe.slug));
+    const theme = recipeSceneThemes[index] || recipeSceneThemes[0];
+    const product = productBySlug(recipe.products[0]);
+    const image = editorialImage(recipeDishImage(recipe));
+    return `<article class="recipe-scene recipe-scene--${theme.color}" data-recipe-content><div class="recipe-scene-photo"><img class="recipe-scene-dish" src="${image}"${responsiveEditorialImageAttrs(image,"(max-width: 700px) 90vw, 570px")} alt="${escapeHTML(recipe.heroAlt || recipe.title)}" fetchpriority="high" decoding="async"><span class="recipe-scene-badge">${escapeHTML(theme.label)}</span>${product ? `<img class="recipe-scene-pack" src="${productionImage(cutoutAsset(product.image))}" alt="Empaque de ${escapeHTML(product.name)} IceMan" decoding="async">` : ""}</div><div class="recipe-scene-copy"><span class="recipe-scene-kicker">${escapeHTML(theme.label)}</span><h2>${escapeHTML(theme.title)}</h2><p>${escapeHTML(recipe.description)}</p>${product ? `<div class="recipe-scene-product"><span>PRODUCTO PROTAGONISTA</span><strong>${escapeHTML(product.name)} IceMan</strong></div>` : ""}<a href="${editorialPath(recipe)}" data-link class="recipe-scene-cta">Ver receta ${iconArrow()}</a></div></article>`;
   }
   function recipeFeaturePanel(recipe) {
     const ingredients = recipe.ingredients.reduce((groups, ingredient) => {
@@ -594,7 +604,7 @@
     return `<div class="recipe-feature-content" data-recipe-content><div class="recipe-feature-image"><img src="${editorialImage(dishImage)}"${responsiveEditorialImageAttrs(editorialImage(dishImage),"(max-width: 600px) calc(100vw - 36px), 680px")} alt="${escapeHTML(visual.alt)}" fetchpriority="high" decoding="async"><span>${escapeHTML(product?.name || "IceMan")}</span></div><div class="recipe-feature-copy"><div class="recipe-feature-heading"><div><span class="story-kicker">${escapeHTML([recipe.time,recipe.servings].filter(Boolean).join(" · "))}</span><h2>${escapeHTML(recipe.title)}</h2></div><button class="recipe-back-to-packs" type="button" data-recipe-back>Elegir otro producto</button></div><p class="recipe-feature-description">${escapeHTML(recipe.description)}</p><div class="recipe-full-details"><section><h3>Ingredientes</h3>${ingredients.filter(group=>group.items.length).map(group=>`<div class="recipe-ingredient-group">${group.title!=="Ingredientes"?`<h4>${escapeHTML(group.title)}</h4>`:""}<ul>${group.items.map(item=>`<li>${escapeHTML(item)}</li>`).join("")}</ul></div>`).join("")}</section><section><h3>Preparación</h3><ol>${recipe.steps.map((step,index)=>`<li><span>${String(index+1).padStart(2,"0")}</span><p>${escapeHTML(step)}</p></li>`).join("")}</ol></section></div><a class="recipe-detail-link" href="${editorialPath(recipe)}" data-link>Ver receta completa ${iconArrow()}</a></div></div>`;
   }
   function editorialPage(path) {
-    const content=`<div class="recipe-experience"><section class="recipe-discovery" id="elige-tu-idea" data-recipe-explorer><div class="wrap"><div class="recipe-discovery-heading"><span class="story-kicker">INSPIRACIÓN PARA TU MESA</span><h1>RECETAS</h1><p>Elige un producto IceMan para descubrir su receta.</p></div><div class="recipe-pack-shelf" aria-label="Productos IceMan con recetas">${recipeProductChoices()}</div><div id="recipe-feature-panel" class="recipe-feature-panel" aria-live="polite"><div class="recipe-selection-empty"><span aria-hidden="true">${iconSpark()}</span><p>Selecciona un empaque para ver la receta, sus ingredientes y su preparación.</p></div></div></div></section>
+    const content=`<div class="recipe-experience"><section class="recipe-discovery" id="elige-tu-idea" data-recipe-explorer><div class="wrap"><div class="recipe-discovery-heading"><span class="story-kicker">LA MESA ICEMAN</span><h1>Encuentra una.<br><em>Hazla tuya.</em></h1><p>Una idea puede cambiar todo el momento. Elige la que se te antoje hoy.</p></div><div class="recipe-showcase"><div id="recipe-feature-panel" class="recipe-feature-panel" aria-live="polite">${recipeScene(orderedRecipes()[0])}</div><div class="recipe-scene-picker"><span>ELIGE UNA RECETA</span><div class="recipe-pack-shelf" role="group" aria-label="Elegir receta destacada">${recipeProductChoices()}</div></div></div></div></section>
     <section class="recipe-library" id="las-recetas"><div class="wrap"><div class="recipe-library-heading"><div><span class="story-kicker">LA MESA IceMan</span><h2>Encuentra tu favorita.<br><em>Hazla tuya.</em></h2></div></div></div><div class="wrap"><nav class="recipe-section-nav" aria-label="Explorar inspiración"><a href="#las-recetas" aria-current="location">Recetas</a><a href="#ocasiones">Ocasiones ${iconArrow("up-right")}</a><label class="recipe-search"><span class="sr-only">Buscar recetas</span><input id="editorial-search" type="search" placeholder="Busca una receta o ingrediente…"></label></nav><p id="editorial-search-status" aria-live="polite"></p><div class="recipe-library-list" id="editorial-card-grid">${orderedRecipes().map(recipeCover).join("")}</div><div id="editorial-empty" class="editorial-empty" hidden>No encontramos recetas con esa búsqueda.</div></div></section>
     <section class="recipe-occasions" id="ocasiones"><div class="wrap"><div class="recipe-library-heading"><div><span class="story-kicker">CUALQUIER DÍA PUEDE SER ESPECIAL</span><h2>Momentos para disfrutar,<br><em>recetas para compartir.</em></h2></div></div><div class="occasion-grid">${editorial.occasions.map((o,index)=>`<a class="occasion-card" href="#las-recetas" data-occasion-link="${o.slug}"><img src="${editorialImage(o.image)}"${responsiveEditorialImageAttrs(editorialImage(o.image),"(max-width: 600px) calc(100vw - 36px), (max-width: 900px) calc(50vw - 24px), 240px")} alt="${escapeHTML(o.title)}" loading="lazy" decoding="async"><span class="occasion-overlay"><strong>${escapeHTML(o.title)}</strong><span>${escapeHTML(o.text)}</span><b>Ver ideas ${iconArrow()}</b></span></a>`).join("")}</div></div></section></div>`;
     pageShell(content,path);updateHead(path,"Recetas — IceMan","Encuentra recetas con productos IceMan para cocinar, disfrutar y compartir.");
@@ -987,7 +997,7 @@
           item.classList.toggle("is-selected", selected);
         });
         const panel = recipeExplorer.querySelector("#recipe-feature-panel");
-        panel.innerHTML = recipeFeaturePanel(recipe);
+        panel.innerHTML = recipeScene(recipe);
         panel.classList.remove("is-entering");
         requestAnimationFrame(() => panel.classList.add("is-entering"));
       }, { signal });
