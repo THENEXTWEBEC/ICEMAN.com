@@ -13,7 +13,7 @@
     "brochetas-carne-papas-rejilla-chimichurri": "editorial/recipe-brochetas-generated.png",
     "carne-plancha-papas-onduladas-salsa-ajo": "editorial/home-recipe-steak-fries-v2.webp",
     "pollo-hierbas-aros-cebolla-ensalada-repollo": "editorial/recipe-onion-chicken-generated.png",
-    "waffles-iceman-franui-frutos-rojos": "editorial/recipe-waffles-generated.png",
+    "waffles-iceman-franui-frutos-rojos": "editorial/recipe-waffles-box-front.webp",
     "bowl-salmon-teriyaki-edamame-mayonesa-picante": "editorial/recipe-salmon-generated.png"
   };
   const recipeDishImage = (recipe) => cleanRecipeImages[recipe.slug] || recipeVisual(recipe).image;
