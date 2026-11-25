@@ -239,3 +239,6 @@
   }
 }
 .reference-categories-heading h2{scroll-margin-top:90px}
+
+/* Leave room for the sticky header when the phone gallery enters view. */
+@media(max-width:900px){.reference-categories-inner{height:calc(100svh - 92px)}}
