@@ -12,7 +12,6 @@
   const cleanRecipeImages = {
     "brochetas-carne-papas-rejilla-chimichurri": "editorial/recipe-brochetas-generated.png",
     "carne-plancha-papas-onduladas-salsa-ajo": "editorial/home-recipe-steak-fries-v2.webp",
-    "pollo-hierbas-aros-cebolla-ensalada-repollo": "editorial/recipe-onion-chicken-generated.png",
     "waffles-iceman-franui-frutos-rojos": "editorial/recipe-waffles-box-front.webp",
     "bowl-salmon-teriyaki-edamame-mayonesa-picante": "editorial/recipe-salmon-generated.png"
   };
@@ -612,7 +611,17 @@
     const isRecipe = item.kind === "recipe";
     const isBusiness = item.kind === "business";
     const visual=isRecipe ? recipeVisual(item) : null;
-    if(visual) item = {...item, image:recipeDishImage(item),heroImage:recipeDishImage(item),heroAlt:visual.alt};
+    if(visual) {
+      const dishImage = recipeDishImage(item);
+      const usesProductionComposite = document.documentElement.dataset.icemanOptimized === "true"
+        && item.slug === "pollo-hierbas-aros-cebolla-ensalada-repollo";
+      item = {
+        ...item,
+        image:dishImage,
+        heroImage:usesProductionComposite ? "editorial/recipe-card-" + item.slug + ".webp" : dishImage,
+        heroAlt:visual.alt
+      };
+    }
     const relatedProducts = editorialProducts(item.products || []);
     const recipeFacts = isRecipe ? [item.time ? `<span><small>TIEMPO</small><b>${escapeHTML(item.time)}</b></span>` : "", item.servings ? `<span><small>RINDE</small><b>${escapeHTML(item.servings)}</b></span>` : ""].filter(Boolean).join("") : "";
     const related = (isRecipe ? orderedRecipes().map(recipe=>({...recipe,kind:"recipe"})) : editorialAll).filter((other) => other.slug !== item.slug && other.kind === item.kind).slice(0,3);

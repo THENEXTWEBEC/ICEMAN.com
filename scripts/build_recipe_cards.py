@@ -30,7 +30,9 @@ RECIPES = {
     "pollo-hierbas-aros-cebolla-ensalada-repollo": {
         "dish": "editorial/recipe-onion-chicken-plate.webp",
         "crop": (0.14, 0.035, 0.995, 0.735),
-        "pack": "catalog/cutout/aros-cebolla.webp",
+        # Keep the exact user-provided package pixels and scale it like every other bag.
+        "pack": "editorial/customer-onion-rings.webp",
+        "pack_polygon": [(60,782),(476,782),(488,1377),(483,1403),(474,1414),(65,1414),(51,1403),(49,1378),(54,821)],
     },
     "waffles-iceman-franui-frutos-rojos": {
         "dish": "editorial/recipe-waffles-franui-clean.webp",
@@ -97,7 +99,12 @@ def compose(asset_dir: Path, slug: str, item: dict) -> None:
         canvas.paste(food.convert("RGBA"), (x0, y0), mask)
 
     with Image.open(package) as img:
-        pack = trim_pack(img, item.get("box", False))
+        pack = img.convert("RGBA")
+        if item.get("pack_polygon"):
+            mask = Image.new("L", pack.size, 0)
+            ImageDraw.Draw(mask).polygon(item["pack_polygon"], fill=255)
+            pack.putalpha(mask)
+        pack = trim_pack(pack, item.get("box", False))
         # The waffle is a wide black carton; the other packages are tall / broad bags.
         if item.get("box"):
             max_w, max_h = divider - 40, 260
