@@ -74,3 +74,8 @@
   .recipe-experience .recipe-pack-name{font-size:12px}
 }
 @media(prefers-reduced-motion:reduce){.recipe-scene-cta,.recipe-experience .recipe-pack-choice{transition:none}}
+
+
+/* Keep the edamame package secondary to the salmon bowl. */
+.recipe-scene--ocean .recipe-scene-pack{width:44%;height:64%;right:-3%;bottom:-8%}
+@media(max-width:600px){.recipe-scene--ocean .recipe-scene-pack{width:51%;height:58%;right:-3%;bottom:-7%}}
