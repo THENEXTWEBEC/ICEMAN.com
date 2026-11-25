@@ -242,3 +242,34 @@
 
 /* Leave room for the sticky header when the phone gallery enters view. */
 @media(max-width:900px){.reference-categories-inner{height:calc(100svh - 92px)}}
+
+/* Normalize visible package scale across the six category cards. */
+@media(min-width:561px){
+  .reference-category-papas .reference-category-pack-1{transform:rotate(-6deg) scale(1.08)}
+  .reference-category-papas .reference-category-pack-2{transform:rotate(4deg) scale(1.08)}
+  .reference-category-vegetales .reference-category-pack-1{transform:rotate(-6deg) scale(1.08)}
+  .reference-category-vegetales .reference-category-pack-2{transform:rotate(4deg) scale(1.08)}
+  .reference-category-smoothies .reference-category-pack-1{
+    top:12%;left:5%;width:48%;height:82%;aspect-ratio:auto;object-fit:contain;
+    transform:rotate(-5deg) scale(1.08);
+  }
+  .reference-category-smoothies .reference-category-pack-2{
+    top:12%;right:5%;left:auto;width:48%;height:82%;aspect-ratio:auto;object-fit:contain;
+    transform:rotate(5deg) scale(1.04);
+  }
+  .reference-category-helados .reference-category-pack-1{transform:rotate(-3deg) scale(1.45)}
+  .reference-category-helados .reference-category-pack-2{transform:rotate(4deg) scale(1.25)}
+  .reference-category-waffles .reference-category-pack-1{top:14%;height:74%}
+}
+@media(max-width:560px){
+  .reference-category-especialidades .reference-category-products{
+    top:10%;left:11%;width:78%;height:58%;
+  }
+  .reference-category-especialidades .reference-category-pack-1{transform:rotate(-6deg) scale(1.35)}
+  .reference-category-especialidades .reference-category-pack-2{transform:rotate(4deg) scale(1.35)}
+  .reference-category-smoothies .reference-category-pack-1{transform:rotate(-5deg) scale(1.2)}
+  .reference-category-smoothies .reference-category-pack-2{transform:rotate(5deg) scale(1.06)}
+  .reference-category-helados .reference-category-pack-1{transform:rotate(-3deg) scale(1.4)}
+  .reference-category-helados .reference-category-pack-2{transform:rotate(4deg) scale(1.08)}
+  .reference-category-waffles .reference-category-pack-1{top:14%;width:84%;height:72%;left:8%}
+}
