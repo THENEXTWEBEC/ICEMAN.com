@@ -1334,8 +1334,8 @@ body:has(.home-hero-journey) .site-header .brand-official-logo{width:158px;heigh
 }
 
 
-/* Keep every image in the Nosotros values selector in the same 4:3 frame. */
-[data-story-selector="values"] .story-panel-image {
+/* Keep Practicidad, Versatilidad and Para compartir in the same 4:3 frame. */
+[data-story-selector="concepts"] .story-panel-image {
   height: auto;
   aspect-ratio: 4 / 3;
 }
