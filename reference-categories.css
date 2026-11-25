@@ -306,3 +306,8 @@
   place-items:center;
   overflow:hidden;
 }
+
+/* Give the tall vegetable pack more breathing room inside its image frame. */
+.reference-category-vegetales .reference-category-products .reference-category-pack{
+  transform:scale(.84);
+}
