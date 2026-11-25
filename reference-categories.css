@@ -232,3 +232,21 @@
   .reference-category .reference-category-footer strong{font-size:clamp(14px,4vw,21px)}
   .reference-category .reference-category-footer .reference-category-button{width:clamp(32px,9vw,42px);height:clamp(32px,9vw,42px)}
 }
+
+/* Keep long category names readable in the compact three-column layout. */
+@media(min-width:561px){
+  .reference-category .reference-category-footer strong{
+    font-size:clamp(15px,7cqw,25px);
+    text-overflow:clip;
+  }
+  .reference-category .reference-category-footer .reference-category-button{
+    width:clamp(44px,20cqw,62px);
+    height:clamp(44px,20cqw,62px);
+  }
+}
+@media(max-width:560px){
+  .reference-category .reference-category-footer strong{
+    font-size:clamp(12px,3.3vw,16px);
+    text-overflow:clip;
+  }
+}
