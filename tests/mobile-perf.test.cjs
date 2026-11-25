@@ -18,8 +18,8 @@ test('initial hero retains responsive critical image with high fetch priority', 
 });
 
 test('below-the-fold categories use low-priority lazy images', () => {
-  assert.match(app, /class="reference-category-pack" src="\$\{src\}"\$\{responsive\} alt="" loading="lazy" fetchpriority="low"/);
-  assert.match(app, /const src = cutoutAsset\(category\.image\)/);
+  assert.match(app, /reference-category-pack-\$\{packIndex \+ 1\}" src="\$\{src\}"\$\{responsive\} alt="" loading="lazy" fetchpriority="low"/);
+  assert.match(app, /const packs = categoryPacks\[category\.slug\]/);
   assert.doesNotMatch(app, /loading="\$\{index < 3 \? "eager" : "lazy"\}"/);
 });
 
