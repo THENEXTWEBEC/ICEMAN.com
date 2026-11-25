@@ -226,3 +226,16 @@
   .reference-category-grid{grid-template-rows:repeat(3,minmax(0,1fr))}
   .reference-category strong{bottom:21%;font-size:clamp(20px,3.4vw,30px)}
 }
+
+/* Preserve the grid width and product hierarchy at viewport height. */
+.reference-category-grid{width:100%}
+@media(min-width:901px){
+  .reference-categories-inner{height:calc(100svh - 76px)}
+  .reference-category-smoothies .reference-category-pack-1{
+    top:12%;left:5%;width:48%;height:82%;aspect-ratio:auto;object-fit:contain;
+  }
+  .reference-category-smoothies .reference-category-pack-2{
+    top:12%;right:5%;left:auto;width:48%;height:82%;aspect-ratio:auto;object-fit:contain;
+  }
+}
+.reference-categories-heading h2{scroll-margin-top:90px}
