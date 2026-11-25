@@ -42,11 +42,11 @@ test('recipe explorer displays only catalog products and preserves product links
    recipe.products.forEach(slug=>assert.ok(catalog.products.some(product=>product.slug===slug),slug));
  });
 });
-test('recipe selector starts empty and allows selection through button controls',()=>{
+test('recipe selector opens on a featured recipe and allows button selection',()=>{
  assert.match(app,/data-recipe-explorer/);
- assert.match(app,/aria-pressed="false" aria-controls="recipe-feature-panel"/);
- assert.match(app,/Selecciona un empaque para ver la receta/);
- assert.match(app,/function recipeFeaturePanel\(recipe\)/);
+ assert.match(app,/recipeScene\(orderedRecipes\(\)\[0\]\)/);
+ assert.match(app,/aria-pressed="\$\{index === 0\}" aria-controls="recipe-feature-panel"/);
+ assert.match(app,/panel\.innerHTML = recipeScene\(recipe\)/);
  assert.match(app,/IntersectionObserver/);
 });
 test('home category showcase renders the six catalog routes',()=>{

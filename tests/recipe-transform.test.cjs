@@ -23,13 +23,13 @@ test('five approved recipes use supplied dish photos and their exact catalog pro
   }
 });
 
-test('recipe product selection begins empty and supports keyboard and touch buttons', () => {
+test('recipe selection starts with a featured scene and supports keyboard and touch buttons', () => {
   const app = fs.readFileSync(path.join(project, 'app.js'), 'utf8');
   const css = fs.readFileSync(path.join(project, 'recipe-experience.css'), 'utf8');
   assert.match(app, /data-recipe-select=/);
-  assert.match(app, /aria-pressed="false" aria-controls="recipe-feature-panel"/);
-  assert.match(app, /recipeFeaturePanel\(recipe\)/);
-  assert.match(app, /data-recipe-back/);
+  assert.match(app, /recipeScene\(orderedRecipes\(\)\[0\]\)/);
+  assert.match(app, /aria-pressed="\$\{index === 0\}" aria-controls="recipe-feature-panel"/);
+  assert.match(app, /panel\.innerHTML = recipeScene\(recipe\)/);
   assert.match(css, /@media\(prefers-reduced-motion:reduce\)/);
   assert.match(css, /touch-action:manipulation/);
   assert.match(app, /IntersectionObserver/);
