@@ -172,3 +172,10 @@ html,body,#app{max-width:100%}html,body{overflow-x:clip}body{min-width:0}img{dis
 
 /* Invert the official logo for the dark footer without a white box. */
 .site-footer .footer-official-logo { filter: grayscale(1) invert(1) contrast(1.2); mix-blend-mode: screen; }
+
+
+/* Mobile footer: keep the inverted white logo transparent over the blue footer. */
+@media(max-width:640px){
+  .site-footer .footer-brand-block{background:transparent!important}
+  .site-footer .footer-official-logo{background:transparent!important;filter:grayscale(1) invert(1) contrast(1.2)!important;mix-blend-mode:screen!important;box-shadow:none!important}
+}
