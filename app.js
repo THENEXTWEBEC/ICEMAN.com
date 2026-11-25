@@ -838,7 +838,7 @@
     hero:{image:"editorial/advice-store-frozen-products.webp",alt:"Selección de productos IceMan conservados en el congelador"},
     history:{image:"editorial/nosotros-salteado-user.png",alt:"Salteado de verduras servido en una sartén"},
     purpose:[
-      {image:"editorial/nosotros-proposito-carne-papas.jpeg?v=20261124-papas-correctas",alt:"Papas fritas con carne, salsa cremosa y hierbas frescas"}
+      {image:"editorial/article-vegetables.webp",alt:"Brócoli, zanahorias y coliflor servidos en un plato"}
     ]
   };
   const storyConcepts = [
