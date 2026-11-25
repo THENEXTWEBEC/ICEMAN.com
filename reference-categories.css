@@ -273,3 +273,10 @@
   .reference-category-helados .reference-category-pack-2{transform:rotate(4deg) scale(1.08)}
   .reference-category-waffles .reference-category-pack-1{top:14%;width:84%;height:72%;left:8%}
 }
+
+
+/* Category cards use only the category name and arrow as their link label. */
+@media(min-width:901px){.reference-category strong{bottom:7%;display:flex;align-items:center;justify-content:center;gap:.18em}}
+.reference-category-arrow{font-size:.86em;font-weight:500;line-height:.8;transition:transform .2s ease}
+.reference-category:hover .reference-category-arrow{transform:translateX(4px)}
+@media(max-width:900px){.reference-category strong{bottom:7%;display:flex;align-items:center;justify-content:center;gap:.18em}}
