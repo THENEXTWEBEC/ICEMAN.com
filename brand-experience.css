@@ -1371,3 +1371,9 @@ body:has(.home-hero-journey) .site-header .brand-official-logo{width:158px;heigh
   object-fit: contain !important;
   object-position: center;
 }
+
+
+/* Center all three values photos inside the shared horizontal frame. */
+#story-panel-values .story-panel-image img {
+  object-position: center center !important;
+}
