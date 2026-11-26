@@ -1362,3 +1362,12 @@ body:has(.home-hero-journey) .site-header .brand-official-logo{width:158px;heigh
   object-fit: cover !important;
   object-position: center top !important;
 }
+
+/* Preserve the full source image in Nosotros instead of cropping into a soft strip. */
+.story-history-foot img {
+  width: 100%;
+  height: auto !important;
+  aspect-ratio: 1136 / 941;
+  object-fit: contain !important;
+  object-position: center;
+}
