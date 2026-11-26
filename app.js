@@ -1108,6 +1108,17 @@
       signal.addEventListener("abort",()=>observer.disconnect(),{once:true});
       marquee.querySelector("button").addEventListener("click",e=>{const paused=marquee.classList.toggle("is-paused");e.currentTarget.setAttribute("aria-pressed",String(paused));e.currentTarget.textContent=paused?"Reanudar títulos ▶":"Pausar títulos Ⅱ";},{signal});
     }
+    const recipeCards=[...root.querySelectorAll(".recipe-library-list .recipe-cover")];
+    if(recipeCards.length && "IntersectionObserver" in window){
+      const cardObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{
+        if(!entry.isIntersecting)return;
+        entry.target.classList.remove("is-entering");
+        entry.target.classList.add("is-entered");
+        cardObserver.unobserve(entry.target);
+      }),{threshold:.08,rootMargin:"0px 0px -4% 0px"});
+      recipeCards.forEach(card=>{card.classList.add("is-entering");cardObserver.observe(card);});
+      signal.addEventListener("abort",()=>cardObserver.disconnect(),{once:true});
+    }
     experienceCleanup=()=>{controller.abort();cancelAnimationFrame(frame);};
   }
   function notFound(path) {
