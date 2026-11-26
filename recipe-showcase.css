@@ -192,9 +192,17 @@
 }
 
 
-/* Keep the Papas onduladas package fully visible at the bottom of its scene. */
-.recipe-experience .recipe-scene--violet .recipe-scene-pack{z-index:3;left:3%;bottom:0;width:71.4%;height:86.1%;object-position:bottom left}
-@media(max-width:600px){.recipe-experience .recipe-scene--violet .recipe-scene-pack{left:3%;bottom:0;width:71.4%;height:86.1%}}
+/* Offset the 133 transparent rows at the bottom of the 1154px-tall package cutout. */
+.recipe-experience .recipe-scene--violet .recipe-scene-pack{
+  z-index:3;
+  left:3%;
+  bottom:3px;
+  width:71.4%;
+  height:auto;
+  aspect-ratio:1656 / 1154;
+  object-position:bottom left;
+  transform:translateY(11.5%);
+}
 
 
 /* Keep the recipe headline on the left and its watermark clear on the right. */
