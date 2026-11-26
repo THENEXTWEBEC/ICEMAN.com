@@ -160,6 +160,12 @@ def main() -> None:
     html = bundle_css(html)
     html = fingerprint_scripts(html)
     entry.write_text(html, encoding="utf-8")
+
+    # Serve Nosotros directly instead of redirecting through the cached 404 shell.
+    about_entry = DIST / "nosotros" / "index.html"
+    about_entry.parent.mkdir(parents=True, exist_ok=True)
+    about_entry.write_text(html, encoding="utf-8")
+
     verify()
     print(f"Production build complete: {cards} recipe compositions, {converted} new WebP files, {responsive} responsive variants, {category_optimized} optimized category images, one CSS bundle.")
 
