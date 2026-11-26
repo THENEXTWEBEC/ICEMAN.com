@@ -213,6 +213,6 @@
   .recipe-experience .recipe-discovery-heading{width:100%;margin-bottom:24px}
   .recipe-experience .recipe-discovery-heading h1{max-width:520px;font-size:clamp(40px,10vw,52px);line-height:1;letter-spacing:-.06em}
   .recipe-experience .recipe-discovery-heading p{max-width:300px;margin-top:13px;font-size:14px}
-  .recipe-experience .recipe-discovery-watermark{top:clamp(125px,39vw,162px);right:12px;font-size:clamp(78px,26vw,146px);opacity:.72}
+  .recipe-experience .recipe-discovery-watermark{top:clamp(125px,39vw,162px);right:12px;font-size:clamp(74px,24vw,144px);opacity:.72}
 }
 @media(prefers-reduced-motion:reduce){.recipe-experience .recipe-discovery-heading h1,.recipe-experience .recipe-discovery-heading p{animation:none;opacity:1;transform:none}}
