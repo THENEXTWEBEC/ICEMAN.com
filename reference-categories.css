@@ -280,3 +280,16 @@
 .reference-category-arrow{font-size:.86em;font-weight:500;line-height:.8;transition:transform .2s ease}
 .reference-category:hover .reference-category-arrow{transform:translateX(4px)}
 @media(max-width:900px){.reference-category strong{bottom:7%;display:flex;align-items:center;justify-content:center;gap:.18em}}
+
+
+/* Keep the smoothie pair at the same compact scale and spacing as other category pairs. */
+.reference-category-smoothies .reference-category-pack-1{
+  top:18%!important;right:auto!important;bottom:auto!important;left:9%!important;
+  width:45%!important;height:68%!important;aspect-ratio:auto!important;object-fit:contain!important;
+  transform:rotate(-5deg)!important;
+}
+.reference-category-smoothies .reference-category-pack-2{
+  top:13%!important;right:10%!important;bottom:auto!important;left:auto!important;
+  width:45%!important;height:68%!important;aspect-ratio:auto!important;object-fit:contain!important;
+  transform:rotate(5deg)!important;
+}
