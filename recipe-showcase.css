@@ -196,7 +196,7 @@
 .recipe-experience .recipe-scene--violet .recipe-scene-pack{
   z-index:3;
   left:3%;
-  bottom:3px;
+  bottom:-8px;
   width:71.4%;
   height:auto;
   aspect-ratio:1656 / 1154;
