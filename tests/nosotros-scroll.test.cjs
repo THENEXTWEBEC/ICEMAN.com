@@ -75,3 +75,12 @@ test('short viewports and reduced motion keep content accessible',()=>{
  assert.equal(reduced.window.lastScroll,undefined);
  reduced.api.updateScrollStories();assert.equal(reduced.api.scenes[0].active,2);
 });
+
+test('late content above a scene does not shift photo timing or button destinations',()=>{
+ const f=fixture(),s=f.api.scenes[0];
+ s.section.getBoundingClientRect=()=>({top:1800-f.window.scrollY});
+ f.window.scrollY=1800-76+s.travel*.5;
+ f.api.updateScrollStories();
+ assert.equal(s.active,1);
+ s.buttons[0].listeners.click();assert.equal(f.window.lastScroll.top,1724);
+});

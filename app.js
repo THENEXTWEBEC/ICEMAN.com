@@ -1106,6 +1106,8 @@
       if(signal.aborted)return;
       scenes.forEach(scene=>{
         if(reduced.matches){renderStory(scene,scene.active/Math.max(1,scene.images.length-1));return;}
+        // Earlier lazy images/font metrics can move the scene after initial layout.
+        scene.start=scene.section.getBoundingClientRect().top+window.scrollY-scene.header-(scene.flowing?window.innerHeight*.25:0);
         const progress=(window.scrollY-scene.start)/Math.max(1,scene.travel);
         renderStory(scene,progress);
       });
@@ -1114,6 +1116,7 @@
     const measureScrollStories=()=>{
       const headerHeight=root.querySelector(".site-header")?.offsetHeight||76;
       scenes.forEach(scene=>{
+        scene.header=headerHeight;
         scene.section.style.setProperty("--story-header",`${headerHeight}px`);
         scene.section.classList.remove("is-flowing");
         scene.flowing=reduced.matches || scene.wrap.offsetHeight>window.innerHeight-headerHeight+2;
@@ -1133,7 +1136,8 @@
       scene.images.forEach(image=>image.addEventListener("load",scheduleScrollStories,{signal}));
       scene.buttons.forEach((button,index)=>button.addEventListener("click",()=>{
         if(reduced.matches){renderStory(scene,index/Math.max(1,scene.images.length-1));return;}
-        window.scrollTo({top:scene.start+scene.travel*index/Math.max(1,scene.images.length-1),behavior:"smooth"});
+        const start=scene.section.getBoundingClientRect().top+window.scrollY-scene.header-(scene.flowing?window.innerHeight*.25:0);
+        window.scrollTo({top:start+scene.travel*index/Math.max(1,scene.images.length-1),behavior:"smooth"});
       },{signal}));
     });
     if(scenes.length){
@@ -1496,3 +1500,4 @@
   catch { consentUI(); }
   scrollToHash(window.location.hash, "auto");
 })();
+
