@@ -903,7 +903,7 @@
     {title:"CONFIANZA",text:"Cuidamos la calidad de todo lo que llevamos hasta ti.",image:"editorial/trust-family-celebration.jpeg",alt:"Dos mujeres junto a una mesa con flores, platos y productos IceMan"}
   ];
   function storySelector(items, id, title, hint, number) {
-    return `<section class="story-section story-selector" data-story-selector="${id}"><div class="wrap"><div class="story-section-head"><span class="story-number">${number} / SOMOS IceMan</span><h2>${title}</h2><p>${hint}</p></div><div class="story-selector-layout"><div class="story-options" role="group" aria-label="${title}">${items.map((item,i)=>`<button type="button" data-story-option="${i}" aria-pressed="${i===0}" aria-controls="story-panel-${id}"><span>0${i+1}</span>${item.title}<b aria-hidden="true">${iconArrow("up-right")}</b></button>`).join("")}</div><div class="story-panel" id="story-panel-${id}"><div class="story-panel-image"><img class="is-visible" src="${editorialImage(items[0].image)}" alt="${items[0].alt}" loading="lazy" decoding="async"><img class="story-panel-image-next" alt="" aria-hidden="true" decoding="async"></div><p aria-live="polite">${items[0].text}</p></div></div></div></section>`;
+    return `<section class="story-section story-selector" data-story-selector="${id}"><div class="wrap"><div class="story-section-head"><span class="story-number">${number} / SOMOS IceMan</span><h2>${title}</h2><p>${hint}</p></div><div class="story-selector-layout"><div class="story-options" role="group" aria-label="${title}">${items.map((item,i)=>`<button type="button" data-story-option="${i}" aria-pressed="${i===0}" aria-controls="story-panel-${id}"><span>0${i+1}</span>${item.title}<b aria-hidden="true">${iconArrow("up-right")}</b></button>`).join("")}</div><div class="story-panel" id="story-panel-${id}"><div class="story-panel-image">${items.map((item,i)=>`<img class="${i===0?"is-visible":""}" src="${editorialImage(item.image)}" alt="${item.alt}" aria-hidden="${i!==0}" loading="lazy" decoding="async">`).join("")}</div><p aria-live="polite">${items[0].text}</p></div></div></div></section>`;
   }
   function aboutPage(path) {
     const words = "Hacerlo fácil no significa hacerlo siempre igual.".split(" ");
@@ -1060,66 +1060,92 @@
       comparison.dataset.comparisonSide=value === 100 ? "pack" : value === 0 ? "dish" : "mix";
       e.target.setAttribute("aria-valuetext",`${value}% empaque, ${100-value}% preparación`);
     },{signal});
+    // One native-scroll timeline for every pinned scene. No wheel/touch interception.
     const storySections=[...root.querySelectorAll("[data-story-selector]")];
-    const activateStoryOption=(section,index)=>{
-      const buttons=[...section.querySelectorAll("[data-story-option]")];
-      const button=buttons[index]; if(!button || button.getAttribute("aria-pressed")==="true") return;
-      const items=section.dataset.storySelector==="concepts"?storyConcepts:storyValues;
-      const item=items[index];
-      buttons.forEach(b=>b.setAttribute("aria-pressed",String(b===button)));
-      const images=[...section.querySelectorAll(".story-panel-image img")];
-      const active=images.find(image=>image.classList.contains("is-visible"))||images[0];
-      const incoming=images.find(image=>image!==active);
-      const transitionId=Number(section.dataset.storyTransitionId||0)+1;
-      section.dataset.storyTransitionId=String(transitionId);
-      incoming.onload=()=>{
-        if(Number(section.dataset.storyTransitionId)!==transitionId) return;
-        incoming.alt=item.alt;
-        incoming.removeAttribute("aria-hidden");
-        active.alt="";
-        active.setAttribute("aria-hidden","true");
-        requestAnimationFrame(()=>{
-          incoming.classList.add("is-visible");
-          active.classList.remove("is-visible");
-          section.querySelector(".story-panel p").textContent=item.text;
-        });
-      };
-      incoming.onerror=incoming.onload;
-      incoming.src=editorialImage(item.image);
-      if(incoming.complete && incoming.naturalWidth) incoming.onload();
-    };
-    storySections.forEach(section=>section.addEventListener("click",e=>{
-      const button=e.target.closest("[data-story-option]"); if(button) activateStoryOption(section,Number(button.dataset.storyOption));
-    },{signal}));
+    const purpose=root.querySelector("[data-story-purpose]");
+    const scenes=[...storySections,...(purpose?[purpose]:[])].map(section=>({
+      section, wrap:section.querySelector(":scope > .wrap"),
+      images:[...section.querySelectorAll(".story-panel-image img,.purpose-photos img")],
+      buttons:[...section.querySelectorAll("[data-story-option]")],
+      items:section.dataset.storySelector==="concepts"?storyConcepts:storyValues,
+      active:0, travel:0, start:0, flowing:false
+    }));
     let storyFrame=0;
+    const clampStory=value=>Math.max(0,Math.min(1,value));
+    const renderStory=(scene,progress)=>{
+      const {section,images,buttons}=scene;
+      const position=clampStory(progress)*Math.max(0,images.length-1);
+      const lower=Math.floor(position), upper=Math.min(images.length-1,lower+1);
+      const mix=clampStory((position-lower-.32)/.36);
+      const blend=mix*mix*(3-2*mix);
+      const requested=Math.min(images.length-1,Math.round(position));
+      // Keep the last decoded frame if a slow connection has not delivered the next.
+      const ready=index=>images[index]?.complete && images[index].naturalWidth>0;
+      const active=ready(requested)?requested:scene.active;
+      const canBlend=!reduced.matches && ready(lower) && ready(upper);
+      images.forEach((image,index)=>{
+        image.style.opacity=String(canBlend?(index===lower?1:index===upper?blend:0):Number(index===active));
+        image.style.zIndex=String(canBlend && index===upper?2:1);
+        image.classList.toggle(buttons.length?"is-visible":"is-active",index===active);
+        image.setAttribute("aria-hidden",String(index!==active));
+      });
+      buttons.forEach((button,index)=>button.setAttribute("aria-pressed",String(index===active)));
+      if(buttons.length && active!==scene.active) section.querySelector(".story-panel p").textContent=scene.items[active].text;
+      scene.active=active;
+      if(!buttons.length){
+        const wordColors=["#ffffff","#3bb3e9","#f9d657","#d2b3ff","#a98cff","#f1b7ed"];
+        const words=section.querySelectorAll("h2 span");
+        words.forEach((word,index)=>{
+          word.style.setProperty("--purpose-word-color",wordColors[index%wordColors.length]);
+          word.classList.toggle("lit",reduced.matches || progress>=index/Math.max(1,words.length-1));
+        });
+      }
+    };
     const updateScrollStories=()=>{
       storyFrame=0;
-      storySections.forEach(section=>{
-        const sectionRect=section.getBoundingClientRect();
-        if(sectionRect.bottom<0 || sectionRect.top>window.innerHeight) return;
-        if(section.dataset.storySelector==="values"){
-          // Advance each scene halfway through its scroll interval so the
-          // transition feels continuous without making the pinned section linger.
-          const travel=Math.max(1,section.offsetHeight-window.innerHeight);
-          const progress=Math.max(0,Math.min(2,((0-sectionRect.top)/travel)*2));
-          activateStoryOption(section,Math.min(2,Math.floor(progress+0.5)));
-          return;
-        }
-        const targetY=window.innerHeight*(window.innerWidth<=820?0.7:0.6);
-        let nearestIndex=0,nearestDistance=Infinity;
-        section.querySelectorAll("[data-story-option]").forEach((button,index)=>{
-          const rect=button.getBoundingClientRect();
-          const distance=Math.abs((rect.top+rect.bottom)/2-targetY);
-          if(distance<nearestDistance){nearestDistance=distance;nearestIndex=index;}
-        });
-        activateStoryOption(section,nearestIndex);
+      if(signal.aborted)return;
+      scenes.forEach(scene=>{
+        if(reduced.matches){renderStory(scene,scene.active/Math.max(1,scene.images.length-1));return;}
+        const progress=(window.scrollY-scene.start)/Math.max(1,scene.travel);
+        renderStory(scene,progress);
       });
     };
     const scheduleScrollStories=()=>{if(!storyFrame) storyFrame=requestAnimationFrame(updateScrollStories);};
-    window.addEventListener("scroll",scheduleScrollStories,{signal,passive:true});
-    window.addEventListener("resize",scheduleScrollStories,{signal,passive:true});
-    scheduleScrollStories();
-    signal.addEventListener("abort",()=>{if(storyFrame) cancelAnimationFrame(storyFrame);},{once:true});
+    const measureScrollStories=()=>{
+      const headerHeight=root.querySelector(".site-header")?.offsetHeight||76;
+      scenes.forEach(scene=>{
+        scene.section.style.setProperty("--story-header",`${headerHeight}px`);
+        scene.section.classList.remove("is-flowing");
+        scene.flowing=reduced.matches || scene.wrap.offsetHeight>window.innerHeight-headerHeight+2;
+        scene.section.classList.toggle("is-flowing",scene.flowing);
+        const height=scene.wrap.offsetHeight;
+        // Two equal transitions; the first/last photo also stays visible on entry/exit.
+        scene.travel=scene.flowing?Math.max(1,height-window.innerHeight*.25):height*.65*Math.max(1,scene.images.length-1);
+        scene.section.style.setProperty("--story-scene-height",`${height+(scene.flowing?0:scene.travel)}px`);
+      });
+      // Read document positions only after every scene has its final height.
+      scenes.forEach(scene=>{
+        scene.start=scene.section.getBoundingClientRect().top+window.scrollY-headerHeight-(scene.flowing?window.innerHeight*.25:0);
+      });
+      scheduleScrollStories();
+    };
+    scenes.forEach(scene=>{
+      scene.images.forEach(image=>image.addEventListener("load",scheduleScrollStories,{signal}));
+      scene.buttons.forEach((button,index)=>button.addEventListener("click",()=>{
+        if(reduced.matches){renderStory(scene,index/Math.max(1,scene.images.length-1));return;}
+        window.scrollTo({top:scene.start+scene.travel*index/Math.max(1,scene.images.length-1),behavior:"smooth"});
+      },{signal}));
+    });
+    if(scenes.length){
+      window.addEventListener("scroll",scheduleScrollStories,{signal,passive:true});
+      window.addEventListener("resize",measureScrollStories,{signal,passive:true});
+      reduced.addEventListener("change",measureScrollStories,{signal});
+      const sceneResize=new ResizeObserver(measureScrollStories);
+      scenes.forEach(scene=>sceneResize.observe(scene.wrap));
+      signal.addEventListener("abort",()=>{sceneResize.disconnect();if(storyFrame)cancelAnimationFrame(storyFrame);},{once:true});
+      measureScrollStories();
+      document.fonts?.ready.then(()=>{if(!signal.aborted)measureScrollStories();});
+    }
     const hero=root.querySelector("[data-reveal-hero]");
     if(hero){
       const update=e=>{ if (e.target.closest("a,button")) return; const rect=hero.getBoundingClientRect(); hero.style.setProperty("--reveal-x",`${e.clientX-rect.left}px`);hero.style.setProperty("--reveal-y",`${e.clientY-rect.top}px`);hero.classList.add("is-revealing");};
@@ -1129,19 +1155,6 @@
       hero.addEventListener("pointercancel",()=>hero.classList.remove("is-revealing"),{signal});
       hero.querySelector("[data-reveal-toggle]").addEventListener("click",e=>{ const active=hero.classList.toggle("is-photo-visible");e.currentTarget.setAttribute("aria-pressed",String(active));e.currentTarget.innerHTML=active?`Volver a los empaques ${iconArrow("up-right")}`:`Descubre nuestra mesa ${iconArrow("up-right")}`;},{signal});
     }
-    let frame=0;
-    const purpose=root.querySelector("[data-story-purpose]");
-    const updatePurpose=()=>{
-      frame=0;if(!purpose)return;
-      const rect=purpose.getBoundingClientRect();
-      const progress=reduced.matches?1:Math.max(0,Math.min(1,(innerHeight*.6-rect.top)/(rect.height-innerHeight*.3)));
-      const wordColors=["#ffffff","#3bb3e9","#f9d657","#d2b3ff","#a98cff","#f1b7ed"];
-      const words=purpose.querySelectorAll("h2 span");words.forEach((word,i)=>{word.style.setProperty("--purpose-word-color",wordColors[i%wordColors.length]);word.classList.toggle("lit",progress>=(i/(words.length+1)));});
-      const purposeImages=purpose.querySelectorAll(".purpose-photos img");
-      const activeImageIndex=Math.min(purposeImages.length-1,Math.floor(progress*purposeImages.length));
-      purposeImages.forEach((img,i)=>{const active=reduced.matches||i===activeImageIndex;img.classList.toggle("is-active",active);img.setAttribute("aria-hidden",String(!active));});
-    };
-    if(purpose){ window.addEventListener("scroll",()=>{if(!frame) frame=requestAnimationFrame(updatePurpose);},{signal,passive:true});window.addEventListener("resize",updatePurpose,{signal});reduced.addEventListener("change",updatePurpose,{signal});updatePurpose(); }
     const marquee=root.querySelector(".recipe-marquee");
     if(marquee){
       const observer=new IntersectionObserver(([entry])=>marquee.classList.toggle("is-offscreen",!entry.isIntersecting));observer.observe(marquee);
@@ -1159,7 +1172,7 @@
       recipeCards.forEach(card=>{card.classList.add("is-entering");cardObserver.observe(card);});
       signal.addEventListener("abort",()=>cardObserver.disconnect(),{once:true});
     }
-    experienceCleanup=()=>{controller.abort();cancelAnimationFrame(frame);};
+    experienceCleanup=()=>{controller.abort();};
   }
   function notFound(path) {
     pageShell(`<section class="not-found"><div><div class="eyebrow" style="justify-content:center">Página no encontrada</div><h1>Sigamos explorando.</h1><p>El enlace puede haber cambiado.</p><a class="btn btn-primary" href="/productos" data-link>Ver productos ${iconArrow()}</a></div></section>`, path);
