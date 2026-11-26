@@ -341,7 +341,9 @@
       if (!product || !editorialItem(item.slug)) return "";
       const packageImage = cutoutAsset(product.image);
       const packageSet = [320,640,960].map((width) => `${projectBase}/assets/catalog/responsive/cutout-${encodeURIComponent(product.image)}-${width}.webp ${width}w`).join(", ");
-      return `<figure class="recipe-intro-scene recipe-intro-scene-${index+1}"><img class="recipe-intro-dish" src="${editorialImage(item.image)}" alt="${escapeHTML(item.alt)}" loading="lazy" decoding="async" width="1200" height="800"><img class="recipe-intro-package" src="${packageImage}" srcset="${packageSet}" sizes="(max-width: 600px) 48px, 82px" alt="Empaque oficial IceMan de ${escapeHTML(product.name)}" loading="lazy" decoding="async" width="320" height="420"></figure>`;
+      const packageSrcset = product.slug === "corte-ondulado-900-premium" ? "" : ` srcset="${packageSet}" sizes="(max-width: 600px) 48px, 82px"`;
+      const packageDimensions = product.slug === "corte-ondulado-900-premium" ? `width="1656" height="1154"` : `width="320" height="420"`;
+      return `<figure class="recipe-intro-scene recipe-intro-scene-${index+1}"><img class="recipe-intro-dish" src="${editorialImage(item.image)}" alt="${escapeHTML(item.alt)}" loading="lazy" decoding="async" width="1200" height="800"><img class="recipe-intro-package" src="${packageImage}"${packageSrcset} alt="Empaque oficial IceMan de ${escapeHTML(product.name)}" loading="lazy" decoding="async" ${packageDimensions}></figure>`;
     }).join("");
     const stockistItems = stockists.map(({ name, logo }) => `<div class="stockist-logo stockist-logo-${logo.replace(/\.[^.]+$/, "").replace(/[^a-z0-9-]/gi, "-")}" role="listitem"><img src="${optimizedImage(`${projectBase}/assets/stockists/${logo}`)}" alt="${escapeHTML(name)}" loading="lazy" decoding="async"></div>`).join("");
     const leadArticles = editorial.articles.slice(0, 3);
