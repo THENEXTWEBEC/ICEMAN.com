@@ -12,6 +12,8 @@ import io
 from pathlib import Path
 import re
 import shutil
+from urllib.parse import urlsplit
+import xml.etree.ElementTree as ET
 from PIL import Image
 from build_recipe_cards import build_cards
 
@@ -136,6 +138,24 @@ def fingerprint_scripts(html: str) -> str:
     return html
 
 
+def write_route_entries(html: str) -> int:
+    """Serve known routes directly, without the GitHub Pages 404 round trip."""
+    routes = {"/productos", "/recetas", "/nosotros", "/donde-encontrarnos",
+              "/contacto", "/empresas", "/privacidad", "/terminos"}
+    sitemap = ET.parse(ROOT / "sitemap.xml")
+    for node in sitemap.iter():
+        if node.tag.rsplit("}", 1)[-1] == "loc" and node.text:
+            routes.add(urlsplit(node.text.strip()).path)
+    for route in sorted(routes):
+        parts = [part for part in route.split("/") if part]
+        if not parts or any(part in {".", ".."} for part in parts):
+            continue
+        entry = DIST.joinpath(*parts, "index.html")
+        entry.parent.mkdir(parents=True, exist_ok=True)
+        entry.write_text(html, encoding="utf-8")
+    return len(routes)
+
+
 def verify() -> None:
     html = (DIST / "index.html").read_text(encoding="utf-8")
     assert 'data-iceman-optimized="true"' in html
@@ -161,15 +181,13 @@ def main() -> None:
     html = fingerprint_scripts(html)
     entry.write_text(html, encoding="utf-8")
 
-    # Serve Nosotros directly instead of redirecting through the cached 404 shell.
-    about_entry = DIST / "nosotros" / "index.html"
-    about_entry.parent.mkdir(parents=True, exist_ok=True)
-    about_entry.write_text(html, encoding="utf-8")
+    routes = write_route_entries(html)
 
     verify()
-    print(f"Production build complete: {cards} recipe compositions, {converted} new WebP files, {responsive} responsive variants, {category_optimized} optimized category images, one CSS bundle.")
+    print(f"Production build complete: {cards} recipe compositions, {converted} new WebP files, {responsive} responsive variants, {category_optimized} optimized category images, {routes} direct routes, one CSS bundle.")
 
 
 if __name__ == "__main__":
     main()
+
 

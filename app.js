@@ -50,6 +50,7 @@
   let stockistsCleanup = null;
   let showcaseCleanup = null;
   let recipeImageObserver = null;
+  const comparisonSilhouettes = new Map();
 
   const track = (eventName, params = {}) => {
     if (typeof window.gtag === "function") window.gtag("event", eventName, params);
@@ -613,7 +614,8 @@
       const product = productBySlug(recipe.products[0]);
       if (!product) return "";
       const labels = ["Rejilla", "Onduladas", "Aros", "Waffles", "Edamame"];
-      return `<button class="recipe-pack-choice ${index === 0 ? "is-selected" : ""}" type="button" data-recipe-select="${escapeHTML(recipe.slug)}" aria-pressed="${index === 0}" aria-controls="recipe-feature-panel"><span class="recipe-pack-image"><img src="${asset(product.image)}" alt="" loading="${index < 2 ? "eager" : "lazy"}" decoding="async" width="84" height="84"></span><span class="recipe-pack-name">${escapeHTML(labels[index] || product.name)}</span></button>`;
+      const src = asset(product.image);
+      return `<button class="recipe-pack-choice ${index === 0 ? "is-selected" : ""}" type="button" data-recipe-select="${escapeHTML(recipe.slug)}" aria-pressed="${index === 0}" aria-controls="recipe-feature-panel"><span class="recipe-pack-image"><img src="${src}" srcset="${responsivePackSrcset(product.image)}" sizes="84px" alt="" loading="${index < 2 ? "eager" : "lazy"}" fetchpriority="low" decoding="async" width="84" height="84"></span><span class="recipe-pack-name">${escapeHTML(labels[index] || product.name)}</span></button>`;
     }).join("");
   }
   const recipeSceneThemes = [
@@ -628,8 +630,9 @@
     const theme = recipeSceneThemes[index] || recipeSceneThemes[0];
     const product = productBySlug(recipe.products[0]);
     const image = editorialImage(recipeDishImage(recipe));
+    const scenePack = product ? productionImage(cutoutAsset(product.image)) : "";
     const packageIsInPhoto = recipe.slug === "waffles-iceman-franui-frutos-rojos";
-    return `<article class="recipe-scene recipe-scene--${theme.color}" data-recipe-content><div class="recipe-scene-photo"><img class="recipe-scene-dish" src="${image}"${responsiveEditorialImageAttrs(image,"(max-width: 700px) 90vw, 570px")} alt="${escapeHTML(recipe.heroAlt || recipe.title)}" fetchpriority="high" decoding="async"><span class="recipe-scene-badge">${escapeHTML(theme.label)}</span>${product && !packageIsInPhoto ? `<img class="recipe-scene-pack" src="${product.image === "papas-ondulado-premium" ? `${projectBase}/assets/catalog/cutout/papas-ondulado-premium.png` : productionImage(cutoutAsset(product.image))}" alt="Empaque de ${escapeHTML(product.name)} IceMan" decoding="async">` : ""}</div><div class="recipe-scene-copy"><span class="recipe-scene-kicker">${escapeHTML(theme.label)}</span><h2>${escapeHTML(theme.title)}</h2><p>${escapeHTML(recipe.description)}</p>${product ? `<div class="recipe-scene-product"><span>PRODUCTO PROTAGONISTA</span><strong>${escapeHTML(product.name)} IceMan</strong></div>` : ""}<a href="${editorialPath(recipe)}" data-link class="recipe-scene-cta">Ver receta ${iconArrow()}</a></div></article>`;
+    return `<article class="recipe-scene recipe-scene--${theme.color}" data-recipe-content><div class="recipe-scene-photo"><img class="recipe-scene-dish" src="${image}"${responsiveEditorialImageAttrs(image,"(max-width: 700px) 90vw, 570px")} alt="${escapeHTML(recipe.heroAlt || recipe.title)}" fetchpriority="high" decoding="async"><span class="recipe-scene-badge">${escapeHTML(theme.label)}</span>${product && !packageIsInPhoto ? `<img class="recipe-scene-pack" src="${scenePack}"${responsiveImageAttrs(scenePack,"(max-width: 700px) 65vw, 400px")} alt="Empaque de ${escapeHTML(product.name)} IceMan" decoding="async">` : ""}</div><div class="recipe-scene-copy"><span class="recipe-scene-kicker">${escapeHTML(theme.label)}</span><h2>${escapeHTML(theme.title)}</h2><p>${escapeHTML(recipe.description)}</p>${product ? `<div class="recipe-scene-product"><span>PRODUCTO PROTAGONISTA</span><strong>${escapeHTML(product.name)} IceMan</strong></div>` : ""}<a href="${editorialPath(recipe)}" data-link class="recipe-scene-cta">Ver receta ${iconArrow()}</a></div></article>`;
   }
   function recipeFeaturePanel(recipe) {
     const ingredients = recipe.ingredients.reduce((groups, ingredient) => {
@@ -883,7 +886,7 @@
     waffle: productionImage(`${projectBase}/assets/catalog/cutout/waffle-clean.png`)
   };
   function floatPacks(className = "", packNames = floatingPackSets.default) {
-    return `<div class="floating-packs ${className}" aria-hidden="true">${packNames.map((name,index)=>`<img src="${floatingPackCutouts[name] || cutoutAsset(name)}" alt="" class="float-pack pack-${["one","two","three"][index]}" loading="lazy" decoding="async">`).join("")}</div>`;
+    return `<div class="floating-packs ${className}" aria-hidden="true">${packNames.map((name,index)=>`<img src="${floatingPackCutouts[name] || cutoutAsset(name)}" alt="" class="float-pack pack-${["one","two","three"][index]}"${responsiveImageAttrs(floatingPackCutouts[name] || cutoutAsset(name),"(max-width: 600px) 44vw, 280px")} loading="lazy" decoding="async">`).join("")}</div>`;
   }
   const storyVisuals = {
     hero:{image:"editorial/advice-store-frozen-products.webp",alt:"Selección de productos IceMan conservados en el congelador"},
@@ -917,13 +920,12 @@
     updateHead(path,"Somos IceMan — Lo hacemos fácil. Tú lo haces especial.","Conoce IceMan, una marca ecuatoriana con más de 20 años cerca de tu mesa.");
   }
   function stockistsPage(path) {
-    pageShell(`<div class="stockists-page"><section class="brand-page-intro"><div class="wrap">${breadcrumbs([{name:"Inicio",href:"/"},{name:"Dónde encontrarnos"}])}<span class="story-kicker">CERCA DE TU MESA</span><h1>Encuentra productos IceMan en tu supermercado favorito</h1></div><img src="${asset("air-fryer")}" alt="Papas Air Fryer IceMan" class="stockists-hero-pack" fetchpriority="high" decoding="async"></section><section class="stockists-directory"><div class="wrap"><div class="stockists-directory-head"><h2>Dónde encontrarnos</h2><p>La presencia de la marca en una cadena no garantiza la disponibilidad de cada producto en todas sus sucursales. Consulta el surtido con tu establecimiento.</p></div><ul class="stockists-grid">${stockists.map((item,index)=>`<li><div class="stockists-logo-frame stockists-logo-frame-${item.logo.replace(/\.[^.]+$/, "").replace(/[^a-z0-9-]/gi, "-")}"><img src="${optimizedImage(`${projectBase}/assets/stockists/${item.logo}`)}" alt="${escapeHTML(item.name)}" loading="lazy"></div><h3>${escapeHTML(item.name)}</h3></li>`).join("")}</ul><a href="/contacto" data-link class="text-link">¿Necesitas ayuda? Contacta con IceMan ${iconArrow()}</a></div></section></div>`,path);
+    pageShell(`<div class="stockists-page"><section class="brand-page-intro"><div class="wrap">${breadcrumbs([{name:"Inicio",href:"/"},{name:"Dónde encontrarnos"}])}<span class="story-kicker">CERCA DE TU MESA</span><h1>Encuentra productos IceMan en tu supermercado favorito</h1></div><img src="${asset("air-fryer")}"${responsiveImageAttrs(asset("air-fryer"),"(max-width: 600px) 55vw, 340px")} alt="Papas Air Fryer IceMan" class="stockists-hero-pack" fetchpriority="high" decoding="async"></section><section class="stockists-directory"><div class="wrap"><div class="stockists-directory-head"><h2>Dónde encontrarnos</h2><p>La presencia de la marca en una cadena no garantiza la disponibilidad de cada producto en todas sus sucursales. Consulta el surtido con tu establecimiento.</p></div><ul class="stockists-grid">${stockists.map((item,index)=>`<li><div class="stockists-logo-frame stockists-logo-frame-${item.logo.replace(/\.[^.]+$/, "").replace(/[^a-z0-9-]/gi, "-")}"><img src="${optimizedImage(`${projectBase}/assets/stockists/${item.logo}`)}" alt="${escapeHTML(item.name)}" loading="lazy"></div><h3>${escapeHTML(item.name)}</h3></li>`).join("")}</ul><a href="/contacto" data-link class="text-link">¿Necesitas ayuda? Contacta con IceMan ${iconArrow()}</a></div></section></div>`,path);
     updateHead(path,"Dónde encontrarnos","Consulta los establecimientos donde encuentras productos IceMan en Ecuador.");
   }
   function setupExperience() {
     const controller = new AbortController(), signal = controller.signal;
     const reduced = matchMedia("(prefers-reduced-motion: reduce)");
-    const silhouetteCache = new WeakMap();
     const normalizeComparisonScene = scene => {
       const images = [...scene.querySelectorAll(".comparison-pack img,.comparison-dish img")];
       if (images.length !== 2 || images.some(img => !img.complete || !img.naturalWidth)) return;
@@ -941,7 +943,8 @@
           ? { vertical:[.78,.56], horizontal:[.78,.56], compact:[.78,.56] }
           : { vertical:[.70,.70], horizontal:[.84,.62], compact:[.70,.64] };
         const measurements = images.map(img => {
-          let shape = silhouetteCache.get(img);
+          const cacheKey = img.currentSrc || img.src;
+          let shape = comparisonSilhouettes.get(cacheKey);
           if (!shape || shape.naturalWidth !== img.naturalWidth || shape.naturalHeight !== img.naturalHeight) {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             const fit = Math.min(canvas.width / img.naturalWidth, canvas.height / img.naturalHeight);
@@ -957,7 +960,7 @@
             shape={naturalWidth:img.naturalWidth,naturalHeight:img.naturalHeight,
               left:(left-(canvas.width-drawWidth)/2)/drawWidth,right:(right+1-(canvas.width-drawWidth)/2)/drawWidth,
               top:(top-(canvas.height-drawHeight)/2)/drawHeight,bottom:(bottom+1-(canvas.height-drawHeight)/2)/drawHeight};
-            silhouetteCache.set(img,shape);
+            comparisonSilhouettes.set(cacheKey,shape);
           }
           const fit=Math.min(contentWidth/img.naturalWidth,contentHeight/img.naturalHeight);
           const renderedWidth=img.naturalWidth*fit, renderedHeight=img.naturalHeight*fit;
@@ -993,7 +996,39 @@
     };
     let comparisonObserver;
     let dishImageObserver;
+    let comparisonVisibility;
+    let nearComparisons = new WeakSet();
+    const comparisonQueue = new Set();
+    let comparisonFrame = 0;
+    // Normalize one nearby scene per frame instead of sampling the entire
+    // catalog in a single task when images load or the viewport changes.
+    const flushComparison = () => {
+      comparisonFrame = 0;
+      if (signal.aborted) return;
+      const scene = comparisonQueue.values().next().value;
+      if (scene) {
+        comparisonQueue.delete(scene);
+        if (!comparisonVisibility || nearComparisons.has(scene)) normalizeComparisonScene(scene);
+      }
+      if (comparisonQueue.size) comparisonFrame = requestAnimationFrame(flushComparison);
+    };
+    const scheduleComparison = scene => {
+      if (!scene || (comparisonVisibility && !nearComparisons.has(scene))) return;
+      comparisonQueue.add(scene);
+      if (!comparisonFrame) comparisonFrame = requestAnimationFrame(flushComparison);
+    };
+    signal.addEventListener("abort", () => {
+      if (comparisonFrame) cancelAnimationFrame(comparisonFrame);
+      comparisonQueue.clear();
+    }, { once:true });
     if ("IntersectionObserver" in window) {
+      comparisonVisibility = new IntersectionObserver(entries => entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          nearComparisons.add(entry.target);
+          scheduleComparison(entry.target);
+        } else nearComparisons.delete(entry.target);
+      }), { rootMargin:"180px 0px" });
+      signal.addEventListener("abort", () => comparisonVisibility.disconnect(), { once:true });
       dishImageObserver = new IntersectionObserver(entries => entries.forEach(entry => {
         if (!entry.isIntersecting) return;
         const image = entry.target;
@@ -1015,19 +1050,23 @@
     }
     refreshComparisons = () => {
       comparisonObserver?.disconnect();
+      comparisonVisibility?.disconnect();
+      nearComparisons = new WeakSet();
+      comparisonQueue.clear();
       if (dishImageObserver) root.querySelectorAll(".comparison-dish img[data-deferred-src]").forEach(image => dishImageObserver.observe(image));
       root.querySelectorAll(".comparison-scene").forEach(scene => {
         comparisonObserver?.observe(scene);
-        normalizeComparisonScene(scene);
+        if (comparisonVisibility) comparisonVisibility.observe(scene);
+        else scheduleComparison(scene);
       });
     };
     if (window.ResizeObserver) {
-      comparisonObserver = new ResizeObserver(entries => entries.forEach(entry => normalizeComparisonScene(entry.target)));
+      comparisonObserver = new ResizeObserver(entries => entries.forEach(entry => scheduleComparison(entry.target)));
       signal.addEventListener("abort", () => comparisonObserver.disconnect(), { once:true });
     }
     refreshComparisons();
     root.addEventListener("load", event => {
-      if (event.target.matches?.(".comparison-scene img")) normalizeComparisonScene(event.target.closest(".comparison-scene"));
+      if (event.target.matches?.(".comparison-scene img")) scheduleComparison(event.target.closest(".comparison-scene"));
     }, { capture:true, signal });
     window.addEventListener("resize", refreshComparisons, { signal, passive:true });
     const recipeExplorer = root.querySelector("[data-recipe-explorer]");
@@ -1104,10 +1143,12 @@
     const updateScrollStories=()=>{
       storyFrame=0;
       if(signal.aborted)return;
-      scenes.forEach(scene=>{
+      const bounds=scenes.map(scene=>scene.section.getBoundingClientRect());
+      scenes.forEach((scene,index)=>{
+        if(bounds[index].bottom<0 || bounds[index].top>window.innerHeight)return;
         if(reduced.matches){renderStory(scene,scene.active/Math.max(1,scene.images.length-1));return;}
         // Earlier lazy images/font metrics can move the scene after initial layout.
-        scene.start=scene.section.getBoundingClientRect().top+window.scrollY-scene.header-(scene.flowing?window.innerHeight*.25:0);
+        scene.start=bounds[index].top+window.scrollY-scene.header-(scene.flowing?window.innerHeight*.25:0);
         const progress=(window.scrollY-scene.start)/Math.max(1,scene.travel);
         renderStory(scene,progress);
       });
@@ -1500,4 +1541,5 @@
   catch { consentUI(); }
   scrollToHash(window.location.hash, "auto");
 })();
+
 
