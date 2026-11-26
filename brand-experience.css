@@ -1339,3 +1339,14 @@ body:has(.home-hero-journey) .site-header .brand-official-logo{width:158px;heigh
   height: auto;
   aspect-ratio: 4 / 3;
 }
+
+/* Keep every value story image in the same horizontal frame, including the portrait source used for trust. */
+[data-story-selector="values"] .story-panel-image {
+  height: auto;
+  aspect-ratio: 16 / 9;
+  max-height: none;
+}
+[data-story-selector="values"] .story-panel-image img {
+  object-fit: cover;
+  object-position: center 40%;
+}
