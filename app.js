@@ -332,18 +332,15 @@
     }).join("");
     const showcasePanels = homeShowcase.map(({ product, tone }) => `<article class="discovery-card" style="--panel-tone:${tone}"><a class="discovery-link" href="${productPath(product)}" data-link data-product-link="${escapeHTML(product.slug)}" aria-label="${escapeHTML(product.name)}. Primer clic para conocerlo; segundo clic para ver el producto." aria-expanded="false"><img class="discovery-pack discovery-pack-${escapeHTML(product.slug)}" src="${asset(product.image)}"${responsiveImageAttrs(asset(product.image),"(max-width: 640px) 25vw, 25vw")} alt="Empaque IceMan de ${escapeHTML(product.name)}" loading="lazy" decoding="async" width="480" height="480"><span class="discovery-copy"><h3>${escapeHTML(product.name)}</h3><p>${escapeHTML(product.description || "Descubre este producto IceMan, práctico y fácil de preparar.")}</p><span class="discovery-cta">Segundo clic para ver producto ${iconArrow()}</span></span></a></article>`).join("");
     const recipeIntroItems = [
-      { slug:"brochetas-carne-papas-rejilla-chimichurri", image:"editorial/recipe-table-brochetas-fries.jpg", product:"papas-rejilla", alt:"Mesa para compartir con brochetas, papas corte rejilla y chimichurri" },
-      { slug:"pollo-hierbas-aros-cebolla-ensalada-repollo", image:"editorial/home-recipe-onion-chicken-v2.webp", product:"aros-de-cebolla", alt:"Pollo a las hierbas con aros de cebolla crujientes y ensalada fresca" },
-      { slug:"carne-plancha-papas-onduladas-salsa-ajo", image:"editorial/home-recipe-steak-fries-v2.webp", product:"corte-ondulado-900-premium", alt:"Carne a la plancha acompañada de papas onduladas y salsa de ajo" }
+      { slug:"brochetas-carne-papas-rejilla-chimichurri", image:"editorial/recipe-table-brochetas-fries.jpg", product:"papas-rejilla", packageImage:"papas-rejilla", packageWidth:421, packageHeight:480, alt:"Mesa para compartir con brochetas, papas corte rejilla y chimichurri" },
+      { slug:"pollo-hierbas-aros-cebolla-ensalada-repollo", image:"editorial/home-recipe-onion-chicken-v2.webp", product:"aros-de-cebolla", packageImage:"aros-cebolla", packageWidth:333, packageHeight:480, alt:"Pollo a las hierbas con aros de cebolla crujientes y ensalada fresca" },
+      { slug:"carne-plancha-papas-onduladas-salsa-ajo", image:"editorial/home-recipe-steak-fries-v2.webp", product:"corte-ondulado-900-premium", packageImage:"papas-ondulado-premium", packageWidth:480, packageHeight:347, alt:"Carne a la plancha acompañada de papas onduladas y salsa de ajo" }
     ];
     const recipeIntroCards = recipeIntroItems.map((item,index) => {
       const product = products.find((entry) => entry.slug === item.product);
       if (!product || !editorialItem(item.slug)) return "";
-      const packageImage = cutoutAsset(product.image);
-      const packageSet = [320,640,960].map((width) => `${projectBase}/assets/catalog/responsive/cutout-${encodeURIComponent(product.image)}-${width}.webp ${width}w`).join(", ");
-      const packageSrcset = product.slug === "corte-ondulado-900-premium" ? "" : ` srcset="${packageSet}" sizes="(max-width: 600px) 48px, 82px"`;
-      const packageDimensions = product.slug === "corte-ondulado-900-premium" ? `width="1656" height="1154"` : `width="320" height="420"`;
-      return `<figure class="recipe-intro-scene recipe-intro-scene-${index+1}"><img class="recipe-intro-dish" src="${editorialImage(item.image)}" alt="${escapeHTML(item.alt)}" loading="lazy" decoding="async" width="1200" height="800"><img class="recipe-intro-package" src="${packageImage}"${packageSrcset} alt="Empaque oficial IceMan de ${escapeHTML(product.name)}" loading="lazy" decoding="async" ${packageDimensions}></figure>`;
+      const packageImage = `${projectBase}/assets/editorial/home-recipe-packs/${item.packageImage}.webp`;
+      return `<figure class="recipe-intro-scene recipe-intro-scene-${index+1}"><img class="recipe-intro-dish" src="${editorialImage(item.image)}" alt="${escapeHTML(item.alt)}" loading="lazy" decoding="async" width="1200" height="800"><img class="recipe-intro-package" src="${packageImage}" alt="Empaque oficial IceMan de ${escapeHTML(product.name)}" loading="lazy" decoding="async" width="${item.packageWidth}" height="${item.packageHeight}"></figure>`;
     }).join("");
     const stockistItems = stockists.map(({ name, logo }) => `<div class="stockist-logo stockist-logo-${logo.replace(/\.[^.]+$/, "").replace(/[^a-z0-9-]/gi, "-")}" role="listitem"><img src="${optimizedImage(`${projectBase}/assets/stockists/${logo}`)}" alt="${escapeHTML(name)}" loading="lazy" decoding="async"></div>`).join("");
     const leadArticles = editorial.articles.slice(0, 3);
