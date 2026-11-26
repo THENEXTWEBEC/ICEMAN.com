@@ -195,3 +195,24 @@
 /* Keep the Papas onduladas package fully visible at the bottom of its scene. */
 .recipe-experience .recipe-scene--violet .recipe-scene-pack{z-index:3;left:3%;bottom:0;width:71.4%;height:86.1%;object-position:bottom left}
 @media(max-width:600px){.recipe-experience .recipe-scene--violet .recipe-scene-pack{left:3%;bottom:0;width:71.4%;height:86.1%}}
+
+
+/* Keep the recipe headline on the left and its watermark clear on the right. */
+.recipe-experience .recipe-discovery-heading{display:block;position:relative;z-index:1;width:min(58%,740px);margin:0 0 clamp(28px,3.4vw,46px);text-align:left}
+.recipe-experience .recipe-discovery-heading h1{max-width:740px;margin:0;font-size:clamp(48px,4.6vw,72px);line-height:.98;letter-spacing:-.065em;text-wrap:balance}
+.recipe-experience .recipe-discovery-heading p{max-width:520px;margin:18px 0 0;font-size:clamp(15px,1.15vw,17px);line-height:1.6}
+.recipe-experience .recipe-discovery-watermark{z-index:0;top:clamp(220px,17vw,280px);right:0;left:auto;width:auto;transform:none;font-size:clamp(118px,8.7vw,145px);letter-spacing:-.09em;color:rgba(116,218,247,.075);text-shadow:0 18px 42px rgba(33,185,229,.07);-webkit-text-stroke:1px rgba(142,225,249,.09)}
+.recipe-experience .recipe-discovery-heading h1,.recipe-experience .recipe-discovery-heading p{animation:recipe-hero-arrive .7s both cubic-bezier(.2,.7,.2,1)}
+.recipe-experience .recipe-discovery-heading h1{animation-delay:.08s}.recipe-experience .recipe-discovery-heading p{animation-delay:.16s}
+@media(max-width:900px){
+  .recipe-experience .recipe-discovery-heading{width:min(70%,680px);margin-bottom:28px}
+  .recipe-experience .recipe-discovery-heading h1{font-size:clamp(44px,6vw,60px)}
+  .recipe-experience .recipe-discovery-watermark{top:230px;font-size:clamp(112px,15vw,138px)}
+}
+@media(max-width:600px){
+  .recipe-experience .recipe-discovery-heading{width:100%;margin-bottom:24px}
+  .recipe-experience .recipe-discovery-heading h1{max-width:520px;font-size:clamp(40px,10vw,52px);line-height:1;letter-spacing:-.06em}
+  .recipe-experience .recipe-discovery-heading p{max-width:300px;margin-top:13px;font-size:14px}
+  .recipe-experience .recipe-discovery-watermark{top:auto;right:-4px;bottom:clamp(320px,80vw,420px);font-size:clamp(88px,23vw,126px);opacity:.72}
+}
+@media(prefers-reduced-motion:reduce){.recipe-experience .recipe-discovery-heading h1,.recipe-experience .recipe-discovery-heading p{animation:none;opacity:1;transform:none}}
