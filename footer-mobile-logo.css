@@ -1,6 +1,6 @@
 .footer-mobile-lockup{display:none}
 @media(max-width:820px){
   .footer-brand{width:min(100%,240px)}
-  .footer-brand .footer-official-logo{display:block;width:100%;height:auto;object-fit:contain}
+  .footer-brand .footer-official-logo{display:block;width:100%;height:auto;object-fit:contain;background:transparent!important;filter:none!important;mix-blend-mode:screen!important;box-shadow:none!important}
   .footer-mobile-lockup{display:none}
 }
