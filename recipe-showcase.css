@@ -191,6 +191,7 @@
   .recipe-experience .recipe-cover,.recipe-experience .recipe-cover.is-entering,.recipe-experience .recipe-cover.is-entered,.recipe-experience .recipe-cover-dish{transition:none;opacity:1;transform:none}
 }
 
-/* Keep the Papas onduladas package complete and set it low in its scene. */
-.recipe-experience .recipe-scene--violet .recipe-scene-pack{z-index:3;left:3%;bottom:-4%;width:71.4%;height:86.1%;object-position:bottom left}
-@media(max-width:600px){.recipe-experience .recipe-scene--violet{gap:20px}.recipe-experience .recipe-scene--violet .recipe-scene-pack{left:3%;bottom:-4%;width:71.4%;height:86.1%}}
+
+/* Keep the Papas onduladas package fully visible at the bottom of its scene. */
+.recipe-experience .recipe-scene--violet .recipe-scene-pack{z-index:3;left:3%;bottom:0;width:71.4%;height:86.1%;object-position:bottom left}
+@media(max-width:600px){.recipe-experience .recipe-scene--violet .recipe-scene-pack{left:3%;bottom:0;width:71.4%;height:86.1%}}
