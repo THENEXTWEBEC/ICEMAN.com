@@ -553,7 +553,7 @@
     const imageLoading = index === 0 ? 'eager' : 'lazy';
     const imagePriority = index === 0 ? ' fetchpriority="high"' : '';
     const artworkClass = isComposite ? "recipe-cover-art--composite" : "recipe-cover-art--clean";
-    return `<article class="recipe-cover" data-editorial-card data-category="recetas" data-search="${escapeHTML(search)}">
+    return `<article class="recipe-cover" data-editorial-card data-recipe-slug="${escapeHTML(recipe.slug)}" data-category="recetas" data-search="${escapeHTML(search)}">
       <a class="recipe-cover-art ${artworkClass} recipe-visual-${visual.treatment}" href="${editorialPath(recipe)}" data-link aria-label="Abrir ${escapeHTML(recipe.title)}">
         <img class="recipe-cover-dish" src="${imageSrc}"${responsive} alt="${escapeHTML(visual.alt)}" loading="${imageLoading}" decoding="async"${imagePriority} width="1200" height="720">
         <span class="recipe-cover-index">${String(index + 1).padStart(2, "0")} / LA MESA IceMan</span>
@@ -1274,9 +1274,25 @@
         button.classList.toggle("is-active", active);
         button.setAttribute("aria-pressed", String(active));
       });
+      const slug = occasionLink.dataset.occasionLink;
+      const occasion = editorial.occasions.find((item) => item.slug === slug);
+      const relatedRecipes = editorial.recipes.filter((recipe) =>
+        (recipe.occasions || []).includes(slug)
+        || (recipe.products || []).some((product) => occasion?.products.includes(product))
+      );
+      const relatedSlugs = new Set(relatedRecipes.map((recipe) => recipe.slug));
       const search = root.querySelector("#editorial-search");
-      if (search) search.value = occasionLink.dataset.occasionLink;
-      applyEditorialSearch(occasionLink.dataset.occasionLink, "recetas");
+      if (search) search.value = "";
+      root.querySelectorAll("[data-editorial-card][data-category='recetas']").forEach((card) => {
+        card.hidden = !relatedSlugs.has(card.dataset.recipeSlug);
+      });
+      root.querySelectorAll("[data-editorial-card]").forEach((card) => {
+        if (card.dataset.category !== "recetas") card.hidden = true;
+      });
+      const empty = root.querySelector("#editorial-empty");
+      if (empty) empty.hidden = relatedSlugs.size > 0;
+      const status = root.querySelector("#editorial-search-status");
+      if (status) status.textContent = `${relatedSlugs.size} ${relatedSlugs.size === 1 ? "idea" : "ideas"} para ${occasion?.title || "esta ocasión"}`;
       root.querySelector("#editorial-card-grid")?.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
     }
   });
