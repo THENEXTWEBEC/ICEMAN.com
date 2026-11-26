@@ -1,5 +1,6 @@
-.recipe-experience .recipe-discovery{padding:72px 0 95px;background:#111b4a;color:#fff}
+.recipe-experience .recipe-discovery{position:relative;isolation:isolate;overflow:hidden;padding:72px 0 95px;background:#111b4a;color:#fff}
 .recipe-experience .recipe-discovery:before{display:none}
+.recipe-experience .recipe-discovery-watermark{position:absolute;z-index:-1;top:135px;left:50%;width:max-content;transform:translateX(-50%);color:rgba(116,218,247,.075);font-size:clamp(150px,28vw,390px);font-weight:950;line-height:.8;letter-spacing:-.09em;white-space:nowrap;pointer-events:none;text-shadow:0 18px 45px rgba(33,185,229,.12),0 2px 0 rgba(164,236,255,.12);-webkit-text-stroke:1px rgba(142,225,249,.12)}
 .recipe-experience .recipe-discovery>.wrap{width:min(1280px,calc(100% - 48px))}
 .recipe-experience .recipe-discovery-heading{display:flex;max-width:none;align-items:end;justify-content:space-between;gap:30px;margin:0 0 28px;text-align:left}
 .recipe-experience .recipe-discovery-heading .story-kicker{color:#72d9f5;letter-spacing:.14em}
@@ -7,6 +8,10 @@
 .recipe-experience .recipe-discovery-heading h1 em{color:#23bce8;font-style:normal}
 .recipe-experience .recipe-discovery-heading p{max-width:300px;margin:0 0 6px;color:#d5e7f4;font-size:16px;line-height:1.55}
 .recipe-showcase{padding:clamp(18px,3vw,36px);border:1px solid rgba(255,255,255,.1);border-radius:30px;background:#1a3170;box-shadow:0 25px 65px rgba(4,10,37,.18)}
+.recipe-experience .recipe-marquee{position:relative;z-index:1;margin:28px calc((min(1280px,100vw - 48px) - 100vw)/2) 30px;padding:15px 0;background:#ffd133;color:#142256;box-shadow:0 12px 28px rgba(2,8,34,.28);transform:rotate(-1deg) scale(1.02)}
+.recipe-experience .recipe-marquee:before,.recipe-experience .recipe-marquee:after{position:absolute;right:0;left:0;height:3px;background:repeating-linear-gradient(90deg,#142256 0 24px,transparent 24px 40px);content:"";opacity:.72}
+.recipe-experience .recipe-marquee:before{top:5px}.recipe-experience .recipe-marquee:after{bottom:5px}
+.recipe-experience .recipe-marquee-window{margin:0;overflow:hidden}.recipe-experience .recipe-marquee-track{animation:recipe-travel 72s linear infinite}.recipe-experience .recipe-marquee-track>div{gap:22px;padding:0 22px}.recipe-experience .recipe-marquee a{color:#142256;font-size:13px;font-weight:850;letter-spacing:.015em;text-transform:uppercase}.recipe-experience .recipe-marquee span{color:#1b9dc5}.recipe-experience .recipe-marquee>button{right:12px;z-index:2;min-height:34px;padding:7px 10px;border:1px solid rgba(20,34,86,.38);border-radius:20px;background:#ffd133;color:#142256;font-size:9px;font-weight:850;text-transform:uppercase}
 .recipe-experience .recipe-feature-panel{margin:0;scroll-margin-top:90px}
 .recipe-scene{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.95fr);gap:clamp(25px,5vw,74px);min-height:460px;align-items:center;padding:clamp(12px,2vw,24px);border-radius:22px;background:linear-gradient(125deg,#184c93,#0d3480)}
 .recipe-scene--violet{background:linear-gradient(125deg,#554380,#3d347b)}
@@ -46,6 +51,7 @@
 .recipe-experience .recipe-pack-name{min-height:0;margin:0;color:#fff;font-size:14px;font-weight:750}
 @media(max-width:800px){
   .recipe-experience .recipe-discovery{padding:48px 0 65px}
+  .recipe-experience .recipe-discovery-watermark{top:118px;font-size:clamp(112px,29vw,220px)}
   .recipe-experience .recipe-discovery-heading{display:block}
   .recipe-experience .recipe-discovery-heading p{max-width:560px;margin-top:16px}
   .recipe-scene{grid-template-columns:1fr;gap:15px}
@@ -59,6 +65,11 @@
   .recipe-experience .recipe-discovery>.wrap{width:calc(100% - 28px)}
   .recipe-experience .recipe-discovery-heading{padding:0 5px;margin-bottom:24px}
   .recipe-experience .recipe-discovery-heading h1{font-size:clamp(41px,10.5vw,62px)}
+  .recipe-experience .recipe-marquee{margin:24px -18px 25px;padding:14px 0;transform:rotate(-1deg) scale(1.02)}
+  .recipe-experience .recipe-marquee-track>div{gap:16px;padding:0 16px}
+  .recipe-experience .recipe-marquee a{font-size:10px}
+  .recipe-experience .recipe-marquee-window{margin-right:92px}
+  .recipe-experience .recipe-marquee>button{right:4px;font-size:8px;padding:7px 8px}
   .recipe-showcase{padding:10px;border-radius:20px}
   .recipe-scene{min-height:0;padding:9px;border-radius:14px}
   .recipe-scene-photo{aspect-ratio:1.08;border-radius:10px}
