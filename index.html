@@ -38,14 +38,14 @@
         document.head.append(heroPreload);
       } else if (normalizedRoute === "/nosotros" || normalizedRoute === "/recetas") {
         const isAbout = normalizedRoute === "/nosotros";
-        const image = isAbout ? "advice-store-frozen-products" : "recipe-brochetas-generated";
-        const version = isAbout ? "?v=images-20261030" : "";
+        const image = isAbout ? "nosotros-salteado-user" : "recipe-brochetas-generated";
+        const version = "";
         const heroPreload = document.createElement("link");
         heroPreload.rel = "preload";
         heroPreload.as = "image";
         heroPreload.href = `assets/editorial/responsive/${image}-960.webp${version}`;
         heroPreload.setAttribute("imagesrcset", [480,768,960].map(width => `assets/editorial/responsive/${image}-${width}.webp${version} ${width}w`).join(", "));
-        heroPreload.setAttribute("imagesizes", isAbout ? "100vw" : "(max-width: 700px) 90vw, 570px");
+        heroPreload.setAttribute("imagesizes", isAbout ? "(max-width: 820px) calc(100vw - 40px), 58vw" : "(max-width: 700px) 90vw, 570px");
         heroPreload.fetchPriority = "high";
         document.head.append(heroPreload);
       }
@@ -64,10 +64,11 @@
     <link rel="stylesheet" href="recipe-section-redesign.css?v=recipe-package-frames-20261122" />
     <link rel="stylesheet" href="recipe-showcase.css?v=tall-background-recetas-20261127" />
     <link rel="stylesheet" href="home-recipes-intro.css?v=recipe-intro-full-packs-20261126" />
+    <link rel="stylesheet" href="nosotros-flow.css?v=continuous-story-20261127" />
     <script defer src="catalog.js?v=papas-onduladas-20261030"></script>
     <script defer src="editorial-data.js?v=unique-context-images-20261028"></script>
     <script defer src="motion-experience.js?v=category-motion-20-percent"></script>
-    <script defer src="app.js?v=recipe-image-restore-20261127"></script>
+    <script defer src="app.js?v=continuous-story-20261127"></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Saltar al contenido</a>

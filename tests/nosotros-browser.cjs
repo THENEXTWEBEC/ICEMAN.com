@@ -1,0 +1,61 @@
+const { chromium } = require('playwright');
+const assert = require('node:assert/strict');
+(async () => {
+ const browser = await chromium.launch({headless:true});
+ try {
+  for (const [width,height] of [[1440,900],[390,844],[320,740],[768,1024]]) {
+   const page = await browser.newPage({viewport:{width,height},isMobile:width<821,hasTouch:width<821});
+   const errors=[];
+   page.on('pageerror',error=>errors.push(error.message));
+   await page.addInitScript(()=>localStorage.setItem('iceman-consent',JSON.stringify({essential:true,analytics:false})));
+   await page.goto('http://127.0.0.1:4173/nosotros/',{waitUntil:'networkidle'});
+   await page.evaluate(async()=>{
+    const images=[...document.querySelectorAll('.story-flow img')];
+    images.forEach(image=>image.loading='eager');
+    await Promise.all(images.map(image=>image.decode()));
+    await document.fonts.ready;
+   });
+   const tick=()=>page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+   await tick();
+   const opening=await page.evaluate(()=>({
+    overflow:document.documentElement.scrollWidth>innerWidth,
+    photoTop:document.querySelector('.story-opening-photo').getBoundingClientRect().top,
+    headlineTop:document.querySelector('h1').getBoundingClientRect().top,
+    historyTop:document.querySelector('.story-opening-lead').getBoundingClientRect().top,
+    imageFit:getComputedStyle(document.querySelector('.story-opening-photo>img')).objectFit
+   }));
+   assert.equal(opening.overflow,false,'no horizontal overflow '+width);
+   assert.ok(opening.headlineTop<height*.5,'headline starts immediately '+width);
+   assert.ok(opening.historyTop<height*.75,'history starts immediately '+width);
+   assert.ok(opening.photoTop<height-50,'photo anticipates next scene '+width);
+   assert.equal(opening.imageFit,'contain');
+   if(width===1440||width===390) console.log('ICEMAN_SCREENSHOT opening-'+width+' '+(await page.screenshot({type:'jpeg',quality:48})).toString('base64'));
+   for(const id of ['concepts','values']){
+    for(const [progress,expected] of [[0,0],[.5,1],[1,2],[.5,1],[0,0]]){
+     await page.evaluate(({id,progress})=>{
+      const section=document.querySelector('[data-story-selector="'+id+'"]');
+      const wrap=section.querySelector(':scope>.wrap');
+      const flowing=section.classList.contains('is-flowing');
+      const header=Number.parseFloat(section.style.getPropertyValue('--story-header'));
+      const start=section.getBoundingClientRect().top+scrollY-header-(flowing?innerHeight*.25:0);
+      const travel=flowing?Math.max(1,wrap.offsetHeight-innerHeight*.25):Math.max(1,section.offsetHeight-wrap.offsetHeight);
+      scrollTo({top:start+travel*progress,behavior:'instant'});
+     },{id,progress});
+     await tick();
+     const selected=await page.locator('[data-story-selector="'+id+'"] [data-story-option][aria-pressed=true]').getAttribute('data-story-option');
+     assert.equal(Number(selected),expected,id+' native forward/reverse '+width+' '+progress);
+     assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
+     if(id==='values'&&progress===.5&&(width===1440||width===390))console.log('ICEMAN_SCREENSHOT values-'+width+' '+(await page.screenshot({type:'jpeg',quality:48})).toString('base64'));
+    }
+   }
+   await page.emulateMedia({reducedMotion:'reduce'});
+   await tick();
+   await page.locator('[data-story-selector="values"] [data-story-option="2"]').click();
+   assert.equal(await page.locator('[data-story-selector="values"] [data-story-option="2"]').getAttribute('aria-pressed'),'true');
+   assert.equal(await page.locator('[data-story-selector="values"]>.wrap').evaluate(el=>getComputedStyle(el).position),'relative');
+   assert.deepEqual(errors,[],'no JavaScript errors '+width);
+   console.log('ICEMAN_VALIDATED '+width+'x'+height);
+   await page.close();
+  }
+ } finally {await browser.close();}
+})().catch(error=>{console.error(error);process.exit(1);});

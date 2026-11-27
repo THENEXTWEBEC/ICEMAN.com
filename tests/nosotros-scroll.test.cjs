@@ -59,7 +59,7 @@ test('slow image keeps the previous frame and catches up on load without another
 });
 test('sticky start uses header and measured travel; last button lands at release',()=>{
  const f=fixture(),s=f.api.scenes[0];
- assert.equal(s.start,924);assert.equal(s.travel,910);
+ assert.equal(s.start,924);assert.ok(Math.abs(s.travel-476)<.001);
  s.buttons[2].listeners.click();
  assert.equal(f.window.lastScroll.top,s.start+s.travel);
  assert.equal(f.window.lastScroll.behavior,'smooth');
