@@ -1407,73 +1407,10 @@ body:has(.home-hero-journey) .site-header .brand-official-logo{width:158px;heigh
   .brand-story .purpose-photos img {position:absolute}
 }
 
-/* Nosotros — balanced editorial scale, November 2026. */
-.brand-story{--story-content:1120px}
-.brand-story .wrap{width:min(var(--story-content),calc(100% - 80px))}
-.brand-story .story-number,.brand-story .story-kicker{font-size:12px;letter-spacing:.13em}
-.brand-story .story-section{padding-block:64px}
-.brand-story .story-hero,.brand-story .story-hero-inner{min-height:540px}
-.brand-story .story-hero-inner{grid-template-columns:1.35fr 1fr;gap:32px}
-.brand-story .story-hero-copy{padding-block:58px}
-.brand-story .story-hero h1{font-size:clamp(40px,4.5vw,64px);line-height:1.08;letter-spacing:-.045em;margin:22px 0 30px}
-.brand-story .hero-story-packs{height:350px}
-.brand-story .hero-story-packs .pack-one{height:260px;width:72%;right:6%;top:0}
-.brand-story .hero-story-packs .pack-two{height:180px;width:47%;bottom:5%}
-.brand-story .hero-story-packs .pack-three{height:145px;width:36%;right:0;bottom:0}
-.brand-story .story-history{background:#1b214b}
-.brand-story .story-history-grid{grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(32px,5vw,72px);margin-top:24px}
-.brand-story .story-history-grid h2{max-width:370px;font-size:clamp(34px,3.4vw,48px);line-height:1.12;letter-spacing:-.04em}
-.brand-story .story-history-copy p{font-size:16px;line-height:1.75;margin:0 0 16px}
-.brand-story .story-history-copy p:last-child{margin-bottom:0}
-.brand-story .story-history-foot{grid-template-columns:minmax(200px,300px) minmax(0,1fr);gap:40px;margin-top:32px;padding:24px;border:1px solid #ffffff18;border-radius:20px;background:#ffffff04}
-.brand-story .story-history-foot img{display:block;width:100%;height:auto!important;max-height:250px;aspect-ratio:1136/941;object-fit:contain!important;border-radius:12px}
-.brand-story .story-history-foot p{max-width:540px;font-size:clamp(21px,2vw,28px);line-height:1.4;margin:0;font-weight:600}
-.brand-story [data-story-selector]>.wrap{column-gap:56px;row-gap:16px;padding-block:40px}
-.brand-story [data-story-selector] .story-section-head h2{font-size:clamp(32px,3.3vw,46px);line-height:1.12;letter-spacing:-.04em;margin:16px 0}
-.brand-story [data-story-selector] .story-section-head>p{font-size:16px;line-height:1.6}
-.brand-story [data-story-selector] .story-options button{min-height:58px;font-size:clamp(22px,2.2vw,30px);padding:14px 0}
-.brand-story [data-story-selector] .story-panel-image{height:clamp(260px,40svh,360px);border-radius:20px}
-.brand-story [data-story-selector] .story-panel p{font-size:16px;line-height:1.6;min-height:3.2em}
-.brand-story .purpose-sticky{gap:56px;padding-block:40px}
-.brand-story .purpose-copy h2{font-size:clamp(34px,3.6vw,50px);line-height:1.12;letter-spacing:-.04em;margin:20px 0}
-.brand-story .purpose-copy p{font-size:16px;line-height:1.75}
-.brand-story .purpose-photos{height:clamp(260px,40svh,360px);border-radius:20px}
-.brand-story .story-closing{padding:64px 0 80px}
-.brand-story .story-closing h2{font-size:clamp(40px,4.5vw,62px);line-height:1.08;margin:24px auto 30px}
-.brand-story .closing-packs .pack-one{width:16%}
-.brand-story .closing-packs .pack-two{width:15%}
-.brand-story .closing-packs .pack-three{width:10%}
-@media(max-width:820px){
-  .brand-story .wrap{width:calc(100% - 40px)}
-  .brand-story .story-section{padding-block:44px}
-  .brand-story .story-hero,.brand-story .story-hero-inner{min-height:0}
-  .brand-story .story-hero-inner{grid-template-columns:1fr;gap:0}
-  .brand-story .story-hero-copy{padding:42px 0 12px}
-  .brand-story .story-hero h1{font-size:clamp(36px,7.2vw,52px)}
-  .brand-story .hero-story-packs{height:250px;width:min(420px,100%);margin:0 auto 30px}
-  .brand-story .hero-story-packs .pack-one{height:220px;width:60%;right:20%}
-  .brand-story .hero-story-packs .pack-two{height:150px;width:38%}
-  .brand-story .hero-story-packs .pack-three{height:130px;width:32%}
-  .brand-story .story-history-grid{grid-template-columns:1fr;gap:24px}
-  .brand-story .story-history-grid h2{max-width:520px;font-size:clamp(32px,5.6vw,42px)}
-  .brand-story .story-history-foot{grid-template-columns:minmax(150px,.8fr) 1fr;gap:24px;padding:20px}
-  .brand-story [data-story-selector]>.wrap{row-gap:14px;padding-block:28px}
-  .brand-story [data-story-selector] .story-section-head h2{font-size:clamp(30px,5.5vw,38px)}
-  .brand-story [data-story-selector] .story-section-head>p{font-size:16px}
-  .brand-story [data-story-selector] .story-panel-image{height:clamp(180px,27svh,280px)}
-  .brand-story [data-story-selector] .story-options button{min-height:44px;padding:9px 10px;font-size:22px}
-  .brand-story .purpose-sticky{gap:20px;padding-block:28px}
-  .brand-story .purpose-copy h2{font-size:clamp(30px,6vw,40px)}
-  .brand-story .purpose-photos{height:clamp(200px,30svh,300px)}
-}
-@media(max-width:540px){
-  .brand-story .story-history-foot{grid-template-columns:1fr;gap:18px;padding:20px;margin-top:26px}
-  .brand-story .story-history-foot img{max-width:270px;max-height:224px;margin-inline:auto}
-  .brand-story .story-history-foot p{font-size:22px}
-  .brand-story .story-hero-actions{gap:16px}
-  .brand-story .story-closing{padding:44px 0 100px}
-  .brand-story .closing-packs .pack-one,.brand-story .closing-packs .pack-two{width:23%}
-}
+/* Keep the compact composition confined to the introduction. */
+.brand-story .story-intro .wrap{width:min(1040px,calc(100% - 80px))}
+.brand-story .story-intro .story-kicker{font-size:12px;letter-spacing:.13em}
+@media(max-width:820px){.brand-story .story-intro .wrap{width:calc(100% - 40px)}}
 
 /* Nosotros introduction: one photo, one message, one compact composition. */
 .brand-story .story-intro{padding-block:clamp(40px,5vw,68px)}
