@@ -295,3 +295,28 @@
   width:58%!important;height:84%!important;aspect-ratio:auto!important;object-fit:contain!important;
   transform:rotate(5deg)!important;
 }
+
+/* Keep each pair together even when the viewport makes its card wide. */
+.reference-category{container-type:size}
+.reference-category:not(.reference-category-waffles) .reference-category-products{
+  inset:8% auto auto 50%;
+  width:min(90%,110cqh);
+  height:68%;
+  transform:translateX(-50%);
+}
+.reference-category:not(.reference-category-waffles) .reference-category-pack{
+  width:58%!important;height:84%!important;aspect-ratio:auto!important;
+  object-fit:contain!important;
+}
+.reference-category:not(.reference-category-waffles) .reference-category-pack-1{
+  top:15%!important;left:5%!important;right:auto!important;bottom:auto!important;
+}
+.reference-category:not(.reference-category-waffles) .reference-category-pack-2{
+  top:4%!important;left:auto!important;right:5%!important;bottom:auto!important;
+}
+
+.reference-category-smoothies .reference-category-pack-1{left:16%!important}
+.reference-category-smoothies .reference-category-pack-2{right:16%!important}
+
+.reference-category-especialidades .reference-category-pack-1{transform:rotate(-6deg) scale(1.25)}
+.reference-category-especialidades .reference-category-pack-2{transform:rotate(4deg) scale(1.25)}
