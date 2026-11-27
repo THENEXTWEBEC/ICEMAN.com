@@ -73,7 +73,7 @@
   const optimizedImage = (path = "") => {
     const webpPath = webpSupported ? path.replace(/\.png(?=([?#]|$))/i, ".webp") : path;
     if (!/\.webp(?:[?#]|$)/i.test(webpPath) || /[?&]v=/.test(webpPath)) return webpPath;
-    const version = webpPath.includes("prepared-cutout-croqueta-de-yuca") ? "served-yuca-20261127" : webpPath.includes("/prepared-cutout/") ? "comparison-20261111" : "images-20261030";
+    const version = webpPath.includes("/catalog/prepared/papas-rejilla.webp") ? "served-rejilla-20261127" : webpPath.includes("prepared-cutout-croqueta-de-yuca") ? "served-yuca-20261127" : webpPath.includes("/prepared-cutout/") ? "comparison-20261111" : "images-20261030";
     return `${webpPath}${webpPath.includes("?") ? "&" : "?"}v=${version}`;
   };
   const asset = (name) => optimizedImage(`${projectBase}/assets/catalog/${encodeURIComponent(name)}.webp`);
