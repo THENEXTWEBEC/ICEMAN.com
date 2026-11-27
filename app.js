@@ -794,7 +794,7 @@
   // geometry and only swaps the visual shown on the “En tu mesa” side.
   const dishScenes = {
     "papas-air-fryer": {image:"catalog/prepared/papas-air-fryer.png",alt:"Papas Air Fryer preparadas y servidas en un plato verde"},
-    "corte-ondulado-900-premium": {image:"catalog/prepared/corte-ondulado-900-premium-v2.webp",alt:"Papas onduladas preparadas y servidas en un plato verde"},
+    "corte-ondulado-900-premium": {image:"catalog/prepared/papas-onduladas-original-horizontal.webp",alt:"Papas onduladas preparadas y servidas en un plato verde"},
     "corte-recto-900-premium": {image:"catalog/prepared/corte-recto-900-premium.png",alt:"Papas de corte recto preparadas y servidas en un plato verde"},
     "papa-steak": {image:"catalog/prepared/papa-steak.png",alt:"Papa Steak preparada y servida en un plato verde"},
     "papas-spices": {image:"catalog/prepared/papas-spices.png",alt:"Papas con especias preparadas y servidas en un plato verde"},
@@ -825,7 +825,7 @@
   // baseline; only products needing an optical adjustment override the defaults.
   const comparisonConfig = {
     "papas-air-fryer":{packageOrientation:"vertical",dishOrientation:"vertical"},
-    "corte-ondulado-900-premium":{packageOrientation:"horizontal",dishOrientation:"horizontal",dishRotation:90,dishScale:.88,dishPositionY:4},
+    "corte-ondulado-900-premium":{packageOrientation:"horizontal",dishOrientation:"horizontal",dishScale:.88,dishPositionY:4},
     "corte-recto-900-premium":{packageOrientation:"horizontal",dishOrientation:"horizontal",dishRotation:90,dishScale:.94,dishPositionY:1.4},
     "papa-steak":{packageOrientation:"horizontal",dishOrientation:"horizontal",packageScale:.78,dishScale:.84,dishPositionY:2,packageMobileScale:.82,dishMobilePositionY:1},
     "papas-spices":{packageOrientation:"vertical",dishOrientation:"vertical"},
