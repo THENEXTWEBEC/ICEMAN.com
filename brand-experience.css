@@ -307,7 +307,6 @@ img[src*="/assets/catalog/smoothie-red.webp"]{
    pouch. A white backing constrained to the pouch silhouette restores it
    without recreating or changing any printed artwork. */
 img[src*="/assets/catalog/cutout/papa-steak."],
-img[src*="/assets/catalog/cutout/papas-ondulado-premium."],
 img[src*="/assets/catalog/cutout/papas-recto-premium."],
 img[src*="/assets/catalog/cutout/salteado-verduras."],
 img[src*="/assets/catalog/cutout/yuca-congelada."],
@@ -327,7 +326,6 @@ img[src*="/assets/catalog/cutout/papa-steak."]{
   -webkit-mask-image:url("assets/catalog/masks/papa-steak.svg");
   mask-image:url("assets/catalog/masks/papa-steak.svg");
 }
-img[src*="/assets/catalog/cutout/papas-ondulado-premium."],
 img[src*="/assets/catalog/cutout/papas-recto-premium."]{
   background:linear-gradient(to bottom,transparent 64%,#c69147 64%);
   -webkit-mask-image:url("assets/catalog/masks/papas-premium.svg");
