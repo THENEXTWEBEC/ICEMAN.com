@@ -1171,11 +1171,9 @@ body:has(.home-hero-journey) .site-header .brand-official-logo{width:158px;heigh
 }
 .catalog-results .comparison-line{left:var(--split,50%)}
 
-/* Papas onduladas: add height to the served plate and lift its top edge to
-   match the package silhouette. The 90-degree rotation makes scaleX the
-   vertical axis of the plated image. */
+/* Keep the original rectangular plate horizontal and preserve its proportions. */
 .product-comparison[data-comparison-product="corte-ondulado-900-premium"] .comparison-dish img{
-  transform:translate(var(--dish-normalized-x,0px),calc(var(--dish-normalized-y,0px) - 4%)) scale(calc(var(--dish-normalized-scale,1) * var(--dish-size,1) * 1.2),calc(var(--dish-normalized-scale,1) * var(--dish-size,1))) rotate(90deg)!important;
+  transform:translate(var(--dish-normalized-x,0px),calc(var(--dish-normalized-y,0px) - 4%)) scale(calc(var(--dish-normalized-scale,1) * var(--dish-size,1)))!important;
 }
 
 @media(max-width:640px){
@@ -1221,7 +1219,7 @@ body:has(.home-hero-journey) .site-header .brand-official-logo{width:158px;heigh
 /* Papas onduladas mobile: bring the served plate closer to the package equator. */
 @media(max-width:640px){
   .product-comparison[data-comparison-product="corte-ondulado-900-premium"] .comparison-dish img{
-    transform:translate(var(--dish-normalized-x,0px),calc(var(--dish-normalized-y,0px) + 1%)) scale(calc(var(--dish-normalized-scale,1) * var(--dish-size,1) * 1.2),calc(var(--dish-normalized-scale,1) * var(--dish-size,1))) rotate(90deg)!important;
+    transform:translate(var(--dish-normalized-x,0px),calc(var(--dish-normalized-y,0px) + 1%)) scale(calc(var(--dish-normalized-scale,1) * var(--dish-size,1)))!important;
   }
   /* Waffle glaseado: enlarge the served waffles to balance the package on\n     narrow screens. The authored comparison scale remains unchanged on desktop. */\n  .product-comparison[data-comparison-product="waffle-glaseado"]{\n    --dish-size:1.28!important;\n  }
 }
@@ -1230,7 +1228,7 @@ body:has(.home-hero-journey) .site-header .brand-official-logo{width:158px;heigh
 /* Lower the Papas onduladas serving slightly on desktop. */
 @media(min-width:641px){
   .product-comparison[data-comparison-product="corte-ondulado-900-premium"] .comparison-dish img{
-    transform:translate(var(--dish-normalized-x,0px),calc(var(--dish-normalized-y,0px) - 3%)) scale(calc(var(--dish-normalized-scale,1) * var(--dish-size,1) * 1.2),calc(var(--dish-normalized-scale,1) * var(--dish-size,1))) rotate(90deg)!important;
+    transform:translate(var(--dish-normalized-x,0px),calc(var(--dish-normalized-y,0px) - 3%)) scale(calc(var(--dish-normalized-scale,1) * var(--dish-size,1)))!important;
   }
 }
 
