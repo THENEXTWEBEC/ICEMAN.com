@@ -32,7 +32,7 @@ jobs:
         run: python scripts/build_site.py
       - name: Validate generated production assets
         run: |
-          test -f _site/iceman.bundle.css
+          compgen -G '_site/iceman.bundle.*.css' >/dev/null
           test -f _site/assets/catalog/cutout/waffle-clean.webp
           test -f _site/assets/catalog/responsive/cutout-waffle-clean-320.webp
           test -f _site/assets/editorial/sharing-table.webp
