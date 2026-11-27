@@ -57,8 +57,8 @@
 }
 .reference-category-helados .reference-category-pack-1{width:44%;top:20%;left:11%;transform:rotate(-3deg)}
 .reference-category-helados .reference-category-pack-2{width:46%;top:11%;right:8%;transform:rotate(4deg)}
-.reference-category-helados .reference-category-pack-1{transform:rotate(-3deg) scale(1.28)}
-.reference-category-helados .reference-category-pack-2{transform:rotate(4deg) scale(1.55)}
+.reference-category-helados .reference-category-pack-1{transform:rotate(-3deg) scale(1.216)}
+.reference-category-helados .reference-category-pack-2{transform:rotate(4deg) scale(1.4725)}
 .reference-category-waffles .reference-category-pack-1{width:88%;height:68%;top:18%;left:6%;transform:none}
 .reference-category strong{position:absolute;right:4%;bottom:15.8%;left:4%;display:block;color:#12194f;font-size:clamp(24px,2.85vw,38px);font-weight:850;letter-spacing:-.055em;line-height:1;text-transform:uppercase;white-space:nowrap}
 .reference-category-button{position:absolute;bottom:4.3%;left:50%;display:inline-flex;align-items:center;justify-content:center;gap:14px;min-width:47%;min-height:9%;padding:6px 18px;border-radius:999px;background:#202d62;color:#fff;font-size:clamp(14px,1.35vw,18px);font-weight:700;line-height:1;white-space:nowrap;transform:translateX(-50%)}
@@ -259,8 +259,8 @@
     top:12%;right:5%;left:auto;width:48%;height:82%;aspect-ratio:auto;object-fit:contain;
     transform:rotate(5deg) scale(1.04);
   }
-  .reference-category-helados .reference-category-pack-1{transform:rotate(-3deg) scale(1.45)}
-  .reference-category-helados .reference-category-pack-2{transform:rotate(4deg) scale(1.25)}
+  .reference-category-helados .reference-category-pack-1{transform:rotate(-3deg) scale(1.3775)}
+  .reference-category-helados .reference-category-pack-2{transform:rotate(4deg) scale(1.1875)}
   .reference-category-waffles .reference-category-pack-1{top:14%;height:74%}
 }
 @media(max-width:560px){
@@ -271,8 +271,8 @@
   .reference-category-especialidades .reference-category-pack-2{transform:rotate(4deg) scale(1.35)}
   .reference-category-smoothies .reference-category-pack-1{transform:rotate(-5deg) scale(1.2)}
   .reference-category-smoothies .reference-category-pack-2{transform:rotate(5deg) scale(1.06)}
-  .reference-category-helados .reference-category-pack-1{transform:rotate(-3deg) scale(1.4)}
-  .reference-category-helados .reference-category-pack-2{transform:rotate(4deg) scale(1.08)}
+  .reference-category-helados .reference-category-pack-1{transform:rotate(-3deg) scale(1.33)}
+  .reference-category-helados .reference-category-pack-2{transform:rotate(4deg) scale(1.026)}
   .reference-category-waffles .reference-category-pack-1{top:14%;width:84%;height:72%;left:8%}
 }
 
