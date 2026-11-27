@@ -65,6 +65,7 @@
   .brand-story.story-flow [data-story-selector]>.wrap{padding-block:38px;row-gap:16px}
   .brand-story.story-flow [data-story-selector] .story-section-head h2{font-size:clamp(30px,6.4vw,46px)}
   .brand-story.story-flow [data-story-selector] .story-panel-image{height:clamp(220px,33svh,320px);border-radius:20px 4px 4px 4px}
+  .brand-story.story-flow [data-story-selector] .story-panel p{min-height:4.8em}
   .brand-story.story-flow [data-story-selector] .story-options button{min-height:44px}
   .brand-story.story-flow .purpose-sticky{padding-block:30px;gap:24px}
   .brand-story.story-flow .purpose-photos{height:auto;max-height:none;aspect-ratio:4/3}

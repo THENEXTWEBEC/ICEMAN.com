@@ -29,7 +29,7 @@ const assert = require('node:assert/strict');
    assert.ok(opening.historyTop<height*.75,'history starts immediately '+width);
    assert.ok(opening.photoTop<height-50,'photo anticipates next scene '+width);
    assert.equal(opening.imageFit,'contain');
-   if(width===1440||width===390) console.log('ICEMAN_SCREENSHOT opening-'+width+' '+(await page.screenshot({type:'jpeg',quality:48})).toString('base64'));
+   if(width===1440||width===390||width===320) console.log('ICEMAN_SCREENSHOT opening-'+width+' '+(await page.screenshot({type:'jpeg',quality:48})).toString('base64'));
    for(const id of ['concepts','values']){
     for(const [progress,expected] of [[0,0],[.5,1],[1,2],[.5,1],[0,0]]){
      await page.evaluate(({id,progress})=>{
@@ -43,9 +43,10 @@ const assert = require('node:assert/strict');
      },{id,progress});
      await tick();
      const selected=await page.locator('[data-story-selector="'+id+'"] [data-story-option][aria-pressed=true]').getAttribute('data-story-option');
+     if(Number(selected)!==expected)console.log('ICEMAN_DIAGNOSTIC '+JSON.stringify(await page.evaluate(()=>({scrollY,viewport:[innerWidth,innerHeight],scenes:[...document.querySelectorAll('[data-story-selector]')].map(s=>({id:s.dataset.storySelector,top:s.getBoundingClientRect().top,height:s.offsetHeight,wrap:s.firstElementChild.offsetHeight,flowing:s.classList.contains('is-flowing'),caption:s.querySelector('.story-panel p').getBoundingClientRect().height,header:s.style.getPropertyValue('--story-header')}))}))));
      assert.equal(Number(selected),expected,id+' native forward/reverse '+width+' '+progress);
      assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
-     if(id==='values'&&progress===.5&&(width===1440||width===390))console.log('ICEMAN_SCREENSHOT values-'+width+' '+(await page.screenshot({type:'jpeg',quality:48})).toString('base64'));
+     if(progress===.5&&((id==='values'&&(width===1440||width===390||width===320))||(id==='concepts'&&width===1440)))console.log('ICEMAN_SCREENSHOT '+id+'-'+width+' '+(await page.screenshot({type:'jpeg',quality:48})).toString('base64'));
     }
    }
    await page.emulateMedia({reducedMotion:'reduce'});
