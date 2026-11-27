@@ -94,9 +94,8 @@
 .story-flow .story-frame img { display: block; width: 100%; height: auto; object-fit: contain; }
 .story-flow .story-opening-photo { --frame: #77b8ec; }
 @media (min-width: 821px) and (max-height: 760px) {
-  .story-flow .story-opening-photo { width: min(100%, max(380px, calc((100svh - 170px) * 1.2))); }
+  .story-flow .story-opening-photo { width: min(100%, max(380px, calc((100svh - 170px) * 1.5))); }
 }
-.story-flow .story-opening-photo img { aspect-ratio: 1136 / 941; }
 
 .story-flow .story-opening-thread {
   display: grid;

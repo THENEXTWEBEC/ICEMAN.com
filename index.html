@@ -38,8 +38,8 @@
         document.head.append(heroPreload);
       } else if (normalizedRoute === "/nosotros" || normalizedRoute === "/recetas") {
         const isAbout = normalizedRoute === "/nosotros";
-        const image = isAbout ? "nosotros-salteado-user" : "recipe-brochetas-generated";
-        const version = "";
+        const image = isAbout ? "advice-store-frozen-products" : "recipe-brochetas-generated";
+        const version = isAbout ? "?v=images-20261030" : "";
         const heroPreload = document.createElement("link");
         heroPreload.rel = "preload";
         heroPreload.as = "image";

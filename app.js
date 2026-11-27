@@ -922,7 +922,7 @@
     return `<div class="floating-packs ${className}" aria-hidden="true">${packNames.map((name,index)=>`<img src="${floatingPackCutouts[name] || cutoutAsset(name)}" alt="" class="float-pack pack-${["one","two","three"][index]}"${responsiveImageAttrs(floatingPackCutouts[name] || cutoutAsset(name),"(max-width: 600px) 44vw, 280px")} loading="lazy" decoding="async">`).join("")}</div>`;
   }
   const storyVisuals = {
-    hero:{image:"editorial/advice-store-frozen-products.webp",alt:"Selección de productos IceMan conservados en el congelador"},
+    hero:{image:"editorial/advice-store-frozen-products.webp",alt:"Una mujer sostiene una bolsa de Mix Jardinera IceMan junto al congelador"},
     history:{image:"editorial/nosotros-salteado-user.png",alt:"Salteado de verduras servido en una sartén"},
     purpose:[
       {image:"editorial/article-vegetables.webp",alt:"Brócoli, zanahorias y coliflor servidos en un plato"}
@@ -980,7 +980,7 @@
             <p class="story-opening-description">Somos una marca ecuatoriana de alimentos congelados. Te acompañamos con opciones prácticas y variadas para cocinar rico y compartir cada día.</p>
           </div>
           <figure class="story-frame story-opening-photo">
-            ${storyPhoto(storyVisuals.history, heroSizes, [1136, 941], true)}
+            ${storyPhoto(storyVisuals.hero, heroSizes, [1536, 1024], true)}
           </figure>
         </div>
         <div class="wrap story-opening-thread">
@@ -991,7 +991,7 @@
             <p>A lo largo de los años hemos ampliado nuestras categorías y nuestra presencia en el país, manteniendo nuestro compromiso con la calidad, la variedad y la confianza. También queremos demostrarte que elegir congelados no significa renunciar al sabor ni al valor nutricional: procesos como IQF ayudan a conservar las características de los alimentos.</p>
           </div>
           <figure class="story-frame story-opening-daily">
-            ${storyPhoto(storyVisuals.hero, "(max-width: 600px) calc(100vw - 74px), (max-width: 820px) 70vw, 510px", [1536, 1024])}
+            ${storyPhoto(storyVisuals.history, "(max-width: 600px) calc(100vw - 74px), (max-width: 820px) 70vw, 510px", [1136, 941])}
             <figcaption>Una marca de Kypross.</figcaption>
           </figure>
         </div>
