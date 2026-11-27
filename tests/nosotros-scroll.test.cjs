@@ -1,86 +1,130 @@
-const test=require('node:test');
-const assert=require('node:assert/strict');
-const fs=require('node:fs');
-const vm=require('node:vm');
-const path=require('node:path');
-const app=fs.readFileSync(path.join(__dirname,'../app.js'),'utf8');
-const timeline=app.slice(app.indexOf('    // One native-scroll timeline'),app.indexOf('    const hero=root.querySelector("[data-reveal-hero]");'));
-function element(){
- const attrs={},listeners={},classes=new Set();
- return {style:{setProperty(k,v){this[k]=v;}},attrs,listeners,
- classList:{toggle(k,v){v?classes.add(k):classes.delete(k);},remove(k){classes.delete(k);},contains:k=>classes.has(k)},
- setAttribute(k,v){attrs[k]=v;},addEventListener(k,v){listeners[k]=v;}};
+const test = require('node:test');
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const vm = require('node:vm');
+const path = require('node:path');
+
+const app = fs.readFileSync(path.join(__dirname, '../app.js'), 'utf8');
+const timeline = app.slice(app.indexOf('    // Short sticky scenes'), app.indexOf('    const hero=root.querySelector("[data-reveal-hero]");'));
+
+function element() {
+  return {
+    attrs: {},
+    handlers: {},
+    style: { setProperty(property, value) { this[property] = value; } },
+    classList: new Set(),
+    setAttribute(key, value) { this.attrs[key] = value; },
+    addEventListener(event, handler) { this.handlers[event] = handler; }
+  };
 }
-function fixture({height=700,viewport=800,reducedMotion=false}={}){
- const win={innerHeight:viewport,scrollY:0,addEventListener(){},scrollTo(options){this.lastScroll=options;}};
- const sections=['concepts','values','purpose'].map((id,i)=>{
-  const section=element(),wrap={offsetHeight:height};
-  const images=Array.from({length:id==='purpose'?1:3},()=>({...element(),complete:true,naturalWidth:100}));
-  const buttons=id==='purpose'?[]:Array.from({length:3},element);
-  const caption={textContent:'description 0'},words=Array.from({length:9},element);
-  Object.assign(section,{dataset:{storySelector:id},wrap,images,buttons,
-   getBoundingClientRect:()=>({top:1000+i*3000-win.scrollY}),
-   querySelector:s=>s===':scope > .wrap'?wrap:caption,
-   querySelectorAll:s=>s.includes('story-panel-image')?images:s==='h2 span'?words:buttons});
-  return section;
- });
- const root={querySelectorAll:()=>sections.slice(0,2),querySelector:s=>s==='.site-header'?{offsetHeight:76}:sections[2]};
- const context={window:win,root,signal:new AbortController().signal,reduced:{matches:reducedMotion,addEventListener(){}},
-  storyConcepts:[0,1,2].map(i=>({text:'description '+i})),storyValues:[0,1,2].map(i=>({text:'description '+i})),
-  requestAnimationFrame:()=>1,cancelAnimationFrame(){},ResizeObserver:class{observe(){}disconnect(){}},document:{}};
- vm.runInNewContext(timeline+';this.api={scenes,renderStory,updateScrollStories,measureScrollStories};',context);
- return {...context,sections};
+
+function fixture({ width = 1440, height = 850, reducedMotion = false } = {}) {
+  const buttons = Array.from({ length: 3 }, element);
+  const photos = Array.from({ length: 3 }, () => ({ ...element(), complete: true, naturalWidth: 100 }));
+  const slides = photos.map(photo => ({ ...element(), querySelector: () => photo }));
+  const caption = { ...element(), textContent: 'First description' };
+  const wrap = { offsetHeight: 520 };
+  const section = {
+    ...element(),
+    dataset: { storySelector: 'concepts' },
+    offset: 1000,
+    querySelector: selector => selector === '.wrap' ? wrap : caption,
+    querySelectorAll: selector => selector === '.story-panel-slide' ? slides : buttons,
+    getBoundingClientRect: () => ({
+      top: section.offset - window.scrollY,
+      bottom: section.offset - window.scrollY + wrap.offsetHeight
+    })
+  };
+  section.classList.toggle = (name, value) => value ? section.classList.add(name) : section.classList.delete(name);
+  const window = { ...element(), scrollY: 0, innerHeight: height, scrollTo(options) { this.lastScroll = options; } };
+  const preference = { matches: reducedMotion, addEventListener() {} };
+  const root = { querySelector: () => ({ offsetHeight: 76 }), querySelectorAll: () => [section] };
+  let scheduled;
+  const sync = () => {
+    const next = scheduled;
+    scheduled = null;
+    next?.();
+  };
+  vm.runInNewContext(timeline, {
+    window, root, reduced: preference,
+    storyConcepts: ['First description', 'Second description', 'Third description'].map(text => ({ text })),
+    signal: new AbortController().signal,
+    matchMedia: () => ({ matches: width <= 820 }),
+    requestAnimationFrame(callback) { scheduled = callback; return 1; },
+    cancelAnimationFrame() {},
+    ResizeObserver: class { observe() {} disconnect() {} }
+  });
+  sync();
+  return {
+    section, window, buttons, caption, photos, slides, sync,
+    scroll(progress) {
+      const travel = parseFloat(section.style['--story-scene-height']) - wrap.offsetHeight;
+      window.scrollY = section.offset - 76 + progress * travel;
+      window.handlers.scroll();
+      sync();
+    }
+  };
 }
-test('photo and caption advance together at both boundaries and reverse without lag',()=>{
- const f=fixture(),s=f.api.scenes[0];
- for(const [progress,expected] of [[-.2,0],[.24,0],[.26,1],[.5,1],[.76,2],[1.2,2],[.5,1],[0,0]]){
-  f.window.scrollY=s.start+s.travel*progress;f.api.updateScrollStories();
-  assert.equal(s.active,expected);
-  assert.equal(s.buttons[expected].attrs['aria-pressed'],'true');
-  if(expected)assert.equal(f.sections[0].querySelector('p').textContent,'description '+expected);
- }
-});
-test('crossfade stays opaque and follows intermediate scroll positions',()=>{
- const f=fixture(),s=f.api.scenes[0];
- f.api.renderStory(s,.25);
- assert.equal(s.images[0].style.opacity,'1');
- assert.ok(Math.abs(Number(s.images[1].style.opacity)-.5)<.00001);
- f.api.renderStory(s,.22);
- assert.ok(Number(s.images[1].style.opacity)<.5);
- assert.equal(s.images[0].style.opacity,'1');
-});
-test('slow image keeps the previous frame and catches up on load without another scroll',()=>{
- const f=fixture(),s=f.api.scenes[0];
- s.images[1].complete=false;s.images[1].naturalWidth=0;
- f.window.scrollY=s.start+s.travel*.5;f.api.updateScrollStories();
- assert.equal(s.active,0);assert.equal(s.images[0].style.opacity,'1');
- s.images[1].complete=true;s.images[1].naturalWidth=100;s.images[1].listeners.load();
- f.api.updateScrollStories();assert.equal(s.active,1);
-});
-test('sticky start uses header and measured travel; last button lands at release',()=>{
- const f=fixture(),s=f.api.scenes[0];
- assert.equal(s.start,924);assert.ok(Math.abs(s.travel-476)<.001);
- s.buttons[2].listeners.click();
- assert.equal(f.window.lastScroll.top,s.start+s.travel);
- assert.equal(f.window.lastScroll.behavior,'smooth');
- assert.ok(f.api.scenes[2].travel>0,'purpose text has a scroll interval even with one photo');
-});
-test('short viewports and reduced motion keep content accessible',()=>{
- const short=fixture({viewport:500});
- assert.equal(short.api.scenes[0].flowing,true);
- assert.equal(short.sections[0].classList.contains('is-flowing'),true);
- const reduced=fixture({reducedMotion:true});
- reduced.api.scenes[0].buttons[2].listeners.click();
- assert.equal(reduced.api.scenes[0].active,2);
- assert.equal(reduced.window.lastScroll,undefined);
- reduced.api.updateScrollStories();assert.equal(reduced.api.scenes[0].active,2);
+
+test('photo, caption and controls advance together and reverse with natural scroll', () => {
+  const story = fixture();
+  for (const [progress, active, description] of [
+    [.26, 1, 'Second description'], [.8, 2, 'Third description'], [.45, 1, 'Second description'], [0, 0, 'First description']
+  ]) {
+    story.scroll(progress);
+    assert.equal(story.slides[active].attrs['aria-hidden'], 'false');
+    assert.equal(story.buttons[active].attrs['aria-pressed'], 'true');
+    assert.equal(story.caption.textContent, description);
+  }
 });
 
-test('late content above a scene does not shift photo timing or button destinations',()=>{
- const f=fixture(),s=f.api.scenes[0];
- s.section.getBoundingClientRect=()=>({top:1800-f.window.scrollY});
- f.window.scrollY=1800-76+s.travel*.5;
- f.api.updateScrollStories();
- assert.equal(s.active,1);
- s.buttons[0].listeners.click();assert.equal(f.window.lastScroll.top,1724);
+test('each frame is composed as an opaque background and a fading foreground', () => {
+  const story = fixture();
+  story.scroll(.25);
+  assert.equal(story.slides[0].style.opacity, '1');
+  assert.ok(Math.abs(Number(story.slides[1].style.opacity) - .5) < .00001);
+  story.scroll(.22);
+  assert.ok(Number(story.slides[1].style.opacity) < .5);
+  assert.equal(story.slides[0].style.opacity, '1');
+});
+
+test('slow photos preserve the current content and catch up when the image loads', () => {
+  const story = fixture();
+  const photo = story.photos[1];
+  photo.complete = false;
+  photo.naturalWidth = 0;
+  story.scroll(.5);
+  assert.equal(story.slides[0].style.opacity, '1');
+  assert.equal(story.caption.textContent, 'First description');
+  photo.complete = true;
+  photo.naturalWidth = 100;
+  photo.handlers.load();
+  story.sync();
+  assert.equal(story.caption.textContent, 'Second description');
+});
+
+test('desktop controls move to the matching point using the current section bounds', () => {
+  const story = fixture();
+  story.section.offset = 1820;
+  story.buttons[2].handlers.click();
+  assert.equal(story.caption.textContent, 'Third description');
+  assert.ok(Math.abs(story.window.lastScroll.top - (1820 - 76 + 520 * .63)) < .001);
+  assert.equal(story.window.lastScroll.behavior, 'smooth');
+  story.window.handlers.wheel();
+  story.scroll(.5);
+  assert.equal(story.caption.textContent, 'Second description');
+});
+
+test('narrow, short and reduced-motion layouts switch images without moving the page', () => {
+  for (const options of [{ width: 390 }, { height: 500 }, { reducedMotion: true }]) {
+    const story = fixture(options);
+    assert.equal(story.section.classList.has('is-flowing'), true);
+    story.buttons[2].handlers.click();
+    assert.equal(story.caption.textContent, 'Third description');
+    assert.equal(story.window.lastScroll, undefined);
+    story.window.scrollY += 50;
+    story.window.handlers.scroll();
+    story.sync();
+    assert.equal(story.caption.textContent, 'Third description');
+  }
 });

@@ -909,18 +909,90 @@
     {title:"INNOVACIÓN",text:"Buscamos productos y soluciones que abren nuevas posibilidades.",image:"editorial/innovation-potato-salad.jpeg",alt:"Ensalada rusa servida en un plato blanco"},
     {title:"CONFIANZA",text:"Cuidamos la calidad de todo lo que llevamos hasta ti.",image:"editorial/trust-family-celebration.jpeg",alt:"Dos mujeres junto a una mesa con flores, platos y productos IceMan"}
   ];
-  function storySelector(items, id, title, hint, number) {
-    return `<section class="story-section story-selector" data-story-selector="${id}"><div class="wrap"><div class="story-section-head"><span class="story-number">${number} / SOMOS IceMan</span><h2>${title}</h2><p>${hint}</p></div><div class="story-selector-layout"><div class="story-options" role="group" aria-label="${title}">${items.map((item,i)=>`<button type="button" data-story-option="${i}" aria-pressed="${i===0}" aria-controls="story-panel-${id}"><span>0${i+1}</span>${item.title}<b aria-hidden="true">${iconArrow("up-right")}</b></button>`).join("")}</div><div class="story-panel" id="story-panel-${id}"><div class="story-panel-image">${items.map((item,i)=>`<img class="${i===0?"is-visible":""}" src="${editorialImage(item.image)}" alt="${item.alt}" aria-hidden="${i!==0}" loading="lazy" decoding="async">`).join("")}</div><p aria-live="polite">${items[0].text}</p></div></div></div></section>`;
+  function storyPhoto(visual, sizes, dimensions, priority = false) {
+    const image = document.documentElement.dataset.icemanOptimized === "true"
+      ? visual.image.replace(/\.jpe?g(?=([?#]|$))/i, ".webp")
+      : visual.image;
+    const src = editorialImage(image);
+    return `<img src="${src}"${responsiveEditorialImageAttrs(src, sizes)} alt="${visual.alt}" width="${dimensions[0]}" height="${dimensions[1]}" ${priority ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async">`;
   }
+
+  function storySelector(items, id, label, title, dimensions) {
+    const panelId = `story-panel-${id}`;
+    const photoSizes = "(max-width: 600px) calc(100vw - 44px), (max-width: 820px) calc(100vw - 80px), (max-width: 1360px) 49vw, 680px";
+    return `<section class="story-section story-selector" data-story-selector="${id}" aria-labelledby="story-title-${id}">
+      <div class="wrap">
+        <div class="story-section-head">
+          <span class="story-kicker">${label}</span>
+          <h2 id="story-title-${id}">${title}</h2>
+        </div>
+        <div class="story-options" role="group" aria-label="${label}">
+          ${items.map((item, index) => `<button type="button" data-story-option="${index}" aria-pressed="${index === 0}" aria-controls="${panelId}"><span class="story-option-dot" aria-hidden="true"></span><strong>${item.title}</strong>${iconArrow("up-right")}</button>`).join("")}
+        </div>
+        <figure class="story-panel" id="${panelId}">
+          <div class="story-panel-image">
+            ${items.map((item, index) => `<div class="story-panel-slide${index === 0 ? " is-visible" : ""}" aria-hidden="${index !== 0}">${storyPhoto(item, photoSizes, dimensions[index])}</div>`).join("")}
+          </div>
+          <figcaption><p>${items[0].text}</p></figcaption>
+        </figure>
+      </div>
+    </section>`;
+  }
+
   function aboutPage(path) {
-    const words = "Hacerlo fácil no significa hacerlo siempre igual.".split(" ");
-    const content = `<div class="brand-story story-flow"><section class="story-opening" id="trayectoria" aria-labelledby="story-opening-title"><div class="wrap"><div class="story-opening-head"><div><span class="story-kicker">SOMOS IceMan</span><h1 id="story-opening-title">Lo hacemos fácil.<br><em>Tú lo haces especial.</em></h1></div><div class="story-opening-lead"><span class="story-number">01 / CERCA DE TI</span><h2>Más de <em>20 años</em><br> cerca de tu mesa.</h2><p>Somos una marca ecuatoriana de alimentos congelados. Te acompañamos con opciones prácticas y variadas para cocinar rico y compartir cada día.</p><span class="story-opening-signature">Una marca de Kypross.</span></div></div><div class="story-opening-thread"><figure class="story-opening-photo"><img src="${editorialImage(storyVisuals.history.image)}"${responsiveEditorialImageAttrs(editorialImage(storyVisuals.history.image),"(max-width: 820px) calc(100vw - 40px), 58vw")} alt="${storyVisuals.history.alt}" width="1136" height="941" fetchpriority="high" decoding="async"><figcaption>Pensamos en ti, en tu familia y en las necesidades reales de cada día.</figcaption></figure><div class="story-opening-history"><div class="story-opening-history-copy"><p>IceMan es una marca ecuatoriana de alimentos congelados con más de 20 años de trayectoria. Forma parte de Kypross, una empresa especializada en la elaboración, importación y distribución de alimentos. Ofrecemos una amplia variedad de productos pensados para hacer más fáciles tus comidas de todos los días y abrirte nuevas posibilidades en la cocina.</p><p>A lo largo de los años hemos ampliado nuestras categorías y nuestra presencia en el país, manteniendo nuestro compromiso con la calidad, la variedad y la confianza. También queremos demostrarte que elegir congelados no significa renunciar al sabor ni al valor nutricional: procesos como IQF ayudan a conservar las características de los alimentos.</p></div><figure class="story-opening-daily"><img src="${editorialImage(storyVisuals.hero.image)}"${responsiveEditorialImageAttrs(editorialImage(storyVisuals.hero.image),"(max-width: 820px) calc(100vw - 40px), 420px")} alt="${storyVisuals.hero.alt}" width="1536" height="1024" loading="lazy" decoding="async"></figure></div></div></div></section>
-    ${storySelector(storyConcepts,"concepts","Elegir IceMan significa elegir…","Desliza hacia abajo y mira cómo cambia la historia","03")}
-    <section class="story-purpose" data-story-purpose><div class="wrap purpose-sticky"><div class="purpose-copy"><span class="story-number">04 / NUESTRO PROPÓSITO</span><h2 aria-label="Hacerlo fácil no significa hacerlo siempre igual.">${words.map(w=>`<span aria-hidden="true">${w}</span>`).join(" ")}</h2><p>Existimos para que la falta de tiempo nunca limite la posibilidad de comer rico, crear algo diferente y compartir.</p></div><div class="purpose-photos">${storyVisuals.purpose.map((visual,i)=>`<img class="${i===0?"is-active":""}" src="${editorialImage(visual.image)}" alt="${visual.alt}" loading="lazy" decoding="async">`).join("")}</div></div></section>
-    ${storySelector(storyValues,"values","Así hacemos las cosas","Desliza hacia abajo para descubrir cómo vivimos estos valores","05")}
-    <section class="story-closing"><div class="wrap"><span class="story-number">06 / ESTO RECIÉN EMPIEZA</span><h2>Hay mucho<br>por <em>descubrir.</em></h2><a class="btn btn-primary" href="/productos" data-link>Conoce nuestros productos ${iconArrow()}</a>${floatPacks("closing-packs",floatingPackSets.closing)}</div></section></div>`;
-    pageShell(content,path);
-    updateHead(path,"Somos IceMan — Lo hacemos fácil. Tú lo haces especial.","Conoce IceMan, una marca ecuatoriana con más de 20 años cerca de tu mesa.");
+    const heroSizes = "(max-width: 600px) calc(100vw - 46px), (max-width: 820px) calc(100vw - 82px), (max-width: 1360px) 48vw, 655px";
+    const content = `<div class="brand-story story-flow">
+      <section class="story-opening" id="trayectoria" aria-labelledby="story-opening-title">
+        <div class="wrap story-opening-head">
+          <div class="story-opening-copy">
+            <span class="story-kicker">Somos IceMan</span>
+            <h1 id="story-opening-title">Lo hacemos fácil. <em>Tú lo haces especial.</em></h1>
+            <p class="story-opening-lead">Más de <strong>20 años</strong> cerca de tu mesa.</p>
+            <p class="story-opening-description">Somos una marca ecuatoriana de alimentos congelados. Te acompañamos con opciones prácticas y variadas para cocinar rico y compartir cada día.</p>
+          </div>
+          <figure class="story-frame story-opening-photo">
+            ${storyPhoto(storyVisuals.history, heroSizes, [1136, 941], true)}
+          </figure>
+        </div>
+        <div class="wrap story-opening-thread">
+          <div class="story-opening-history">
+            <span class="story-kicker">Nuestra historia</span>
+            <h2>Pensamos en ti, <em>en tu familia</em> y en las necesidades reales de cada día.</h2>
+            <p>IceMan es una marca ecuatoriana de alimentos congelados con más de 20 años de trayectoria. Forma parte de Kypross, una empresa especializada en la elaboración, importación y distribución de alimentos. Ofrecemos una amplia variedad de productos pensados para hacer más fáciles tus comidas de todos los días y abrirte nuevas posibilidades en la cocina.</p>
+            <p>A lo largo de los años hemos ampliado nuestras categorías y nuestra presencia en el país, manteniendo nuestro compromiso con la calidad, la variedad y la confianza. También queremos demostrarte que elegir congelados no significa renunciar al sabor ni al valor nutricional: procesos como IQF ayudan a conservar las características de los alimentos.</p>
+          </div>
+          <figure class="story-frame story-opening-daily">
+            ${storyPhoto(storyVisuals.hero, "(max-width: 600px) calc(100vw - 74px), (max-width: 820px) 70vw, 510px", [1536, 1024])}
+            <figcaption>Una marca de Kypross.</figcaption>
+          </figure>
+        </div>
+      </section>
+      ${storySelector(storyConcepts, "concepts", "Nuestra forma de vivir", "Elegir IceMan <em>significa elegir…</em>", [[1067, 1600], [1600, 1104], [960, 977]])}
+      <section class="story-purpose" aria-labelledby="story-purpose-title">
+        <div class="wrap story-purpose-layout">
+          <div class="story-purpose-copy">
+            <span class="story-kicker">Nuestro propósito</span>
+            <h2 id="story-purpose-title">Hacerlo fácil <em>no significa hacerlo siempre igual.</em></h2>
+            <p>Existimos para que la falta de tiempo nunca limite la posibilidad de comer rico, crear algo diferente y compartir.</p>
+          </div>
+          <figure class="story-frame story-purpose-photo">
+            ${storyPhoto(storyVisuals.purpose[0], "(max-width: 820px) calc(100vw - 54px), (max-width: 1360px) 48vw, 650px", [1440, 720])}
+          </figure>
+        </div>
+      </section>
+      ${storySelector(storyValues, "values", "Nuestros valores", "Así hacemos <em>las cosas.</em>", [[1066, 1600], [1136, 942], [1067, 1600]])}
+      <section class="story-closing" aria-labelledby="story-closing-title">
+        <div class="wrap story-closing-layout">
+          <div class="story-closing-copy">
+            <h2 id="story-closing-title">Hay mucho <em>por descubrir.</em></h2>
+            <a class="btn story-catalog-link" href="/productos" data-link>Conoce nuestros productos ${iconArrow()}</a>
+          </div>
+          ${floatPacks("closing-packs", floatingPackSets.closing)}
+        </div>
+      </section>
+    </div>`;
+    pageShell(content, path);
+    updateHead(path, "Somos IceMan — Lo hacemos fácil. Tú lo haces especial.", "Conoce IceMan, una marca ecuatoriana con más de 20 años cerca de tu mesa.");
   }
   function stockistsPage(path) {
     pageShell(`<div class="stockists-page"><section class="brand-page-intro"><div class="wrap">${breadcrumbs([{name:"Inicio",href:"/"},{name:"Dónde encontrarnos"}])}<span class="story-kicker">CERCA DE TU MESA</span><h1>Encuentra productos IceMan en tu supermercado favorito</h1></div><img src="${asset("air-fryer")}"${responsiveImageAttrs(asset("air-fryer"),"(max-width: 600px) 55vw, 340px")} alt="Papas Air Fryer IceMan" class="stockists-hero-pack" fetchpriority="high" decoding="async"></section><section class="stockists-directory"><div class="wrap"><div class="stockists-directory-head"><h2>Dónde encontrarnos</h2><p>La presencia de la marca en una cadena no garantiza la disponibilidad de cada producto en todas sus sucursales. Consulta el surtido con tu establecimiento.</p></div><ul class="stockists-grid">${stockists.map((item,index)=>`<li><div class="stockists-logo-frame stockists-logo-frame-${item.logo.replace(/\.[^.]+$/, "").replace(/[^a-z0-9-]/gi, "-")}"><img src="${optimizedImage(`${projectBase}/assets/stockists/${item.logo}`)}" alt="${escapeHTML(item.name)}" loading="lazy"></div><h3>${escapeHTML(item.name)}</h3></li>`).join("")}</ul><a href="/contacto" data-link class="text-link">¿Necesitas ayuda? Contacta con IceMan ${iconArrow()}</a></div></section></div>`,path);
@@ -1107,97 +1179,115 @@
       comparison.dataset.comparisonSide=value === 100 ? "pack" : value === 0 ? "dish" : "mix";
       e.target.setAttribute("aria-valuetext",`${value}% empaque, ${100-value}% preparación`);
     },{signal});
-    // One native-scroll timeline for every pinned scene. No wheel/touch interception.
-    const storySections=[...root.querySelectorAll("[data-story-selector]")];
-    const purpose=root.querySelector("[data-story-purpose]");
-    const scenes=[...storySections,...(purpose?[purpose]:[])].map(section=>({
-      section, wrap:section.querySelector(":scope > .wrap"),
-      images:[...section.querySelectorAll(".story-panel-image img,.purpose-photos img")],
-      buttons:[...section.querySelectorAll("[data-story-option]")],
-      items:section.dataset.storySelector==="concepts"?storyConcepts:storyValues,
-      active:0, travel:0, start:0, flowing:false
-    }));
-    let storyFrame=0;
-    const clampStory=value=>Math.max(0,Math.min(1,value));
-    const renderStory=(scene,progress)=>{
-      const {section,images,buttons}=scene;
-      const position=clampStory(progress)*Math.max(0,images.length-1);
-      const lower=Math.floor(position), upper=Math.min(images.length-1,lower+1);
-      const mix=clampStory((position-lower-.32)/.36);
-      const blend=mix*mix*(3-2*mix);
-      const requested=Math.min(images.length-1,Math.round(position));
-      // Keep the last decoded frame if a slow connection has not delivered the next.
-      const ready=index=>images[index]?.complete && images[index].naturalWidth>0;
-      const active=ready(requested)?requested:scene.active;
-      const canBlend=!reduced.matches && ready(lower) && ready(upper);
-      images.forEach((image,index)=>{
-        image.style.opacity=String(canBlend?(index===lower?1:index===upper?blend:0):Number(index===active));
-        image.style.zIndex=String(canBlend && index===upper?2:1);
-        image.classList.toggle(buttons.length?"is-visible":"is-active",index===active);
-        image.setAttribute("aria-hidden",String(index!==active));
-      });
-      buttons.forEach((button,index)=>button.setAttribute("aria-pressed",String(index===active)));
-      if(buttons.length && active!==scene.active) section.querySelector(".story-panel p").textContent=scene.items[active].text;
-      scene.active=active;
-      if(!buttons.length){
-        const wordColors=["#ffffff","#3bb3e9","#f9d657","#d2b3ff","#a98cff","#f1b7ed"];
-        const words=section.querySelectorAll("h2 span");
-        words.forEach((word,index)=>{
-          word.style.setProperty("--purpose-word-color",wordColors[index%wordColors.length]);
-          word.classList.toggle("lit",reduced.matches || progress>=index/Math.max(1,words.length-1));
-        });
-      }
-    };
-    const updateScrollStories=()=>{
-      storyFrame=0;
-      if(signal.aborted)return;
-      const bounds=scenes.map(scene=>scene.section.getBoundingClientRect());
-      scenes.forEach((scene,index)=>{
-        if(bounds[index].bottom<0 || bounds[index].top>window.innerHeight)return;
-        if(reduced.matches){renderStory(scene,scene.active/Math.max(1,scene.images.length-1));return;}
-        // Earlier lazy images/font metrics can move the scene after initial layout.
-        scene.start=bounds[index].top+window.scrollY-scene.header-(scene.flowing?window.innerHeight*.25:0);
-        const progress=(window.scrollY-scene.start)/Math.max(1,scene.travel);
-        renderStory(scene,progress);
-      });
-    };
-    const scheduleScrollStories=()=>{if(!storyFrame) storyFrame=requestAnimationFrame(updateScrollStories);};
-    const measureScrollStories=()=>{
-      const headerHeight=root.querySelector(".site-header")?.offsetHeight||76;
-      scenes.forEach(scene=>{
-        scene.header=headerHeight;
-        scene.section.style.setProperty("--story-header",`${headerHeight}px`);
-        scene.section.classList.remove("is-flowing");
-        scene.flowing=reduced.matches || !scene.buttons.length || scene.wrap.offsetHeight>window.innerHeight-headerHeight+2;
-        scene.section.classList.toggle("is-flowing",scene.flowing);
-        const height=scene.wrap.offsetHeight;
-        // Short, equal transitions keep the next scene close; single-photo stories flow normally.
-        scene.travel=scene.flowing?Math.max(1,height-window.innerHeight*.25):height*.34*Math.max(1,scene.images.length-1);
-        scene.section.style.setProperty("--story-scene-height",`${height+(scene.flowing?0:scene.travel)}px`);
-      });
-      // Read document positions only after every scene has its final height.
-      scenes.forEach(scene=>{
-        scene.start=scene.section.getBoundingClientRect().top+window.scrollY-headerHeight-(scene.flowing?window.innerHeight*.25:0);
-      });
-      scheduleScrollStories();
-    };
-    scenes.forEach(scene=>{
-      scene.images.forEach(image=>image.addEventListener("load",scheduleScrollStories,{signal}));
-      scene.buttons.forEach((button,index)=>button.addEventListener("click",()=>{
-        if(reduced.matches){renderStory(scene,index/Math.max(1,scene.images.length-1));return;}
-        const start=scene.section.getBoundingClientRect().top+window.scrollY-scene.header-(scene.flowing?window.innerHeight*.25:0);
-        window.scrollTo({top:start+scene.travel*index/Math.max(1,scene.images.length-1),behavior:"smooth"});
-      },{signal}));
+    // Short sticky scenes on wide screens, with immediate controls on touch layouts.
+    const scenes = [...root.querySelectorAll("[data-story-selector]")].map(section => {
+      const slides = [...section.querySelectorAll(".story-panel-slide")];
+      return {
+        section, slides,
+        photos: slides.map(slide => slide.querySelector("img")),
+        wrap: section.querySelector(".wrap"),
+        buttons: [...section.querySelectorAll("[data-story-option]")],
+        caption: section.querySelector("figcaption p"),
+        items: section.dataset.storySelector === "concepts" ? storyConcepts : storyValues,
+        active: 0, selection: null, travel: 0
+      };
     });
-    if(scenes.length){
-      window.addEventListener("scroll",scheduleScrollStories,{signal,passive:true});
-      window.addEventListener("resize",measureScrollStories,{signal,passive:true});
-      reduced.addEventListener("change",measureScrollStories,{signal});
-      const sceneResize=new ResizeObserver(measureScrollStories);
-      scenes.forEach(scene=>sceneResize.observe(scene.wrap));
-      signal.addEventListener("abort",()=>{sceneResize.disconnect();if(storyFrame)cancelAnimationFrame(storyFrame);},{once:true});
-      measureScrollStories();
-      document.fonts?.ready.then(()=>{if(!signal.aborted)measureScrollStories();});
+    if (scenes.length) {
+      const compactStory = matchMedia("(max-width: 820px)");
+      const limit = value => Math.min(1, Math.max(0, value));
+      let storyFrame = 0;
+      const renderStory = (scene, position) => {
+        const { slides, photos, buttons, caption, items } = scene;
+        const lower = Math.floor(position);
+        const next = Math.min(lower + 1, slides.length - 1);
+        const mix = limit((position - lower - .3) / .4);
+        const blend = mix * mix * (3 - 2 * mix);
+        const ready = index => photos[index].complete && photos[index].naturalWidth > 0;
+        const requested = Math.round(position);
+        const active = ready(requested) ? requested : scene.active;
+        const canBlend = !scene.manual && ready(lower) && ready(next);
+
+        slides.forEach((slide, index) => {
+          slide.style.opacity = String(canBlend
+            ? (index === lower ? 1 : index === next ? blend : 0)
+            : Number(index === active));
+          slide.style.zIndex = String(canBlend && index === next ? 2 : 1);
+        });
+        if (active === scene.active) return;
+        slides[scene.active].setAttribute("aria-hidden", "true");
+        slides[active].setAttribute("aria-hidden", "false");
+        buttons[scene.active].setAttribute("aria-pressed", "false");
+        buttons[active].setAttribute("aria-pressed", "true");
+        caption.textContent = items[active].text;
+        scene.active = active;
+      };
+      const updateStories = () => {
+        storyFrame = 0;
+        if (signal.aborted) return;
+        const bounds = scenes.map(scene => scene.section.getBoundingClientRect());
+        scenes.forEach((scene, index) => {
+          if (scene.selection !== null) {
+            renderStory(scene, scene.selection);
+            if (scene.manual || scene.active !== scene.selection) return;
+            const target = scene.travel * scene.selection / (scene.slides.length - 1);
+            if (Math.abs(scene.header - bounds[index].top - target) <= 2) scene.selection = null;
+            return;
+          }
+          if (scene.manual || bounds[index].bottom < 0 || bounds[index].top > window.innerHeight) return;
+          const progress = limit((scene.header - bounds[index].top) / scene.travel);
+          renderStory(scene, progress * (scene.slides.length - 1));
+        });
+      };
+      const scheduleStories = () => {
+        if (!storyFrame) storyFrame = requestAnimationFrame(updateStories);
+      };
+      const measureStories = () => {
+        const header = root.querySelector(".site-header")?.offsetHeight || 76;
+        const heights = scenes.map(scene => scene.wrap.offsetHeight);
+        scenes.forEach((scene, index) => {
+          scene.header = header;
+          const manual = reduced.matches || compactStory.matches || heights[index] > window.innerHeight - header;
+          if (manual !== scene.manual) scene.selection = null;
+          scene.manual = manual;
+          scene.caption.setAttribute("aria-live", manual ? "polite" : "off");
+          scene.travel = Math.min(340, heights[index] * .63);
+          scene.section.classList.toggle("is-flowing", manual);
+          scene.section.style.setProperty("--story-header", `${header}px`);
+          scene.section.style.setProperty("--story-scene-height", manual ? "auto" : `${heights[index] + scene.travel}px`);
+        });
+        scheduleStories();
+      };
+      const cancelStorySelection = () => {
+        scenes.forEach(scene => {
+          if (!scene.manual) scene.selection = null;
+        });
+        scheduleStories();
+      };
+      scenes.forEach(scene => {
+        scene.photos.forEach(photo => photo.addEventListener("load", scheduleStories, {signal}));
+        scene.buttons.forEach((button, index) => button.addEventListener("click", () => {
+          scene.selection = index;
+          renderStory(scene, index);
+          if (scene.manual) return;
+          const start = scene.section.getBoundingClientRect().top + window.scrollY - scene.header;
+          window.scrollTo({top: start + scene.travel * index / (scene.slides.length - 1), behavior: "smooth"});
+        }, {signal}));
+      });
+      window.addEventListener("scroll", scheduleStories, {signal, passive: true});
+      window.addEventListener("resize", measureStories, {signal, passive: true});
+      window.addEventListener("wheel", cancelStorySelection, {signal, passive: true});
+      window.addEventListener("pointerdown", cancelStorySelection, {signal, passive: true});
+      window.addEventListener("keydown", event => {
+        if (["ArrowDown", "ArrowUp", "PageUp", "PageDown", "Home", "End"].includes(event.key)) cancelStorySelection();
+      }, {signal});
+      reduced.addEventListener("change", measureStories, {signal});
+      const sceneResize = new ResizeObserver(measureStories);
+      scenes.forEach(scene => sceneResize.observe(scene.wrap));
+      signal.addEventListener("abort", () => {
+        sceneResize.disconnect();
+        if (storyFrame) cancelAnimationFrame(storyFrame);
+      }, {once: true});
+      measureStories();
     }
     const hero=root.querySelector("[data-reveal-hero]");
     if(hero){
