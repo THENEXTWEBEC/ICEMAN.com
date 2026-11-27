@@ -1,0 +1,42 @@
+/* Keep customer-facing copy inside its available boxes at every viewport size. */
+#app :where(h1,h2,h3,h4,h5,h6,p,a,button,label,li,strong,b,small,summary,figcaption,legend,dt,dd){
+  min-width:0;
+  max-inline-size:100%;
+  overflow-wrap:anywhere;
+  word-break:normal;
+}
+
+/* Flex and grid text columns must be allowed to shrink below their content width. */
+#app :where(
+  .recipe-discovery-heading,
+  .recipe-showcase,
+  .recipe-scene,
+  .recipe-scene-copy,
+  .recipe-scene-product,
+  .recipe-scene-picker,
+  .recipe-feature-panel,
+  .recipe-feature-content,
+  .recipe-feature-copy,
+  .recipe-feature-heading,
+  .recipe-library-heading,
+  .recipe-cover,
+  .recipe-cover-copy,
+  .editorial-card,
+  .editorial-card-copy,
+  .editorial-card-foot,
+  .editorial-hero-copy,
+  .editorial-detail-copy,
+  .home-recipe-copy,
+  .site-footer,
+  .footer-column,
+  .footer-brand-block
+){
+  min-width:0;
+}
+
+/* Scrolling recipe titles intentionally run beyond the viewport inside a clipped window. */
+#app .recipe-marquee :where(a,span){
+  max-inline-size:none;
+  overflow-wrap:normal;
+  word-break:normal;
+}
