@@ -1437,3 +1437,6 @@ body:has(.home-hero-journey) .site-header .brand-official-logo{width:158px;heigh
 .brand-story .story-intro-more>summary:hover{background:#a8e8fa12;border-color:#a8e8fa}
 .brand-story .story-intro-full{padding-top:8px}
 .brand-story .story-intro-full p{font-size:16px;line-height:1.75;margin:16px 0 0;color:#d7def1}
+
+/* Mobile stockist hero: give the floating package a clear visual anchor. */
+@media(max-width:600px){.stockists-page .brand-page-intro{padding-bottom:198px}.stockists-page .brand-page-intro h1{padding-bottom:0;max-width:100%}.stockists-page .stockists-hero-pack{right:2%;bottom:-8px;top:auto;width:62%;height:225px;max-width:280px;object-fit:contain;transform:rotate(10deg) scale(1.04);filter:drop-shadow(0 18px 24px #101b4d99)}.stockists-page .brand-page-intro:after{position:absolute;right:-7%;bottom:-18%;width:72%;height:46%;border-radius:50%;background:radial-gradient(ellipse at center,#3b83c955 0%,#3b83c900 72%);content:"";pointer-events:none}}
