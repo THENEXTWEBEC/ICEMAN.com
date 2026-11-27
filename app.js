@@ -497,8 +497,7 @@
           <img class="editorial-recipe-product" src="${asset(product.image)}"${responsiveImageAttrs(asset(product.image),"(max-width: 600px) calc(100vw - 36px), (max-width: 900px) calc(50vw - 30px), 420px")} alt="${escapeHTML(productAlt)}" loading="${imageLoading}"${imagePriority} decoding="async">
           <img class="editorial-recipe-dish" data-src="${dishSrc}"${responsiveEditorialImageAttrs(dishSrc,"(max-width: 600px) calc(100vw - 36px), 520px")} alt="${escapeHTML(dishAlt)}" decoding="async">
           <span class="editorial-recipe-status" aria-hidden="true"><span>Producto IceMan</span><span>Listo para disfrutar</span></span>
-          <span class="editorial-recipe-cue" aria-hidden="true">Toca para transformar</span>
-        </button>
+          <span class="editorial-recipe-cue" aria-hidden="true">Toca para transformar</span>        </button>
         <div class="editorial-card-copy"><div class="editorial-kicker">De nuestro producto a tu mesa</div><h3><a href="${articleHref(item)}" data-link>${escapeHTML(item.title)}</a></h3><p>${escapeHTML(item.description)}</p><div class="editorial-recipe-facts" aria-label="Detalles de la receta"><span><small>Tiempo</small><b>${escapeHTML(item.time)}</b></span><span><small>Dificultad</small><b>${escapeHTML(item.difficulty)}</b></span></div><div class="editorial-card-foot"><a class="editorial-product-chip" href="${productPath(product)}" data-link aria-label="Ver producto ${escapeHTML(product.name)}">${escapeHTML(product.name)} · ${escapeHTML(product.presentation)}</a><a class="editorial-read editorial-recipe-link" href="${articleHref(item)}" data-link>Ver receta ${iconArrow()}</a></div></div>
       </article>`;
     }
@@ -807,7 +806,7 @@
     "papas-rejilla": {image:"catalog/prepared/papas-rejilla.png",alt:"Papas rejilla preparadas y servidas en un plato verde",source:"prepared"},
     "hash-brown": {image:"catalog/prepared/hash-brown.png",alt:"Hash Brown preparado y servido en un plato verde"},
     "aros-de-cebolla": {image:"catalog/prepared/aros-de-cebolla.png",alt:"Aros de cebolla preparados y servidos en un plato verde"},
-    "croqueta-de-yuca": {image:"catalog/prepared/croqueta-de-yuca.png",alt:"Croquetas de yuca preparadas y servidas en un plato verde"},
+    "croqueta-de-yuca": {image:"catalog/prepared/croqueta-de-yuca.png",alt:"Croquetas de yuca preparadas y servidas en un plato verde",eager:true},
     "zanahoria-ondulada": {image:"catalog/prepared/zanahoria-ondulada.png",alt:"Zanahoria ondulada servida en un plato verde"},
     "ensalada-rusa": {image:"catalog/prepared/ensalada-rusa.png",alt:"Ensalada rusa servida en un plato verde"},
     "maiz-dulce-450": {image:"catalog/prepared/maiz-dulce-450.png",alt:"Maíz dulce preparado y servido en un plato verde"},
@@ -871,7 +870,9 @@
     const dishBaseSrc = product.slug === "papas-rejilla" ? `${projectBase}/assets/catalog/prepared-cutout/papas-rejilla.png?v=rejilla-png-20261127` : optimizedImage(dish.source === "prepared" ? `${projectBase}/assets/${dish.image}` : dish.image.startsWith("catalog/prepared/") ? `${projectBase}/assets/catalog/prepared-cutout/${dish.image.split("/").pop()}` : editorialImage(dish.image));
     const dishSrc = dishBaseSrc;
     const dishResponsiveAttrs = responsiveImageAttrs(dishSrc, imageSizes) || responsiveEditorialImageAttrs(dishSrc, imageSizes);
-    const deferDishImage = !eagerImage;
+    // Load the yuca dish immediately so the prepared side is visible on first render.
+    const dishEagerImage = eagerImage || dish.eager;
+    const deferDishImage = !dishEagerImage;
     const dishImageAttrs = deferDishImage
       ? `data-deferred-src="${dishSrc}"${dishResponsiveAttrs.replace(/\bsrcset=/, "data-deferred-srcset=").replace(/\bsizes=/, "data-deferred-sizes=")}`
       : `src="${dishSrc}"${dishResponsiveAttrs}`;
@@ -879,7 +880,7 @@
     const dishRotation = config.dishRotation || 0;
     const dishScale = config.dishScale || 1;
     const packageScale = config.packageScale || 1;
-    return `<div class="product-comparison" data-comparison data-comparison-product="${product.slug}" data-package-orientation="${config.packageOrientation || "vertical"}" data-dish-orientation="${config.dishOrientation || "vertical"}" data-comparison-dish-rotation="${dishRotation}" data-pack-mobile-scale="${config.packageMobileScale || 1}" data-dish-mobile-offset-y="${config.dishMobilePositionY || 0}" data-comparison-side="mix" style="--split:50%;--dish-size:${dishScale};--pack-size:${packageScale};--pack-offset-x:${config.packagePositionX || 0};--pack-offset-y:${config.packagePositionY || 0};--dish-offset-x:${config.dishPositionX || 0};--dish-offset-y:${config.dishPositionY || 0}"><div class="comparison-scene"><div class="comparison-dish ${dish.className || ""}"><img ${dishImageAttrs} alt="${dish.alt}" loading="${imageLoading}"${imagePriority} decoding="async"></div><div class="comparison-pack">${pack}</div><span class="comparison-line" aria-hidden="true"><b>↔</b></span><input type="range" min="0" max="100" value="50" data-compare-range aria-label="Revelar preparación de ${escapeHTML(product.name)}" aria-valuetext="50% empaque, 50% preparación"></div><div class="comparison-captions"><span>En el empaque</span><span>En tu mesa</span></div><p class="comparison-cue">Desliza y descubre <span aria-hidden="true">↔</span></p></div>`;
+    return `<div class="product-comparison" data-comparison data-comparison-product="${product.slug}" data-package-orientation="${config.packageOrientation || "vertical"}" data-dish-orientation="${config.dishOrientation || "vertical"}" data-comparison-dish-rotation="${dishRotation}" data-pack-mobile-scale="${config.packageMobileScale || 1}" data-dish-mobile-offset-y="${config.dishMobilePositionY || 0}" data-comparison-side="mix" style="--split:50%;--dish-size:${dishScale};--pack-size:${packageScale};--pack-offset-x:${config.packagePositionX || 0};--pack-offset-y:${config.packagePositionY || 0};--dish-offset-x:${config.dishPositionX || 0};--dish-offset-y:${config.dishPositionY || 0}"><div class="comparison-scene"><div class="comparison-dish ${dish.className || ""}"><img ${dishImageAttrs} alt="${dish.alt}" loading="${dishEagerImage ? "eager" : imageLoading}"${imagePriority} decoding="async"></div><div class="comparison-pack">${pack}</div><span class="comparison-line" aria-hidden="true"><b>↔</b></span><input type="range" min="0" max="100" value="50" data-compare-range aria-label="Revelar preparación de ${escapeHTML(product.name)}" aria-valuetext="50% empaque, 50% preparación"></div><div class="comparison-captions"><span>En el empaque</span><span>En tu mesa</span></div><p class="comparison-cue">Desliza y descubre <span aria-hidden="true">↔</span></p></div>`;
   }
   const floatingPackSets = {
     default:["air-fryer","edamame-grano","papas-rejilla"],
@@ -997,8 +998,7 @@
   function stockistsPage(path) {
     pageShell(`<div class="stockists-page"><section class="brand-page-intro"><div class="wrap">${breadcrumbs([{name:"Inicio",href:"/"},{name:"Dónde encontrarnos"}])}<span class="story-kicker">CERCA DE TU MESA</span><h1>Encuentra productos IceMan en tu supermercado favorito</h1></div><img src="${asset("air-fryer")}"${responsiveImageAttrs(asset("air-fryer"),"(max-width: 600px) 55vw, 340px")} alt="Papas Air Fryer IceMan" class="stockists-hero-pack" fetchpriority="high" decoding="async"></section><section class="stockists-directory"><div class="wrap"><div class="stockists-directory-head"><h2>Dónde encontrarnos</h2><p>La presencia de la marca en una cadena no garantiza la disponibilidad de cada producto en todas sus sucursales. Consulta el surtido con tu establecimiento.</p></div><ul class="stockists-grid">${stockists.map((item,index)=>`<li><div class="stockists-logo-frame stockists-logo-frame-${item.logo.replace(/\.[^.]+$/, "").replace(/[^a-z0-9-]/gi, "-")}"><img src="${optimizedImage(`${projectBase}/assets/stockists/${item.logo}`)}" alt="${escapeHTML(item.name)}" loading="lazy"></div><h3>${escapeHTML(item.name)}</h3></li>`).join("")}</ul><a href="/contacto" data-link class="text-link">¿Necesitas ayuda? Contacta con IceMan ${iconArrow()}</a></div></section></div>`,path);
     updateHead(path,"Dónde encontrarnos","Consulta los establecimientos donde encuentras productos IceMan en Ecuador.");
-  }
-  function setupExperience() {
+  }  function setupExperience() {
     const controller = new AbortController(), signal = controller.signal;
     const reduced = matchMedia("(prefers-reduced-motion: reduce)");
     root.querySelectorAll(".story-intro-more").forEach(details=>{
@@ -1639,5 +1639,4 @@
   catch { consentUI(); }
   scrollToHash(window.location.hash, "auto");
 })();
-
 
