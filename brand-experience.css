@@ -1447,3 +1447,5 @@ body:has(.home-hero-journey) .site-header .brand-official-logo{width:158px;heigh
 
 .brand-story .story-panel-image .story-panel-slide { position:absolute; inset:0; opacity:0; }
 .brand-story .story-panel-image .story-panel-slide.is-visible { opacity:1; }
+
+.brand-story .story-panel-image .story-panel-slide img { opacity:1; }
