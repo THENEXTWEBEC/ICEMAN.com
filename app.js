@@ -1286,11 +1286,16 @@
             return;
           }
           if ((scene.manual && !scene.flowing) || bounds[index].bottom < 0 || bounds[index].top > window.innerHeight) return;
-          const panel = scene.section.querySelector('.story-panel-image');
-          const panelBounds = panel?.getBoundingClientRect();
-          const progress = scene.flowing && panelBounds
-            ? limit((window.innerHeight - panelBounds.top) / Math.max(1, window.innerHeight + panelBounds.height))
-            : limit((scene.header - bounds[index].top) / scene.travel);
+          let progress;
+          if (scene.flowing) {
+            const panel = scene.section.querySelector('.story-panel-image');
+            const panelBounds = typeof panel?.getBoundingClientRect === "function" ? panel.getBoundingClientRect() : null;
+            progress = panelBounds
+              ? limit((window.innerHeight - panelBounds.top) / Math.max(1, window.innerHeight + panelBounds.height))
+              : limit((scene.header - bounds[index].top) / scene.travel);
+          } else {
+            progress = limit((scene.header - bounds[index].top) / scene.travel);
+          }
           renderStory(scene, progress * (scene.slides.length - 1));
         });
       };
@@ -1305,7 +1310,7 @@
           const manual = reduced.matches || heights[index] > window.innerHeight - header + 2;
           if (manual !== scene.manual) scene.selection = null;
           scene.manual = manual;
-          scene.flowing = manual && !reduced.matches;
+          scene.flowing = manual && !reduced.matches && window.innerHeight > 600;
           scene.caption.setAttribute("aria-live", manual ? "polite" : "off");
           scene.travel = compactStory.matches ? heights[index] * 1.1 : Math.min(340, heights[index] * .63);
           scene.section.classList.toggle("is-flowing", manual);
