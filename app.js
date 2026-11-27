@@ -1229,7 +1229,7 @@
       document.fonts?.ready.then(()=>{if(!signal.aborted)measureScrollStories();});
     }
     }
-    // Short sticky scenes on wide screens, with immediate controls on touch layouts.
+    // Sticky story scenes on desktop and mobile, with direct selection controls.
     const scenes = [...root.querySelectorAll("[data-story-selector]")].map(section => {
       const slides = [...section.querySelectorAll(".story-panel-slide")];
       return {
@@ -1296,11 +1296,11 @@
         const heights = scenes.map(scene => scene.wrap.offsetHeight);
         scenes.forEach((scene, index) => {
           scene.header = header;
-          const manual = reduced.matches || compactStory.matches || heights[index] > window.innerHeight - header;
+          const manual = reduced.matches || heights[index] > window.innerHeight - header + 2;
           if (manual !== scene.manual) scene.selection = null;
           scene.manual = manual;
           scene.caption.setAttribute("aria-live", manual ? "polite" : "off");
-          scene.travel = Math.min(340, heights[index] * .63);
+          scene.travel = compactStory.matches ? heights[index] * 1.1 : Math.min(340, heights[index] * .63);
           scene.section.classList.toggle("is-flowing", manual);
           scene.section.style.setProperty("--story-header", `${header}px`);
           scene.section.style.setProperty("--story-scene-height", manual ? "auto" : `${heights[index] + scene.travel}px`);
