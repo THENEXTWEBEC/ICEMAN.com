@@ -1476,3 +1476,21 @@ body:has(.home-hero-journey) .site-header .brand-official-logo{width:158px;heigh
   .brand-story .story-closing{padding:44px 0 100px}
   .brand-story .closing-packs .pack-one,.brand-story .closing-packs .pack-two{width:23%}
 }
+
+/* Nosotros introduction: one photo, one message, one compact composition. */
+.brand-story .story-intro{padding-block:clamp(40px,5vw,68px)}
+.brand-story .story-intro-layout{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:clamp(32px,5vw,72px);align-items:center;max-width:1040px}
+.brand-story .story-intro-photo{width:100%;max-width:420px;justify-self:center}
+.brand-story .story-intro-photo img{display:block;width:100%;height:auto;aspect-ratio:1136/941;object-fit:contain;border-radius:18px}
+.brand-story .story-intro-copy{min-width:0;max-width:460px}
+.brand-story .story-intro-copy h2{font-size:clamp(32px,3.25vw,44px);line-height:1.12;letter-spacing:-.035em;margin:18px 0}
+.brand-story .story-intro-copy>p{font-size:17px;line-height:1.7;color:#d7def1;margin:0;max-width:43ch}
+.brand-story .story-intro-signature{display:block;margin-top:22px;font-size:14px;line-height:1.5;color:#a8b9d5}
+@media(max-width:700px){
+  .brand-story .story-intro-layout{grid-template-columns:1fr;gap:26px}
+  .brand-story .story-intro-copy{grid-row:1;max-width:520px}
+  .brand-story .story-intro-copy h2{font-size:clamp(31px,7.8vw,40px);margin:14px 0}
+  .brand-story .story-intro-copy>p{font-size:16px}
+  .brand-story .story-intro-signature{margin-top:16px}
+  .brand-story .story-intro-photo{max-width:360px;justify-self:start}
+}
