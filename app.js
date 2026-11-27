@@ -650,9 +650,38 @@
     const dishImage = typeof recipeDishImage === "function" ? recipeDishImage(recipe) : visual.image;
     return `<div class="recipe-feature-content" data-recipe-content><div class="recipe-feature-image"><img src="${editorialImage(dishImage)}"${responsiveEditorialImageAttrs(editorialImage(dishImage),"(max-width: 600px) calc(100vw - 36px), 680px")} alt="${escapeHTML(visual.alt)}" fetchpriority="high" decoding="async"><span>${escapeHTML(product?.name || "IceMan")}</span></div><div class="recipe-feature-copy"><div class="recipe-feature-heading"><div><span class="story-kicker">${escapeHTML([recipe.time,recipe.servings].filter(Boolean).join(" · "))}</span><h2>${escapeHTML(recipe.title)}</h2></div><button class="recipe-back-to-packs" type="button" data-recipe-back>Elegir otro producto</button></div><p class="recipe-feature-description">${escapeHTML(recipe.description)}</p><div class="recipe-full-details"><section><h3>Ingredientes</h3>${ingredients.filter(group=>group.items.length).map(group=>`<div class="recipe-ingredient-group">${group.title!=="Ingredientes"?`<h4>${escapeHTML(group.title)}</h4>`:""}<ul>${group.items.map(item=>`<li>${escapeHTML(item)}</li>`).join("")}</ul></div>`).join("")}</section><section><h3>Preparación</h3><ol>${recipe.steps.map((step,index)=>`<li><span>${String(index+1).padStart(2,"0")}</span><p>${escapeHTML(step)}</p></li>`).join("")}</ol></section></div><a class="recipe-detail-link" href="${editorialPath(recipe)}" data-link>Ver receta completa ${iconArrow()}</a></div></div>`;
   }
+  function recipeOccasions(recipes) {
+    const cards = editorial.occasions.map((occasion) => {
+      const taggedRecipes = recipes.filter((recipe) => recipe.occasions.includes(occasion.slug));
+      const usesOccasionProduct = (recipe) => recipe.products.some((slug) => occasion.products.includes(slug));
+      const recipe = taggedRecipes.find(usesOccasionProduct) || taggedRecipes[0] || recipes.find(usesOccasionProduct);
+      if (!recipe) return "";
+      const image = editorialImage(occasion.image);
+      return `<a class="occasion-card" href="${editorialPath(recipe)}" data-link>
+        <img src="${image}"${responsiveEditorialImageAttrs(image, "(max-width: 600px) calc(100vw - 36px), (max-width: 900px) 50vw, 420px")} alt="" loading="lazy" decoding="async">
+        <span class="occasion-overlay">
+          <strong>${escapeHTML(occasion.title)}</strong>
+          <span>${escapeHTML(occasion.text)}</span>
+          <b aria-hidden="true">${iconArrow()}</b>
+        </span>
+      </a>`;
+    }).join("");
+    return `<section class="recipe-occasions" id="ocasiones" aria-labelledby="recipe-occasions-title">
+      <div class="wrap">
+        <div class="recipe-library-heading">
+          <div>
+            <span class="story-kicker">CUALQUIER DÍA PUEDE SER ESPECIAL</span>
+            <h2 id="recipe-occasions-title">Momentos para disfrutar,<br><em>recetas para compartir.</em></h2>
+          </div>
+        </div>
+        <div class="occasion-grid">${cards}</div>
+      </div>
+    </section>`;
+  }
   function editorialPage(path) {
-    const marqueeRecipes=orderedRecipes().map(recipe=>`<a href="${editorialPath(recipe)}" data-link>${escapeHTML(recipe.title)}</a>`).join('');
-    const content=`<div class="recipe-experience"><section class="recipe-discovery" id="elige-tu-idea" data-recipe-explorer><span class="recipe-discovery-watermark" aria-hidden="true">RECETAS</span><div class="wrap"><div class="recipe-discovery-heading"><h1>Encuentra tu favorita,<br><em>hazla tuya.</em></h1><p>Una idea puede cambiar todo el momento. Elige la que se te antoje hoy.</p></div><div class="recipe-marquee" aria-label="Recetas IceMan"><div class="recipe-marquee-window"><div class="recipe-marquee-track"><div>${marqueeRecipes}</div><div aria-hidden="true">${marqueeRecipes.replaceAll('data-link>','data-link tabindex="-1">')}</div></div></div><button type="button" aria-pressed="false" aria-label="Pausar recetas">Pausar Ⅱ</button></div><div class="recipe-showcase"><div id="recipe-feature-panel" class="recipe-feature-panel" aria-live="polite">${recipeScene(orderedRecipes()[0])}</div><div class="recipe-scene-picker"><span>ELIGE UNA RECETA</span><div class="recipe-pack-shelf" role="group" aria-label="Elegir receta destacada">${recipeProductChoices()}</div></div></div></div></section></div>`;
+    const recipes = orderedRecipes();
+    const marqueeRecipes=recipes.map(recipe=>`<a href="${editorialPath(recipe)}" data-link>${escapeHTML(recipe.title)}</a>`).join('');
+    const content=`<div class="recipe-experience"><section class="recipe-discovery" id="elige-tu-idea" data-recipe-explorer><span class="recipe-discovery-watermark" aria-hidden="true">RECETAS</span><div class="wrap"><div class="recipe-discovery-heading"><h1>Encuentra tu favorita,<br><em>hazla tuya.</em></h1><p>Una idea puede cambiar todo el momento. Elige la que se te antoje hoy.</p></div><div class="recipe-marquee" aria-label="Recetas IceMan"><div class="recipe-marquee-window"><div class="recipe-marquee-track"><div>${marqueeRecipes}</div><div aria-hidden="true">${marqueeRecipes.replaceAll('data-link>','data-link tabindex="-1">')}</div></div></div><button type="button" aria-pressed="false" aria-label="Pausar recetas">Pausar Ⅱ</button></div><div class="recipe-showcase"><div id="recipe-feature-panel" class="recipe-feature-panel" aria-live="polite">${recipeScene(recipes[0])}</div><div class="recipe-scene-picker"><span>ELIGE UNA RECETA</span><div class="recipe-pack-shelf" role="group" aria-label="Elegir receta destacada">${recipeProductChoices()}</div></div></div></div></section>${recipeOccasions(recipes)}</div>`;
     pageShell(content,path);updateHead(path,"Recetas — IceMan","Encuentra recetas con productos IceMan para cocinar, disfrutar y compartir.");
   }
   function editorialDetail(item, path) {
