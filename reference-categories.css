@@ -315,8 +315,12 @@
   top:4%!important;left:auto!important;right:5%!important;bottom:auto!important;
 }
 
-.reference-category.reference-category-smoothies .reference-category-pack-1{left:16%!important}
-.reference-category.reference-category-smoothies .reference-category-pack-2{right:16%!important}
+/* Leave a small visible gap between smoothie packs. */
+.reference-category.reference-category-smoothies .reference-category-pack-1{left:4%!important}
+.reference-category.reference-category-smoothies .reference-category-pack-2{right:4%!important}
+/* Ice cream tubs need extra horizontal room for their wider silhouettes. */
+.reference-category.reference-category-helados .reference-category-pack-1{left:-3%!important}
+.reference-category.reference-category-helados .reference-category-pack-2{right:-3%!important}
 
 .reference-category-especialidades .reference-category-pack-1{transform:rotate(-6deg) scale(1.25)}
 .reference-category-especialidades .reference-category-pack-2{transform:rotate(4deg) scale(1.25)}
