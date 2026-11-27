@@ -497,8 +497,7 @@
           <img class="editorial-recipe-product" src="${asset(product.image)}"${responsiveImageAttrs(asset(product.image),"(max-width: 600px) calc(100vw - 36px), (max-width: 900px) calc(50vw - 30px), 420px")} alt="${escapeHTML(productAlt)}" loading="${imageLoading}"${imagePriority} decoding="async">
           <img class="editorial-recipe-dish" data-src="${dishSrc}"${responsiveEditorialImageAttrs(dishSrc,"(max-width: 600px) calc(100vw - 36px), 520px")} alt="${escapeHTML(dishAlt)}" decoding="async">
           <span class="editorial-recipe-status" aria-hidden="true"><span>Producto IceMan</span><span>Listo para disfrutar</span></span>
-          <span class="editorial-recipe-cue" aria-hidden="true">Toca para transformar</span>        </button>        <div class="editorial-card-copy"><div class="editorial-kicker">De nuestro producto a tu mesa</div><h3><a href="${articleHref(item)}" data-link>${escapeHTML(item.title)}</a></h3><p>${escapeHTML(item.description)}</p><div class="editorial-recipe-facts" aria-label="Detalles de la receta"><span><small>Tiempo</small><b>${escapeHTML(item.time)}</b></span><span><small>Dificultad</small><b>${escapeHTML(item.difficulty)}</b></span></div><div class="editorial-card-foot"><a class="editorial-product-chip" href="${productPath(product)}" data-link aria-label="Ver producto ${escapeHTML(product.name)}">${escapeHTML(product.name)} · ${escapeHTML(product.presentation)}</a><a class="editorial-read editorial-recipe-link" href="${articleHref(item)}" data-link>Ver receta ${iconArrow()}</a></div></div>
-      </article>`;
+          <span class="editorial-recipe-cue" aria-hidden="true">Toca para transformar</span>        </button>        <div class="editorial-card-copy"><div class="editorial-kicker">De nuestro producto a tu mesa</div><h3><a href="${articleHref(item)}" data-link>${escapeHTML(item.title)}</a></h3><p>${escapeHTML(item.description)}</p><div class="editorial-recipe-facts" aria-label="Detalles de la receta"><span><small>Tiempo</small><b>${escapeHTML(item.time)}</b></span><span><small>Dificultad</small><b>${escapeHTML(item.difficulty)}</b></span></div><div class="editorial-card-foot"><a class="editorial-product-chip" href="${productPath(product)}" data-link aria-label="Ver producto ${escapeHTML(product.name)}">${escapeHTML(product.name)} · ${escapeHTML(product.presentation)}</a><a class="editorial-read editorial-recipe-link" href="${articleHref(item)}" data-link>Ver receta ${iconArrow()}</a></div></div>      </article>`;
     }
     return `<article class="editorial-card ${item.image.startsWith("editorial/") ? "editorial-card-poster" : ""} ${item.imageLayout === "landscape" ? "editorial-card-landscape" : ""} ${featured ? "editorial-card-featured" : ""}" data-editorial-card data-category="${item.kind === "business" ? "negocios" : item.kind === "recipe" ? "recetas" : "nutricion"}" data-search="${escapeHTML([item.title,item.description,item.category,...(item.tags || []),...(item.ingredients || []),...(item.occasions || []),product?.name || ""].join(" ").toLocaleLowerCase("es"))}">
       <a class="editorial-card-image" href="${articleHref(item)}" data-link aria-label="Leer ${escapeHTML(item.title)}"><img src="${editorialImage(item.image)}"${responsiveEditorialImageAttrs(editorialImage(item.image),"(max-width: 600px) calc(100vw - 36px), (max-width: 900px) calc(50vw - 30px), 420px")} alt="${escapeHTML(item.image.startsWith("editorial/") ? item.title : item.kind === "recipe" ? `Producto IceMan para ${item.title}` : item.title)}" loading="${imageLoading}"${imagePriority} decoding="async">${item.image.startsWith("editorial/") ? "" : `<span class="editorial-image-label">${escapeHTML(item.kind === "recipe" ? "IceMan EN LA MESA" : item.category.toUpperCase())}</span>`}</a>
@@ -864,7 +863,7 @@
     "papas-rejilla":{packageOrientation:"vertical",dishOrientation:"vertical",dishScale:1.0,dishPositionY:2,dishMobilePositionY:2},
     "hash-brown":{packageOrientation:"vertical",dishOrientation:"vertical"},
     "aros-de-cebolla":{packageOrientation:"vertical",dishOrientation:"vertical"},
-    "croqueta-de-yuca":{packageOrientation:"vertical",dishOrientation:"vertical"},
+    "croqueta-de-yuca":{packageOrientation:"vertical",dishOrientation:"vertical",dishScale:1.08,dishPositionX:14},
     "salteado-de-verduras":{packageOrientation:"vertical",dishOrientation:"vertical"},
     "edamame-vaina":{packageOrientation:"vertical",dishOrientation:"vertical"},
     "edamame-grano":{packageOrientation:"vertical",dishOrientation:"vertical"},
@@ -997,8 +996,7 @@
         </div>
       </section>
       ${storySelector(storyConcepts, "concepts", "Nuestra forma de vivir", "Elegir IceMan <em>significa elegir…</em>", [[1067, 1600], [1600, 1104], [960, 977]])}
-      <section class="story-purpose" aria-labelledby="story-purpose-title">        <div class="wrap story-purpose-layout">
-          <div class="story-purpose-copy">
+      <section class="story-purpose" aria-labelledby="story-purpose-title">        <div class="wrap story-purpose-layout">          <div class="story-purpose-copy">
             <span class="story-kicker">Nuestro propósito</span>
             <h2 id="story-purpose-title">Hacerlo fácil <em>no significa hacerlo siempre igual.</em></h2>
             <p>Existimos para que la falta de tiempo nunca limite la posibilidad de comer rico, crear algo diferente y compartir.</p>
