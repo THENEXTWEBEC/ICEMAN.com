@@ -1463,7 +1463,7 @@ body:has(.home-hero-journey) .site-header .brand-official-logo{width:158px;heigh
 @media (max-width: 600px) {
   .brand-story .story-selector .story-panel-image {
     width: 100%;
-    height: min(92vw, 520px) !important;
+    height: min(82vw, 340px) !important;
     min-height: 0;
     max-height: none !important;
     aspect-ratio: 1 / 1;
