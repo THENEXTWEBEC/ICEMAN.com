@@ -12,8 +12,8 @@
   const cleanRecipeImages = {
     "brochetas-carne-papas-rejilla-chimichurri": "editorial/recipe-brochetas-generated.png",
     "carne-plancha-papas-onduladas-salsa-ajo": "editorial/home-recipe-steak-fries-v2.webp?plate=20261127",
-    "waffles-iceman-franui-frutos-rojos": "editorial/recipe-waffles-original-20261127.webp",
-    "bowl-salmon-teriyaki-edamame-mayonesa-picante": "editorial/recipe-edamame-original-20261127.webp"
+    "waffles-iceman-franui-frutos-rojos": "editorial/recipe-waffles-pack-reduced-20261127.png",
+    "bowl-salmon-teriyaki-edamame-mayonesa-picante": "editorial/recipe-edamame-pack-reduced-20261127.png"
   };
   const recipeDishImage = (recipe) => cleanRecipeImages[recipe.slug] || recipeVisual(recipe).image;
   const categories = catalog.categories;
