@@ -863,7 +863,7 @@
     "papas-rejilla":{packageOrientation:"vertical",dishOrientation:"vertical",dishScale:1.0,dishPositionY:2,dishMobilePositionY:2},
     "hash-brown":{packageOrientation:"vertical",dishOrientation:"vertical"},
     "aros-de-cebolla":{packageOrientation:"vertical",dishOrientation:"vertical"},
-    "croqueta-de-yuca":{packageOrientation:"vertical",dishOrientation:"vertical",dishScale:1.08,dishPositionX:14},
+    "croqueta-de-yuca":{packageOrientation:"vertical",dishOrientation:"vertical"},
     "salteado-de-verduras":{packageOrientation:"vertical",dishOrientation:"vertical"},
     "edamame-vaina":{packageOrientation:"vertical",dishOrientation:"vertical"},
     "edamame-grano":{packageOrientation:"vertical",dishOrientation:"vertical"},
