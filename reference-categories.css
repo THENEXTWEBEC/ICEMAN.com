@@ -10,7 +10,9 @@
 .reference-categories .discovery-link{position:relative;display:block;height:clamp(280px,30vw,480px);color:inherit}
 .reference-categories .discovery-pack{position:absolute;inset:7% 5%;width:90%;height:86%;object-fit:contain;transform:translate3d(var(--repel-x,0px),var(--repel-y,0px),0) scale(var(--pack-scale,1));transition:transform .36s cubic-bezier(.2,.8,.2,1);pointer-events:none}
 .reference-categories .discovery-card.is-revealed .discovery-pack{transform:translate3d(0,-32%,0) scale(.5)}
+.reference-categories .discovery-card:hover .discovery-pack,.reference-categories .discovery-link:focus-visible .discovery-pack{transform:translate3d(0,-32%,0) scale(.5)}
 .reference-categories .discovery-copy{z-index:2;inset:51% 0 0;justify-content:flex-start;padding:12px 16px;transform:translateY(8px)}
+.reference-categories .discovery-card:hover .discovery-copy,.reference-categories .discovery-link:focus-visible .discovery-copy{opacity:1;transform:translateY(0)}
 .reference-categories .discovery-copy h3{font-size:clamp(18px,1.8vw,26px);margin-bottom:8px}
 .reference-categories .discovery-copy p{font-size:clamp(12px,1.05vw,14px);line-height:1.4;text-wrap:pretty}
 .reference-categories .discovery-cta{margin-top:10px;font-size:11px}
