@@ -1457,18 +1457,20 @@ body:has(.home-hero-journey) .site-header .brand-official-logo{width:158px;heigh
 }
 
 
-/* Mobile Nosotros: larger, near-square editorial photos across every story. */
+
+
+/* Mobile Nosotros: square up the actual legacy story selector photos. */
 @media (max-width: 600px) {
-  .brand-story [data-story-selector] .story-panel-image {
+  .brand-story .story-selector .story-panel-image {
     width: 100%;
-    height: min(88vw, 520px) !important;
+    height: min(92vw, 520px) !important;
     min-height: 0;
     max-height: none !important;
-    aspect-ratio: 1 / .94;
+    aspect-ratio: 1 / 1;
     border-radius: 20px;
   }
 
-  .brand-story [data-story-selector] .story-panel-image img {
+  .brand-story .story-selector .story-panel-image img {
     width: 100%;
     height: 100%;
     max-width: none;
@@ -1477,16 +1479,11 @@ body:has(.home-hero-journey) .site-header .brand-official-logo{width:158px;heigh
     object-position: center;
   }
 
-  .brand-story .story-selector .story-panel-image:has(.story-panel-slide[aria-hidden="false"] img[src*="trust-family-celebration"]) {
-    height: min(88vw, 520px) !important;
-    aspect-ratio: 1 / .94;
-  }
-
   .brand-story .purpose-photos {
     width: 100%;
-    height: min(88vw, 520px);
+    height: min(92vw, 520px);
     max-height: none;
-    aspect-ratio: 1 / .94;
+    aspect-ratio: 1 / 1;
     overflow: hidden;
     border-radius: 20px;
   }
