@@ -800,7 +800,7 @@
     "papa-steak": {image:"catalog/prepared/papa-steak.png",alt:"Papa Steak preparada y servida en un plato verde"},
     "papas-spices": {image:"catalog/prepared/papas-spices.png",alt:"Papas con especias preparadas y servidas en un plato verde"},
     "papas-finas-hierbas": {image:"catalog/prepared/papas-finas-hierbas.png",alt:"Papas con finas hierbas preparadas y servidas en un plato verde"},
-    "papas-rejilla": {image:"catalog/prepared/papas-rejilla.png",alt:"Papas rejilla preparadas y servidas en un plato verde"},
+    "papas-rejilla": {image:"catalog/prepared/papas-rejilla.png",alt:"Papas rejilla preparadas y servidas en un plato verde",source:"prepared"},
     "hash-brown": {image:"catalog/prepared/hash-brown.png",alt:"Hash Brown preparado y servido en un plato verde"},
     "aros-de-cebolla": {image:"catalog/prepared/aros-de-cebolla.png",alt:"Aros de cebolla preparados y servidos en un plato verde"},
     "croqueta-de-yuca": {image:"catalog/prepared/croqueta-de-yuca.png",alt:"Croquetas de yuca preparadas y servidas en un plato verde"},
