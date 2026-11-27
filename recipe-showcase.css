@@ -256,7 +256,7 @@
 @media(min-width:901px){
   .recipe-experience .recipe-discovery-watermark{
     top:clamp(18px,2vw,32px);
-    transform:scaleY(1.85);
+    transform:scaleY(1.665);
     transform-origin:top right;
   }
 }
