@@ -12,8 +12,8 @@
   const cleanRecipeImages = {
     "brochetas-carne-papas-rejilla-chimichurri": "editorial/recipe-brochetas-generated.png",
     "carne-plancha-papas-onduladas-salsa-ajo": "editorial/home-recipe-steak-fries-v2.webp?plate=20261127",
-    "waffles-iceman-franui-frutos-rojos": "editorial/waffles-franui-no-white-border-20261126.webp",
-    "bowl-salmon-teriyaki-edamame-mayonesa-picante": "editorial/recipe-salmon-generated.png"
+    "waffles-iceman-franui-frutos-rojos": "editorial/recipe-waffles-original-20261127.webp",
+    "bowl-salmon-teriyaki-edamame-mayonesa-picante": "editorial/recipe-edamame-original-20261127.webp"
   };
   const recipeDishImage = (recipe) => cleanRecipeImages[recipe.slug] || recipeVisual(recipe).image;
   const categories = catalog.categories;
@@ -631,8 +631,9 @@
     const product = productBySlug(recipe.products[0]);
     const image = editorialImage(recipeDishImage(recipe));
     const scenePack = product ? productionImage(cutoutAsset(product.image)) : "";
-    const packageIsInPhoto = recipe.slug === "waffles-iceman-franui-frutos-rojos";
-    return `<article class="recipe-scene recipe-scene--${theme.color}" data-recipe-content><div class="recipe-scene-photo"><img class="recipe-scene-dish" src="${image}"${responsiveEditorialImageAttrs(image,"(max-width: 700px) 90vw, 570px")} alt="${escapeHTML(recipe.heroAlt || recipe.title)}" fetchpriority="high" decoding="async"><span class="recipe-scene-badge">${escapeHTML(theme.label)}</span>${product && !packageIsInPhoto ? `<img class="recipe-scene-pack" src="${scenePack}"${responsiveImageAttrs(scenePack,"(max-width: 700px) 65vw, 400px")} alt="Empaque de ${escapeHTML(product.name)} IceMan" decoding="async">` : ""}</div><div class="recipe-scene-copy"><span class="recipe-scene-kicker">${escapeHTML(theme.label)}</span><h2>${escapeHTML(theme.title)}</h2><p>${escapeHTML(recipe.description)}</p>${product ? `<div class="recipe-scene-product"><span>PRODUCTO PROTAGONISTA</span><strong>${escapeHTML(product.name)} IceMan</strong></div>` : ""}<a href="${editorialPath(recipe)}" data-link class="recipe-scene-cta">Ver receta ${iconArrow()}</a></div></article>`;
+    const suppliedPhoto = recipe.slug === "waffles-iceman-franui-frutos-rojos" ? "waffles" : recipe.slug === "bowl-salmon-teriyaki-edamame-mayonesa-picante" ? "edamame" : "";
+    const packageIsInPhoto = Boolean(suppliedPhoto);
+    return `<article class="recipe-scene recipe-scene--${theme.color}" data-recipe-content><div class="recipe-scene-photo${suppliedPhoto ? ` recipe-scene-photo--supplied recipe-scene-photo--${suppliedPhoto}` : ""}"><img class="recipe-scene-dish" src="${image}"${responsiveEditorialImageAttrs(image,"(max-width: 700px) 90vw, 570px")} alt="${escapeHTML(recipe.heroAlt || recipe.title)}" fetchpriority="high" decoding="async"><span class="recipe-scene-badge">${escapeHTML(theme.label)}</span>${product && !packageIsInPhoto ? `<img class="recipe-scene-pack" src="${scenePack}"${responsiveImageAttrs(scenePack,"(max-width: 700px) 65vw, 400px")} alt="Empaque de ${escapeHTML(product.name)} IceMan" decoding="async">` : ""}</div><div class="recipe-scene-copy"><span class="recipe-scene-kicker">${escapeHTML(theme.label)}</span><h2>${escapeHTML(theme.title)}</h2><p>${escapeHTML(recipe.description)}</p>${product ? `<div class="recipe-scene-product"><span>PRODUCTO PROTAGONISTA</span><strong>${escapeHTML(product.name)} IceMan</strong></div>` : ""}<a href="${editorialPath(recipe)}" data-link class="recipe-scene-cta">Ver receta ${iconArrow()}</a></div></article>`;
   }
   function recipeFeaturePanel(recipe) {
     const ingredients = recipe.ingredients.reduce((groups, ingredient) => {

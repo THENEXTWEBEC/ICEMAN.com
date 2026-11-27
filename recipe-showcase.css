@@ -224,3 +224,23 @@
   .recipe-experience .recipe-discovery-watermark{top:clamp(125px,39vw,162px);right:12px;font-size:clamp(74px,24vw,144px);opacity:.72}
 }
 @media(prefers-reduced-motion:reduce){.recipe-experience .recipe-discovery-heading h1,.recipe-experience .recipe-discovery-heading p{animation:none;opacity:1;transform:none}}
+
+/* Frame the supplied originals; let only the package cross the lower edge. */
+.recipe-experience .recipe-scene-photo--supplied{
+  width:min(100%,390px);height:auto;aspect-ratio:1086/1244;
+  margin:0 auto 38px;overflow:visible;background:transparent;
+}
+.recipe-experience .recipe-scene-photo--supplied .recipe-scene-dish{
+  position:absolute;inset:0 auto auto 0;width:100%;height:auto;
+  max-height:none;aspect-ratio:1086/1448;object-fit:contain;
+  border-radius:0;transform:none;
+}
+.recipe-experience .recipe-scene-photo--edamame .recipe-scene-dish{
+  clip-path:polygon(1.5% 0,98.5% 0,100% 1.2%,100% 85.9%,59% 85.9%,58.7% 91.1%,56% 92%,48% 92.7%,36% 93.1%,23% 92.9%,13% 92.1%,8.5% 91.3%,8.2% 85.9%,0 85.9%,0 1.2%);
+}
+.recipe-experience .recipe-scene-photo--waffles .recipe-scene-dish{
+  clip-path:polygon(1.5% 0,98.5% 0,100% 1.2%,100% 85.9%,81% 85.9%,81% 90%,80% 90.5%,3.4% 90.5%,2.8% 90%,2.8% 85.9%,0 85.9%,0 1.2%);
+}
+@media(max-width:700px){
+  .recipe-experience .recipe-scene-photo--supplied{width:min(100%,340px);margin-bottom:34px}
+}
