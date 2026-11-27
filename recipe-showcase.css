@@ -296,7 +296,7 @@
 
 /* Pale ice-blue lettering behind the recipe hero. */
 .recipe-experience .recipe-discovery-watermark{
-  color:rgba(230,247,255,.13);
+  color:rgba(230,247,255,.055);
   -webkit-text-stroke:0;
   text-shadow:none;
   filter:none;
