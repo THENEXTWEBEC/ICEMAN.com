@@ -1453,5 +1453,5 @@ body:has(.home-hero-journey) .site-header .brand-official-logo{width:158px;heigh
 .brand-story .story-selector .story-panel-image:has(.story-panel-slide[aria-hidden="false"] img[src*="trust-family-celebration"]) { height:min(70svh,680px); }
 .brand-story .story-selector .story-panel-image img[src*="trust-family-celebration"] { --story-frame-y:35%; object-position:center 35%; }
 @media(max-width:820px){
-  .brand-story .story-selector .story-panel-image:has(.story-panel-slide[aria-hidden="false"] img[src*="trust-family-celebration"]) { height:clamp(280px,42svh,400px); }
+  .brand-story .story-selector .story-panel-image:has(.story-panel-slide[aria-hidden="false"] img[src*="trust-family-celebration"]) { height:clamp(160px,min(42svh,calc(100svh - 420px)),400px); }
 }
