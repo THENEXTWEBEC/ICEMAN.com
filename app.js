@@ -832,7 +832,7 @@
     "papas-rejilla": {image:"catalog/prepared/papas-rejilla.png",alt:"Papas rejilla preparadas y servidas en un plato verde",source:"prepared"},
     "hash-brown": {image:"catalog/prepared/hash-brown.png",alt:"Hash Brown preparado y servido en un plato verde"},
     "aros-de-cebolla": {image:"catalog/prepared/aros-de-cebolla.png",alt:"Aros de cebolla preparados y servidos en un plato verde"},
-    "croqueta-de-yuca": {image:"catalog/prepared-cutout/croqueta-de-yuca-correcta.webp",alt:"Croquetas de yuca preparadas y servidas en un plato verde",source:"prepared",eager:true},
+    "croqueta-de-yuca": {image:"catalog/prepared-cutout/croqueta-de-yuca-transparent-20261127.webp",alt:"Croquetas de yuca preparadas y servidas en un plato verde",source:"prepared",eager:true},
     "zanahoria-ondulada": {image:"catalog/prepared/zanahoria-ondulada.png",alt:"Zanahoria ondulada servida en un plato verde"},
     "ensalada-rusa": {image:"catalog/prepared/ensalada-rusa.png",alt:"Ensalada rusa servida en un plato verde"},
     "maiz-dulce-450": {image:"catalog/prepared/maiz-dulce-450.png",alt:"Maíz dulce preparado y servido en un plato verde"},
