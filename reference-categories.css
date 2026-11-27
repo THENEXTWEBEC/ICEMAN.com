@@ -288,12 +288,12 @@
 .reference-category-smoothies .reference-category-pack-1{
   top:7%!important;right:auto!important;bottom:auto!important;left:2%!important;
   width:58%!important;height:84%!important;aspect-ratio:auto!important;object-fit:contain!important;
-  transform:rotate(-5deg)!important;
+  transform:rotate(-5deg) scale(1.1)!important;
 }
 .reference-category-smoothies .reference-category-pack-2{
   top:4%!important;right:auto!important;bottom:auto!important;left:39%!important;
   width:58%!important;height:84%!important;aspect-ratio:auto!important;object-fit:contain!important;
-  transform:rotate(5deg)!important;
+  transform:rotate(5deg) scale(1.1)!important;
 }
 
 /* Keep each pair together even when the viewport makes its card wide. */
