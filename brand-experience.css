@@ -1440,3 +1440,7 @@ body:has(.home-hero-journey) .site-header .brand-official-logo{width:158px;heigh
 
 /* Mobile stockist hero: give the floating package a clear visual anchor. */
 @media(max-width:600px){.stockists-page .brand-page-intro{padding-bottom:198px}.stockists-page .brand-page-intro h1{padding-bottom:0;max-width:100%}.stockists-page .stockists-hero-pack{right:2%;bottom:-8px;top:auto;width:62%;height:225px;max-width:280px;object-fit:contain;transform:rotate(10deg) scale(1.04);filter:drop-shadow(0 18px 24px #101b4d99)}.stockists-page .brand-page-intro:after{position:absolute;right:-7%;bottom:-18%;width:72%;height:46%;border-radius:50%;background:radial-gradient(ellipse at center,#3b83c955 0%,#3b83c900 72%);content:"";pointer-events:none}}
+
+/* Original navy Nosotros: only the two requested photo adjustments. */
+.brand-story .story-history-foot img { width:90%; justify-self:center; }
+.brand-story .story-selector .story-panel-image img[src*="trust-family-celebration"] { --story-frame-y:75%; object-position:center 75%; }
