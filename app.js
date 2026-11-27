@@ -830,7 +830,7 @@
     "papa-steak":{packageOrientation:"horizontal",dishOrientation:"horizontal",packageScale:.78,dishScale:.84,dishPositionY:2,packageMobileScale:.82,dishMobilePositionY:1},
     "papas-spices":{packageOrientation:"vertical",dishOrientation:"vertical"},
     "papas-finas-hierbas":{packageOrientation:"vertical",dishOrientation:"vertical"},
-    "papas-rejilla":{packageOrientation:"vertical",dishOrientation:"horizontal",dishRotation:90,dishScale:1.04},
+    "papas-rejilla":{packageOrientation:"vertical",dishOrientation:"vertical",dishScale:1.0},
     "hash-brown":{packageOrientation:"vertical",dishOrientation:"vertical"},
     "aros-de-cebolla":{packageOrientation:"vertical",dishOrientation:"vertical"},
     "croqueta-de-yuca":{packageOrientation:"vertical",dishOrientation:"vertical"},
