@@ -1492,3 +1492,13 @@ body:has(.home-hero-journey) .site-header .brand-official-logo{width:158px;heigh
   .brand-story .story-intro-signature{margin-top:16px}
   .brand-story .story-intro-photo{max-width:360px;justify-self:start}
 }
+
+/* Optional full brand history; the introduction stays concise on entry. */
+.brand-story .story-intro-more{margin-top:20px}
+.brand-story .story-intro-more>summary{display:inline-flex;align-items:center;gap:12px;min-height:44px;padding:10px 18px;border:1px solid #a8e8fa66;border-radius:24px;color:#a8e8fa;background:transparent;font-size:16px;font-weight:600;line-height:1.4;cursor:pointer;list-style:none}
+.brand-story .story-intro-more>summary::-webkit-details-marker{display:none}
+.brand-story .story-intro-more>summary::after{content:"+";font-size:22px;line-height:1;font-weight:400}
+.brand-story .story-intro-more[open]>summary::after{content:"−"}
+.brand-story .story-intro-more>summary:hover{background:#a8e8fa12;border-color:#a8e8fa}
+.brand-story .story-intro-full{padding-top:8px}
+.brand-story .story-intro-full p{font-size:16px;line-height:1.75;margin:16px 0 0;color:#d7def1}
