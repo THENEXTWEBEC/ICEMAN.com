@@ -829,7 +829,7 @@
     "papa-steak":{packageOrientation:"horizontal",dishOrientation:"horizontal",packageScale:.78,dishScale:.84,dishPositionY:2,packageMobileScale:.82,dishMobilePositionY:1},
     "papas-spices":{packageOrientation:"vertical",dishOrientation:"vertical"},
     "papas-finas-hierbas":{packageOrientation:"vertical",dishOrientation:"vertical"},
-    "papas-rejilla":{packageOrientation:"vertical",dishOrientation:"vertical",dishPositionY:4},
+    "papas-rejilla":{packageOrientation:"vertical",dishOrientation:"horizontal",dishRotation:90,dishScale:1.04},
     "hash-brown":{packageOrientation:"vertical",dishOrientation:"vertical"},
     "aros-de-cebolla":{packageOrientation:"vertical",dishOrientation:"vertical"},
     "croqueta-de-yuca":{packageOrientation:"vertical",dishOrientation:"vertical"},
@@ -862,7 +862,7 @@
       : cutoutAsset(product.image);
     const pack = `<img src="${packSrc}"${responsiveImageAttrs(packSrc,imageSizes)} alt="Empaque de ${escapeHTML(product.name)}, ${escapeHTML(product.presentation)}" loading="${imageLoading}"${imagePriority} decoding="async">`;
     if (!dish) return `<div class="product-photo">${pack}</div>`;
-    const dishBaseSrc = optimizedImage(dish.source === "prepared" ? `${projectBase}/assets/${dish.image}` : dish.image.startsWith("catalog/prepared/") ? `${projectBase}/assets/catalog/prepared-cutout/${dish.image.split("/").pop()}` : editorialImage(dish.image));
+    const dishBaseSrc = product.slug === "papas-rejilla" ? `${projectBase}/assets/catalog/prepared-cutout/papas-rejilla.png?v=rejilla-png-20261127` : optimizedImage(dish.source === "prepared" ? `${projectBase}/assets/${dish.image}` : dish.image.startsWith("catalog/prepared/") ? `${projectBase}/assets/catalog/prepared-cutout/${dish.image.split("/").pop()}` : editorialImage(dish.image));
     const dishSrc = dishBaseSrc;
     const dishResponsiveAttrs = responsiveImageAttrs(dishSrc, imageSizes) || responsiveEditorialImageAttrs(dishSrc, imageSizes);
     const deferDishImage = !eagerImage;
