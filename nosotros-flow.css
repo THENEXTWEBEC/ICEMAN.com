@@ -22,7 +22,7 @@
 .brand-story.story-flow [data-story-selector]>.wrap{min-height:0;padding-block:clamp(44px,6vw,80px)}
 .brand-story.story-flow [data-story-selector] .story-section-head h2{font-size:clamp(34px,4.1vw,60px)}
 .brand-story.story-flow [data-story-selector] .story-panel-image{height:clamp(300px,47svh,470px);border-radius:28px 4px 4px 4px;background:transparent}
-.brand-story.story-flow [data-story-selector] .story-panel-image img{object-fit:contain;object-position:center;transform:none}
+.brand-story.story-flow [data-story-selector] .story-panel-image img{object-fit:contain;object-position:center;transform:none;background:var(--story-canvas)}
 .brand-story.story-flow .story-purpose{height:auto}
 .brand-story.story-flow .purpose-sticky{position:relative;top:auto;min-height:0;padding-block:clamp(40px,5vw,72px)}
 .brand-story.story-flow .purpose-photos{height:auto;aspect-ratio:4/3;border-radius:4px 40px 4px 4px;background:transparent}
