@@ -11,7 +11,7 @@
   }
   const cleanRecipeImages = {
     "brochetas-carne-papas-rejilla-chimichurri": "editorial/recipe-brochetas-generated.png",
-    "carne-plancha-papas-onduladas-salsa-ajo": "editorial/recipe-steak-fries.webp",
+    "carne-plancha-papas-onduladas-salsa-ajo": "editorial/home-recipe-steak-fries-v2.webp?plate=20261127",
     "waffles-iceman-franui-frutos-rojos": "editorial/waffles-franui-no-white-border-20261126.webp",
     "bowl-salmon-teriyaki-edamame-mayonesa-picante": "editorial/recipe-salmon-generated.png"
   };
@@ -335,7 +335,7 @@
     const recipeIntroItems = [
       { slug:"brochetas-carne-papas-rejilla-chimichurri", image:"editorial/recipe-table-brochetas-fries.jpg", product:"papas-rejilla", packageImage:"papas-rejilla-completo", packageWidth:456, packageHeight:520, alt:"Mesa para compartir con brochetas, papas corte rejilla y chimichurri" },
       { slug:"pollo-hierbas-aros-cebolla-ensalada-repollo", image:"editorial/home-recipe-onion-chicken-v2.webp", product:"aros-de-cebolla", packageImage:"aros-cebolla", packageWidth:333, packageHeight:480, alt:"Pollo a las hierbas con aros de cebolla crujientes y ensalada fresca" },
-      { slug:"carne-plancha-papas-onduladas-salsa-ajo", image:"editorial/recipe-steak-fries.webp", product:"corte-ondulado-900-premium", packageImage:"papas-ondulado-premium", packageWidth:480, packageHeight:347, alt:"Carne a la plancha acompañada de papas onduladas y salsa de ajo" }
+      { slug:"carne-plancha-papas-onduladas-salsa-ajo", image:"editorial/home-recipe-steak-fries-v2.webp?plate=20261127", product:"corte-ondulado-900-premium", packageImage:"papas-ondulado-premium", packageWidth:480, packageHeight:347, alt:"Carne a la plancha acompañada de papas onduladas y salsa de ajo" }
     ];
     const recipeIntroCards = recipeIntroItems.map((item,index) => {
       const product = products.find((entry) => entry.slug === item.product);
