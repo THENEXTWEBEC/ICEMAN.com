@@ -450,10 +450,10 @@
   .brand-story.story-flow [data-story-selector] > .wrap { position: relative; top: auto; }
 }
 
-/* Rounded photo treatment, scoped to Nosotros. */
+/* Each photo owns its rounded, individually colored border. */
 .brand-story.story-flow {
   --story-photo-radius: clamp(16px, 2vw, 26px);
-  --story-photo-border: 2px solid #125da8;
+  --story-photo-color: #28a9df;
 }
 .brand-story.story-flow .story-frame,
 .brand-story.story-flow [data-story-selector] .story-panel-image,
@@ -464,11 +464,32 @@
 .brand-story.story-flow .story-panel-image::before {
   border-radius: var(--story-photo-radius);
 }
+.brand-story.story-flow .story-opening-photo { --story-photo-color: #28a9df; }
+.brand-story.story-flow .story-opening-daily { --story-photo-color: #38a88b; }
+.brand-story.story-flow .story-purpose-photo { --story-photo-color: #e9ac25; }
+.brand-story.story-flow [data-story-selector="concepts"] .story-panel-slide:nth-child(1) { --story-photo-color: #f28c47; }
+.brand-story.story-flow [data-story-selector="concepts"] .story-panel-slide:nth-child(2) { --story-photo-color: #d9af29; }
+.brand-story.story-flow [data-story-selector="concepts"] .story-panel-slide:nth-child(3) { --story-photo-color: #e46c80; }
+.brand-story.story-flow [data-story-selector="values"] .story-panel-slide:nth-child(1) { --story-photo-color: #35a584; }
+.brand-story.story-flow [data-story-selector="values"] .story-panel-slide:nth-child(2) { --story-photo-color: #548fd5; }
+.brand-story.story-flow [data-story-selector="values"] .story-panel-slide:nth-child(3) { --story-photo-color: #a579c5; }
 .brand-story.story-flow .story-frame img,
 .brand-story.story-flow [data-story-selector] .story-panel-image img {
   box-sizing: border-box;
-  border: var(--story-photo-border);
+  border: 3px solid var(--story-photo-color);
   border-radius: var(--story-photo-radius);
+}
+.brand-story.story-flow .story-panel-slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.brand-story.story-flow [data-story-selector] .story-panel-image img {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  flex: 0 1 auto;
 }
 @keyframes story-photo-reveal {
   from { clip-path: inset(0 0 14% round var(--story-photo-radius)); }
