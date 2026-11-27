@@ -449,3 +449,28 @@
   .story-flow *::before { animation: none !important; transition: none !important; }
   .brand-story.story-flow [data-story-selector] > .wrap { position: relative; top: auto; }
 }
+
+/* Rounded photo treatment, scoped to Nosotros. */
+.brand-story.story-flow {
+  --story-photo-radius: clamp(16px, 2vw, 26px);
+  --story-photo-border: 2px solid #125da8;
+}
+.brand-story.story-flow .story-frame,
+.brand-story.story-flow [data-story-selector] .story-panel-image,
+.brand-story.story-flow .story-panel-slide {
+  border-radius: calc(var(--story-photo-radius) + clamp(8px, 1vw, 15px));
+}
+.brand-story.story-flow .story-frame::before,
+.brand-story.story-flow .story-panel-image::before {
+  border-radius: var(--story-photo-radius);
+}
+.brand-story.story-flow .story-frame img,
+.brand-story.story-flow [data-story-selector] .story-panel-image img {
+  box-sizing: border-box;
+  border: var(--story-photo-border);
+  border-radius: var(--story-photo-radius);
+}
+@keyframes story-photo-reveal {
+  from { clip-path: inset(0 0 14% round var(--story-photo-radius)); }
+  to { clip-path: inset(0 round var(--story-photo-radius)); }
+}
