@@ -794,7 +794,7 @@
   // geometry and only swaps the visual shown on the “En tu mesa” side.
   const dishScenes = {
     "papas-air-fryer": {image:"catalog/prepared/papas-air-fryer.png",alt:"Papas Air Fryer preparadas y servidas en un plato verde"},
-    "corte-ondulado-900-premium": {image:"catalog/prepared/papas-onduladas-original-horizontal.webp",alt:"Papas onduladas preparadas y servidas en un plato verde"},
+    "corte-ondulado-900-premium": {image:"catalog/prepared-cutout/papas-onduladas-original-horizontal.webp",alt:"Papas onduladas preparadas y servidas en un plato verde"},
     "corte-recto-900-premium": {image:"catalog/prepared/corte-recto-900-premium.png",alt:"Papas de corte recto preparadas y servidas en un plato verde"},
     "papa-steak": {image:"catalog/prepared/papa-steak.png",alt:"Papa Steak preparada y servida en un plato verde"},
     "papas-spices": {image:"catalog/prepared/papas-spices.png",alt:"Papas con especias preparadas y servidas en un plato verde"},
