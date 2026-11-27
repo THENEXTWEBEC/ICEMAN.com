@@ -260,3 +260,36 @@
     transform-origin:top right;
   }
 }
+
+/* Scale only the packages in the two supplied recipe photos by 5%.
+   The original photo element, source, dimensions and translation stay fixed. */
+.recipe-experience .recipe-scene-photo--edamame{
+  --recipe-pack-outline:polygon(7% 38.3%,61.9% 38.3%,58.3% 90.8%,56% 91.8%,48% 92.7%,36% 92.9%,23% 92.6%,12% 91.9%,10% 91%,7% 38.3%);
+  --recipe-pack-anchor:35% 92.7%;
+}
+.recipe-experience .recipe-scene-photo--waffles{
+  --recipe-pack-outline:polygon(6.6% 57.1%,10% 55.5%,76.4% 55.1%,79.1% 57.1%,79.1% 89.7%,6.6% 89.7%);
+  --recipe-pack-anchor:42.85% 89.6%;
+}
+.recipe-experience .recipe-scene-photo--supplied:has(.recipe-scene-pack-adjustment) .recipe-scene-dish{
+  clip-path:inset(0 0 14.1% 0);
+}
+.recipe-experience .recipe-scene-pack-adjustment,
+.recipe-experience .recipe-scene-pack-restoration{
+  position:absolute;inset:0;display:block;pointer-events:none;
+}
+.recipe-experience .recipe-scene-pack-adjustment{z-index:1}
+.recipe-experience .recipe-scene-pack-restoration{overflow:hidden}
+.recipe-experience .recipe-scene-pack-fill,
+.recipe-experience .recipe-scene-pack-isolated{
+  position:absolute;inset:0 auto auto 0;display:block;
+  width:100%;height:auto;max-width:none;max-height:none;
+  aspect-ratio:1086/1448;object-fit:contain;border-radius:0;
+  clip-path:var(--recipe-pack-outline);
+  transform:translateY(-10.91%);
+}
+.recipe-experience .recipe-scene-pack-isolated{
+  transform:translateY(-10.91%) scale(.95);
+  transform-origin:var(--recipe-pack-anchor);
+}
+.recipe-experience .recipe-scene-photo--supplied .recipe-scene-badge{z-index:2}
