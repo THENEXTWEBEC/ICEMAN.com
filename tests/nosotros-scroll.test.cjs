@@ -5,7 +5,7 @@ const vm = require('node:vm');
 const path = require('node:path');
 
 const app = fs.readFileSync(path.join(__dirname, '../app.js'), 'utf8');
-const timeline = app.slice(app.indexOf('    // Short sticky scenes'), app.indexOf('    const hero=root.querySelector("[data-reveal-hero]");'));
+const timeline = app.slice(app.indexOf('    // Sticky story scenes'), app.indexOf('    const hero=root.querySelector("[data-reveal-hero]");'));
 
 function element() {
   return {
@@ -115,8 +115,8 @@ test('desktop controls move to the matching point using the current section boun
   assert.equal(story.caption.textContent, 'Second description');
 });
 
-test('narrow, short and reduced-motion layouts switch images without moving the page', () => {
-  for (const options of [{ width: 390 }, { height: 500 }, { reducedMotion: true }]) {
+test('short and reduced-motion layouts switch images without moving the page', () => {
+  for (const options of [{ height: 500 }, { reducedMotion: true }]) {
     const story = fixture(options);
     assert.equal(story.section.classList.has('is-flowing'), true);
     story.buttons[2].handlers.click();
@@ -127,4 +127,15 @@ test('narrow, short and reduced-motion layouts switch images without moving the 
     story.sync();
     assert.equal(story.caption.textContent, 'Third description');
   }
+});
+
+test('mobile photos advance and reverse with scroll while the scene stays pinned', () => {
+  const story = fixture({ width: 390, height: 844 });
+  assert.equal(story.section.classList.has('is-flowing'), false);
+  for (const [progress, description] of [[.5, 'Second description'], [1, 'Third description'], [0, 'First description']]) {
+    story.scroll(progress);
+    assert.equal(story.caption.textContent, description);
+  }
+  story.buttons[2].handlers.click();
+  assert.equal(story.window.lastScroll.behavior, 'smooth');
 });
