@@ -251,3 +251,12 @@
 @media(max-width:700px){
   .recipe-experience .recipe-scene-photo--supplied{width:100%;margin:0 auto 36px}
 }
+
+/* Tall, subtle lettering fills the recipe hero behind the headline. */
+@media(min-width:901px){
+  .recipe-experience .recipe-discovery-watermark{
+    top:clamp(18px,2vw,32px);
+    transform:scaleY(1.85);
+    transform-origin:top right;
+  }
+}
