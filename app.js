@@ -497,8 +497,7 @@
           <img class="editorial-recipe-product" src="${asset(product.image)}"${responsiveImageAttrs(asset(product.image),"(max-width: 600px) calc(100vw - 36px), (max-width: 900px) calc(50vw - 30px), 420px")} alt="${escapeHTML(productAlt)}" loading="${imageLoading}"${imagePriority} decoding="async">
           <img class="editorial-recipe-dish" data-src="${dishSrc}"${responsiveEditorialImageAttrs(dishSrc,"(max-width: 600px) calc(100vw - 36px), 520px")} alt="${escapeHTML(dishAlt)}" decoding="async">
           <span class="editorial-recipe-status" aria-hidden="true"><span>Producto IceMan</span><span>Listo para disfrutar</span></span>
-          <span class="editorial-recipe-cue" aria-hidden="true">Toca para transformar</span>        </button>
-        <div class="editorial-card-copy"><div class="editorial-kicker">De nuestro producto a tu mesa</div><h3><a href="${articleHref(item)}" data-link>${escapeHTML(item.title)}</a></h3><p>${escapeHTML(item.description)}</p><div class="editorial-recipe-facts" aria-label="Detalles de la receta"><span><small>Tiempo</small><b>${escapeHTML(item.time)}</b></span><span><small>Dificultad</small><b>${escapeHTML(item.difficulty)}</b></span></div><div class="editorial-card-foot"><a class="editorial-product-chip" href="${productPath(product)}" data-link aria-label="Ver producto ${escapeHTML(product.name)}">${escapeHTML(product.name)} · ${escapeHTML(product.presentation)}</a><a class="editorial-read editorial-recipe-link" href="${articleHref(item)}" data-link>Ver receta ${iconArrow()}</a></div></div>
+          <span class="editorial-recipe-cue" aria-hidden="true">Toca para transformar</span>        </button>        <div class="editorial-card-copy"><div class="editorial-kicker">De nuestro producto a tu mesa</div><h3><a href="${articleHref(item)}" data-link>${escapeHTML(item.title)}</a></h3><p>${escapeHTML(item.description)}</p><div class="editorial-recipe-facts" aria-label="Detalles de la receta"><span><small>Tiempo</small><b>${escapeHTML(item.time)}</b></span><span><small>Dificultad</small><b>${escapeHTML(item.difficulty)}</b></span></div><div class="editorial-card-foot"><a class="editorial-product-chip" href="${productPath(product)}" data-link aria-label="Ver producto ${escapeHTML(product.name)}">${escapeHTML(product.name)} · ${escapeHTML(product.presentation)}</a><a class="editorial-read editorial-recipe-link" href="${articleHref(item)}" data-link>Ver receta ${iconArrow()}</a></div></div>
       </article>`;
     }
     return `<article class="editorial-card ${item.image.startsWith("editorial/") ? "editorial-card-poster" : ""} ${item.imageLayout === "landscape" ? "editorial-card-landscape" : ""} ${featured ? "editorial-card-featured" : ""}" data-editorial-card data-category="${item.kind === "business" ? "negocios" : item.kind === "recipe" ? "recetas" : "nutricion"}" data-search="${escapeHTML([item.title,item.description,item.category,...(item.tags || []),...(item.ingredients || []),...(item.occasions || []),product?.name || ""].join(" ").toLocaleLowerCase("es"))}">
@@ -834,7 +833,7 @@
     "papas-rejilla": {image:"catalog/prepared/papas-rejilla.png",alt:"Papas rejilla preparadas y servidas en un plato verde",source:"prepared"},
     "hash-brown": {image:"catalog/prepared/hash-brown.png",alt:"Hash Brown preparado y servido en un plato verde"},
     "aros-de-cebolla": {image:"catalog/prepared/aros-de-cebolla.png",alt:"Aros de cebolla preparados y servidos en un plato verde"},
-    "croqueta-de-yuca": {image:"catalog/prepared/croqueta-de-yuca.png",alt:"Croquetas de yuca preparadas y servidas en un plato verde",eager:true},
+    "croqueta-de-yuca": {image:"catalog/prepared-cutout/croqueta-de-yuca.png",alt:"Croquetas de yuca preparadas y servidas en un plato verde",source:"prepared",eager:true,preferPng:true},
     "zanahoria-ondulada": {image:"catalog/prepared/zanahoria-ondulada.png",alt:"Zanahoria ondulada servida en un plato verde"},
     "ensalada-rusa": {image:"catalog/prepared/ensalada-rusa.png",alt:"Ensalada rusa servida en un plato verde"},
     "maiz-dulce-450": {image:"catalog/prepared/maiz-dulce-450.png",alt:"Maíz dulce preparado y servido en un plato verde"},
@@ -895,9 +894,10 @@
       : cutoutAsset(product.image);
     const pack = `<img src="${packSrc}"${responsiveImageAttrs(packSrc,imageSizes)} alt="Empaque de ${escapeHTML(product.name)}, ${escapeHTML(product.presentation)}" loading="${imageLoading}"${imagePriority} decoding="async">`;
     if (!dish) return `<div class="product-photo">${pack}</div>`;
-    const dishBaseSrc = product.slug === "papas-rejilla" ? `${projectBase}/assets/catalog/prepared-cutout/papas-rejilla.png?v=rejilla-png-20261127` : optimizedImage(dish.source === "prepared" ? `${projectBase}/assets/${dish.image}` : dish.image.startsWith("catalog/prepared/") ? `${projectBase}/assets/catalog/prepared-cutout/${dish.image.split("/").pop()}` : editorialImage(dish.image));
+    const dishAssetPath = dish.source === "prepared" ? `${projectBase}/assets/${dish.image}` : dish.image.startsWith("catalog/prepared/") ? `${projectBase}/assets/catalog/prepared-cutout/${dish.image.split("/").pop()}` : editorialImage(dish.image);
+    const dishBaseSrc = dish.preferPng ? `${projectBase}/assets/${dish.image}?v=croqueta-plato-20261127` : product.slug === "papas-rejilla" ? `${projectBase}/assets/catalog/prepared-cutout/papas-rejilla.png?v=rejilla-png-20261127` : optimizedImage(dishAssetPath);
     const dishSrc = dishBaseSrc;
-    const dishResponsiveAttrs = responsiveImageAttrs(dishSrc, imageSizes) || responsiveEditorialImageAttrs(dishSrc, imageSizes);
+    const dishResponsiveAttrs = dish.preferPng ? "" : responsiveImageAttrs(dishSrc, imageSizes) || responsiveEditorialImageAttrs(dishSrc, imageSizes);
     // Load the yuca dish immediately so the prepared side is visible on first render.
     const dishEagerImage = eagerImage || dish.eager;
     const deferDishImage = !dishEagerImage;
@@ -997,8 +997,7 @@
         </div>
       </section>
       ${storySelector(storyConcepts, "concepts", "Nuestra forma de vivir", "Elegir IceMan <em>significa elegir…</em>", [[1067, 1600], [1600, 1104], [960, 977]])}
-      <section class="story-purpose" aria-labelledby="story-purpose-title">
-        <div class="wrap story-purpose-layout">
+      <section class="story-purpose" aria-labelledby="story-purpose-title">        <div class="wrap story-purpose-layout">
           <div class="story-purpose-copy">
             <span class="story-kicker">Nuestro propósito</span>
             <h2 id="story-purpose-title">Hacerlo fácil <em>no significa hacerlo siempre igual.</em></h2>
@@ -1667,4 +1666,3 @@
   catch { consentUI(); }
   scrollToHash(window.location.hash, "auto");
 })();
-
