@@ -36,6 +36,18 @@
         heroPreload.setAttribute("imagesizes", "100vw");
         heroPreload.fetchPriority = "high";
         document.head.append(heroPreload);
+      } else if (normalizedRoute === "/nosotros" || normalizedRoute === "/recetas") {
+        const isAbout = normalizedRoute === "/nosotros";
+        const image = isAbout ? "advice-store-frozen-products" : "recipe-brochetas-generated";
+        const version = isAbout ? "?v=images-20261030" : "";
+        const heroPreload = document.createElement("link");
+        heroPreload.rel = "preload";
+        heroPreload.as = "image";
+        heroPreload.href = `assets/editorial/responsive/${image}-960.webp${version}`;
+        heroPreload.setAttribute("imagesrcset", [480,768,960].map(width => `assets/editorial/responsive/${image}-${width}.webp${version} ${width}w`).join(", "));
+        heroPreload.setAttribute("imagesizes", isAbout ? "100vw" : "(max-width: 700px) 90vw, 570px");
+        heroPreload.fetchPriority = "high";
+        document.head.append(heroPreload);
       }
     </script>
     <link rel="stylesheet" href="styles.css?v=recipe-rail-removed-20261118" />
