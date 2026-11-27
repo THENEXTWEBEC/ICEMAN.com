@@ -938,7 +938,7 @@
     {title:"CONFIANZA",text:"Cuidamos la calidad de todo lo que llevamos hasta ti.",image:"editorial/trust-family-celebration.jpeg",alt:"Dos mujeres junto a una mesa con flores, platos y productos IceMan"}
   ];
   function storySelector(items, id, title, hint, number) {
-    return `<section class="story-section story-selector" data-story-selector="${id}"><div class="wrap"><div class="story-section-head"><span class="story-number">${number} / SOMOS IceMan</span><h2>${title}</h2><p>${hint}</p></div><div class="story-selector-layout"><div class="story-options" role="group" aria-label="${title}">${items.map((item,i)=>`<button type="button" data-story-option="${i}" aria-pressed="${i===0}" aria-controls="story-panel-${id}"><span>0${i+1}</span>${item.title}<b aria-hidden="true">${iconArrow("up-right")}</b></button>`).join("")}</div><div class="story-panel" id="story-panel-${id}"><div class="story-panel-image">${items.map((item,i)=>`<img class="${i===0?"is-visible":""}" src="${editorialImage(item.image)}" alt="${item.alt}" aria-hidden="${i!==0}" loading="lazy" decoding="async">`).join("")}</div><p aria-live="polite">${items[0].text}</p></div></div></div></section>`;
+    return `<section class="story-section story-selector" data-story-selector="${id}"><div class="wrap"><div class="story-section-head"><span class="story-number">${number} / SOMOS IceMan</span><h2>${title}</h2><p>${hint}</p></div><div class="story-selector-layout"><div class="story-options" role="group" aria-label="${title}">${items.map((item,i)=>`<button type="button" data-story-option="${i}" aria-pressed="${i===0}" aria-controls="story-panel-${id}"><span>0${i+1}</span>${item.title}<b aria-hidden="true">${iconArrow("up-right")}</b></button>`).join("")}</div><div class="story-panel" id="story-panel-${id}"><div class="story-panel-image">${items.map((item,i)=>`<div class="story-panel-slide${i===0?" is-visible":""}" aria-hidden="${i!==0}"><img src="${editorialImage(item.image)}" alt="${item.alt}" loading="lazy" decoding="async"></div>`).join("")}</div><figcaption><p aria-live="polite">${items[0].text}</p></figcaption></div></div></div></section>`;
   }
   function aboutPage(path) {
     const words = "Hacerlo fácil no significa hacerlo siempre igual.".split(" ");
@@ -1135,8 +1135,9 @@
       comparison.dataset.comparisonSide=value === 100 ? "pack" : value === 0 ? "dish" : "mix";
       e.target.setAttribute("aria-valuetext",`${value}% empaque, ${100-value}% preparación`);
     },{signal});
+    {
     // One native-scroll timeline for every pinned scene. No wheel/touch interception.
-    const storySections=[...root.querySelectorAll("[data-story-selector]")];
+    const storySections=[];
     const purpose=root.querySelector("[data-story-purpose]");
     const scenes=[...storySections,...(purpose?[purpose]:[])].map(section=>({
       section, wrap:section.querySelector(":scope > .wrap"),
@@ -1226,6 +1227,117 @@
       signal.addEventListener("abort",()=>{sceneResize.disconnect();if(storyFrame)cancelAnimationFrame(storyFrame);},{once:true});
       measureScrollStories();
       document.fonts?.ready.then(()=>{if(!signal.aborted)measureScrollStories();});
+    }
+    }
+    // Short sticky scenes on wide screens, with immediate controls on touch layouts.
+    const scenes = [...root.querySelectorAll("[data-story-selector]")].map(section => {
+      const slides = [...section.querySelectorAll(".story-panel-slide")];
+      return {
+        section, slides,
+        photos: slides.map(slide => slide.querySelector("img")),
+        wrap: section.querySelector(".wrap"),
+        buttons: [...section.querySelectorAll("[data-story-option]")],
+        caption: section.querySelector("figcaption p"),
+        items: section.dataset.storySelector === "concepts" ? storyConcepts : storyValues,
+        active: 0, selection: null, travel: 0
+      };
+    });
+    if (scenes.length) {
+      const compactStory = matchMedia("(max-width: 820px)");
+      const limit = value => Math.min(1, Math.max(0, value));
+      let storyFrame = 0;
+      const renderStory = (scene, position) => {
+        const { slides, photos, buttons, caption, items } = scene;
+        const lower = Math.floor(position);
+        const next = Math.min(lower + 1, slides.length - 1);
+        const mix = limit((position - lower - .3) / .4);
+        const blend = mix * mix * (3 - 2 * mix);
+        const ready = index => photos[index].complete && photos[index].naturalWidth > 0;
+        const requested = Math.round(position);
+        const active = ready(requested) ? requested : scene.active;
+        const canBlend = !scene.manual && ready(lower) && ready(next);
+
+        slides.forEach((slide, index) => {
+          slide.style.opacity = String(canBlend
+            ? (index === lower ? 1 : index === next ? blend : 0)
+            : Number(index === active));
+          slide.style.zIndex = String(canBlend && index === next ? 2 : 1);
+        });
+        if (active === scene.active) return;
+        slides[scene.active].setAttribute("aria-hidden", "true");
+        slides[active].setAttribute("aria-hidden", "false");
+        buttons[scene.active].setAttribute("aria-pressed", "false");
+        buttons[active].setAttribute("aria-pressed", "true");
+        caption.textContent = items[active].text;
+        scene.active = active;
+      };
+      const updateStories = () => {
+        storyFrame = 0;
+        if (signal.aborted) return;
+        const bounds = scenes.map(scene => scene.section.getBoundingClientRect());
+        scenes.forEach((scene, index) => {
+          if (scene.selection !== null) {
+            renderStory(scene, scene.selection);
+            if (scene.manual || scene.active !== scene.selection) return;
+            const target = scene.travel * scene.selection / (scene.slides.length - 1);
+            if (Math.abs(scene.header - bounds[index].top - target) <= 2) scene.selection = null;
+            return;
+          }
+          if (scene.manual || bounds[index].bottom < 0 || bounds[index].top > window.innerHeight) return;
+          const progress = limit((scene.header - bounds[index].top) / scene.travel);
+          renderStory(scene, progress * (scene.slides.length - 1));
+        });
+      };
+      const scheduleStories = () => {
+        if (!storyFrame) storyFrame = requestAnimationFrame(updateStories);
+      };
+      const measureStories = () => {
+        const header = root.querySelector(".site-header")?.offsetHeight || 76;
+        const heights = scenes.map(scene => scene.wrap.offsetHeight);
+        scenes.forEach((scene, index) => {
+          scene.header = header;
+          const manual = reduced.matches || compactStory.matches || heights[index] > window.innerHeight - header;
+          if (manual !== scene.manual) scene.selection = null;
+          scene.manual = manual;
+          scene.caption.setAttribute("aria-live", manual ? "polite" : "off");
+          scene.travel = Math.min(340, heights[index] * .63);
+          scene.section.classList.toggle("is-flowing", manual);
+          scene.section.style.setProperty("--story-header", `${header}px`);
+          scene.section.style.setProperty("--story-scene-height", manual ? "auto" : `${heights[index] + scene.travel}px`);
+        });
+        scheduleStories();
+      };
+      const cancelStorySelection = () => {
+        scenes.forEach(scene => {
+          if (!scene.manual) scene.selection = null;
+        });
+        scheduleStories();
+      };
+      scenes.forEach(scene => {
+        scene.photos.forEach(photo => photo.addEventListener("load", scheduleStories, {signal}));
+        scene.buttons.forEach((button, index) => button.addEventListener("click", () => {
+          scene.selection = index;
+          renderStory(scene, index);
+          if (scene.manual) return;
+          const start = scene.section.getBoundingClientRect().top + window.scrollY - scene.header;
+          window.scrollTo({top: start + scene.travel * index / (scene.slides.length - 1), behavior: "smooth"});
+        }, {signal}));
+      });
+      window.addEventListener("scroll", scheduleStories, {signal, passive: true});
+      window.addEventListener("resize", measureStories, {signal, passive: true});
+      window.addEventListener("wheel", cancelStorySelection, {signal, passive: true});
+      window.addEventListener("pointerdown", cancelStorySelection, {signal, passive: true});
+      window.addEventListener("keydown", event => {
+        if (["ArrowDown", "ArrowUp", "PageUp", "PageDown", "Home", "End"].includes(event.key)) cancelStorySelection();
+      }, {signal});
+      reduced.addEventListener("change", measureStories, {signal});
+      const sceneResize = new ResizeObserver(measureStories);
+      scenes.forEach(scene => sceneResize.observe(scene.wrap));
+      signal.addEventListener("abort", () => {
+        sceneResize.disconnect();
+        if (storyFrame) cancelAnimationFrame(storyFrame);
+      }, {once: true});
+      measureStories();
     }
     const hero=root.querySelector("[data-reveal-hero]");
     if(hero){

@@ -1444,3 +1444,6 @@ body:has(.home-hero-journey) .site-header .brand-official-logo{width:158px;heigh
 /* Original navy Nosotros: only the two requested photo adjustments. */
 .brand-story .story-history-foot img { width:90%; justify-self:center; }
 .brand-story .story-selector .story-panel-image img[src*="trust-family-celebration"] { --story-frame-y:75%; object-position:center 75%; }
+
+.brand-story .story-panel-image .story-panel-slide { position:absolute; inset:0; opacity:0; }
+.brand-story .story-panel-image .story-panel-slide.is-visible { opacity:1; }
