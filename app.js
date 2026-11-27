@@ -1239,7 +1239,7 @@
         buttons: [...section.querySelectorAll("[data-story-option]")],
         caption: section.querySelector("figcaption p"),
         items: section.dataset.storySelector === "concepts" ? storyConcepts : storyValues,
-        active: 0, selection: null, travel: 0
+        active: 0, selection: null, travel: 0, flowing: false
       };
     });
     if (scenes.length) {
@@ -1255,7 +1255,7 @@
         const ready = index => photos[index].complete && photos[index].naturalWidth > 0;
         const requested = Math.round(position);
         const active = ready(requested) ? requested : scene.active;
-        const canBlend = !scene.manual && ready(lower) && ready(next);
+        const canBlend = !reduced.matches && ready(lower) && ready(next);
 
         slides.forEach((slide, index) => {
           slide.style.opacity = String(canBlend
@@ -1278,13 +1278,19 @@
         scenes.forEach((scene, index) => {
           if (scene.selection !== null) {
             renderStory(scene, scene.selection);
-            if (scene.manual || scene.active !== scene.selection) return;
-            const target = scene.travel * scene.selection / (scene.slides.length - 1);
-            if (Math.abs(scene.header - bounds[index].top - target) <= 2) scene.selection = null;
+            if ((scene.manual && !scene.flowing) || scene.active !== scene.selection) return;
+            if (!scene.flowing) {
+              const target = scene.travel * scene.selection / (scene.slides.length - 1);
+              if (Math.abs(scene.header - bounds[index].top - target) <= 2) scene.selection = null;
+            }
             return;
           }
-          if (scene.manual || bounds[index].bottom < 0 || bounds[index].top > window.innerHeight) return;
-          const progress = limit((scene.header - bounds[index].top) / scene.travel);
+          if ((scene.manual && !scene.flowing) || bounds[index].bottom < 0 || bounds[index].top > window.innerHeight) return;
+          const panel = scene.section.querySelector('.story-panel-image');
+          const panelBounds = panel?.getBoundingClientRect();
+          const progress = scene.flowing && panelBounds
+            ? limit((window.innerHeight - panelBounds.top) / Math.max(1, window.innerHeight + panelBounds.height))
+            : limit((scene.header - bounds[index].top) / scene.travel);
           renderStory(scene, progress * (scene.slides.length - 1));
         });
       };
@@ -1299,6 +1305,7 @@
           const manual = reduced.matches || heights[index] > window.innerHeight - header + 2;
           if (manual !== scene.manual) scene.selection = null;
           scene.manual = manual;
+          scene.flowing = manual && !reduced.matches;
           scene.caption.setAttribute("aria-live", manual ? "polite" : "off");
           scene.travel = compactStory.matches ? heights[index] * 1.1 : Math.min(340, heights[index] * .63);
           scene.section.classList.toggle("is-flowing", manual);
@@ -1309,7 +1316,7 @@
       };
       const cancelStorySelection = () => {
         scenes.forEach(scene => {
-          if (!scene.manual) scene.selection = null;
+          if (!reduced.matches) scene.selection = null;
         });
         scheduleStories();
       };
