@@ -294,10 +294,10 @@
 }
 .recipe-experience .recipe-scene-photo--supplied .recipe-scene-badge{z-index:2}
 
-/* Pale ice-blue lettering with a soft, diffused edge behind the recipe hero. */
+/* Pale ice-blue lettering behind the recipe hero. */
 .recipe-experience .recipe-discovery-watermark{
   color:rgba(230,247,255,.13);
   -webkit-text-stroke:0;
-  text-shadow:0 0 28px rgba(222,246,255,.12);
-  filter:blur(3px);
+  text-shadow:none;
+  filter:none;
 }
