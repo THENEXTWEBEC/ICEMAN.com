@@ -47,7 +47,7 @@ body:has(.catalog-results) #main{background:#161d46}.page-intro:has(+ .catalog-t
 .story-selector .story-panel-image img[src*="ice-man-sharing-event"] { --story-frame-y: 47%; }
 .story-selector .story-panel-image img[src*="11-cercania-familia"] { --story-frame-y: 34%; }
 .story-selector .story-panel-image img[src*="innovation-potato-salad"] { --story-frame-y: 58%; }
-.story-selector .story-panel-image img[src*="trust-family-celebration"] { --story-frame-y: 30%; }
+.story-selector .story-panel-image img[src*="trust-family-celebration"] { --story-frame-y: 65%; }
 
 .story-selector .story-panel-image img{position:absolute;inset:0;width:100%;height:100%;opacity:0;transition:opacity .7s cubic-bezier(.22,.61,.36,1);will-change:opacity}
 .story-selector .story-panel-image img.is-visible{opacity:1}
